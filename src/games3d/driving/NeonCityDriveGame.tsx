@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
+import { useVisibilityPause } from '../../games/shared/useVisibilityPause';
 import type { GameComponentProps } from '../../types/game';
 import {
   DRIVE_CARS,
@@ -249,6 +250,8 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
       setPhase('drive');
     }
   }, [phase]);
+
+  useVisibilityPause(togglePause, phase === 'drive');
 
   const toggleMute = useCallback(() => {
     const next = engineRef.current?.toggleMute();

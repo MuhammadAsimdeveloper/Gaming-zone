@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
+import { useVisibilityPause } from '../../games/shared/useVisibilityPause';
 import { formatRaceTime } from '../shared/math';
 import type { GameComponentProps } from '../../types/game';
 import {
@@ -226,6 +227,8 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
       setPhase('racing');
     }
   }, [phase]);
+
+  useVisibilityPause(togglePause, phase === 'racing');
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {

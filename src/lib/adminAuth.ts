@@ -1,15 +1,15 @@
 import { ADMIN_PASSCODE_HASH } from '../config/site';
 
+/*
+ * Dormant scaffolding: no admin route or dashboard is shipped in this build.
+ * If one is added, keep it explicitly local-only; a browser passcode is not
+ * server authentication and must never be described as secure.
+ */
 const SESSION_KEY = 'neonrift:admin-session';
 const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
-const DEV_PASSCODE = 'neonrift-admin';
 
 export function isAdminConfigured(): boolean {
-  return Boolean(ADMIN_PASSCODE_HASH) || import.meta.env.DEV;
-}
-
-export function isUsingDefaultDevPasscode(): boolean {
-  return import.meta.env.DEV && !ADMIN_PASSCODE_HASH;
+  return Boolean(ADMIN_PASSCODE_HASH);
 }
 
 async function sha256Hex(value: string): Promise<string> {
@@ -19,11 +19,7 @@ async function sha256Hex(value: string): Promise<string> {
 }
 
 export async function verifyAdminPasscode(passcode: string): Promise<boolean> {
-  if (!isAdminConfigured() || !passcode) return false;
-
-  if (!ADMIN_PASSCODE_HASH) {
-    return passcode === DEV_PASSCODE;
-  }
+  if (!ADMIN_PASSCODE_HASH || !passcode) return false;
 
   const hash = await sha256Hex(passcode);
   return hash === ADMIN_PASSCODE_HASH;

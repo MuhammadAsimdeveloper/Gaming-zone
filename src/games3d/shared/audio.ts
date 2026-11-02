@@ -17,7 +17,7 @@ export class GameAudio {
 
   start(): void {
     if (this.context) {
-      void this.context.resume();
+      this.resumeContext();
       return;
     }
     const AudioContextCtor =
@@ -131,11 +131,11 @@ export class GameAudio {
   }
 
   suspend(): void {
-    if (this.context?.state === 'running') void this.context.suspend();
+    if (this.context?.state === 'running') void this.context.suspend().catch(() => undefined);
   }
 
   resume(): void {
-    if (this.context?.state === 'suspended') void this.context.resume();
+    this.resumeContext();
   }
 
   dispose(): void {
@@ -145,13 +145,19 @@ export class GameAudio {
     }
     this.engineOscA?.stop();
     this.engineOscB?.stop();
-    if (this.context) void this.context.close();
+    const context = this.context;
+    if (context) void context.close().catch(() => undefined);
     this.context = null;
     this.master = null;
     this.engineGain = null;
     this.engineOscA = null;
     this.engineOscB = null;
     this.engineFilter = null;
+  }
+
+  private resumeContext(): void {
+    if (this.context?.state !== 'suspended') return;
+    void this.context.resume().catch(() => undefined);
   }
 
   private startMusic(): void {

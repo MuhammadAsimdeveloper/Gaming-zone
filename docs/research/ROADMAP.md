@@ -41,6 +41,39 @@ Before the first new game, close the existing platform gaps. These are small and
 
 **Exit criterion:** a clean, tested platform with no known blocking defects and an honest status document.
 
+### Phase 0 status — verified 2026-11-02
+
+| Task | Status |
+|---|---|
+| 0.1 App-level ErrorBoundary | Complete. `AppErrorBoundary` covers routes; game boundaries still contain game chunk failures. Playwright recovery test passes. |
+| 0.2 Admin route/dashboard | Not shipped by design. `adminAuth.ts`/`adminStore.ts` remain dormant scaffolding; README states that a browser passcode is not server authentication. |
+| 0.3 Privacy “NeoRift” typo | Complete. Brand audit found no remaining `NeoRift` or `Gaming Zone` references. |
+| 0.4 Invalid Tailwind utilities | No unknown-utility warnings in the production build; pages were exercised in Playwright. |
+| 0.5 `public/_redirects` | Complete. SPA fallback present and verified through preview deep links. |
+| 0.6 `public/_headers` | Complete. Nosniff, frame, referrer and permissions headers configured. CSP is still open (see limitations). |
+| 0.7 `.env.example` | Complete. Documents optional variables with empty values. |
+| 0.8 Passcode-hash helper script | Not implemented. Deferred with the admin dashboard; no setup path is advertised. |
+| 0.9 README and testing report | Complete. README contains commands, routes, configuration, actual results and limitations. |
+| 0.10 Vitest coverage | 49 tests across consent, ads, catalogue/storage helpers, visibility pause and the error boundary. |
+| 0.11 Typecheck/test/build | Pass. See the verification snapshot below. |
+| 0.12 Browser QA | 37 Playwright tests pass against the production preview. |
+| 0.13 OG cover and sitemap | Complete. `public/og-cover.png` is original and referenced by `index.html`; sitemap/robots are generated from real routes. |
+| 0.14 Local commit | Pending at the time of writing; the final hardening commit is on `feature/platform-hardening`. |
+
+### Verification snapshot — 2026-11-02
+
+| Command | Result |
+|---|---|
+| `npm ci` | Completed successfully |
+| `npm run typecheck` | Passed with no output |
+| `npm test` | 49 tests passed in 5 files |
+| `npm run build` | Passed; 2,143 modules; Three.js scenery chunk 561.48 kB raw / 140.49 kB gzip warning |
+| `npx playwright test --workers=2` | 37 tests passed in 2.4 minutes |
+
+Known QA limits: full 3D race/match completion is not automated or manually played to the end;
+the browser suite verifies load, controls, pause/resume, restart, mute and route-away cleanup.
+No CSP ships yet. No admin dashboard ships.
+
 ---
 
 ## 3. Phase 1 — Wave 1: quick wins
@@ -67,6 +100,27 @@ Goal: prove the game pipeline five times with small, complete games.
 | M6 — Integration and QA | Catalogue, thumbnail, related, docs | All QA gates pass |
 
 **Wave 1 exit criterion:** five complete games integrated, each with a playthrough on desktop and mobile, passing typecheck, tests and build.
+
+### Rift Chess — implementation milestones
+
+**Status:** plan ready, implementation not started, no catalogue entry. The platform gates above
+pass; starting code requires explicit approval. Full plan:
+[RIFT-CHESS-IMPLEMENTATION-PLAN.md](RIFT-CHESS-IMPLEMENTATION-PLAN.md).
+
+| Milestone | Deliverable | Exit criteria |
+|---|---|---|
+| M0 — Dependency gate | `chess.js` (BSD-2-Clause) installed and noticed | Licence re-verified; notice added; typecheck/build green |
+| M1 — Rules spine | `rules.ts` + tests | ≥30 FEN fixtures cover mate, stalemate, castling, en passant, promotion, repetition, fifty-move, insufficient material |
+| M2 — Playable board | Accessible grid, selection, promotion, move list, undo, restart | Full local two-player game by mouse and keyboard |
+| M3 — Computer opponent | Web Worker alpha-beta bot, five honest levels, 10 s timeout fallback | Legal reply every time; worker terminates on restart/unmount; UI never blocks |
+| M4 — Modes and persistence | Clocks, save/resume, original puzzles, local records | Reload restores an AI game; hidden tab freezes clocks; versioned save resets cleanly |
+| M5 — Polish | Themes, procedural audio, accessibility, responsive layout | Keyboard-only full game and 320 px layout verified |
+| M6 — Integration and QA | Registry, catalogue, thumbnail, docs, browser tests | Existing 49 unit + 37 browser tests still pass; new tests pass; all gates green |
+
+Licence note: `js-chess-engine@2.4.6` is MIT but requires Node ≥24 as of 2026-11-02, while this
+project targets Node 20+. The plan therefore uses `chess.js` for rules and an in-house worker
+minimax. Do not add `js-chess-engine` without deliberately raising the Node baseline and recording
+that decision.
 
 ---
 
@@ -220,10 +274,11 @@ This is a long programme. The wave structure exists so that value ships early an
 
 ## 11. Approval gate
 
-No implementation begins until the shortlist is approved. After approval, the order is:
+No game implementation begins until the shortlist and the specific game plan are approved. Phase 0
+is complete and verified. After approval, the order is:
 
-1. Phase 0 platform hardening.
-2. Rift Chess.
+1. Phase 0 platform hardening. **Complete and verified 2026-11-02.**
+2. Rift Chess. **Plan ready; implementation not started.**
 3. Neon Rush.
 4. Lawn Protocol.
 5. Apex Time Trial.

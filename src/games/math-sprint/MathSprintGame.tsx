@@ -153,6 +153,7 @@ export default function MathSprintGame({ onStart, onComplete }: GameComponentPro
     if (phase !== 'running') return undefined;
 
     const tick = () => {
+      if (document.visibilityState === 'hidden') return;
       const endAt = endAtRef.current;
       if (endAt === null) return;
       const remaining = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
@@ -164,6 +165,24 @@ export default function MathSprintGame({ onStart, onComplete }: GameComponentPro
     const interval = window.setInterval(tick, 200);
     return () => window.clearInterval(interval);
   }, [finishRun, phase]);
+
+  useEffect(() => {
+    let hiddenAt: number | null = null;
+
+    function handleVisibility() {
+      if (document.visibilityState === 'hidden') {
+        if (phaseRef.current === 'running') hiddenAt = Date.now();
+        return;
+      }
+      if (hiddenAt !== null && phaseRef.current === 'running' && endAtRef.current !== null) {
+        endAtRef.current += Date.now() - hiddenAt;
+      }
+      hiddenAt = null;
+    }
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, []);
 
   const nextQuestion = () => {
     const next = createQuestion();

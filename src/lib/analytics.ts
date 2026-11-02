@@ -1,4 +1,5 @@
 import { GA_MEASUREMENT_ID } from '../config/site';
+import { readConsent } from './consent';
 import { readString, writeString } from './storage';
 
 export type AnalyticsConsent = 'granted' | 'denied';
@@ -13,7 +14,6 @@ export type AnalyticsEventName =
   | 'share'
   | 'returning_user';
 
-const CONSENT_KEY = 'neonrift:analytics-consent';
 const VISITOR_KEY = 'neonrift:visitor';
 
 let initialized = false;
@@ -30,8 +30,7 @@ export function isAnalyticsConfigured(): boolean {
 }
 
 export function getAnalyticsConsent(): AnalyticsConsent | null {
-  const value = readString(CONSENT_KEY);
-  return value === 'granted' || value === 'denied' ? value : null;
+  return readConsent('analytics');
 }
 
 function reportReturningUser(): void {
@@ -82,18 +81,13 @@ export function initializeAnalytics(): void {
   reportReturningUser();
 }
 
-export function setAnalyticsConsent(consent: AnalyticsConsent): void {
-  writeString(CONSENT_KEY, consent);
-  if (consent === 'granted') initializeAnalytics();
-}
-
-export function clearAnalyticsConsent(): void {
+/** Stops future analytics requests when consent is withdrawn. A reload may be needed to clear provider cookies. */
+export function resetAnalytics(): void {
   if (typeof window === 'undefined') return;
-  try {
-    window.localStorage.removeItem(CONSENT_KEY);
-  } catch {
-    // Ignore blocked storage.
-  }
+  document.querySelectorAll('script[data-neonrift-analytics]').forEach((script) => script.remove());
+  delete window.gtag;
+  delete window.dataLayer;
+  initialized = false;
 }
 
 export function track(name: AnalyticsEventName, params: Record<string, unknown> = {}): void {

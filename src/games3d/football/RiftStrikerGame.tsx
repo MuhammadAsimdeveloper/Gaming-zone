@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
+import { useVisibilityPause } from '../../games/shared/useVisibilityPause';
 import type { GameComponentProps } from '../../types/game';
 import { FootballEngine, type FootballCamera, type FootballDifficulty, type FootballHud, type FootballResult } from './engine';
 
@@ -222,6 +223,8 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
       setPhase('live');
     }
   }, [phase]);
+
+  useVisibilityPause(togglePause, phase === 'live');
 
   const toggleMute = useCallback(() => {
     const next = engineRef.current?.toggleMute();

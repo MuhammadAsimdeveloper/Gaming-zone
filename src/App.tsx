@@ -3,7 +3,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ConsentBanner } from './components/analytics/ConsentBanner';
 import { SiteLayout } from './components/layout/SiteLayout';
 import { Container } from './components/ui/Container';
-import { initializeAnalytics } from './lib/analytics';
+import { resetAdsense } from './lib/ads';
+import { initializeAnalytics, resetAnalytics } from './lib/analytics';
+import { useConsent } from './lib/useConsent';
 import { CatalogueProvider } from './providers/CatalogueProvider';
 import { PreferencesProvider } from './providers/PreferencesProvider';
 import { ToastProvider } from './providers/ToastProvider';
@@ -34,10 +36,18 @@ function RouteFallback() {
   );
 }
 
-function AnalyticsInitializer() {
+function ConsentEffects() {
+  const { analytics, advertising } = useConsent();
+
   useEffect(() => {
-    initializeAnalytics();
-  }, []);
+    if (analytics === 'granted') initializeAnalytics();
+    else resetAnalytics();
+  }, [analytics]);
+
+  useEffect(() => {
+    if (advertising !== 'granted') resetAdsense();
+  }, [advertising]);
+
   return null;
 }
 
@@ -47,7 +57,7 @@ export default function App() {
       <PreferencesProvider>
         <CatalogueProvider>
           <BrowserRouter>
-            <AnalyticsInitializer />
+            <ConsentEffects />
             <Suspense fallback={<RouteFallback />}>
               <Routes>
                 <Route element={<SiteLayout />}>

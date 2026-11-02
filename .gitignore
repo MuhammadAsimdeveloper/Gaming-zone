@@ -11,4 +11,7 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 coverage
+test-results
+playwright-report
+blob-report
 *.log

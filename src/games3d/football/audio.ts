@@ -6,7 +6,7 @@ export class StadiumAudio {
 
   start(): void {
     if (this.context) {
-      void this.context.resume();
+      this.resumeContext();
       return;
     }
     const AudioContextCtor =
@@ -141,18 +141,24 @@ export class StadiumAudio {
   }
 
   pause(): void {
-    if (this.context?.state === 'running') void this.context.suspend();
+    if (this.context?.state === 'running') void this.context.suspend().catch(() => undefined);
   }
 
   resume(): void {
-    if (this.context?.state === 'suspended') void this.context.resume();
+    this.resumeContext();
   }
 
   dispose(): void {
-    if (this.context) void this.context.close();
+    const context = this.context;
+    if (context) void context.close().catch(() => undefined);
     this.context = null;
     this.master = null;
     this.crowdGain = null;
+  }
+
+  private resumeContext(): void {
+    if (this.context?.state !== 'suspended') return;
+    void this.context.resume().catch(() => undefined);
   }
 
   private noiseBurst(duration: number, frequency: number, volume: number): void {

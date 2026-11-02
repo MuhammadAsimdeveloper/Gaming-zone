@@ -4,6 +4,7 @@ import type { GameComponentProps } from '../../types/game';
 import { cn } from '../../lib/cn';
 import { GameButton, GameFrame, GameOverlay, GameStat, Kbd } from '../shared/GameFrame';
 import { useBestScore } from '../shared/useBestScore';
+import { useVisibilityPause } from '../shared/useVisibilityPause';
 
 const WIDTH = 640;
 const HEIGHT = 480;
@@ -207,6 +208,8 @@ export default function BrickBreakerGame({ onStart, onComplete }: GameComponentP
       setPhaseSafe('running');
     }
   }, [setPhaseSafe]);
+
+  useVisibilityPause(togglePause, phase === 'running');
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

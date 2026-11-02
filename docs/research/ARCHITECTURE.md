@@ -1,6 +1,9 @@
 # Technical Architecture
 
-> Planning document for the next 15 games. It describes the existing NeonRift platform, the shared patterns new games must follow, and the engine choice per game. Nothing here has been implemented yet.
+> Architecture record for the existing NeonRift platform and planning guide for the next 15 games.
+> The platform and its 10 games are implemented. The 15 shortlisted games remain designs, except
+> Rift Chess, which has an approved-for-planning implementation plan and no code yet.
+> Verification results below were recorded on 2026-11-02.
 
 ---
 
@@ -15,8 +18,9 @@
 | Icons | Lucide React | No icon fonts |
 | 3D | Three.js 0.187 | Imperative engines mounted and disposed by React |
 | State | React context providers | Toast, Preferences, Catalogue |
-| Persistence | LocalStorage | Preferences, admin session, per-game records |
-| Tests | Vitest 5 | Unit tests for pure logic |
+| Persistence | LocalStorage | Preferences, dormant admin session, per-game records |
+| Tests | Vitest 5 + Playwright 1.64 | Unit tests for pure logic; browser E2E against the production preview |
+| CI | GitHub Actions | Node 20, `npm ci`, typecheck, unit, build, Playwright on Chromium |
 
 ### Route map
 
@@ -144,7 +148,7 @@ Benefits: deterministic behaviour, stable physics, reproducible tests, and a cle
 
 | # | Game | Renderer | Why |
 |---|---|---|---|
-| 1 | Rift Chess | React DOM + SVG/CSS board | No game loop needed; accessible DOM pieces |
+| 1 | Rift Chess | React DOM + SVG/CSS board | No game loop needed; accessible DOM pieces. Plan: [RIFT-CHESS-IMPLEMENTATION-PLAN.md](RIFT-CHESS-IMPLEMENTATION-PLAN.md) |
 | 2 | Neon Rush | Three.js | 3D lanes and trains; reuses existing renderer lifecycle |
 | 3 | Strata | Canvas 2D | Tilemap, lighting and particles are cheap and controllable |
 | 4 | Lawn Protocol | Canvas 2D + DOM HUD | Grid simulation; DOM for seed cards |
@@ -259,9 +263,16 @@ Rules:
 | Pure rules | Vitest | Move legality, wave spawning, damage math, scoring, collision helpers |
 | Simulation | Vitest | Fixed-step determinism, seeded RNG, win/loss transitions |
 | Persistence | Vitest | Save/load, version mismatch, blocked storage |
-| Integration | Manual browser | Mount, pause, restart, fullscreen, route change, unmount |
-| Mobile | Manual device/emulation | Touch controls, safe areas, orientation, performance |
-| Regression | Build + typecheck | `npm run typecheck`, `npm run build` |
+| Consent and ads | Vitest + Playwright | Separate analytics/advertising choices, no scripts before consent, withdrawal |
+| Integration | Playwright | Mount, pause/resume, restart, fullscreen, favorites/recent, route change, 404, error recovery |
+| Game QA | Playwright | All 10 games load and accept input; 2D completion/game-over; 3D mute, pause, restart, canvas size and unmount |
+| Mobile | Playwright emulation + manual device | Touch controls, hidden-tab fairness, 390×844 layouts |
+| Regression | Build + typecheck | `npm run typecheck`, `npm test`, `npm run build`, `npx playwright test` |
+
+Current verified totals: 49 Vitest tests in 5 files and 37 Playwright tests. The production build
+transforms 2,143 modules; the shared Three.js scenery chunk is 561.48 kB raw / 140.49 kB gzip and
+triggers the >500 kB warning. No CSP ships yet. Full 3D race/match completion is not automated and
+has not been manually played to the end.
 
 ### Definition of done per game
 

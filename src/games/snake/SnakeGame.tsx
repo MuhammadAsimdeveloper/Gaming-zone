@@ -12,6 +12,7 @@ import {
 import type { GameComponentProps } from '../../types/game';
 import { GameButton, GameFrame, GameOverlay, GameStat, Kbd } from '../shared/GameFrame';
 import { useBestScore } from '../shared/useBestScore';
+import { useVisibilityPause } from '../shared/useVisibilityPause';
 
 const GRID_SIZE = 20;
 const BASE_TICK = 150;
@@ -152,6 +153,8 @@ export default function SnakeGame({ onStart, onComplete }: GameComponentProps) {
       changePhase('running');
     }
   }, [changePhase]);
+
+  useVisibilityPause(togglePause, phase === 'running');
 
   const resetRun = useCallback(() => {
     snakeRef.current = initialSnake();

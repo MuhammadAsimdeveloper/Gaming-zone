@@ -212,6 +212,32 @@ export default function ReactionTimeGame({ onStart, onComplete }: GameComponentP
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleReact, startRun]);
 
+  useEffect(() => {
+    let suspended = false;
+
+    function handleVisibility() {
+      if (document.visibilityState === 'hidden') {
+        const current = phaseRef.current;
+        if (current === 'idle' || current === 'over') return;
+        suspended = true;
+        if (current === 'waiting' || current === 'go') {
+          clearTimers();
+          waitingRef.current = false;
+          goAtRef.current = null;
+        }
+        return;
+      }
+
+      if (!suspended) return;
+      suspended = false;
+      if (finishedRef.current) return;
+      armRound();
+    }
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, [armRound, clearTimers]);
+
   const handlePanelClick = () => {
     if (phaseRef.current === 'idle' || phaseRef.current === 'over') {
       startRun();

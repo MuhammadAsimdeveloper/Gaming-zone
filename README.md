@@ -13,9 +13,9 @@ A free, instant-play browser gaming portal. Original branding, original games, n
 - Tailwind CSS 4
 - React Router 7
 - Three.js 0.187 for 3D games
-- Vitest 5
+- Vitest 5 + Playwright 1.64
 - LocalStorage for preferences and local records
-- Static hosting target: Cloudflare Pages
+- GitHub Actions CI, static hosting target: Cloudflare Pages
 
 No backend, database, account system or paid service is required.
 
@@ -30,9 +30,35 @@ npm run typecheck  # tsc --noEmit
 npm test           # Vitest unit tests
 npm run build      # typecheck + production build to dist/
 npm run preview    # preview the production build
+npm run test:e2e   # build, then Playwright browser tests against the preview
 ```
 
 Node 20+ is required. The project is developed on Node 24.
+
+Playwright's Chromium is the only browser target in CI. Install it once with
+`npx playwright install chromium` before running `npm run test:e2e` locally.
+
+---
+
+## Verification snapshot (2026-11-02)
+
+| Command | Result |
+|---|---|
+| `npm ci` | Completed; no lockfile changes |
+| `npm run typecheck` | Passed with no output |
+| `npm test` | 49 tests passed in 5 files |
+| `npm run build` | Passed; 2,143 modules transformed; Three.js scenery chunk 561.48 kB raw / 140.49 kB gzip triggers the existing >500 kB warning |
+| `npx playwright test --workers=2` | 37 tests passed in 2.4 minutes |
+
+The browser suite covers the homepage, catalogue, search, category filters, all ten game pages,
+launch/pause/resume/restart, favorites after reload, recently played, fullscreen state, 404,
+mobile navigation, consent behavior, error-boundary recovery, hidden-tab fairness, keyboard and
+touch input, and 2D game completion/game-over. The three 3D games are verified for loading,
+input, pause/resume, restart, mute and route-away cleanup; a complete race or 90-second match is
+not automated. No game is described as manually played beyond what these tests exercised.
+
+CI runs on every push to `main`/`master` and every pull request in
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ---
 
@@ -95,7 +121,7 @@ Configuration is optional and read from Vite environment variables at build time
 | `VITE_SITE_URL` | Canonical site URL | `https://neonrift.pages.dev` |
 | `VITE_CONTACT_EMAIL` | Address shown on the contact page | empty |
 | `VITE_GA_MEASUREMENT_ID` | Analytics ID; analytics stays idle when empty | empty |
-| `VITE_ADMIN_PASSCODE_HASH` | SHA-256 hash for the local dev admin gate | empty |
+| `VITE_ADMIN_PASSCODE_HASH` | Reserved for dormant local admin scaffolding; no admin route ships | empty |
 | `VITE_EXTERNAL_GAME_ORIGINS` | Comma-separated HTTPS origins approved for embedding | empty |
 | `VITE_ADS_ENABLED` | Enables ad slots when exactly `true` | disabled |
 | `VITE_ADSENSE_CLIENT` | AdSense client ID | empty |
@@ -103,7 +129,7 @@ Configuration is optional and read from Vite environment variables at build time
 
 Do not commit `.env` files. The `.gitignore` already excludes them.
 
-**Admin note:** the admin gate is a local convenience feature, not authentication. It does not protect a server, because there is no server. See the roadmap in `docs/research/ROADMAP.md` for the planned honest admin dashboard.
+**Admin note:** no admin route or dashboard is shipped in this build. `src/lib/adminAuth.ts` is dormant scaffolding. If a dashboard is added later it must be described as local-only convenience, never as secure server authentication, because there is no server and a browser passcode cannot protect one. See `docs/research/ROADMAP.md` for the planned honest admin work.
 
 ---
 
@@ -121,15 +147,27 @@ The build is a static site. `public/_redirects` provides the SPA fallback for de
 
 ---
 
+## Next game: Rift Chess
+
+Rift Chess is the first approved shortlist game. It is **not implemented and has no catalogue
+entry yet**. The gated implementation plan, licence checks and milestones are in
+[`docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md`](docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md).
+
+---
+
 ## Limitations
 
 - Progress, favourites and records are stored in this browser only. There is no account or cloud save.
+- Full 3D race/match completion is not covered by automated tests and has not been manually played to the end. Load, controls, pause/resume, restart, mute and cleanup are covered.
 - Clearing site data removes local progress.
-- The admin gate is not real authentication.
-- Ads are disabled by default and no ad scripts are loaded.
+- No admin dashboard is shipped; the admin helper modules are dormant scaffolding and are not authentication.
+- Ads are disabled by default. No ad script loads unless ads are explicitly enabled, configured, and advertising consent is granted.
+- Analytics is disabled by default and loads only after analytics consent is granted.
 - External game embedding is deny-by-default and requires an explicit HTTPS allowlist.
 - The 15 games in the research shortlist are designs, not shipped features.
 - Game records are local; the site does not display invented player counts, ratings or revenue.
+- No Content-Security-Policy ships yet; the optional analytics and ad integrations must be validated against it before one is added.
+- The production build warns about the shared Three.js chunk exceeding 500 kB raw. It is lazy-loaded and compressed to ~140 kB gzip, but further splitting is still an open performance task.
 
 ---
 

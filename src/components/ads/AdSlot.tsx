@@ -1,42 +1,20 @@
 import { useEffect } from 'react';
 import type { AdPlacement } from '../../config/site';
-import { getAdsenseClient, getAdSlotId, isAdSlotConfigured } from '../../lib/ads';
+import {
+  getAdsenseClient,
+  getAdSlotId,
+  isAdSlotConfigured,
+  loadAdsenseScript,
+  pushAd,
+} from '../../lib/ads';
 import { cn } from '../../lib/cn';
+import { useConsent } from '../../lib/useConsent';
 import { useCatalogue } from '../../providers/CatalogueProvider';
 
-declare global {
-  interface Window {
-    adsbygoogle?: unknown[];
-  }
-}
-
-let adsenseLoader: Promise<void> | null = null;
-
-function loadAdsenseScript(): Promise<void> {
-  if (typeof window === 'undefined') return Promise.resolve();
-  if (adsenseLoader) return adsenseLoader;
-
-  adsenseLoader = new Promise((resolve) => {
-    if (document.querySelector('script[data-neonrift-adsense]')) {
-      resolve();
-      return;
-    }
-    const script = document.createElement('script');
-    script.async = true;
-    script.crossOrigin = 'anonymous';
-    script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(getAdsenseClient())}`;
-    script.dataset.neonriftAdsense = 'true';
-    script.onload = () => resolve();
-    script.onerror = () => resolve();
-    document.head.appendChild(script);
-  });
-
-  return adsenseLoader;
-}
-
 export function AdSlot({ placement, className }: { placement: AdPlacement; className?: string }) {
+  const { advertising } = useConsent();
   const { isAdPlacementEnabled } = useCatalogue();
-  const enabled = isAdSlotConfigured(placement) && isAdPlacementEnabled(placement);
+  const enabled = isAdSlotConfigured(placement, advertising) && isAdPlacementEnabled(placement);
 
   useEffect(() => {
     if (!enabled) return;
@@ -44,12 +22,7 @@ export function AdSlot({ placement, className }: { placement: AdPlacement; class
 
     void loadAdsenseScript().then(() => {
       if (cancelled) return;
-      try {
-        window.adsbygoogle = window.adsbygoogle ?? [];
-        window.adsbygoogle.push({});
-      } catch {
-        // AdSense refused the fill; keep the page clean with no placeholder ad.
-      }
+      pushAd();
     });
 
     return () => {
