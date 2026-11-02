@@ -1,0 +1,17 @@
+{
+  "name": "NeonRift — Free Browser Games",
+  "short_name": "NeonRift",
+  "description": "Play free original browser games instantly. No downloads, no account.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050814",
+  "theme_color": "#050814",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

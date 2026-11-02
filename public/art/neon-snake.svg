@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Neon Snake key art">
+  <defs>
+    <linearGradient id="snakeBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071527"/>
+      <stop offset="1" stop-color="#080a1e"/>
+    </linearGradient>
+    <radialGradient id="snakeGlow" cx="0.62" cy="0.45" r="0.5">
+      <stop offset="0" stop-color="#4ade9d" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#4ade9d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="snakeBody" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.55" stop-color="#34d399"/>
+      <stop offset="1" stop-color="#a7f3d0"/>
+    </linearGradient>
+    <pattern id="snakeGrid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" fill="none" stroke="#7dd3fc" stroke-opacity="0.06"/>
+    </pattern>
+    <filter id="snakeBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#snakeBg)"/>
+  <rect width="800" height="500" fill="url(#snakeGrid)"/>
+  <ellipse cx="500" cy="230" rx="340" ry="250" fill="url(#snakeGlow)"/>
+  <path d="M170 350h160v-70h170v-80" fill="none" stroke="url(#snakeBody)" stroke-width="46" stroke-linecap="round" stroke-linejoin="round" filter="url(#snakeBlur)" opacity="0.55"/>
+  <path d="M170 350h160v-70h170v-80" fill="none" stroke="url(#snakeBody)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="170" cy="350" r="15" fill="url(#snakeBody)"/>
+  <g>
+    <circle cx="500" cy="200" r="26" fill="url(#snakeBody)"/>
+    <circle cx="491" cy="192" r="4.5" fill="#03130c"/>
+    <circle cx="509" cy="192" r="4.5" fill="#03130c"/>
+    <path d="M491 211q9 7 18 0" fill="none" stroke="#03130c" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <g>
+    <circle cx="640" cy="160" r="26" fill="#fde047" opacity="0.16"/>
+    <circle cx="640" cy="160" r="11" fill="#fde047"/>
+    <path d="M640 138v-10M640 192v-10M618 160h-10M672 160h-10" stroke="#fde047" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  </g>
+  <g fill="#a7f3d0" opacity="0.5">
+    <circle cx="260" cy="140" r="3"/>
+    <circle cx="694" cy="330" r="2.5"/>
+    <circle cx="380" cy="90" r="2"/>
+    <circle cx="120" cy="250" r="2"/>
+  </g>
+</svg>

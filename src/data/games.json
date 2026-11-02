@@ -1,0 +1,302 @@
+[
+  {
+    "id": "neon-snake",
+    "slug": "neon-snake",
+    "title": "Neon Snake",
+    "tagline": "Grow the glow. Don't bite yourself.",
+    "description": "A glowing twist on the arcade classic. Collect energy orbs, grow your serpent and thread the neon grid without hitting the walls or your own tail.",
+    "category": "arcade",
+    "secondaryCategories": ["action"],
+    "thumbnail": "/art/neon-snake.svg",
+    "accent": "#4ade9d",
+    "type": "internal",
+    "internalKey": "snake",
+    "instructions": [
+      "Steer the serpent with the arrow keys or WASD.",
+      "Collect every glowing orb to grow and add points.",
+      "Hitting a wall or your own tail ends the run.",
+      "The serpent speeds up as your score climbs."
+    ],
+    "controls": [
+      { "label": "Steer", "keys": "Arrow keys / WASD" },
+      { "label": "Pause", "keys": "Space" },
+      { "label": "Mobile", "keys": "Swipe or on-screen pad" }
+    ],
+    "published": true,
+    "createdAt": "2026-10-12T09:00:00.000Z",
+    "featured": true,
+    "popularityRank": 1
+  },
+  {
+    "id": "tic-tac-toe",
+    "slug": "tic-tac-toe",
+    "title": "Tic-Tac-Toe",
+    "tagline": "Three in a row, neon style.",
+    "description": "Classic three-in-a-row on a clean neon board. Face the computer at three difficulty levels or share the device for a local two-player match.",
+    "category": "strategy",
+    "secondaryCategories": ["casual"],
+    "thumbnail": "/art/tic-tac-toe.svg",
+    "accent": "#6ba4ff",
+    "type": "internal",
+    "internalKey": "tic-tac-toe",
+    "instructions": [
+      "Take turns claiming squares on the 3×3 board.",
+      "Line up three of your marks to win the round.",
+      "Choose Easy, Medium or Impossible AI, or play a friend.",
+      "Round scores reset when you start a new match."
+    ],
+    "controls": [
+      { "label": "Place mark", "keys": "Click / tap a square" },
+      { "label": "AI difficulty", "keys": "Selector above the board" },
+      { "label": "Restart", "keys": "New round / Reset match" }
+    ],
+    "published": true,
+    "createdAt": "2026-10-15T10:30:00.000Z",
+    "featured": true,
+    "popularityRank": 3
+  },
+  {
+    "id": "memory-match",
+    "slug": "memory-match",
+    "title": "Memory Match",
+    "tagline": "Flip, match, remember.",
+    "description": "Reveal pairs of glowing icons and clear the board in as few moves as possible. A calm, focused memory challenge you can finish in one coffee break.",
+    "category": "puzzle",
+    "secondaryCategories": ["casual"],
+    "thumbnail": "/art/memory-match.svg",
+    "accent": "#b285ff",
+    "type": "internal",
+    "internalKey": "memory",
+    "instructions": [
+      "Flip two cards per turn to look for matching icons.",
+      "Matched pairs stay face up; mismatches flip back.",
+      "Clear every pair to win, with as few moves as possible.",
+      "Try the quicker 6-pair board or the full 8-pair board."
+    ],
+    "controls": [
+      { "label": "Flip card", "keys": "Click / tap" },
+      { "label": "Difficulty", "keys": "6-pair / 8-pair selector" },
+      { "label": "Restart", "keys": "New game button" }
+    ],
+    "published": true,
+    "createdAt": "2026-10-19T14:00:00.000Z",
+    "featured": true,
+    "popularityRank": 2
+  },
+  {
+    "id": "rock-paper-scissors",
+    "slug": "rock-paper-scissors",
+    "title": "Rock Paper Scissors",
+    "tagline": "Best of five. No excuses.",
+    "description": "A best-of-five showdown against the house. Read the rhythm, pick your throw and take the match with a clean, animated reveal.",
+    "category": "casual",
+    "secondaryCategories": ["strategy"],
+    "thumbnail": "/art/rock-paper-scissors.svg",
+    "accent": "#fbbf24",
+    "type": "internal",
+    "internalKey": "rock-paper-scissors",
+    "instructions": [
+      "Pick rock, paper or scissors each round.",
+      "Rock beats scissors, scissors beats paper, paper beats rock.",
+      "The first player to three round wins takes the match.",
+      "Ties replay the round without changing the score."
+    ],
+    "controls": [
+      { "label": "Throw", "keys": "Click / tap an option" },
+      { "label": "Restart", "keys": "Rematch button" },
+      { "label": "Score", "keys": "First to 3 round wins" }
+    ],
+    "published": true,
+    "createdAt": "2026-10-23T11:15:00.000Z",
+    "featured": false,
+    "popularityRank": 5
+  },
+  {
+    "id": "reaction-time-challenge",
+    "slug": "reaction-time-challenge",
+    "title": "Reaction Time Challenge",
+    "tagline": "Wait for green. Then move.",
+    "description": "Five rounds. Wait for the signal, tap as fast as you can and find out how quick your reflexes really are. False starts cost you milliseconds.",
+    "category": "casual",
+    "secondaryCategories": ["action"],
+    "thumbnail": "/art/reaction-time-challenge.svg",
+    "accent": "#f472b6",
+    "type": "internal",
+    "internalKey": "reaction-time",
+    "instructions": [
+      "Press start, then wait for the panel to turn green.",
+      "Click, tap or press Space the moment it turns green.",
+      "Clicking early adds a 500 ms penalty to that round.",
+      "Five rounds make one run; your best average is saved locally."
+    ],
+    "controls": [
+      { "label": "React", "keys": "Click / tap / Space" },
+      { "label": "Start", "keys": "Start run button" },
+      { "label": "Rounds", "keys": "5 rounds per run" }
+    ],
+    "published": true,
+    "createdAt": "2026-10-27T16:45:00.000Z",
+    "featured": false,
+    "popularityRank": 4
+  },
+  {
+    "id": "rift-breaker",
+    "slug": "rift-breaker",
+    "title": "Rift Breaker",
+    "tagline": "Break every brick in the rift.",
+    "description": "Smash a wall of neon bricks with a bouncing energy ball. Move the paddle, protect your three lives and clear the rift before it clears you.",
+    "category": "arcade",
+    "secondaryCategories": ["action"],
+    "thumbnail": "/art/rift-breaker.svg",
+    "accent": "#38bdf8",
+    "type": "internal",
+    "internalKey": "brick-breaker",
+    "instructions": [
+      "Move the paddle to keep the ball in play.",
+      "Bounce the ball into every brick to clear the rift.",
+      "You have three lives — a missed ball costs one.",
+      "Clearing all bricks wins the run; higher rows score more."
+    ],
+    "controls": [
+      { "label": "Move paddle", "keys": "Arrow keys / A and D" },
+      { "label": "Mouse / touch", "keys": "Move pointer over the board" },
+      { "label": "Pause", "keys": "Space" }
+    ],
+    "published": true,
+    "createdAt": "2026-10-30T08:20:00.000Z",
+    "featured": true,
+    "popularityRank": 6
+  },
+  {
+    "id": "math-sprint",
+    "slug": "math-sprint",
+    "title": "Math Sprint",
+    "tagline": "Sixty seconds of quick math.",
+    "description": "A fast, friendly arithmetic sprint. Solve as many questions as you can in sixty seconds, chain correct answers for a streak bonus and beat your best score.",
+    "category": "educational",
+    "secondaryCategories": ["casual"],
+    "thumbnail": "/art/math-sprint.svg",
+    "accent": "#a3e635",
+    "type": "internal",
+    "internalKey": "math-sprint",
+    "instructions": [
+      "Pick the correct answer from four options.",
+      "Correct answers add time to your streak bonus multiplier.",
+      "A wrong answer resets your streak but not the clock.",
+      "The run lasts 60 seconds — beat your saved high score."
+    ],
+    "controls": [
+      { "label": "Answer", "keys": "Click / tap" },
+      { "label": "Keyboard", "keys": "1 – 4 keys" },
+      { "label": "Start", "keys": "Start button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-01T12:00:00.000Z",
+    "featured": false,
+    "popularityRank": 7
+  },
+  {
+    "id": "neon-apex",
+    "slug": "neon-apex",
+    "title": "Neon Apex",
+    "tagline": "Three laps. Three machines. One city.",
+    "description": "A full 3D arcade racer with three original circuits, three unlockable cars, AI rivals, lap timing and three camera views. Built in WebGL with procedural neon scenery and original vehicle models.",
+    "category": "racing",
+    "secondaryCategories": ["arcade", "action"],
+    "thumbnail": "/art/neon-apex.svg",
+    "accent": "#4c8dff",
+    "type": "internal",
+    "internalKey": "neon-apex",
+    "instructions": [
+      "Choose a circuit, machine and opponent skill level.",
+      "Accelerate with W or the up arrow; brake and reverse with S or the down arrow.",
+      "Steer with A/D or the arrow keys, and hold Space for the handbrake.",
+      "Cross every checkpoint gate and complete three laps before your rivals.",
+      "Win races to unlock the second and third circuits and cars.",
+      "P pauses, C changes camera and M mutes sound."
+    ],
+    "controls": [
+      { "label": "Accelerate", "keys": "W / ArrowUp" },
+      { "label": "Brake / reverse", "keys": "S / ArrowDown" },
+      { "label": "Steer", "keys": "A D / ArrowLeft ArrowRight" },
+      { "label": "Handbrake", "keys": "Space" },
+      { "label": "Camera", "keys": "C" },
+      { "label": "Pause", "keys": "P" },
+      { "label": "Mobile", "keys": "On-screen steering, drift and pedals" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-02T08:00:00.000Z",
+    "featured": true,
+    "popularityRank": 8
+  },
+  {
+    "id": "rift-striker",
+    "slug": "rift-striker",
+    "title": "Rift Striker",
+    "tagline": "Three-a-side under the floodlights.",
+    "description": "A 3D football match with original low-poly athletes, ball physics, passing, charged shooting, pressing, goalkeeper AI and three difficulty levels. Play a two-minute match under a custom neon stadium.",
+    "category": "sports",
+    "secondaryCategories": ["action", "arcade"],
+    "thumbnail": "/art/rift-striker.svg",
+    "accent": "#4ade9d",
+    "type": "internal",
+    "internalKey": "rift-striker",
+    "instructions": [
+      "Move with WASD or the arrow keys and hold Shift to sprint.",
+      "Hold J to charge a shot, then release to strike at goal.",
+      "Press K to pass to the best-placed teammate.",
+      "Press Space to press or tackle the ball carrier.",
+      "Score more goals than Void XI before the two-minute clock expires.",
+      "Tab switches your controlled player, C changes camera and P pauses."
+    ],
+    "controls": [
+      { "label": "Move", "keys": "WASD / Arrow keys" },
+      { "label": "Sprint", "keys": "Shift" },
+      { "label": "Shoot", "keys": "J (hold and release)" },
+      { "label": "Pass", "keys": "K" },
+      { "label": "Press / tackle", "keys": "Space" },
+      { "label": "Switch player", "keys": "Tab" },
+      { "label": "Camera", "keys": "C" },
+      { "label": "Pause", "keys": "P" },
+      { "label": "Mobile", "keys": "On-screen pad plus action buttons" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-02T08:30:00.000Z",
+    "featured": true,
+    "popularityRank": 9
+  },
+  {
+    "id": "neon-city-drive",
+    "slug": "neon-city-drive",
+    "title": "Neon City Drive",
+    "tagline": "Checkpoint runs through a living city grid.",
+    "description": "A compact 3D open-world driving sandbox. Explore a procedural city with roads, intersections, buildings, parks and traffic, chase checkpoint gates against the clock and watch the day-night cycle roll in.",
+    "category": "racing",
+    "secondaryCategories": ["adventure", "casual"],
+    "thumbnail": "/art/neon-city-drive.svg",
+    "accent": "#38e8ff",
+    "type": "internal",
+    "internalKey": "neon-city-drive",
+    "instructions": [
+      "Pick a mission and vehicle, then follow the glowing gate.",
+      "Drive with WASD or the arrow keys and hold Space for the handbrake.",
+      "Reach every checkpoint gate before the mission clock runs out.",
+      "Traffic brakes for you, but collisions cost momentum and count as crashes.",
+      "Staying on the asphalt keeps your top speed; off-road slows the car.",
+      "Complete a mission to unlock the next route. P pauses and C changes camera."
+    ],
+    "controls": [
+      { "label": "Accelerate", "keys": "W / ArrowUp" },
+      { "label": "Brake / reverse", "keys": "S / ArrowDown" },
+      { "label": "Steer", "keys": "A D / ArrowLeft ArrowRight" },
+      { "label": "Handbrake", "keys": "Space" },
+      { "label": "Camera", "keys": "C" },
+      { "label": "Pause", "keys": "P" },
+      { "label": "Mobile", "keys": "On-screen steering, drift and pedals" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-02T09:00:00.000Z",
+    "featured": true,
+    "popularityRank": 10
+  }
+]

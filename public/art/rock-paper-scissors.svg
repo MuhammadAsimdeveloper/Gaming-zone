@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Rock Paper Scissors key art">
+  <defs>
+    <linearGradient id="rpsBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#171026"/>
+      <stop offset="1" stop-color="#0a0f22"/>
+    </linearGradient>
+    <radialGradient id="rpsGlow" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0" stop-color="#fbbf24" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rpsDisc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#241a33"/>
+      <stop offset="1" stop-color="#111634"/>
+    </linearGradient>
+    <linearGradient id="rpsGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fde68a"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="rpsBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9cc0ff"/>
+      <stop offset="1" stop-color="#6ba4ff"/>
+    </linearGradient>
+    <linearGradient id="rpsViolet" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#cbb0ff"/>
+      <stop offset="1" stop-color="#a06bff"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#rpsBg)"/>
+  <ellipse cx="400" cy="250" rx="380" ry="260" fill="url(#rpsGlow)"/>
+  <g>
+    <circle cx="190" cy="250" r="100" fill="url(#rpsDisc)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="2"/>
+    <circle cx="190" cy="250" r="82" fill="none" stroke="#fde68a" stroke-opacity="0.14" stroke-width="1.5" stroke-dasharray="4 8"/>
+    <g transform="translate(190 252)" fill="url(#rpsGold)">
+      <path d="M-40 12L-20 -36L20 -40L42 -2L28 38L-24 40Z"/>
+      <path d="M-20 -15L2 6L30 -20M2 6L-10 34" stroke="#1a1205" stroke-opacity="0.35" stroke-width="3" fill="none"/>
+    </g>
+  </g>
+  <g>
+    <circle cx="400" cy="250" r="100" fill="url(#rpsDisc)" stroke="#6ba4ff" stroke-opacity="0.4" stroke-width="2"/>
+    <circle cx="400" cy="250" r="82" fill="none" stroke="#9cc0ff" stroke-opacity="0.14" stroke-width="1.5" stroke-dasharray="4 8"/>
+    <g transform="translate(400 252)" fill="url(#rpsBlue)">
+      <path d="M-32 -40H18L42 -16V40H-32Z" opacity="0.95"/>
+      <path d="M18 -40v24h24" fill="#0a0f22" opacity="0.35"/>
+      <path d="M-16 -12h36M-16 2h36M-16 16h22" stroke="#0a0f22" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </g>
+  <g>
+    <circle cx="610" cy="250" r="100" fill="url(#rpsDisc)" stroke="#a06bff" stroke-opacity="0.4" stroke-width="2"/>
+    <circle cx="610" cy="250" r="82" fill="none" stroke="#cbb0ff" stroke-opacity="0.14" stroke-width="1.5" stroke-dasharray="4 8"/>
+    <g transform="translate(610 252)" stroke="url(#rpsViolet)" stroke-width="8" stroke-linecap="round" fill="none">
+      <path d="M-34 42L18 -32M34 42L-18 -32"/>
+      <circle cx="-34" cy="42" r="12" fill="#171026"/>
+      <circle cx="34" cy="42" r="12" fill="#171026"/>
+      <circle cx="0" cy="6" r="8" fill="#171026"/>
+    </g>
+  </g>
+  <g fill="#fde68a" opacity="0.55">
+    <circle cx="120" cy="100" r="3"/>
+    <circle cx="690" cy="120" r="2.5"/>
+    <circle cx="700" cy="400" r="2"/>
+    <circle cx="100" cy="410" r="2"/>
+  </g>
+</svg>

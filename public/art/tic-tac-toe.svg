@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Tic-Tac-Toe key art">
+  <defs>
+    <linearGradient id="tttBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1130"/>
+      <stop offset="1" stop-color="#100a26"/>
+    </linearGradient>
+    <radialGradient id="tttGlow" cx="0.5" cy="0.4" r="0.55">
+      <stop offset="0" stop-color="#6ba4ff" stop-opacity="0.24"/>
+      <stop offset="0.6" stop-color="#a06bff" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#a06bff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tttX" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b285ff"/>
+      <stop offset="1" stop-color="#6ba4ff"/>
+    </linearGradient>
+    <filter id="tttBlur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#tttBg)"/>
+  <ellipse cx="400" cy="240" rx="380" ry="260" fill="url(#tttGlow)"/>
+  <g stroke="#6ba4ff" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round">
+    <path d="M350 110v280M450 110v280M260 200h280M260 300h280"/>
+  </g>
+  <g opacity="0.45" filter="url(#tttBlur)">
+    <path d="M275 125l50 50M325 125l-50 50" stroke="url(#tttX)" stroke-width="16" stroke-linecap="round"/>
+    <path d="M375 125l50 50M425 125l-50 50" stroke="url(#tttX)" stroke-width="16" stroke-linecap="round"/>
+    <path d="M475 125l50 50M525 125l-50 50" stroke="url(#tttX)" stroke-width="16" stroke-linecap="round"/>
+  </g>
+  <g stroke="url(#tttX)" stroke-width="11" stroke-linecap="round" fill="none">
+    <path d="M277 127l46 46M323 127l-46 46"/>
+    <path d="M377 127l46 46M423 127l-46 46"/>
+    <path d="M477 127l46 46M523 127l-46 46"/>
+  </g>
+  <g stroke="#6ba4ff" stroke-width="10" fill="none">
+    <circle cx="300" cy="250" r="26"/>
+    <circle cx="400" cy="250" r="26"/>
+  </g>
+  <path d="M268 150h264" stroke="#a7f3d0" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+  <g fill="#cbb0ff" opacity="0.6">
+    <circle cx="180" cy="120" r="3"/>
+    <circle cx="650" cy="370" r="2.5"/>
+    <circle cx="600" cy="100" r="2"/>
+    <circle cx="160" cy="390" r="2"/>
+  </g>
+</svg>
