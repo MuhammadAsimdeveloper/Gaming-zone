@@ -13,18 +13,18 @@ export function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <div className="relative overflow-hidden border-b border-white/[0.06]">
+    <div className="relative overflow-hidden border-b border-line">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(700px 260px at 20% -20%, rgba(76,141,255,0.16), transparent 70%), radial-gradient(500px 220px at 80% 0%, rgba(160,107,255,0.1), transparent 70%)',
+            'radial-gradient(680px 260px at 18% -20%, color-mix(in srgb, var(--nr-brand) 16%, transparent), transparent 70%), radial-gradient(520px 220px at 82% 0%, color-mix(in srgb, var(--nr-accent) 12%, transparent), transparent 70%)',
         }}
       />
       <Container className="relative py-12 sm:py-16">
         {eyebrow ? (
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-electric-400">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand">
             {eyebrow}
           </p>
         ) : null}

@@ -56,14 +56,14 @@ export default function RecentlyPlayedPage() {
       <Container className="py-8 sm:py-10">
         {entries.length > 0 ? (
           <>
-            <ol className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02]">
+            <ol className="overflow-hidden rounded-3xl border border-line bg-raised/60">
               {entries.map(({ game, playedAt }) => (
-                <li key={game.id} className="border-b border-white/[0.06] last:border-b-0">
+                <li key={game.id} className="border-b border-line last:border-b-0">
                   <Link
                     to={`/game/${game.slug}`}
-                    className="group flex items-center gap-4 p-3 transition hover:bg-white/[0.035] sm:p-4"
+                    className="group flex items-center gap-4 p-3 transition hover:bg-sunken sm:p-4"
                   >
-                    <span className="relative aspect-[16/10] w-24 shrink-0 overflow-hidden rounded-xl border border-white/10 sm:w-32">
+                    <span className="relative aspect-[16/10] w-24 shrink-0 overflow-hidden rounded-xl border border-line sm:w-32">
                       <GameThumbnail game={game} />
                     </span>
                     <span className="min-w-0 flex-1">
@@ -73,18 +73,18 @@ export default function RecentlyPlayedPage() {
                       <span className="mt-0.5 block truncate text-xs text-muted">
                         {getCategory(game.category).name} · {game.tagline}
                       </span>
-                      <span className="mt-1.5 block text-[11px] text-muted/60">
+                      <span className="mt-1.5 block text-[11px] text-muted">
                         Played {formatRelativeTime(playedAt)}
                       </span>
                     </span>
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-ink transition group-hover:border-electric-400/40 group-hover:bg-electric-500/15 group-hover:text-electric-200">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-raised text-ink transition group-hover:border-brand/40 group-hover:bg-brand/10 group-hover:text-brand">
                       <Play className="h-4 w-4 translate-x-[1px] fill-current" aria-hidden="true" />
                     </span>
                   </Link>
                 </li>
               ))}
             </ol>
-            <p className="mt-8 text-xs leading-5 text-muted/60">
+            <p className="mt-8 text-xs leading-5 text-muted">
               History is stored locally in this browser and capped at the last 24 games. Clearing
               site data removes it.
             </p>

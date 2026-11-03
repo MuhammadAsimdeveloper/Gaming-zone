@@ -40,7 +40,7 @@ export default function FavoritesPage() {
         {games.length > 0 ? (
           <>
             <GameGrid games={games} />
-            <p className="mt-8 text-xs leading-5 text-muted/60">
+            <p className="mt-8 text-xs leading-5 text-muted">
               Favorites live in this browser's local storage. Clearing site data or switching devices
               starts a fresh list.
             </p>

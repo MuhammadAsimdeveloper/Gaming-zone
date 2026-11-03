@@ -2,17 +2,24 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { Link, type LinkProps } from 'react-router-dom';
 import { cn } from '../../lib/cn';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'outline' | 'danger';
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'ghost'
+  | 'outline'
+  | 'danger'
+  | 'inverse';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-gradient-to-r from-electric-500 to-plasma-500 text-white shadow-[0_10px_34px_-12px_rgba(76,141,255,0.75)] ring-1 ring-white/15 hover:brightness-110',
+    'bg-ink text-surface shadow-[4px_4px_0_0_rgba(20,22,28,0.22)] hover:bg-brand hover:text-white night:bg-gradient-to-r night:from-electric-500 night:to-plasma-500 night:text-night-950 night:hover:text-night-950 night:shadow-[0_10px_34px_-12px_rgba(76,141,255,0.75)] night:ring-1 night:ring-white/15',
   secondary:
-    'border border-white/10 bg-white/[0.055] text-ink hover:border-white/20 hover:bg-white/[0.09]',
-  ghost: 'text-muted hover:bg-white/[0.06] hover:text-ink',
-  outline: 'border border-electric-500/40 bg-electric-500/5 text-electric-300 hover:bg-electric-500/12',
+    'border border-line bg-raised text-ink hover:border-ink/30 hover:bg-sunken',
+  ghost: 'text-muted hover:bg-sunken hover:text-ink',
+  outline: 'border border-brand/40 bg-brand/5 text-brand hover:bg-brand/10',
   danger: 'border border-coral/30 bg-coral/10 text-coral hover:bg-coral/20',
+  inverse: 'bg-surface text-ink hover:bg-brand hover:text-surface',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {

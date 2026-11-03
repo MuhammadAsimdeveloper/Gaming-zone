@@ -4,11 +4,11 @@ import { cn } from '../../lib/cn';
 type Tone = 'neutral' | 'electric' | 'plasma' | 'mint' | 'amber' | 'coral';
 
 const toneClasses: Record<Tone, string> = {
-  neutral: 'border-white/10 bg-white/[0.07] text-muted',
-  electric: 'border-electric-500/30 bg-electric-500/10 text-electric-300',
+  neutral: 'border-line bg-raised text-muted',
+  electric: 'border-brand/30 bg-brand/10 text-brand',
   plasma: 'border-plasma-500/30 bg-plasma-500/10 text-plasma-300',
   mint: 'border-mint/25 bg-mint/10 text-mint',
-  amber: 'border-amber-400/25 bg-amber-400/10 text-amber-300',
+  amber: 'border-warning/25 bg-warning/10 text-warning',
   coral: 'border-coral/25 bg-coral/10 text-coral',
 };
 

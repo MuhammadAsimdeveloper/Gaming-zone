@@ -13,7 +13,7 @@ export function MobileTabBar() {
   return (
     <nav
       aria-label="Mobile quick navigation"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-white/[0.07] bg-night-950/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
     >
       <div className="grid grid-cols-4">
         {tabs.map((tab) => (
@@ -23,14 +23,14 @@ export function MobileTabBar() {
             end={tab.end}
             className={({ isActive }) =>
               cn(
-                'flex flex-col items-center gap-1 py-2.5 text-[10px] font-medium transition',
-                isActive ? 'text-electric-300' : 'text-muted',
+                'mx-1 my-1 flex flex-col items-center gap-1 rounded-xl py-2 text-[10px] font-medium transition',
+                isActive ? 'bg-ink text-surface' : 'text-muted',
               )
             }
           >
             {({ isActive }) => (
               <>
-                <tab.icon className={cn('h-5 w-5', isActive && 'drop-shadow-[0_0_8px_rgba(76,141,255,0.6)]')} aria-hidden="true" />
+                <tab.icon className={cn('h-5 w-5', isActive && 'scale-105')} aria-hidden="true" />
                 {tab.label}
               </>
             )}

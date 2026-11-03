@@ -38,7 +38,7 @@ interface ChoiceProps {
 
 function ConsentChoice({ title, description, onAllow, onDecline }: ChoiceProps) {
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-3 rounded-xl border border-line bg-sunken/60 p-3 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <p className="text-sm font-medium text-ink">{title}</p>
         <p className="mt-0.5 text-xs leading-5 text-muted">{description}</p>
@@ -76,7 +76,7 @@ export function ConsentBanner() {
     <div className="fixed inset-x-0 bottom-0 z-[80] px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] md:pb-6">
       <section
         aria-label="Privacy choices"
-        className="mx-auto w-full max-w-3xl rounded-2xl border border-white/12 bg-night-850/95 p-4 shadow-2xl shadow-black/60 backdrop-blur-xl"
+        className="mx-auto w-full max-w-3xl rounded-2xl border border-line bg-raised/95 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl night:shadow-black/60"
       >
         <div className="flex items-start gap-3">
           <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-mint/20 bg-mint/10 text-mint">
@@ -117,7 +117,7 @@ export function ConsentBanner() {
           </button>
           <Link
             to="/privacy"
-            className="text-xs font-medium text-electric-300 underline underline-offset-2"
+            className="text-xs font-medium text-brand underline underline-offset-2"
           >
             Read the privacy policy
           </Link>

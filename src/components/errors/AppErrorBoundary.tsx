@@ -37,13 +37,13 @@ export class AppErrorBoundary extends Component<Props, State> {
     return (
       <div
         role="alert"
-        className="grid min-h-dvh place-items-center bg-night-950 px-4 py-12 text-ink"
+        className="grid min-h-dvh place-items-center bg-surface px-4 py-12 text-ink"
       >
-        <div className="w-full max-w-lg rounded-3xl border border-white/10 bg-night-900 p-6 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.9)]">
+        <div className="w-full max-w-lg rounded-3xl surface-card p-6">
           <span className="grid h-12 w-12 place-items-center rounded-2xl border border-coral/25 bg-coral/10 text-coral">
             <TriangleAlert className="h-5 w-5" aria-hidden="true" />
           </span>
-          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-muted/70">
+          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-muted">
             NeonRift
           </p>
           <h1 className="mt-1 font-display text-2xl font-semibold text-ink">Something went wrong</h1>
@@ -66,18 +66,18 @@ export class AppErrorBoundary extends Component<Props, State> {
 
           <a
             href="/"
-            className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-electric-300 underline underline-offset-2"
+            className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-brand underline underline-offset-2"
           >
             <Home className="h-3.5 w-3.5" aria-hidden="true" />
             Go to the home page
           </a>
 
           {import.meta.env.DEV ? (
-            <details className="mt-5 rounded-xl border border-white/10 bg-black/25 p-3">
+            <details className="mt-5 rounded-xl border border-line bg-sunken p-3">
               <summary className="cursor-pointer text-xs font-medium text-muted">
                 Developer diagnostics
               </summary>
-              <pre className="mt-2 max-h-64 overflow-auto whitespace-pre-wrap break-words text-[11px] leading-5 text-muted/80">
+              <pre className="mt-2 max-h-64 overflow-auto whitespace-pre-wrap break-words text-[11px] leading-5 text-muted">
                 {this.state.error.message}
                 {'\n\n'}
                 {this.state.error.stack ?? 'No stack trace available.'}

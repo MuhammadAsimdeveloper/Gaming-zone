@@ -30,7 +30,7 @@ export class GameErrorBoundary extends Component<Props, State> {
   render(): ReactNode {
     if (this.state.error) {
       return (
-        <div className="grid min-h-[420px] place-items-center rounded-3xl border border-white/10 bg-night-900 p-6">
+        <div className="grid min-h-[420px] place-items-center rounded-3xl border border-line bg-raised p-6">
           <div className="max-w-md text-center">
             <span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl border border-coral/25 bg-coral/10 text-coral">
               <TriangleAlert className="h-5 w-5" aria-hidden="true" />
@@ -40,7 +40,7 @@ export class GameErrorBoundary extends Component<Props, State> {
               The game stopped unexpectedly. Your saved scores were not affected. Try restarting,
               or use another browser if the problem repeats.
             </p>
-            <p className="mt-2 break-words text-[11px] text-muted/60">{this.state.error.message}</p>
+            <p className="mt-2 break-words text-[11px] text-muted">{this.state.error.message}</p>
             <Button className="mt-5" onClick={this.reset}>
               Restart game
             </Button>

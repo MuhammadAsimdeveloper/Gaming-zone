@@ -61,13 +61,13 @@ export default function ContactPage() {
             </p>
 
             {CONTACT_EMAIL ? (
-              <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <div className="mt-6 rounded-2xl border border-line bg-raised p-5">
                 <div className="flex items-center gap-3">
-                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-electric-500/12 text-electric-300">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand/10 text-brand">
                     <Mail className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-xs uppercase tracking-[0.16em] text-muted/60">Email</p>
+                    <p className="text-xs uppercase tracking-[0.16em] text-muted">Email</p>
                     <p className="truncate text-sm font-medium text-ink">{CONTACT_EMAIL}</p>
                   </div>
                 </div>
@@ -87,11 +87,11 @@ export default function ContactPage() {
                 </div>
               </div>
             ) : (
-              <div className="mt-6 rounded-2xl border border-amber-400/20 bg-amber-400/[0.06] p-5 text-sm leading-6 text-amber-100/80">
-                <p className="font-medium text-amber-100">Contact email not configured</p>
+              <div className="mt-6 rounded-2xl border border-warning/25 bg-warning/10 p-5 text-sm leading-6 text-warning">
+                <p className="font-medium">Contact email not configured</p>
                 <p className="mt-2">
                   This build has no public contact address. Set{' '}
-                  <code className="rounded bg-black/30 px-1.5 py-0.5 text-[12px]">
+                  <code className="rounded bg-sunken px-1.5 py-0.5 text-[12px]">
                     VITE_CONTACT_EMAIL
                   </code>{' '}
                   in your environment and rebuild. The form is hidden deliberately rather than
@@ -102,7 +102,7 @@ export default function ContactPage() {
 
             <div className="mt-8 space-y-4">
               {topics.map((topic) => (
-                <div key={topic.title} className="rounded-2xl border border-white/[0.07] p-4">
+                <div key={topic.title} className="rounded-2xl border border-line bg-raised p-4">
                   <h3 className="flex items-center gap-2 text-sm font-semibold text-ink">
                     <MessageSquare className="h-4 w-4 text-plasma-300" aria-hidden="true" />
                     {topic.title}
@@ -113,7 +113,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.05] to-transparent p-6 sm:p-8">
+          <div className="surface-card rounded-3xl p-6 sm:p-8">
             <h2 className="font-display text-xl font-semibold text-ink">What to include</h2>
             <p className="mt-3 text-sm leading-7 text-muted">
               Clear, complete messages get faster answers. There is no ticket queue and no chatbot
@@ -150,7 +150,7 @@ export default function ContactPage() {
                 </span>
               </li>
             </ul>
-            <p className="mt-8 rounded-2xl border border-white/[0.07] bg-white/[0.03] p-4 text-xs leading-6 text-muted">
+            <p className="mt-8 rounded-2xl border border-line bg-raised/60 p-4 text-xs leading-6 text-muted">
               We do not offer an embedded contact form because this is a static site. A form that
               silently fails or pretends to send mail would be worse than an honest mail link.
             </p>

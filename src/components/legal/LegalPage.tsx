@@ -23,9 +23,9 @@ export function LegalPage({
       <PageHeader eyebrow="Legal" title={title} description={description} />
       <Container className="py-10 sm:py-12">
         <div className="mx-auto max-w-3xl">
-          <p className="text-xs text-muted/70">Last updated {updated}</p>
+          <p className="text-xs text-muted">Last updated {updated}</p>
           <div className="mt-8 space-y-10 text-sm leading-7 text-muted">{children}</div>
-          <div className="mt-12 flex gap-3 rounded-2xl border border-amber-400/20 bg-amber-400/[0.06] p-5 text-sm leading-6 text-amber-100/80">
+          <div className="mt-12 flex gap-3 rounded-2xl border border-warning/25 bg-warning/10 p-5 text-sm leading-6 text-warning">
             <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
             <p>
               This document is a practical starting point for an independent project, not legal

@@ -47,11 +47,27 @@ test.describe('catalogue and navigation', () => {
     await page.goto('/');
 
     const search = page.getByRole('search').filter({ has: page.locator('#header-search') });
-    await search.getByRole('searchbox').fill('neon apex');
-    await search.getByRole('searchbox').press('Enter');
+    await search.getByRole('combobox').fill('neon apex');
+    await search.getByRole('combobox').press('Enter');
 
     await expect(page).toHaveURL(/\/games\?q=neon(%20|\+)apex/);
     await expect(page.getByRole('link', { name: /Neon Apex/ }).first()).toBeVisible();
+    expectNoErrors(errors);
+  });
+
+  test('search suggestions are keyboard navigable', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto('/');
+
+    const search = page.getByRole('search').filter({ has: page.locator('#header-search') });
+    const combobox = search.getByRole('combobox');
+    await combobox.fill('neon');
+    await combobox.press('ArrowDown');
+
+    await expect(search.getByRole('option').first()).toHaveAttribute('aria-selected', 'true');
+    await combobox.press('Enter');
+
+    await expect(page).toHaveURL(/\/game\/neon-(apex|city-drive|snake)/);
     expectNoErrors(errors);
   });
 

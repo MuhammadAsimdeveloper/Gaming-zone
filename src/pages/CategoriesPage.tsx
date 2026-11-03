@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { CategoryIcon } from '../components/category/CategoryIcon';
 import { Seo } from '../components/seo/Seo';
@@ -38,18 +39,16 @@ export default function CategoriesPage() {
               <Link
                 key={category.id}
                 to={`/category/${category.id}`}
-                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.025] p-6 transition duration-200 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.045]"
+                className="accent-tile group relative overflow-hidden rounded-3xl p-6 transition duration-200 hover:-translate-y-0.5"
+                style={{ '--chip': category.accent } as CSSProperties}
               >
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full blur-2xl transition-opacity duration-300 group-hover:opacity-100"
+                  className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full blur-2xl opacity-40 transition-opacity duration-300 group-hover:opacity-70"
                   style={{ backgroundColor: category.glow }}
                 />
                 <div className="relative flex items-start justify-between">
-                  <span
-                    className="grid h-12 w-12 place-items-center rounded-2xl border border-white/10"
-                    style={{ backgroundColor: `${category.accent}1f`, color: category.accent }}
-                  >
+                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-ink text-surface">
                     <CategoryIcon icon={category.icon} className="h-5 w-5" />
                   </span>
                   <Badge tone={count > 0 ? 'electric' : 'neutral'}>
@@ -60,7 +59,7 @@ export default function CategoriesPage() {
                   {category.name}
                 </h2>
                 <p className="relative mt-2 text-sm leading-6 text-muted">{category.description}</p>
-                <span className="relative mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-muted transition group-hover:text-electric-300">
+                <span className="relative mt-5 inline-flex min-h-6 items-center gap-1.5 text-xs font-medium text-ink-soft transition group-hover:text-brand">
                   {count > 0 ? 'View category' : 'Nothing published yet'}
                   <ArrowRight
                     className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
@@ -72,7 +71,7 @@ export default function CategoriesPage() {
           })}
         </div>
 
-        <p className="mt-6 text-xs leading-5 text-muted/60">
+        <p className="mt-6 text-xs leading-5 text-muted">
           The multiplayer category stays hidden until a genuinely multiplayer game is published.
         </p>
       </Container>

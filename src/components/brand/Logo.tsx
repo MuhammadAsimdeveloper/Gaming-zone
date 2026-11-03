@@ -11,12 +11,12 @@ export function Logo({ className }: { className?: string }) {
       aria-label="NeonRift home"
       className={cn('group inline-flex items-center gap-2.5 rounded-xl', className)}
     >
-      <span className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-xl shadow-lg shadow-electric-500/25 ring-1 ring-white/15 transition-transform duration-300 group-hover:scale-105">
+      <span className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-xl shadow-[3px_3px_0_0_rgba(20,22,28,0.25)] ring-1 ring-ink/15 transition-transform duration-300 group-hover:scale-105 night:shadow-none">
         <svg viewBox="0 0 64 64" className="absolute inset-0 h-full w-full" aria-hidden="true">
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#4c8dff" />
-              <stop offset="1" stopColor="#a06bff" />
+              <stop offset="0" stopColor="var(--nr-brand)" />
+              <stop offset="1" stopColor="var(--nr-accent)" />
             </linearGradient>
           </defs>
           <rect width="64" height="64" fill={`url(#${gradientId})`} />

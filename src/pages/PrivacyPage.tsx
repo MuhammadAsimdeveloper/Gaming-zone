@@ -108,7 +108,7 @@ export default function PrivacyPage() {
           personalisation, and does not collect names, emails or precise location.
         </p>
         {analyticsConfigured ? (
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+          <div className="rounded-2xl border border-line bg-raised p-5">
             <p className="text-sm font-medium text-ink">Your analytics choice</p>
             <p className="mt-1 text-sm text-muted">
               Current status:{' '}
@@ -141,14 +141,14 @@ export default function PrivacyPage() {
                 Clear choice
               </Button>
             </div>
-            <p className="mt-3 text-xs text-muted/70">
+            <p className="mt-3 text-xs text-muted">
               Measurement ID configured: <code className="text-[11px]">{GA_MEASUREMENT_ID}</code>.
               Clearing your choice removes the analytics script from this page and stops future
               events. A reload is required to clear provider cookies that were already set.
             </p>
           </div>
         ) : (
-          <p className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4 text-sm">
+          <p className="rounded-2xl border border-line bg-raised p-4 text-sm">
             No analytics measurement ID is configured in this build, so no analytics script is
             loaded at all.
           </p>
@@ -163,7 +163,7 @@ export default function PrivacyPage() {
           place ads over game controls, disguise ads as game content or trigger accidental clicks.
         </p>
         {advertisingConfigured ? (
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+          <div className="rounded-2xl border border-line bg-raised p-5">
             <p className="text-sm font-medium text-ink">Your advertising choice</p>
             <p className="mt-1 text-sm text-muted">
               Current status:{' '}
@@ -196,13 +196,13 @@ export default function PrivacyPage() {
                 Clear choice
               </Button>
             </div>
-            <p className="mt-3 text-xs text-muted/70">
+            <p className="mt-3 text-xs text-muted">
               Withdrawing removes ad slots and stops new ad requests. A reload is required to remove
               Google scripts and cookies that were already loaded.
             </p>
           </div>
         ) : (
-          <p className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4 text-sm">
+          <p className="rounded-2xl border border-line bg-raised p-4 text-sm">
             No ad client is configured in this build, so no ad script or ad request is made even if
             advertising is enabled in the codebase.
           </p>

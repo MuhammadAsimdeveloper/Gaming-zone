@@ -35,7 +35,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-20 border-t border-white/[0.07] bg-night-950/60">
+    <footer className="mt-20 border-t border-line bg-raised/60">
       <Container className="py-14">
         <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
@@ -44,7 +44,7 @@ export function Footer() {
               Original browser games built to be played the second you land. No downloads, no
               account, no waiting.
             </p>
-            <p className="mt-4 text-xs text-muted/60">100% free · No account required</p>
+            <p className="mt-4 text-xs text-muted">100% free · No account required</p>
           </div>
 
           {columns.map((column) => (
@@ -57,7 +57,7 @@ export function Footer() {
                   <li key={link.to}>
                     <Link
                       to={link.to}
-                      className="text-sm text-muted transition hover:text-ink"
+                      className="inline-flex min-h-6 items-center text-sm text-muted transition hover:text-ink"
                     >
                       {link.label}
                     </Link>
@@ -68,11 +68,11 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/[0.07] pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-muted/70">
+        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-muted">
             © {year} NeonRift. Original games, built for the browser.
           </p>
-          <p className="text-xs text-muted/50">
+          <p className="text-xs text-muted">
             {ADS_ENABLED
               ? 'Ads may be shown to keep every game free.'
               : 'No ads are served until advertising is configured.'}

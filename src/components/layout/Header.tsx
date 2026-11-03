@@ -22,7 +22,7 @@ const secondaryNav = [
 ];
 
 const iconLinkClasses =
-  'relative grid h-10 w-10 place-items-center rounded-full text-muted transition hover:bg-white/[0.06] hover:text-ink';
+  'relative grid h-10 w-10 place-items-center rounded-full text-muted transition hover:bg-sunken hover:text-ink';
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -45,7 +45,7 @@ export function Header() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-night-950/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-line bg-surface/85 backdrop-blur-xl">
       <Container className="flex h-16 items-center gap-3 sm:h-[72px]">
         <Logo />
 
@@ -57,9 +57,7 @@ export function Header() {
               className={({ isActive }) =>
                 cn(
                   'rounded-full px-3.5 py-2 text-sm font-medium transition',
-                  isActive
-                    ? 'bg-white/[0.07] text-ink'
-                    : 'text-muted hover:bg-white/[0.04] hover:text-ink',
+                  isActive ? 'bg-ink text-surface' : 'text-muted hover:bg-sunken hover:text-ink',
                 )
               }
             >
@@ -90,7 +88,7 @@ export function Header() {
           <Link to="/favorites" className={iconLinkClasses} aria-label={`Favorites (${favorites.length})`}>
             <Heart className="h-5 w-5" aria-hidden="true" />
             {favorites.length > 0 ? (
-              <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-electric-500 px-1 text-[10px] font-bold text-white">
+              <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-brand px-1 text-[10px] font-bold text-surface">
                 {favorites.length > 9 ? '9+' : favorites.length}
               </span>
             ) : null}
@@ -122,13 +120,13 @@ export function Header() {
       </Container>
 
       {searchOpen ? (
-        <div className="border-t border-white/[0.07] px-4 py-3 md:hidden">
+        <div className="border-t border-line px-4 py-3 md:hidden">
           <SearchBar id="mobile-search" onSubmitted={() => setSearchOpen(false)} />
         </div>
       ) : null}
 
       {mobileOpen ? (
-        <div id="mobile-nav" className="border-t border-white/[0.07] bg-night-900/98 lg:hidden">
+        <div id="mobile-nav" className="border-t border-line bg-raised lg:hidden">
           <Container className="py-4">
             <nav aria-label="Mobile" className="grid grid-cols-2 gap-2">
               {[...primaryNav, ...secondaryNav].map((item) => (
@@ -138,9 +136,7 @@ export function Header() {
                   className={({ isActive }) =>
                     cn(
                       'rounded-xl px-3.5 py-3 text-sm font-medium transition',
-                      isActive
-                        ? 'bg-electric-500/10 text-electric-300'
-                        : 'text-muted hover:bg-white/[0.05] hover:text-ink',
+                      isActive ? 'bg-ink text-surface' : 'text-muted hover:bg-sunken hover:text-ink',
                     )
                   }
                 >

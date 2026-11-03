@@ -40,7 +40,7 @@ import NotFoundPage from './NotFoundPage';
 
 function PlayerSkeleton({ label }: { label: string }) {
   return (
-    <div className="grid min-h-[440px] place-items-center rounded-3xl border border-white/10 bg-night-900">
+    <div className="grid min-h-[440px] place-items-center rounded-3xl border border-line bg-night-900">
       <div className="text-center">
         <Loader2 className="mx-auto h-7 w-7 animate-spin text-electric-400" aria-hidden="true" />
         <p className="mt-3 text-sm font-medium text-ink">Loading {label}</p>
@@ -55,7 +55,7 @@ function iconButtonClasses(active = false): string {
     'grid h-10 w-10 place-items-center rounded-full border transition',
     active
       ? 'border-coral/40 bg-coral/10 text-coral'
-      : 'border-white/10 bg-white/[0.04] text-muted hover:border-white/20 hover:text-ink',
+      : 'border-line bg-raised text-muted hover:border-ink/25 hover:text-ink',
   );
 }
 
@@ -293,7 +293,7 @@ export default function GamePage() {
             <div
               ref={stageRef}
               className={cn(
-                'relative overflow-hidden rounded-3xl border border-white/10 bg-night-950 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.9)]',
+                'relative overflow-hidden rounded-3xl border border-line bg-night-950 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.9)]',
                 isFullscreen && 'rounded-none border-0',
               )}
             >
@@ -348,7 +348,7 @@ export default function GamePage() {
                           <Play className="h-4 w-4 fill-current" aria-hidden="true" />
                           Launch game
                         </Button>
-                        <p className="mt-3 text-[11px] text-muted/70">
+                        <p className="mt-3 text-[11px] text-muted">
                           External host: {new URL(route.url).origin}
                         </p>
                       </div>
@@ -366,7 +366,7 @@ export default function GamePage() {
                       <p className="mt-2 text-sm leading-6 text-muted">
                         {route?.ok === false ? route.reason : 'The game source is not configured.'}
                       </p>
-                      <p className="mt-3 text-xs text-muted/70">
+                      <p className="mt-3 text-xs text-muted">
                         For safety, NeonRift never executes an external URL that is not on the
                         approved origin list.
                       </p>
@@ -392,7 +392,7 @@ export default function GamePage() {
             </div>
 
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
-              <section className="rounded-3xl border border-white/[0.08] bg-white/[0.025] p-5">
+              <section className="rounded-3xl border border-line bg-raised/60 p-5">
                 <h2 className="flex items-center gap-2 font-display text-base font-semibold text-ink">
                   <Info className="h-4 w-4 text-electric-300" aria-hidden="true" />
                   How to play
@@ -400,7 +400,7 @@ export default function GamePage() {
                 <ol className="mt-3 space-y-2.5 text-sm leading-6 text-muted">
                   {game.instructions.map((instruction, index) => (
                     <li key={instruction} className="flex gap-2.5">
-                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white/[0.06] text-[10px] font-semibold text-ink">
+                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-sunken text-[10px] font-semibold text-ink">
                         {index + 1}
                       </span>
                       <span>{instruction}</span>
@@ -409,7 +409,7 @@ export default function GamePage() {
                 </ol>
               </section>
 
-              <section className="rounded-3xl border border-white/[0.08] bg-white/[0.025] p-5">
+              <section className="rounded-3xl border border-line bg-raised/60 p-5">
                 <h2 className="flex items-center gap-2 font-display text-base font-semibold text-ink">
                   <Keyboard className="h-4 w-4 text-plasma-300" aria-hidden="true" />
                   Controls
@@ -418,7 +418,7 @@ export default function GamePage() {
                   {game.controls.map((control) => (
                     <div key={control.label} className="flex items-start justify-between gap-3">
                       <dt className="text-muted">{control.label}</dt>
-                      <dd className="rounded-lg border border-white/[0.08] bg-night-950/60 px-2 py-0.5 text-right text-xs font-medium text-ink">
+                      <dd className="rounded-lg border border-line bg-sunken px-2 py-0.5 text-right text-xs font-medium text-ink">
                         {control.keys}
                       </dd>
                     </div>
@@ -427,10 +427,10 @@ export default function GamePage() {
               </section>
             </div>
 
-            <section className="mt-6 rounded-3xl border border-white/[0.08] bg-white/[0.025] p-5">
+            <section className="mt-6 rounded-3xl border border-line bg-raised/60 p-5">
               <h2 className="font-display text-base font-semibold text-ink">About this game</h2>
               <p className="mt-2 text-sm leading-7 text-muted">{game.description}</p>
-              <p className="mt-3 flex items-center gap-1.5 text-xs text-muted/70">
+              <p className="mt-3 flex items-center gap-1.5 text-xs text-muted">
                 <Check className="h-3.5 w-3.5 text-mint" aria-hidden="true" />
                 {game.type === 'internal'
                   ? 'Original code and art built for NeonRift. No third-party assets.'
@@ -444,15 +444,15 @@ export default function GamePage() {
           </div>
 
           <aside className="space-y-6">
-            <div className="rounded-3xl border border-white/[0.08] bg-white/[0.025] p-4">
-              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10">
+            <div className="rounded-3xl border border-line bg-raised/60 p-4">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-line">
                 <GameThumbnail game={game} priority />
               </div>
               <dl className="mt-4 space-y-2 text-xs">
                 <div className="flex justify-between gap-3">
                   <dt className="text-muted">Category</dt>
                   <dd className="text-right font-medium text-ink">
-                    <Link to={`/category/${game.category}`} className="hover:text-electric-300">
+                    <Link to={`/category/${game.category}`} className="hover:text-brand">
                       {category?.name ?? game.category}
                     </Link>
                   </dd>
@@ -484,9 +484,9 @@ export default function GamePage() {
                     <Link
                       key={entry.id}
                       to={`/game/${entry.slug}`}
-                      className="group flex gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-2.5 transition hover:border-white/20 hover:bg-white/[0.05]"
+                      className="group flex gap-3 rounded-2xl border border-line bg-raised/60 p-2.5 transition hover:border-ink/25 hover:bg-sunken"
                     >
-                      <div className="relative aspect-[16/10] w-28 shrink-0 overflow-hidden rounded-xl border border-white/10">
+                      <div className="relative aspect-[16/10] w-28 shrink-0 overflow-hidden rounded-xl border border-line">
                         <GameThumbnail game={entry} />
                       </div>
                       <div className="min-w-0 self-center">
@@ -494,7 +494,7 @@ export default function GamePage() {
                         <p className="mt-0.5 line-clamp-2 text-[11px] leading-5 text-muted">
                           {entry.tagline}
                         </p>
-                        <span className="mt-1 inline-flex items-center gap-1 text-[11px] text-electric-300">
+                        <span className="mt-1 inline-flex items-center gap-1 text-[11px] text-brand">
                           <Play className="h-3 w-3 fill-current" aria-hidden="true" /> Play
                         </span>
                       </div>

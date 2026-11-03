@@ -52,14 +52,14 @@ export function GameToolbar({
             onChange={(event) => onQueryChange(event.target.value)}
             placeholder={placeholder}
             aria-label="Search games"
-            className="h-11 w-full rounded-full border border-white/10 bg-white/[0.04] pl-11 pr-10 text-sm text-ink placeholder:text-muted/70 transition focus:border-electric-400/50 focus:bg-night-900 focus:outline-none focus:ring-2 focus:ring-electric-500/20"
+            className="field h-11 w-full rounded-full pl-11 pr-10 text-sm focus:outline-none"
           />
           {query ? (
             <button
               type="button"
               onClick={() => onQueryChange('')}
               aria-label="Clear search"
-              className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-muted transition hover:bg-white/10 hover:text-ink"
+              className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-muted transition hover:bg-sunken hover:text-ink"
             >
               <X className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
@@ -74,7 +74,7 @@ export function GameToolbar({
             id="game-sort"
             value={sort}
             onChange={(event) => onSortChange(event.target.value as GameSort)}
-            className="h-11 w-full appearance-none rounded-full border border-white/10 bg-night-800 pl-4 pr-10 text-sm font-medium text-ink transition hover:border-white/20 focus:border-electric-400/50 focus:outline-none sm:w-auto"
+            className="h-11 w-full appearance-none rounded-full border border-line-strong bg-raised pl-4 pr-10 text-sm font-medium text-ink transition hover:border-ink/40 focus:outline-none sm:w-auto"
           >
             {(Object.keys(sortLabels) as GameSort[]).map((value) => (
               <option key={value} value={value}>
@@ -101,10 +101,8 @@ export function GameToolbar({
               onClick={() => onCategoryChange('all')}
               aria-pressed={activeCategory === 'all'}
               className={cn(
-                'shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-medium transition',
-                activeCategory === 'all'
-                  ? 'border-electric-500/40 bg-electric-500/12 text-electric-200'
-                  : 'border-white/10 bg-white/[0.03] text-muted hover:border-white/20 hover:text-ink',
+                'chip shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium',
+                activeCategory === 'all' ? 'chip-active' : '',
               )}
             >
               All
@@ -116,15 +114,13 @@ export function GameToolbar({
                 onClick={() => onCategoryChange(category.id)}
                 aria-pressed={activeCategory === category.id}
                 className={cn(
-                  'shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-medium transition',
-                  activeCategory === category.id
-                    ? 'border-electric-500/40 bg-electric-500/12 text-electric-200'
-                    : 'border-white/10 bg-white/[0.03] text-muted hover:border-white/20 hover:text-ink',
+                  'chip shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium',
+                  activeCategory === category.id ? 'chip-active' : '',
                 )}
               >
                 {category.name}
                 {categoryCounts ? (
-                  <span className="ml-1.5 text-[10px] text-muted/70">{categoryCounts[category.id]}</span>
+                  <span className="ml-1.5 text-[10px]">{categoryCounts[category.id]}</span>
                 ) : null}
               </button>
             ))}
@@ -141,7 +137,7 @@ export function GameToolbar({
             <button
               type="button"
               onClick={onClear}
-              className="rounded-full px-2 py-1 font-medium text-electric-300 transition hover:bg-electric-500/10"
+              className="rounded-full px-2 py-1 font-medium text-brand transition hover:bg-brand/10"
             >
               Clear filters
             </button>

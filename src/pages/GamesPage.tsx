@@ -108,7 +108,7 @@ export default function GamesPage() {
 
         {results.length > limit ? (
           <div className="mt-10 flex justify-center">
-            <Button variant="secondary" onClick={() => setLimit((value) => value + PAGE_SIZE)}>
+            <Button variant="outline" onClick={() => setLimit((value) => value + PAGE_SIZE)}>
               Load more games
               <ChevronDown className="h-4 w-4" aria-hidden="true" />
             </Button>

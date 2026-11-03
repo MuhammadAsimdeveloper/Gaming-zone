@@ -71,7 +71,7 @@ export default function AboutPage() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl border border-white/10 bg-white/[0.025] p-5"
+                className="rounded-2xl border border-line bg-raised/60 p-5"
               >
                 <p className="font-display text-3xl font-semibold text-ink">{stat.value}</p>
                 <p className="mt-1 text-xs leading-5 text-muted">{stat.label}</p>
@@ -101,9 +101,9 @@ export default function AboutPage() {
               {values.map((value) => (
                 <div
                   key={value.title}
-                  className="rounded-2xl border border-white/10 bg-white/[0.025] p-5"
+                  className="rounded-2xl border border-line bg-raised/60 p-5"
                 >
-                  <span className="grid h-10 w-10 place-items-center rounded-xl border border-electric-500/20 bg-electric-500/10 text-electric-300">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl border border-brand/20 bg-brand/10 text-brand">
                     <value.icon className="h-4.5 w-4.5" aria-hidden="true" />
                   </span>
                   <h3 className="mt-4 text-sm font-semibold text-ink">{value.title}</h3>
@@ -119,14 +119,14 @@ export default function AboutPage() {
               {steps.map((step, index) => (
                 <li
                   key={step.title}
-                  className="flex gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5"
+                  className="flex gap-4 rounded-2xl border border-line bg-raised/40 p-5"
                 >
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-plasma-500/20 bg-plasma-500/10 text-plasma-300">
                     <step.icon className="h-4.5 w-4.5" aria-hidden="true" />
                   </span>
                   <div>
                     <h3 className="text-sm font-semibold text-ink">
-                      <span className="mr-2 text-xs font-semibold text-muted/60">0{index + 1}</span>
+                      <span className="mr-2 text-xs font-semibold text-muted">0{index + 1}</span>
                       {step.title}
                     </h3>
                     <p className="mt-1.5 text-[13px] leading-6 text-muted">{step.body}</p>

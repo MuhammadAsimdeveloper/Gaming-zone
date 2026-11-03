@@ -21,7 +21,7 @@ export function SectionHeader({
     <div className={cn('flex flex-wrap items-end justify-between gap-4', className)}>
       <div className="max-w-2xl">
         {eyebrow ? (
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-electric-400">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand">
             {eyebrow}
           </p>
         ) : null}
@@ -31,7 +31,7 @@ export function SectionHeader({
       {actionLabel && actionTo ? (
         <Link
           to={actionTo}
-          className="group inline-flex items-center gap-1.5 rounded-full px-1 py-1 text-sm font-medium text-muted transition hover:text-ink"
+          className="group inline-flex min-h-6 items-center gap-1.5 rounded-full px-1 py-1 text-sm font-medium text-muted transition hover:text-ink"
         >
           {actionLabel}
           <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />

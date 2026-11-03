@@ -65,19 +65,16 @@ export default function CategoryPage() {
       >
         <div className="flex flex-wrap items-center gap-2">
           <span
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-ink"
+            className="inline-flex items-center gap-2 rounded-full border border-line bg-raised px-3 py-1.5 text-xs font-medium text-ink"
           >
-            <span
-              className="grid h-6 w-6 place-items-center rounded-lg"
-              style={{ backgroundColor: `${category.accent}1f`, color: category.accent }}
-            >
+            <span className="grid h-6 w-6 place-items-center rounded-lg bg-ink text-surface">
               <CategoryIcon icon={category.icon} className="h-3.5 w-3.5" />
             </span>
             {categoryGames.length} game{categoryGames.length === 1 ? '' : 's'} published
           </span>
           <Link
             to="/categories"
-            className="rounded-full px-2 py-1 text-xs font-medium text-muted transition hover:text-ink"
+            className="inline-flex min-h-6 items-center rounded-full px-2 py-1 text-xs font-medium text-muted transition hover:text-ink"
           >
             All categories
           </Link>
@@ -124,14 +121,14 @@ export default function CategoryPage() {
 
         {results.length > limit ? (
           <div className="mt-10 flex justify-center">
-            <Button variant="secondary" onClick={() => setLimit((value) => value + PAGE_SIZE)}>
+            <Button variant="outline" onClick={() => setLimit((value) => value + PAGE_SIZE)}>
               Load more games
               <ChevronDown className="h-4 w-4" aria-hidden="true" />
             </Button>
           </div>
         ) : null}
 
-        <div className="mt-14 border-t border-white/[0.07] pt-8">
+        <div className="mt-14 border-t border-line pt-8">
           <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted">
             Keep exploring
           </h2>
@@ -142,11 +139,9 @@ export default function CategoryPage() {
                 <Link
                   key={entry.id}
                   to={`/category/${entry.id}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-2 text-sm text-muted transition hover:border-white/20 hover:text-ink"
+                  className="group inline-flex min-h-9 items-center gap-2 rounded-full border border-line bg-raised px-3.5 py-2 text-sm text-muted transition hover:border-ink/25 hover:text-ink"
                 >
-                  <span style={{ color: entry.accent }}>
-                    <CategoryIcon icon={entry.icon} className="h-3.5 w-3.5" />
-                  </span>
+                  <CategoryIcon icon={entry.icon} className="h-4 w-4" />
                   {entry.name}
                 </Link>
               ))}

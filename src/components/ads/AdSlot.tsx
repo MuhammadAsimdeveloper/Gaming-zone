@@ -34,10 +34,10 @@ export function AdSlot({ placement, className }: { placement: AdPlacement; class
 
   return (
     <aside aria-label="Advertisement" className={cn('w-full', className)}>
-      <p className="mb-2 text-center text-[10px] font-medium uppercase tracking-[0.22em] text-muted/50">
+      <p className="mb-2 text-center text-[10px] font-medium uppercase tracking-[0.22em] text-muted">
         Advertisement
       </p>
-      <div className="min-h-[90px] overflow-hidden rounded-2xl border border-white/[0.04] bg-white/[0.015]">
+      <div className="min-h-[90px] overflow-hidden rounded-2xl border border-line bg-raised/50">
         <ins
           key={placement}
           className="adsbygoogle block"

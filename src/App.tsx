@@ -29,7 +29,7 @@ function RouteFallback() {
   return (
     <Container className="py-20">
       <div className="mx-auto max-w-md text-center">
-        <div className="mx-auto h-9 w-9 animate-spin rounded-full border-2 border-white/10 border-t-electric-400" />
+        <div className="mx-auto h-9 w-9 animate-spin rounded-full border-2 border-line border-t-brand" />
         <p className="mt-4 text-sm text-muted">Loading the rift…</p>
       </div>
     </Container>

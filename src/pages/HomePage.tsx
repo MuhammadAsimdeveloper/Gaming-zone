@@ -1,14 +1,16 @@
-import { ArrowRight, CheckCircle2, Gamepad2, Play, Rocket } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Play } from 'lucide-react';
 import { useMemo } from 'react';
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { AdRegion } from '../components/ads/AdRegion';
 import { CategoryIcon } from '../components/category/CategoryIcon';
+import { GameCard } from '../components/game/GameCard';
 import { GameGrid } from '../components/game/GameGrid';
+import { GameMarquee } from '../components/game/GameMarquee';
 import { GameRail } from '../components/game/GameRail';
 import { GameThumbnail } from '../components/game/GameThumbnail';
 import { SearchBar } from '../components/search/SearchBar';
 import { Seo } from '../components/seo/Seo';
-import { Badge } from '../components/ui/Badge';
 import { ButtonLink } from '../components/ui/Button';
 import { Container } from '../components/ui/Container';
 import { CtaBand } from '../components/ui/CtaBand';
@@ -127,26 +129,25 @@ export default function HomePage() {
         jsonLd={websiteJsonLd}
       />
 
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden border-b border-line">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -left-40 top-0 h-[480px] w-[480px] rounded-full bg-electric-500/10 blur-3xl"
+          className="pointer-events-none absolute -left-40 top-0 h-[480px] w-[480px] rounded-full bg-brand/10 blur-3xl"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-32 top-20 h-[520px] w-[520px] rounded-full bg-plasma-500/10 blur-3xl"
+          className="pointer-events-none absolute -right-32 top-20 h-[520px] w-[520px] rounded-full bg-accent/10 blur-3xl"
         />
 
         <Container className="relative grid items-center gap-12 py-12 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16 lg:py-20">
           <div className="animate-fade-up">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-medium text-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-mint shadow-[0_0_10px_rgba(74,222,157,0.8)]" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-line bg-raised px-3 py-1.5 text-[11px] font-medium text-muted">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand" />
               {publishedGames.length} original games · instant play
             </div>
 
-            <h1 className="mt-6 text-4xl font-semibold leading-[1.05] text-ink sm:text-5xl lg:text-[3.6rem]">
-              Your next favorite is{' '}
-              <span className="text-gradient">one click away.</span>
+            <h1 className="mt-6 text-[clamp(2.8rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-ink">
+              Your next favorite is <span className="text-gradient">one click away.</span>
             </h1>
 
             <p className="mt-5 max-w-xl text-[15px] leading-7 text-muted sm:text-base">
@@ -186,24 +187,19 @@ export default function HomePage() {
           </div>
 
           <div className="relative animate-fade-up" style={{ animationDelay: '120ms' }}>
-            <div
-              aria-hidden="true"
-              className="animate-pulse-glow pointer-events-none absolute -inset-8 rounded-full bg-electric-500/12 blur-3xl"
-            />
-
-            <div className="animate-float relative">
+            <div className="surface-card rounded-[2rem] p-3">
               <Link
                 to={`/game/${heroGame.slug}`}
-                className="group relative block overflow-hidden rounded-[2rem] border border-white/12 bg-night-850 shadow-2xl shadow-black/60"
+                className="group block overflow-hidden rounded-[1.6rem] bg-night-950"
               >
                 <div className="relative aspect-[16/11]">
                   <GameThumbnail game={heroGame} priority />
-                  <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-night-950/25 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-night-950/20 to-transparent" />
                   <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5">
-                    <Badge tone="electric" className="bg-night-950/65 backdrop-blur-md">
+                    <span className="rounded-full border border-white/15 bg-night-950/65 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-md">
                       Featured
-                    </Badge>
-                    <span className="rounded-full border border-white/10 bg-night-950/60 px-3 py-1 text-[11px] font-medium text-ink/90 backdrop-blur-md">
+                    </span>
+                    <span className="rounded-full border border-white/15 bg-night-950/60 px-3 py-1 text-[11px] font-medium text-white/90 backdrop-blur-md">
                       {heroCategory.name}
                     </span>
                   </div>
@@ -222,39 +218,27 @@ export default function HomePage() {
                   </div>
                 </div>
               </Link>
-            </div>
 
-            <div className="animate-float absolute -left-4 top-10 hidden items-center gap-2.5 rounded-2xl border border-white/10 bg-night-900/90 px-3.5 py-2.5 shadow-xl shadow-black/40 backdrop-blur-xl sm:flex">
-              <span className="grid h-8 w-8 place-items-center rounded-xl bg-electric-500/12 text-electric-300">
-                <Gamepad2 className="h-4 w-4" aria-hidden="true" />
-              </span>
-              <span>
-                <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-muted/70">
-                  Original
-                </span>
-                <span className="block text-xs font-semibold text-ink">Built in-house</span>
-              </span>
-            </div>
-
-            <div
-              className="animate-float absolute -right-3 bottom-10 hidden items-center gap-2.5 rounded-2xl border border-white/10 bg-night-900/90 px-3.5 py-2.5 shadow-xl shadow-black/40 backdrop-blur-xl sm:flex"
-              style={{ animationDelay: '1.4s' }}
-            >
-              <span className="grid h-8 w-8 place-items-center rounded-xl bg-plasma-500/12 text-plasma-300">
-                <Rocket className="h-4 w-4" aria-hidden="true" />
-              </span>
-              <span>
-                <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-muted/70">
-                  Fresh
-                </span>
-                <span className="block text-xs font-semibold text-ink">
-                  {newThisMonth} new this month
-                </span>
-              </span>
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                <div className="rounded-2xl border border-line bg-surface px-4 py-3">
+                  <p className="font-display text-2xl font-semibold text-ink">
+                    {publishedGames.length}
+                  </p>
+                  <p className="mt-0.5 text-[11px] leading-4 text-muted">
+                    original games in the library
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-line bg-surface px-4 py-3">
+                  <p className="font-display text-2xl font-semibold text-ink">{newThisMonth}</p>
+                  <p className="mt-0.5 text-[11px] leading-4 text-muted">new this month</p>
+                </div>
+              </div>
             </div>
           </div>
         </Container>
       </section>
+
+      <GameMarquee games={publishedGames} />
 
       <div className="mt-6 space-y-16 sm:mt-10 sm:space-y-20">
         <AdRegion placement="home-top" />
@@ -284,8 +268,31 @@ export default function HomePage() {
               actionLabel="See all"
               actionTo="/popular"
             />
-            <div className="mt-6">
-              <GameGrid games={trendingGames} priorityCount={2} />
+            <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+              {trendingGames[0] ? (
+                <div className="md:col-span-2 xl:row-span-2">
+                  <GameCard game={trendingGames[0]} size="feature" priority />
+                </div>
+              ) : null}
+              {trendingGames.slice(1).map((game) => (
+                <GameCard key={game.id} game={game} />
+              ))}
+              <Link
+                to="/popular"
+                className="accent-tile group flex min-h-[120px] flex-col justify-between rounded-3xl p-5 transition hover:-translate-y-0.5 md:min-h-[160px]"
+                style={{ '--chip': 'var(--nr-brand)' } as CSSProperties}
+              >
+                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-ink-soft">
+                  Curated
+                </span>
+                <span className="inline-flex items-center gap-2 font-display text-lg font-semibold text-ink">
+                  See all popular picks
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Link>
             </div>
           </Container>
         </section>
@@ -305,23 +312,18 @@ export default function HomePage() {
                   <Link
                     key={category.id}
                     to={`/category/${category.id}`}
-                    className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] p-4 transition duration-200 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.045]"
+                    className="accent-tile group relative overflow-hidden rounded-2xl p-4 transition duration-200 hover:-translate-y-0.5"
+                    style={{ '--chip': category.accent } as CSSProperties}
                   >
-                    <span
-                      className="grid h-10 w-10 place-items-center rounded-xl"
-                      style={{
-                        backgroundColor: `${category.accent}1f`,
-                        color: category.accent,
-                      }}
-                    >
+                    <span className="grid h-10 w-10 place-items-center rounded-xl bg-ink text-surface">
                       <CategoryIcon icon={category.icon} className="h-5 w-5" />
                     </span>
                     <span className="mt-4 block text-sm font-semibold text-ink">{category.name}</span>
-                    <span className="mt-0.5 block text-[11px] text-muted">
+                    <span className="mt-0.5 block text-[11px] text-ink-soft">
                       {categoryCounts[category.id]} game{categoryCounts[category.id] === 1 ? '' : 's'}
                     </span>
                     <ArrowRight
-                      className="absolute right-3.5 top-3.5 h-4 w-4 text-muted/30 transition group-hover:text-muted"
+                      className="absolute right-3.5 top-3.5 h-4 w-4 text-ink/30 transition group-hover:text-ink/70"
                       aria-hidden="true"
                     />
                   </Link>

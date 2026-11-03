@@ -60,6 +60,17 @@ not automated. No game is described as manually played beyond what these tests e
 CI runs on every push to `main`/`master` and every pull request in
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
+### Editorial Arcade refresh (2026-11-02)
+
+- Browsing routes render on the light Editorial Arcade shell; `/game/:slug` renders the dark
+  night palette via `data-theme`.
+- Search is a WAI-ARIA combobox with Arrow/Home/End/Enter/Escape support.
+- Footer links meet the 24px WCAG 2.2 target minimum.
+- axe-core WCAG 2.2 AA scans report zero critical/serious violations on `/`, `/games`,
+  `/about`, and `/game/neon-apex` at 1440px and 390px.
+- Verification: `npm ci`, `npm run typecheck`, `npm test`, `npm run build`,
+  `npx playwright test --workers=2` all pass — 70 unit tests and 51 browser tests.
+
 ---
 
 ## Routes

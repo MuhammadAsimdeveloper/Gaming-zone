@@ -23,14 +23,14 @@ export default function NotFoundPage() {
       <Container className="relative flex min-h-[72vh] flex-col items-center justify-center py-20 text-center">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/3 h-64 w-64 rounded-full bg-electric-500/10 blur-3xl"
+          className="pointer-events-none absolute top-1/3 h-64 w-64 rounded-full bg-brand/10 blur-3xl"
         />
         <div className="relative">
           <p className="text-gradient font-display text-[104px] font-bold leading-none tracking-tighter sm:text-[140px]">
             404
           </p>
           <Gamepad2
-            className="animate-float absolute -right-8 top-2 h-10 w-10 text-electric-400 sm:-right-12 sm:h-12 sm:w-12"
+            className="animate-float absolute -right-8 top-2 h-10 w-10 text-brand sm:-right-12 sm:h-12 sm:w-12"
             aria-hidden="true"
           />
         </div>
@@ -55,7 +55,7 @@ export default function NotFoundPage() {
             <Link
               key={link.to}
               to={link.to}
-              className="inline-flex items-center gap-1.5 text-sm text-muted transition hover:text-ink"
+              className="inline-flex min-h-6 items-center gap-1.5 text-sm text-muted transition hover:text-ink"
             >
               {link.label}
               <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />

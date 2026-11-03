@@ -14,14 +14,14 @@ export function GameGrid({
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+        'grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
         className,
       )}
     >
       {games.map((game, index) => (
         <div
           key={game.id}
-          className="animate-fade-up"
+          className="animate-fade-up h-full"
           style={{ animationDelay: `${Math.min(index, 8) * 45}ms` }}
         >
           <GameCard game={game} priority={index < priorityCount} />
