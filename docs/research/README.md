@@ -1,6 +1,6 @@
 # NeonRift — 50-game research and development package
 
-> Generated 2026-11-02. **Research and design only. The 15 shortlisted games have not been implemented.** The 25 games already in the repository (as of 2026-11-04) are separate, existing work.
+> Generated 2026-11-02. **Research and design only. The 15 shortlisted games have not been implemented.** The 25 games already in the repository (as of 2026-11-04) are separate, existing work. A separate six-game Wave 2 design spec was added on 2026-11-04 and is also not implemented.
 
 This folder is the complete deliverable for the “Top 50 Video Games — research, clean-room design and build plan” brief. It is organised as separate documents so each can be reviewed on its own.
 
@@ -17,6 +17,7 @@ This folder is the complete deliverable for the “Top 50 Video Games — resear
 | [SOURCE-DIRECTORY.md](SOURCE-DIRECTORY.md) | The 19 verified repositories (21 candidates), languages, features, maintenance, licence and adaptability |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Platform constraints, module pattern, simulation design, engine per game, budgets, testing and deployment |
 | [ROADMAP.md](ROADMAP.md) | Phase 0 platform hardening, three sequential waves, milestones, QA gates and effort ranges |
+| [Wave 2 spec](../superpowers/specs/2026-11-04-games-wave2-design.md) | Six-game 2026-11-04 slate: Neon Craft, Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology. Design only; awaiting review |
 | [SOURCES.md](SOURCES.md) | Numbered source register with credibility tiers and verification notes |
 | [games/](games/) | Per-group research notes for all 50 references |
 
@@ -37,10 +38,11 @@ This folder is the complete deliverable for the “Top 50 Video Games — resear
 | Technical architecture | Complete | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | Development roadmap | Complete | [ROADMAP.md](ROADMAP.md) |
 | Asset directory | Planned, not built | Requirements per GDD; no assets downloaded |
-| Working games | 25 existing; 15 planned | `src/games/` and `src/games3d/` |
+| Working games | 25 existing; 15 research designs; 6 Wave 2 designs | `src/games/` and `src/games3d/`; [Wave 2 spec](../superpowers/specs/2026-11-04-games-wave2-design.md) |
 | Integration documentation | Complete at design level | [ARCHITECTURE.md](ARCHITECTURE.md) §1, §6; GDD section 9 |
 | QA and performance reports | **Not yet produced for the 15** | Budgets and test plans in GDDs; platform baseline still to be run |
 | Deployment instructions | Documented, not executed | [ARCHITECTURE.md](ARCHITECTURE.md) §12 |
+| Six-game Wave 2 design (2026-11-04) | Complete at design level; awaiting spec review; implementation not started | [Wave 2 spec](../superpowers/specs/2026-11-04-games-wave2-design.md) |
 
 ---
 
@@ -80,3 +82,9 @@ Implementation of the 15 games has **not** started. The next step requires an ex
 - approve a smaller first wave (for example Wave 1 only).
 
 Until then: no game code, no new dependencies, no asset downloads, no destructive Git operations and no public deployment.
+
+A second, user-directed six-game Wave 2 slate (Neon Craft plus five companions) has a written
+design spec at
+[`../superpowers/specs/2026-11-04-games-wave2-design.md`](../superpowers/specs/2026-11-04-games-wave2-design.md).
+That spec is awaiting review; implementation has not started, and none of its six games has a
+catalogue entry.

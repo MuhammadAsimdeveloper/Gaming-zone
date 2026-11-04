@@ -3,6 +3,8 @@
 > Architecture record for the existing NeonRift platform and planning guide for the next 15 games.
 > The platform and its 25 games are implemented. The 15 shortlisted games remain designs, except
 > Rift Chess, which has an approved-for-planning implementation plan and no code yet.
+> A separate six-game Wave 2 slate (Neon Craft plus five companions) has a written design spec
+> dated 2026-11-04; it is not implemented.
 > Verification results below were recorded on 2026-11-04.
 
 ---
@@ -165,6 +167,12 @@ Benefits: deterministic behaviour, stable physics, reproducible tests, and a cle
 | 15 | Rift Hold | Canvas 2D isometric + DOM UI | Grid base building; DOM for upgrade panels |
 
 **No new engine dependency is required for any of the 15.** Add one only if a prototype proves the custom path is materially slower or worse.
+
+The separate six-game slate from 2026-11-04 follows the same platform contracts. Neon Craft is
+planned as a self-contained Three.js voxel engine (chunk streaming, greedy meshing and baked
+light); Rift Rally reuses the existing Three.js racing pattern; Neon Duel, Riftfall, Rift Life
+and Rift Ecology use Canvas 2D and React. No implementation exists yet. See the
+[Wave 2 spec](../superpowers/specs/2026-11-04-games-wave2-design.md).
 
 ---
 

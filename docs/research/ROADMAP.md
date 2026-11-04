@@ -1,6 +1,8 @@
 # Delivery Roadmap
 
 > Generated 2026-11-02. Sequenced, not parallel. Every game must reach "done" before the next one starts. Effort estimates assume one developer working part-time with agent assistance; they are planning ranges, not promises.
+>
+> Appended 2026-11-04 with a separate six-game Wave 2 design slate. That slate is design-only and does not reorder the 15 research games below.
 
 ---
 
@@ -272,7 +274,27 @@ This is a long programme. The wave structure exists so that value ships early an
 
 ---
 
-## 11. Approval gate
+## 11. Separate six-game Wave 2 design (2026-11-04)
+
+This is a second, user-directed slate, separate from the 15 research games. It does not reorder
+Phases 1–3. The design is complete; implementation has not started and the spec is awaiting
+review.
+
+| Sub-wave | Games | Renderer | Status |
+|---|---|---|---|
+| 2A | Neon Craft | Self-contained Three.js voxel engine | Design complete; awaiting review |
+| 2B | Rift Rally, Neon Duel | Three.js; Canvas 2D + React | Design complete; awaiting review |
+| 2C | Riftfall, Rift Life, Rift Ecology | Canvas 2D + React | Design complete; awaiting review |
+
+- Spec: [2026-11-04-games-wave2-design.md](../superpowers/specs/2026-11-04-games-wave2-design.md)
+- Gates: each sub-wave must be playable end to end, tested, built and reviewed before the next
+  sub-wave is called complete.
+- No catalogue entry, thumbnail, test or dependency change exists for these six games yet.
+- Effort is not estimated here; the sub-wave gates govern delivery.
+
+---
+
+## 12. Approval gate
 
 No game implementation begins until the shortlist and the specific game plan are approved. Phase 0
 is complete and verified. After approval, the order is:
@@ -286,3 +308,6 @@ is complete and verified. After approval, the order is:
 7. …and so on, one game at a time.
 
 The roadmap can be re-ordered after any completed game without wasting work, because each game is an independent module.
+
+The separate six-game Wave 2 slate in section 11 has a written spec but no implementation. It
+begins only after the spec is reviewed and approved and an implementation plan is written.

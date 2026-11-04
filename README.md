@@ -2,7 +2,7 @@
 
 A free, instant-play browser gaming portal. Original branding, original games, no account and no download.
 
-**Status:** the platform and 25 internal games are implemented. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). **The 15 shortlisted games are designs only — they are not implemented, and no catalogue entry claims otherwise.**
+**Status:** the platform and 25 internal games are implemented. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). **The 15 shortlisted games are designs only — they are not implemented, and no catalogue entry claims otherwise.** A six-game Wave 2 design spec (Neon Craft plus five companions) was written on 2026-11-04 and is awaiting review; none of it is implemented and no catalogue entry exists for it.
 
 ---
 
@@ -135,6 +135,7 @@ The full deliverable is indexed at [`docs/research/README.md`](docs/research/REA
 - Weighted shortlist of the best 15 concepts.
 - 15 game design documents with features, architecture, milestones, testing and limitations.
 - Licence audit, source-repository directory, technical architecture and delivery roadmap.
+- Six-game Wave 2 design spec (2026-11-04): Neon Craft plus Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology. Design only; implementation has not started. See [`docs/superpowers/specs/2026-11-04-games-wave2-design.md`](docs/superpowers/specs/2026-11-04-games-wave2-design.md).
 
 Start with the [package index](docs/research/README.md).
 
@@ -175,11 +176,17 @@ The build is a static site. `public/_redirects` provides the SPA fallback for de
 
 ---
 
-## Next game: Rift Chess
+## Next games
 
-Rift Chess is the first approved shortlist game. It is **not implemented and has no catalogue
-entry yet**. The gated implementation plan, licence checks and milestones are in
-[`docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md`](docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md).
+Two design tracks are queued. **Neither is implemented, and neither has a catalogue entry.**
+
+- **Wave 2 six-game slate (2026-11-04):** Neon Craft, Rift Rally, Neon Duel, Riftfall, Rift
+  Life and Rift Ecology, split into three sub-waves. The design spec is written and awaiting
+  review at
+  [`docs/superpowers/specs/2026-11-04-games-wave2-design.md`](docs/superpowers/specs/2026-11-04-games-wave2-design.md).
+- **Rift Chess:** the first approved shortlist game. The gated implementation plan, licence
+  checks and milestones are in
+  [`docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md`](docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md).
 
 ---
 
@@ -193,6 +200,7 @@ entry yet**. The gated implementation plan, licence checks and milestones are in
 - Analytics is disabled by default and loads only after analytics consent is granted.
 - External game embedding is deny-by-default and requires an explicit HTTPS allowlist.
 - The 15 games in the research shortlist are designs, not shipped features.
+- The six games in the 2026-11-04 Wave 2 spec are designs only. No game code, catalogue entry, thumbnail or test exists for them yet.
 - Game records are local; the site does not display invented player counts, ratings or revenue.
 - No Content-Security-Policy ships yet; the optional analytics and ad integrations must be validated against it before one is added.
 - The production build warns about the shared Three.js chunk exceeding 500 kB raw. It is lazy-loaded and compressed to ~140 kB gzip, but further splitting is still an open performance task.
