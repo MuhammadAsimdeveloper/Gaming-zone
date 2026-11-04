@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Aqua Grid water network">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#040814"/><stop offset="1" stop-color="#061b26"/></linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4c8dff"/><stop offset="1" stop-color="#4ade9d"/></linearGradient>
+    <filter id="g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <g stroke="#4c8dff" stroke-opacity=".15"><path d="M0 120 H640 M0 240 H640 M0 340 H640 M140 0 V400 M320 0 V400 M500 0 V400"/></g>
+  <g filter="url(#g)" fill="none" stroke="url(#water)" stroke-width="6">
+    <path d="M100 260 H240 V160 H400 V260 H560"/>
+    <path d="M240 260 V330 H500" stroke-opacity=".6"/>
+  </g>
+  <g fill="#4c8dff" filter="url(#g)">
+    <circle cx="240" cy="160" r="10"/><circle cx="400" cy="260" r="10"/><circle cx="500" cy="330" r="8"/>
+  </g>
+  <g transform="translate(80 190)" filter="url(#g)">
+    <rect x="0" y="0" width="44" height="70" rx="8" fill="#0b1a2c" stroke="#4c8dff" stroke-opacity=".5"/>
+    <path d="M22 10 C10 30 8 40 8 46 A14 14 0 0 0 36 46 C36 40 34 30 22 10 Z" fill="#4c8dff" opacity=".7"/>
+  </g>
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <text x="40" y="46" fill="#eaf6ff" font-size="30" font-weight="700">Aqua Grid</text>
+    <text x="40" y="70" fill="#8faac9" font-size="12" letter-spacing="2.4">PUMPS · PIPES · RESERVOIR</text>
+    <text x="460" y="352" fill="#4c8dff" font-size="11" letter-spacing="1.2">RESERVOIR 60</text>
+  </g>
+</svg>

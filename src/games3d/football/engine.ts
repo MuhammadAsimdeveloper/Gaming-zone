@@ -182,9 +182,10 @@ export class FootballEngine {
 
     this.resize();
     window.addEventListener('resize', this.handleResize);
+    window.addEventListener('pointerup', this.handlePointerUp);
+    window.addEventListener('pointercancel', this.handlePointerUp);
+    window.addEventListener('blur', this.handleWindowBlur);
     this.canvas.addEventListener('pointerdown', this.handlePointerDown);
-    this.canvas.addEventListener('pointerup', this.handlePointerUp);
-    this.canvas.addEventListener('pointercancel', this.handlePointerUp);
 
     this.audio.start();
     this.audio.whistle();
@@ -1011,6 +1012,7 @@ export class FootballEngine {
   private finishMatch(): void {
     if (this.phase === 'finished') return;
     this.phase = 'finished';
+    this.pointerShoot = false;
     this.audio.whistle(true);
     const totalPossession = this.possessionFrames.home + this.possessionFrames.away;
     const possessionHome = totalPossession > 0 ? Math.round((this.possessionFrames.home / totalPossession) * 100) : 50;
@@ -1031,6 +1033,10 @@ export class FootballEngine {
   };
 
   private handlePointerUp = (): void => {
+    this.pointerShoot = false;
+  };
+
+  private handleWindowBlur = (): void => {
     this.pointerShoot = false;
   };
 
@@ -1069,6 +1075,7 @@ export class FootballEngine {
 
   pause(): void {
     this.paused = true;
+    this.pointerShoot = false;
     this.audio.pause();
   }
 
@@ -1087,9 +1094,10 @@ export class FootballEngine {
     this.disposed = true;
     this.renderer.setAnimationLoop(null);
     window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('pointerup', this.handlePointerUp);
+    window.removeEventListener('pointercancel', this.handlePointerUp);
+    window.removeEventListener('blur', this.handleWindowBlur);
     this.canvas.removeEventListener('pointerdown', this.handlePointerDown);
-    this.canvas.removeEventListener('pointerup', this.handlePointerUp);
-    this.canvas.removeEventListener('pointercancel', this.handlePointerUp);
     this.keyboard.dispose();
     this.audio.dispose();
     disposeObject(this.scene);

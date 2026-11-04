@@ -30,10 +30,18 @@ const CAPTURED = new Set([
   'KeyS',
   'KeyD',
   'KeyC',
+  'KeyJ',
+  'KeyK',
+  'ShiftLeft',
+  'ShiftRight',
 ]);
 
 export function createKeyboard(canvas: HTMLCanvasElement): KeyboardState {
   const keys = new Set<string>();
+
+  function onPointerDown() {
+    canvas.focus();
+  }
 
   function onKeyDown(event: KeyboardEvent) {
     const target = event.target as HTMLElement | null;
@@ -54,7 +62,7 @@ export function createKeyboard(canvas: HTMLCanvasElement): KeyboardState {
     keys.clear();
   }
 
-  canvas.addEventListener('pointerdown', () => canvas.focus());
+  canvas.addEventListener('pointerdown', onPointerDown);
   window.addEventListener('keydown', onKeyDown, { passive: false });
   window.addEventListener('keyup', onKeyUp);
   window.addEventListener('blur', onBlur);
@@ -62,6 +70,7 @@ export function createKeyboard(canvas: HTMLCanvasElement): KeyboardState {
   return {
     keys,
     dispose() {
+      canvas.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('keyup', onKeyUp);
       window.removeEventListener('blur', onBlur);

@@ -47,6 +47,8 @@ export function GameToolbar({
             aria-hidden="true"
           />
           <input
+            id="game-search"
+            name="game-search"
             type="search"
             value={query}
             onChange={(event) => onQueryChange(event.target.value)}

@@ -41,7 +41,7 @@ Before the first new game, close the existing platform gaps. These are small and
 
 **Exit criterion:** a clean, tested platform with no known blocking defects and an honest status document.
 
-### Phase 0 status — verified 2026-11-02
+### Phase 0 status — verified 2026-11-04
 
 | Task | Status |
 |---|---|
@@ -54,21 +54,21 @@ Before the first new game, close the existing platform gaps. These are small and
 | 0.7 `.env.example` | Complete. Documents optional variables with empty values. |
 | 0.8 Passcode-hash helper script | Not implemented. Deferred with the admin dashboard; no setup path is advertised. |
 | 0.9 README and testing report | Complete. README contains commands, routes, configuration, actual results and limitations. |
-| 0.10 Vitest coverage | 49 tests across consent, ads, catalogue/storage helpers, visibility pause and the error boundary. |
+| 0.10 Vitest coverage | 234 tests across consent, ads, catalogue/storage helpers, admin-store validation, simulation rules, combobox, input capture, visibility pause and the error boundary. |
 | 0.11 Typecheck/test/build | Pass. See the verification snapshot below. |
-| 0.12 Browser QA | 37 Playwright tests pass against the production preview. |
+| 0.12 Browser QA | 66 Playwright tests pass against the production preview. |
 | 0.13 OG cover and sitemap | Complete. `public/og-cover.png` is original and referenced by `index.html`; sitemap/robots are generated from real routes. |
 | 0.14 Local commit | Pending at the time of writing; the final hardening commit is on `feature/platform-hardening`. |
 
-### Verification snapshot — 2026-11-02
+### Verification snapshot — 2026-11-04
 
 | Command | Result |
 |---|---|
 | `npm ci` | Completed successfully |
 | `npm run typecheck` | Passed with no output |
-| `npm test` | 49 tests passed in 5 files |
-| `npm run build` | Passed; 2,143 modules; Three.js scenery chunk 561.48 kB raw / 140.49 kB gzip warning |
-| `npx playwright test --workers=2` | 37 tests passed in 2.4 minutes |
+| `npm test` | 234 tests passed in 27 files |
+| `npm run build` | Passed; Three.js scenery chunk 561.57 kB raw / 140.51 kB gzip warning |
+| `npx playwright test --workers=2` | 66 tests passed |
 
 Known QA limits: full 3D race/match completion is not automated or manually played to the end;
 the browser suite verifies load, controls, pause/resume, restart, mute and route-away cleanup.

@@ -1,9 +1,9 @@
 # Technical Architecture
 
 > Architecture record for the existing NeonRift platform and planning guide for the next 15 games.
-> The platform and its 10 games are implemented. The 15 shortlisted games remain designs, except
+> The platform and its 25 games are implemented. The 15 shortlisted games remain designs, except
 > Rift Chess, which has an approved-for-planning implementation plan and no code yet.
-> Verification results below were recorded on 2026-11-02.
+> Verification results below were recorded on 2026-11-04.
 
 ---
 
@@ -265,14 +265,12 @@ Rules:
 | Persistence | Vitest | Save/load, version mismatch, blocked storage |
 | Consent and ads | Vitest + Playwright | Separate analytics/advertising choices, no scripts before consent, withdrawal |
 | Integration | Playwright | Mount, pause/resume, restart, fullscreen, favorites/recent, route change, 404, error recovery |
-| Game QA | Playwright | All 10 games load and accept input; 2D completion/game-over; 3D mute, pause, restart, canvas size and unmount |
+| Game QA | Playwright | All 25 games load; 2D completion/game-over; 3D mute, pause, restart, canvas size and unmount; simulation start/plant/water |
 | Mobile | Playwright emulation + manual device | Touch controls, hidden-tab fairness, 390×844 layouts |
 | Regression | Build + typecheck | `npm run typecheck`, `npm test`, `npm run build`, `npx playwright test` |
 
-Current verified totals: 49 Vitest tests in 5 files and 37 Playwright tests. The production build
-transforms 2,143 modules; the shared Three.js scenery chunk is 561.48 kB raw / 140.49 kB gzip and
-triggers the >500 kB warning. No CSP ships yet. Full 3D race/match completion is not automated and
-has not been manually played to the end.
+Current verified totals: 234 Vitest tests in 27 files and 66 Playwright tests (verified 2026-11-04). The production build
+produces a shared Three.js scenery chunk at 561.57 kB raw / 140.51 kB gzip and triggers the >500 kB warning. No CSP ships yet. Full 3D race/match completion is not automated and has not been manually played to the end.
 
 ### Definition of done per game
 
@@ -294,7 +292,7 @@ has not been manually played to the end.
 - No secrets in the client bundle.
 - Admin passcode remains a hash in an env var and is explicitly labelled as local-only, not real authentication.
 - External games remain on the HTTPS allowlist with a sandboxed iframe.
-- No `eval`, `new Function` or dynamic script injection.
+- No `eval`, `new Function`, or untrusted dynamic script injection. The only injected scripts are the configured, consent-gated analytics and advertising loaders.
 - Sanitise any user-entered text before rendering.
 - Add a Content Security Policy compatible with Vite's static output; test it before deployment.
 - Do not add third-party analytics or ad scripts without configuration and approval.

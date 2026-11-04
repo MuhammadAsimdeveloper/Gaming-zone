@@ -96,12 +96,14 @@ export function mergeCatalogue(baseGames: Game[], state: AdminState): Game[] {
   const merged = new Map<string, Game>();
 
   for (const game of baseGames) {
-    merged.set(game.id, { ...game, ...(state.edits[game.id] ?? {}) });
+    const candidate = { ...game, ...(state.edits[game.id] ?? {}) };
+    merged.set(game.id, isGameLike(candidate) ? candidate : game);
   }
 
   for (const game of state.customGames) {
     const existing = merged.get(game.id);
-    merged.set(game.id, existing ? { ...existing, ...game } : game);
+    const candidate = existing ? { ...existing, ...game } : game;
+    merged.set(game.id, isGameLike(candidate) ? candidate : game);
   }
 
   return [...merged.values()].filter((game) => !deleted.has(game.id));

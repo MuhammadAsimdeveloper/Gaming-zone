@@ -247,7 +247,7 @@
       "Press K to pass to the best-placed teammate.",
       "Press Space to press or tackle the ball carrier.",
       "Score more goals than Void XI before the two-minute clock expires.",
-      "Tab switches your controlled player, C changes camera and P pauses."
+      "Q switches your controlled player, C changes camera and P pauses."
     ],
     "controls": [
       { "label": "Move", "keys": "WASD / Arrow keys" },
@@ -255,7 +255,7 @@
       { "label": "Shoot", "keys": "J (hold and release)" },
       { "label": "Pass", "keys": "K" },
       { "label": "Press / tackle", "keys": "Space" },
-      { "label": "Switch player", "keys": "Tab" },
+      { "label": "Switch player", "keys": "Q" },
       { "label": "Camera", "keys": "C" },
       { "label": "Pause", "keys": "P" },
       { "label": "Mobile", "keys": "On-screen pad plus action buttons" }
@@ -298,5 +298,454 @@
     "createdAt": "2026-11-02T09:00:00.000Z",
     "featured": true,
     "popularityRank": 10
+  },
+  {
+    "id": "neon-harvest",
+    "slug": "neon-harvest",
+    "title": "Neon Harvest",
+    "tagline": "Grow the grid. Feed the rift.",
+    "description": "A twenty-day rooftop farming simulation. Plant three original crops, balance water and power, buy solar canopies, recyclers and a market uplink, then sell before the season closes.",
+    "category": "simulation",
+    "secondaryCategories": ["strategy", "casual"],
+    "thumbnail": "/art/neon-harvest.svg",
+    "accent": "#4ade9d",
+    "type": "internal",
+    "internalKey": "neon-harvest",
+    "instructions": [
+      "Choose a seed, then plant it in any empty plot.",
+      "Water growing crops for two water; crops need water and energy each day.",
+      "Harvest when a crop is ready — quality and the market price decide the payout.",
+      "Buy solar canopies, water recyclers and market uplinks to scale up.",
+      "Finish the twenty-day season with at least 650 credits to make a profit."
+    ],
+    "controls": [
+      { "label": "Plant / harvest", "keys": "Click or tap a plot action" },
+      { "label": "Water", "keys": "Plot water button (2 water)" },
+      { "label": "Pause", "keys": "Pause button" },
+      { "label": "Speed", "keys": "1x / 2x button" },
+      { "label": "Restart", "keys": "Restart season button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T09:00:00.000Z",
+    "featured": false,
+    "popularityRank": 11
+  },
+  {
+    "id": "rift-transit",
+    "slug": "rift-transit",
+    "title": "Rift Transit",
+    "tagline": "Move the city. Keep the lines moving.",
+    "description": "A twenty-day bus network simulation. Assign a limited fleet across three routes, read the rush-hour demand curve, and upgrade capacity before service levels collapse.",
+    "category": "simulation",
+    "secondaryCategories": ["strategy", "casual"],
+    "thumbnail": "/art/rift-transit.svg",
+    "accent": "#4c8dff",
+    "type": "internal",
+    "internalKey": "rift-transit",
+    "instructions": [
+      "Start the season, then assign reserve buses to routes with the plus buttons.",
+      "Each bus carries a fixed number of passengers; unused demand lowers service level.",
+      "Watch daily demand and operating costs — every bus costs credits to run.",
+      "Buy fleet, marketing and fare upgrades to raise capacity and revenue.",
+      "Finish the twenty-day season with at least 1200 credits."
+    ],
+    "controls": [
+      { "label": "Assign / recall bus", "keys": "Plus / minus on a route" },
+      { "label": "Pause", "keys": "Pause button" },
+      { "label": "Speed", "keys": "1x / 2x button" },
+      { "label": "Restart", "keys": "Restart season button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T10:00:00.000Z",
+    "featured": false,
+    "popularityRank": 12
+  },
+  {
+    "id": "grid-supply",
+    "slug": "grid-supply",
+    "title": "Grid Supply",
+    "tagline": "Balance the city. Keep the lights on.",
+    "description": "A twenty-day power grid simulation. Dispatch solar, wind and gas generation against a moving demand curve, avoid blackout penalties, and expand capacity before the city grows.",
+    "category": "simulation",
+    "secondaryCategories": ["strategy", "educational"],
+    "thumbnail": "/art/grid-supply.svg",
+    "accent": "#b285ff",
+    "type": "internal",
+    "internalKey": "grid-supply",
+    "instructions": [
+      "Set each plant's output before the day ends; unused generation still costs credits.",
+      "Match supply to the forecast demand to avoid blackout penalties.",
+      "Solar and wind are cheap but capped; the gas peaker is flexible and expensive.",
+      "Expand plant capacity with the +15 cap buttons when credits allow.",
+      "Finish the twenty-day season with at least 700 credits."
+    ],
+    "controls": [
+      { "label": "Plant output", "keys": "−10 / +10 buttons" },
+      { "label": "Expand capacity", "keys": "+15 cap button" },
+      { "label": "Pause", "keys": "Pause button" },
+      { "label": "Speed", "keys": "1x / 2x button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T11:00:00.000Z",
+    "featured": false,
+    "popularityRank": 13
+  },
+  {
+    "id": "rift-colony",
+    "slug": "rift-colony",
+    "title": "Rift Colony",
+    "tagline": "Six colonists. One fragile habitat.",
+    "description": "A twenty-four-day colony management simulation. Assign workers across food, power, ore and research, build habitat rings, keep morale alive, and grow the settlement before the season closes.",
+    "category": "simulation",
+    "secondaryCategories": ["strategy", "casual"],
+    "thumbnail": "/art/rift-colony.svg",
+    "accent": "#4ade9d",
+    "type": "internal",
+    "internalKey": "rift-colony",
+    "instructions": [
+      "Assign workers to farm, reactor, ore and lab decks with the plus buttons.",
+      "Colonists eat one food and draw one power each day; shortages damage morale.",
+      "Build habitat rings to raise population capacity, and upgrade decks for more output.",
+      "A new colonist joins every third day when morale and supplies are healthy.",
+      "Finish the twenty-four-day season with at least 1400 points."
+    ],
+    "controls": [
+      { "label": "Assign / recall worker", "keys": "Plus / minus on a deck" },
+      { "label": "Build", "keys": "Construction buttons" },
+      { "label": "Pause", "keys": "Pause button" },
+      { "label": "Speed", "keys": "1x / 2x button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T12:00:00.000Z",
+    "featured": false,
+    "popularityRank": 14
+  },
+  {
+    "id": "orbit-market",
+    "slug": "orbit-market",
+    "title": "Orbit Market",
+    "tagline": "Buy low. Jump far. Sell high.",
+    "description": "A twenty-jump trading simulation across four orbital docks. Read shifting prices, spend fuel to jump, fill an eight-slot cargo hold, and finish with more credits than you started.",
+    "category": "simulation",
+    "secondaryCategories": ["strategy", "casual"],
+    "thumbnail": "/art/orbit-market.svg",
+    "accent": "#b285ff",
+    "type": "internal",
+    "internalKey": "orbit-market",
+    "instructions": [
+      "Start trading, then buy goods where they are cheap.",
+      "Each jump costs two fuel and advances one day; prices change at the next dock.",
+      "Sell cargo where the price is high; the hold carries eight units in total.",
+      "Refuel at any dock for ten credits when the tank runs low.",
+      "Finish the twenty-jump window with at least 800 credits."
+    ],
+    "controls": [
+      { "label": "Buy / sell", "keys": "Goods buttons" },
+      { "label": "Jump", "keys": "Route buttons" },
+      { "label": "Refuel", "keys": "Refuel button" },
+      { "label": "Restart", "keys": "Restart season button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T13:00:00.000Z",
+    "featured": false,
+    "popularityRank": 15
+  },
+  {
+    "id": "neon-diner",
+    "slug": "neon-diner",
+    "title": "Neon Diner",
+    "tagline": "Set the menu. Fill the floor.",
+    "description": "A twenty-day restaurant simulation. Price three original dishes, hire servers, add tables and protect your reputation when the lunch queue outgrows the floor.",
+    "category": "simulation",
+    "secondaryCategories": ["casual", "strategy"],
+    "thumbnail": "/art/neon-diner.svg",
+    "accent": "#ff6b81",
+    "type": "internal",
+    "internalKey": "neon-diner",
+    "instructions": [
+      "Set each dish's price with the minus and plus buttons.",
+      "Start the service; every day brings a new lunch queue.",
+      "Hire servers or add tables when demand exceeds your seats.",
+      "Higher prices earn more per cover but reduce demand and reputation.",
+      "Finish the twenty-day season with at least 900 credits."
+    ],
+    "controls": [
+      { "label": "Price", "keys": "−1 / +1 / +2 buttons" },
+      { "label": "Hire server", "keys": "Hire button" },
+      { "label": "Add tables", "keys": "Add tables button" },
+      { "label": "Pause", "keys": "Pause button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T14:00:00.000Z",
+    "featured": false,
+    "popularityRank": 16
+  },
+  {
+    "id": "skyport",
+    "slug": "skyport",
+    "title": "Skyport",
+    "tagline": "Every slot counts. Every delay shows.",
+    "description": "A twenty-day airport operations simulation. Open gates and runways, hire ground crew, and balance capacity against a rising wave of inbound flights.",
+    "category": "simulation",
+    "secondaryCategories": ["strategy", "casual"],
+    "thumbnail": "/art/skyport.svg",
+    "accent": "#4c8dff",
+    "type": "internal",
+    "internalKey": "skyport",
+    "instructions": [
+      "Start the tower, then watch the daily inbound flight forecast.",
+      "Capacity is the tightest of gates, runways and ground crew.",
+      "Expand capacity before the wave outgrows your available slots.",
+      "Diverted flights lose revenue and add a penalty.",
+      "Finish the twenty-day season with at least 1000 credits."
+    ],
+    "controls": [
+      { "label": "Expand", "keys": "Gate / runway / crew buttons" },
+      { "label": "Pause", "keys": "Pause button" },
+      { "label": "Speed", "keys": "1x / 2x button" },
+      { "label": "Restart", "keys": "Restart season button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T15:00:00.000Z",
+    "featured": false,
+    "popularityRank": 17
+  },
+  {
+    "id": "rift-hospital",
+    "slug": "rift-hospital",
+    "title": "Rift Hospital",
+    "tagline": "Triage the rush. Keep the clinic open.",
+    "description": "A twenty-day clinic simulation. Balance beds, doctors and nurses against a growing patient queue, treat critical cases first and keep the clinic funded.",
+    "category": "simulation",
+    "secondaryCategories": ["strategy", "casual"],
+    "thumbnail": "/art/rift-hospital.svg",
+    "accent": "#ff6b81",
+    "type": "internal",
+    "internalKey": "rift-hospital",
+    "instructions": [
+      "Start the clinic, then watch the daily patient forecast.",
+      "Capacity is the tightest of beds, doctors and nurses.",
+      "Critical cases are treated first; untreated patients cost reputation.",
+      "Expand beds, doctors or nurses before the queue grows too long.",
+      "Finish the twenty-day season with at least 1000 credits."
+    ],
+    "controls": [
+      { "label": "Expand", "keys": "Bed / doctor / nurse buttons" },
+      { "label": "Pause", "keys": "Pause button" },
+      { "label": "Speed", "keys": "1x / 2x button" },
+      { "label": "Restart", "keys": "Restart season button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T16:00:00.000Z",
+    "featured": false,
+    "popularityRank": 18
+  },
+  {
+    "id": "park-pulse",
+    "slug": "park-pulse",
+    "title": "Park Pulse",
+    "tagline": "Price the day. Keep the queues moving.",
+    "description": "A twenty-day theme-park simulation. Set the ticket price, build rides, hire attendants and run campaigns while balancing demand against queue capacity.",
+    "category": "simulation",
+    "secondaryCategories": ["casual", "strategy"],
+    "thumbnail": "/art/park-pulse.svg",
+    "accent": "#b285ff",
+    "type": "internal",
+    "internalKey": "park-pulse",
+    "instructions": [
+      "Set the day ticket with the minus and plus buttons.",
+      "Open the park; demand responds to price, reputation and marketing.",
+      "Build rides or hire attendants when queues exceed capacity.",
+      "Guests spend extra credits on food and games.",
+      "Finish the twenty-day season with at least 5000 credits."
+    ],
+    "controls": [
+      { "label": "Ticket price", "keys": "−2 / +2 buttons" },
+      { "label": "Build ride", "keys": "Build ride button" },
+      { "label": "Hire attendant", "keys": "Hire button" },
+      { "label": "Campaign", "keys": "Marketing button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T17:00:00.000Z",
+    "featured": false,
+    "popularityRank": 19
+  },
+  {
+    "id": "factory-line",
+    "slug": "factory-line",
+    "title": "Factory Line",
+    "tagline": "Keep the line fed. Ship every order.",
+    "description": "A twenty-day production simulation. Balance machines, operators and automation against a growing order book, and keep the backlog from eating your margin.",
+    "category": "simulation",
+    "secondaryCategories": ["strategy", "educational"],
+    "thumbnail": "/art/factory-line.svg",
+    "accent": "#4c8dff",
+    "type": "internal",
+    "internalKey": "factory-line",
+    "instructions": [
+      "Start the line and watch the daily order book.",
+      "Machines and operators set capacity; automation multiplies output.",
+      "Backlogged orders lose credits, so upgrade before demand rises.",
+      "Balance machine costs against the revenue from shipped units.",
+      "Finish the twenty-day season with at least 1500 credits."
+    ],
+    "controls": [
+      { "label": "Buy machine", "keys": "Machine button" },
+      { "label": "Hire operator", "keys": "Operator button" },
+      { "label": "Automation", "keys": "Automation button" },
+      { "label": "Pause", "keys": "Pause button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T18:00:00.000Z",
+    "featured": false,
+    "popularityRank": 20
+  },
+  {
+    "id": "cargo-ring",
+    "slug": "cargo-ring",
+    "title": "Cargo Ring",
+    "tagline": "Fill the contracts. Keep the fleet rolling.",
+    "description": "A twenty-day freight simulation. Assign trucks across three contract lanes, buy depot capacity, and sign bigger contracts while fuel costs eat into every crate.",
+    "category": "simulation",
+    "secondaryCategories": ["strategy", "casual"],
+    "thumbnail": "/art/cargo-ring.svg",
+    "accent": "#4ade9d",
+    "type": "internal",
+    "internalKey": "cargo-ring",
+    "instructions": [
+      "Assign reserve trucks to the inner, outer and deep contract lanes.",
+      "Each truck carries twelve crates; demand shifts every day.",
+      "Buy trucks, sign bigger contracts and improve fuel efficiency.",
+      "Recall trucks from quiet lanes when another lane is short.",
+      "Finish the twenty-day season with at least 2000 credits."
+    ],
+    "controls": [
+      { "label": "Assign / recall", "keys": "Plus / minus on a lane" },
+      { "label": "Buy truck", "keys": "Truck button" },
+      { "label": "Contracts", "keys": "Contract button" },
+      { "label": "Fuel", "keys": "Fuel button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T19:00:00.000Z",
+    "featured": false,
+    "popularityRank": 21
+  },
+  {
+    "id": "aqua-grid",
+    "slug": "aqua-grid",
+    "title": "Aqua Grid",
+    "tagline": "Every drop has to reach the city.",
+    "description": "A twenty-day water-network simulation. Balance pumps, reservoir storage and aging pipes against city demand, repairing leaks before the shortfall penalty lands.",
+    "category": "simulation",
+    "secondaryCategories": ["strategy", "educational"],
+    "thumbnail": "/art/aqua-grid.svg",
+    "accent": "#4c8dff",
+    "type": "internal",
+    "internalKey": "aqua-grid",
+    "instructions": [
+      "Start the grid; each day pumps fill the reservoir and leaks drain it.",
+      "Pipes degrade every day, increasing the leak rate.",
+      "Install pumps for more inflow or repair pipes to reduce leaks.",
+      "Keep the reservoir above demand to avoid shortfall penalties.",
+      "Finish the twenty-day season with at least 1200 credits."
+    ],
+    "controls": [
+      { "label": "Install pump", "keys": "Pump button" },
+      { "label": "Repair pipes", "keys": "Repair button" },
+      { "label": "Pause", "keys": "Pause button" },
+      { "label": "Speed", "keys": "1x / 2x button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T20:00:00.000Z",
+    "featured": false,
+    "popularityRank": 22
+  },
+  {
+    "id": "signal-stack",
+    "slug": "signal-stack",
+    "title": "Signal Stack",
+    "tagline": "Drop on the line. Keep the signal alive.",
+    "description": "A timing puzzle about stacking signal bars. Drop the moving bar on the block below; overhang is cut away, perfect drops widen the next bar, and a complete miss ends the run.",
+    "category": "puzzle",
+    "secondaryCategories": ["casual", "arcade"],
+    "thumbnail": "/art/signal-stack.svg",
+    "accent": "#b285ff",
+    "type": "internal",
+    "internalKey": "signal-stack",
+    "instructions": [
+      "Watch the glowing bar slide across the top.",
+      "Press Space or click Drop when it overlaps the block below.",
+      "The new block shrinks to the overlap; a perfect drop widens it.",
+      "A complete miss ends the run.",
+      "Build the tallest signal tower you can."
+    ],
+    "controls": [
+      { "label": "Drop", "keys": "Space / click / Drop button" },
+      { "label": "Pause", "keys": "P button" },
+      { "label": "Restart", "keys": "Restart button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T21:00:00.000Z",
+    "featured": false,
+    "popularityRank": 23
+  },
+  {
+    "id": "rift-runner",
+    "slug": "rift-runner",
+    "title": "Rift Runner",
+    "tagline": "Jump the signal. Outrun the dark.",
+    "description": "An endless neon runner. Jump incoming barriers as the speed climbs, clear obstacles for bonus points, and keep the runner alive for the best local score.",
+    "category": "arcade",
+    "secondaryCategories": ["action", "casual"],
+    "thumbnail": "/art/rift-runner.svg",
+    "accent": "#4c8dff",
+    "type": "internal",
+    "internalKey": "rift-runner",
+    "instructions": [
+      "Press Space, Arrow Up or W to jump.",
+      "Clear barriers to add points; distance raises the speed.",
+      "Tall barriers arrive every third spawn.",
+      "Press P to pause the run.",
+      "Survive as long as you can and beat your best score."
+    ],
+    "controls": [
+      { "label": "Jump", "keys": "Space / ArrowUp / W / tap" },
+      { "label": "Pause", "keys": "P" },
+      { "label": "Restart", "keys": "Restart button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T22:00:00.000Z",
+    "featured": false,
+    "popularityRank": 24
+  },
+  {
+    "id": "rift-tactics",
+    "slug": "rift-tactics",
+    "title": "Rift Tactics",
+    "tagline": "A small squad. A tight grid.",
+    "description": "A turn-based tactics battle on a five-by-five grid. Move squad units one square or attack in range; every action gives one hostile a turn, so finish the sector fast.",
+    "category": "strategy",
+    "secondaryCategories": ["puzzle", "casual"],
+    "thumbnail": "/art/rift-tactics.svg",
+    "accent": "#b285ff",
+    "type": "internal",
+    "internalKey": "rift-tactics",
+    "instructions": [
+      "Select a squad unit on the grid.",
+      "Click an empty adjacent square to move, or a hostile in range to attack.",
+      "Every action gives one hostile a turn; hostiles close in and attack.",
+      "Clear every hostile to secure the sector.",
+      "Win in fewer turns for a higher score."
+    ],
+    "controls": [
+      { "label": "Select", "keys": "Click / tap a squad unit" },
+      { "label": "Move", "keys": "Click / tap adjacent square" },
+      { "label": "Attack", "keys": "Click / tap hostile in range" },
+      { "label": "Restart", "keys": "Restart button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-03T23:00:00.000Z",
+    "featured": false,
+    "popularityRank": 25
   }
 ]

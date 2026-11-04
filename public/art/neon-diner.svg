@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Neon Diner counter at night">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0610" />
+      <stop offset="0.55" stop-color="#1a0a18" />
+      <stop offset="1" stop-color="#090d1a" />
+    </linearGradient>
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff6b81" />
+      <stop offset="1" stop-color="#b285ff" />
+    </linearGradient>
+    <radialGradient id="lamp" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffd7e0" stop-opacity="0.9" />
+      <stop offset="1" stop-color="#ff6b81" stop-opacity="0" />
+    </radialGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="b" />
+      <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+    </filter>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)" />
+  <g fill="#f9d9e5">
+    <circle cx="80" cy="56" r="1.4" opacity="0.7" />
+    <circle cx="240" cy="40" r="1.1" opacity="0.5" />
+    <circle cx="560" cy="64" r="1.3" opacity="0.6" />
+  </g>
+  <circle cx="320" cy="80" r="120" fill="url(#lamp)" />
+  <path d="M0 286 H640 V400 H0 Z" fill="#120b17" />
+  <path d="M0 286 H640" stroke="url(#neon)" stroke-width="4" filter="url(#glow)" />
+  <g filter="url(#glow)">
+    <rect x="60" y="210" width="520" height="72" rx="18" fill="#1d1022" stroke="#ff6b81" stroke-opacity="0.45" />
+    <path d="M60 246 H580" stroke="#ff6b81" stroke-opacity="0.25" stroke-width="2" />
+    <circle cx="120" cy="200" r="12" fill="#ffd7e0" opacity="0.9" />
+    <circle cx="240" cy="196" r="9" fill="#ffd7e0" opacity="0.7" />
+    <circle cx="380" cy="200" r="12" fill="#ffd7e0" opacity="0.8" />
+    <circle cx="510" cy="196" r="9" fill="#ffd7e0" opacity="0.7" />
+  </g>
+  <g fill="#ff8fa3" opacity="0.8">
+    <rect x="100" y="296" width="46" height="12" rx="6" />
+    <rect x="210" y="296" width="46" height="12" rx="6" />
+    <rect x="320" y="296" width="46" height="12" rx="6" />
+    <rect x="430" y="296" width="46" height="12" rx="6" />
+  </g>
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <text x="40" y="48" fill="#ffeaf0" font-size="30" font-weight="700">Neon Diner</text>
+    <text x="40" y="72" fill="#c69caf" font-size="12" letter-spacing="2.4">MENU · FLOOR · REPUTATION</text>
+    <g fill="#ff8fa3" font-size="11" letter-spacing="1.2">
+      <text x="470" y="352">COVERS 18 / 37</text>
+    </g>
+  </g>
+</svg>

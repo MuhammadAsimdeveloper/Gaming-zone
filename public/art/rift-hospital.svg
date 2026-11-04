@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Rift Hospital clinic cross and monitors">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070610" />
+      <stop offset="0.55" stop-color="#160b19" />
+      <stop offset="1" stop-color="#07101a" />
+    </linearGradient>
+    <linearGradient id="cross" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff8fa3" />
+      <stop offset="1" stop-color="#ff6b81" />
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6" result="b" />
+      <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+    </filter>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ff6b81" stroke-opacity="0.07" />
+    </pattern>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)" />
+  <rect width="640" height="400" fill="url(#grid)" />
+  <g filter="url(#glow)">
+    <rect x="88" y="120" width="150" height="180" rx="18" fill="#1b0e1b" stroke="#ff6b81" stroke-opacity="0.4" />
+    <rect x="404" y="120" width="150" height="180" rx="18" fill="#0c1826" stroke="#4c8dff" stroke-opacity="0.35" />
+    <path d="M133 170 H193 M163 140 V200" stroke="url(#cross)" stroke-width="14" stroke-linecap="round" />
+    <path d="M440 190 H518 M440 216 H500 M440 242 H470" stroke="#9cc0ff" stroke-width="4" stroke-linecap="round" opacity="0.7" />
+    <path d="M440 270 L462 248 L480 262 L500 232 L518 244" stroke="#4ade9d" stroke-width="3" fill="none" />
+  </g>
+  <g fill="#ff8fa3" opacity="0.85">
+    <circle cx="191" cy="340" r="5" />
+    <circle cx="100" cy="340" r="5" />
+    <circle cx="540" cy="340" r="5" />
+  </g>
+  <path d="M0 350 H640" stroke="#ff6b81" stroke-opacity="0.2" stroke-width="2" />
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <text x="40" y="46" fill="#ffeaf0" font-size="30" font-weight="700">Rift Hospital</text>
+    <text x="40" y="70" fill="#c79cae" font-size="12" letter-spacing="2.4">TRIAGE · CAPACITY · REPUTATION</text>
+    <g fill="#ff8fa3" font-size="11" letter-spacing="1.2">
+      <text x="430" y="352">CAPACITY 08 / 24</text>
+    </g>
+  </g>
+</svg>

@@ -7,6 +7,7 @@ export type CategoryIconKey =
   | 'compass'
   | 'trophy'
   | 'brain'
+  | 'sprout'
   | 'swords'
   | 'sparkles'
   | 'users'
@@ -69,6 +70,14 @@ export const categories: Category[] = [
     icon: 'brain',
     accent: '#fbbf24',
     glow: 'rgba(251, 191, 36, 0.18)',
+  },
+  {
+    id: 'simulation',
+    name: 'Simulation',
+    description: 'Build, grow and tune small systems that keep running without you.',
+    icon: 'sprout',
+    accent: '#4ade9d',
+    glow: 'rgba(74, 222, 157, 0.2)',
   },
   {
     id: 'action',

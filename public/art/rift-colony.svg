@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Rift Colony habitat domes">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#03060f" />
+      <stop offset="0.6" stop-color="#071626" />
+      <stop offset="1" stop-color="#081f1b" />
+    </linearGradient>
+    <linearGradient id="dome" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7dffb2" stop-opacity="0.85" />
+      <stop offset="1" stop-color="#12845a" stop-opacity="0.35" />
+    </linearGradient>
+    <radialGradient id="planet" cx="0.35" cy="0.3" r="0.7">
+      <stop offset="0" stop-color="#9cc0ff" />
+      <stop offset="1" stop-color="#1d2c58" />
+    </radialGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6" result="b" />
+      <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+    </filter>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)" />
+  <g fill="#eaffff">
+    <circle cx="70" cy="60" r="1.6" opacity="0.8" />
+    <circle cx="180" cy="42" r="1.2" opacity="0.6" />
+    <circle cx="300" cy="72" r="1.8" opacity="0.7" />
+    <circle cx="470" cy="46" r="1.2" opacity="0.6" />
+    <circle cx="580" cy="90" r="1.6" opacity="0.8" />
+    <circle cx="520" cy="30" r="1" opacity="0.5" />
+    <circle cx="120" cy="130" r="1" opacity="0.5" />
+  </g>
+  <circle cx="520" cy="86" r="58" fill="url(#planet)" opacity="0.55" />
+  <path d="M0 310 Q120 270 240 300 T520 290 T640 310 V400 H0 Z" fill="#06140f" />
+  <path d="M0 318 Q140 286 280 312 T640 306" stroke="#4ade9d" stroke-opacity="0.3" stroke-width="2" fill="none" />
+  <g filter="url(#glow)">
+    <path d="M70 320 A90 90 0 0 1 250 320 Z" fill="url(#dome)" stroke="#7dffb2" stroke-opacity="0.7" />
+    <path d="M250 320 A70 70 0 0 1 390 320 Z" fill="url(#dome)" stroke="#7dffb2" stroke-opacity="0.5" />
+    <path d="M390 320 A110 110 0 0 1 610 320 Z" fill="url(#dome)" stroke="#7dffb2" stroke-opacity="0.35" />
+  </g>
+  <g stroke="#7dffb2" stroke-opacity="0.45">
+    <path d="M160 320 V240" />
+    <path d="M320 320 V270" />
+    <path d="M500 320 V220" />
+    <path d="M160 240 L190 240 L190 320" />
+    <path d="M500 220 L540 220 L540 320" />
+  </g>
+  <g fill="#4ade9d">
+    <circle cx="160" cy="240" r="4" />
+    <circle cx="320" cy="270" r="3" />
+    <circle cx="500" cy="220" r="4" />
+  </g>
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <text x="40" y="46" fill="#eafff6" font-size="30" font-weight="700">Rift Colony</text>
+    <text x="40" y="70" fill="#8eb7a8" font-size="12" letter-spacing="2.4">HABITAT · MORALE · RESEARCH</text>
+    <g fill="#7dffb2" font-size="11" letter-spacing="1.2">
+      <text x="448" y="352">POP 06 / 08</text>
+    </g>
+  </g>
+</svg>

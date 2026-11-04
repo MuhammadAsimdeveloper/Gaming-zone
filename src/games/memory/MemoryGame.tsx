@@ -103,7 +103,8 @@ export default function MemoryGame({ onStart, onComplete }: GameComponentProps) 
   const [newRecord, setNewRecord] = useState(false);
 
   const flipTimerRef = useRef<number | null>(null);
-  const timerStartRef = useRef<number | null>(null);
+  const elapsedMsRef = useRef(0);
+  const visibleSinceRef = useRef<number | null>(null);
   const startedRef = useRef(false);
   const finishedRef = useRef(false);
   const onStartRef = useRef(onStart);
@@ -125,12 +126,34 @@ export default function MemoryGame({ onStart, onComplete }: GameComponentProps) 
     if (phase !== 'playing') return undefined;
 
     const interval = window.setInterval(() => {
-      if (timerStartRef.current !== null) {
-        setSeconds(Math.floor((Date.now() - timerStartRef.current) / 1000));
-      }
+      if (document.visibilityState === 'hidden') return;
+      const visibleFor =
+        visibleSinceRef.current !== null ? Date.now() - visibleSinceRef.current : 0;
+      setSeconds(Math.floor((elapsedMsRef.current + visibleFor) / 1000));
     }, 250);
 
     return () => window.clearInterval(interval);
+  }, [phase]);
+
+  // Keep the score clock honest: only count time while the tab is visible.
+  useEffect(() => {
+    if (phase !== 'playing') return undefined;
+
+    function handleVisibility() {
+      if (document.visibilityState === 'hidden') {
+        if (visibleSinceRef.current !== null) {
+          elapsedMsRef.current += Math.max(0, Date.now() - visibleSinceRef.current);
+          visibleSinceRef.current = null;
+        }
+        return;
+      }
+      if (visibleSinceRef.current === null) {
+        visibleSinceRef.current = Date.now();
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
   }, [phase]);
 
   useEffect(() => {
@@ -138,10 +161,12 @@ export default function MemoryGame({ onStart, onComplete }: GameComponentProps) 
     if (finishedRef.current) return;
     finishedRef.current = true;
 
-    const elapsed =
-      timerStartRef.current !== null
-        ? Math.max(1, Math.round((Date.now() - timerStartRef.current) / 1000))
-        : seconds;
+    const totalMs =
+      elapsedMsRef.current +
+      (visibleSinceRef.current !== null ? Date.now() - visibleSinceRef.current : 0);
+    elapsedMsRef.current = totalMs;
+    visibleSinceRef.current = null;
+    const elapsed = Math.max(1, Math.round(totalMs / 1000));
     const score = Math.max(0, 1000 - moves * 10 - elapsed * 2);
     const currentBest = pairs === 6 ? bestSix.best : bestEight.best;
 
@@ -157,7 +182,7 @@ export default function MemoryGame({ onStart, onComplete }: GameComponentProps) 
     }
 
     onCompleteRef.current?.({ score, outcome: 'win' });
-  }, [bestEight, bestSix, matchedPairs, moves, pairs, phase, seconds]);
+  }, [bestEight, bestSix, matchedPairs, moves, pairs, phase]);
 
   const activeBest = pairs === 6 ? bestSix.best : bestEight.best;
 
@@ -170,7 +195,8 @@ export default function MemoryGame({ onStart, onComplete }: GameComponentProps) 
 
   const resetBoard = (size: BoardSize) => {
     clearFlipTimer();
-    timerStartRef.current = null;
+    elapsedMsRef.current = 0;
+    visibleSinceRef.current = null;
     startedRef.current = false;
     finishedRef.current = false;
     setCards(buildDeck(size));
@@ -198,7 +224,8 @@ export default function MemoryGame({ onStart, onComplete }: GameComponentProps) 
     if (!card || card.matched || flipped.includes(index)) return;
 
     if (phase === 'ready') {
-      timerStartRef.current = Date.now();
+      elapsedMsRef.current = 0;
+      visibleSinceRef.current = Date.now();
       setSeconds(0);
       setPhase('playing');
       if (!startedRef.current) {

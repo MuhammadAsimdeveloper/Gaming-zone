@@ -196,7 +196,6 @@ export default function ReactionTimeGame({ onStart, onComplete }: GameComponentP
       if (target instanceof HTMLElement) {
         const tag = target.tagName;
         if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable) return;
-        if (tag === 'BUTTON' && target !== panelRef.current) return;
       }
 
       event.preventDefault();

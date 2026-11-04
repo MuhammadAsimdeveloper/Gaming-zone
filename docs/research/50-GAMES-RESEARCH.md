@@ -8,7 +8,7 @@
 
 ## TL;DR
 
-1. **Browser feasibility is not evenly distributed.** Twenty of the 50 reference games score 1–2/5 for a zero-budget clean-room build. The strongest opportunities are deterministic, content-light, 2D or stylised-3D loops: chess (5/5), Terraria-like sandbox (5/5), Subway Surfers-like runner (5/5), Minecraft-like voxel sandbox (4/5), Trackmania-like time trial (4/5), Clash Royale-like arena (4/5), Brawl Stars-like arena (4/5) and Plants vs. Zombies-like lane defence (4/5).
+1. **Browser feasibility is not evenly distributed.** Eleven of the 50 reference games score 1–2/5 for a zero-budget clean-room build. The strongest opportunities are deterministic, content-light, 2D or stylised-3D loops: chess (5/5), Terraria-like sandbox (5/5), Subway Surfers-like runner (5/5), Minecraft-like voxel sandbox (4/5), Trackmania-like time trial (4/5), Clash Royale-like arena (4/5), Brawl Stars-like arena (4/5) and Plants vs. Zombies-like lane defence (4/5).
 2. **Technology is rarely the blocker; content and netcode are.** Voxel rendering, tilemaps, 2D physics and stylised 3D all run in modern browsers. What kills projects is art volume, animation volume, live-service content and authoritative multiplayer.
 3. **Licensing cannot be cloned away.** Sports titles (EA FC, eFootball, Cricket 24, NBA 2K) and licensed open worlds are out of scope for a zero-budget original studio. The correct move is genre-level arcade abstraction, not imitation of licensed presentation.
 4. **Multiplayer-dependent designs are a trap without a backend.** Among Us is rules-cheap but fun-expensive: it needs four or more humans. A single-player version with AI crewmates is a different, weaker product.
@@ -26,7 +26,7 @@ The central conclusion is that **the browser is a strong platform for small, det
 
 Three portfolio realities shape the recommendation:
 
-- NeonRift already ships **seven 2D games** (snake, tic-tac-toe, memory, rock-paper-scissors, reaction time, brick breaker, math sprint) and **three 3D games** (racing, football, open-world driving). The marginal value of a fourth racing or football game is low.
+- NeonRift already ships **twenty-five games**: nine 2D arcade/puzzle titles (snake, tic-tac-toe, memory, rock-paper-scissors, reaction time, brick breaker, math sprint, signal stack and rift runner), three 3D games (racing, football, open-world driving), twelve simulation games (rooftop farming, bus dispatch, power grid, colony management, orbital trading, restaurant pricing, airport operations, clinic triage, theme-park pricing, factory production, freight dispatch and water-network balancing) and rift tactics (strategy). The marginal value of a fourth racing or football game is low.
 - The platform's strengths are **instant play, no account, local persistence and a single reusable player shell**. Games that depend on accounts, servers or live operations fight the platform rather than fit it.
 - The zero-budget constraint is real. Cloudflare Pages free and GitHub Free are sufficient for static delivery, but there is **no verified free authoritative real-time multiplayer service** in this stack. Any design that assumes one is mis-scoped.
 

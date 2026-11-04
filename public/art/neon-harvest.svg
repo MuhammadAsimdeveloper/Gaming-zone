@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Neon Harvest rooftop greenhouse">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#050814" />
+      <stop offset="0.6" stop-color="#071525" />
+      <stop offset="1" stop-color="#0a241f" />
+    </linearGradient>
+    <linearGradient id="roof" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0f2a33" />
+      <stop offset="1" stop-color="#0b1b2a" />
+    </linearGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7dffb2" />
+      <stop offset="1" stop-color="#18a86b" />
+    </linearGradient>
+    <linearGradient id="leaf2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5ee7ff" />
+      <stop offset="1" stop-color="#187e9e" />
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#b9ffe1" stop-opacity="0.9" />
+      <stop offset="1" stop-color="#4ade9d" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#4ade9d" stroke-opacity="0.08" />
+    </pattern>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="640" height="400" fill="url(#bg)" />
+  <rect width="640" height="400" fill="url(#grid)" />
+
+  <circle cx="510" cy="92" r="120" fill="url(#sun)" />
+  <circle cx="510" cy="92" r="38" fill="#4ade9d" fill-opacity="0.28" />
+  <circle cx="510" cy="92" r="22" fill="#b9ffe1" fill-opacity="0.7" filter="url(#glow)" />
+
+  <path d="M0 148 L640 122 V400 H0 Z" fill="url(#roof)" />
+  <path d="M0 148 L640 122" stroke="#4ade9d" stroke-opacity="0.35" stroke-width="2" />
+
+  <g stroke="#4ade9d" stroke-opacity="0.18" fill="none">
+    <path d="M64 400 V196" />
+    <path d="M224 400 V182" />
+    <path d="M384 400 V170" />
+    <path d="M544 400 V158" />
+    <path d="M64 196 L544 158" />
+    <path d="M64 260 L544 222" />
+    <path d="M64 324 L544 286" />
+  </g>
+
+  <g>
+    <rect x="58" y="246" width="470" height="18" rx="9" fill="#07101c" stroke="#4ade9d" stroke-opacity="0.25" />
+    <rect x="58" y="312" width="470" height="18" rx="9" fill="#07101c" stroke="#4ade9d" stroke-opacity="0.18" />
+    <rect x="58" y="372" width="470" height="18" rx="9" fill="#07101c" stroke="#4ade9d" stroke-opacity="0.12" />
+  </g>
+
+  <g filter="url(#glow)">
+    <g transform="translate(96 246)">
+      <path d="M0 0 C-22 -26 -18 -52 0 -66 C18 -52 22 -26 0 0" fill="url(#leaf)" />
+      <path d="M0 0 V-54" stroke="#052318" stroke-width="3" stroke-linecap="round" />
+      <path d="M0 -26 C-16 -34 -22 -46 -18 -56" stroke="#052318" stroke-width="2" fill="none" />
+      <path d="M0 -36 C16 -44 22 -56 18 -66" stroke="#052318" stroke-width="2" fill="none" />
+    </g>
+    <g transform="translate(176 246) scale(0.9)">
+      <path d="M0 0 C-22 -26 -18 -52 0 -66 C18 -52 22 -26 0 0" fill="url(#leaf2)" />
+      <path d="M0 0 V-54" stroke="#05202a" stroke-width="3" stroke-linecap="round" />
+      <path d="M0 -30 C-14 -38 -20 -50 -16 -60" stroke="#05202a" stroke-width="2" fill="none" />
+    </g>
+    <g transform="translate(256 312) scale(1.1)">
+      <circle cx="0" cy="-16" r="20" fill="#ffcf6b" fill-opacity="0.85" />
+      <path d="M0 0 C-18 -20 -16 -42 0 -56 C16 -42 18 -20 0 0" fill="url(#leaf)" />
+      <path d="M0 -4 V-44" stroke="#052318" stroke-width="3" stroke-linecap="round" />
+    </g>
+    <g transform="translate(356 312) scale(0.85)">
+      <path d="M0 0 C-22 -26 -18 -52 0 -66 C18 -52 22 -26 0 0" fill="url(#leaf2)" />
+      <path d="M0 0 V-54" stroke="#05202a" stroke-width="3" stroke-linecap="round" />
+    </g>
+    <g transform="translate(436 372) scale(0.95)">
+      <path d="M0 0 C-22 -26 -18 -52 0 -66 C18 -52 22 -26 0 0" fill="url(#leaf)" />
+      <path d="M0 0 V-54" stroke="#052318" stroke-width="3" stroke-linecap="round" />
+    </g>
+  </g>
+
+  <g fill="#4ade9d" opacity="0.65">
+    <circle cx="96" cy="238" r="2.5" />
+    <circle cx="176" cy="238" r="2.5" />
+    <circle cx="256" cy="304" r="2.5" />
+    <circle cx="356" cy="304" r="2.5" />
+    <circle cx="436" cy="364" r="2.5" />
+  </g>
+
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <text x="40" y="48" fill="#eafff6" font-size="30" font-weight="700" letter-spacing="-0.5">Neon Harvest</text>
+    <text x="40" y="74" fill="#91b7ad" font-size="13" letter-spacing="2.4">ROOFTOP FARM · 20 DAYS</text>
+    <g fill="#4ade9d" font-size="11" letter-spacing="1.4">
+      <text x="424" y="48">WATER</text>
+      <text x="504" y="48">POWER</text>
+      <text x="574" y="48">YIELD</text>
+    </g>
+    <g fill="#eafff6" font-size="16" font-weight="600">
+      <text x="424" y="70">24</text>
+      <text x="504" y="70">32</text>
+      <text x="574" y="70">A+</text>
+    </g>
+  </g>
+</svg>

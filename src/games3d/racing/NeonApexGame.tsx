@@ -232,6 +232,16 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
       if (event.code === 'KeyP' || (event.code === 'Escape' && phase === 'paused')) {
         event.preventDefault();
         togglePause();

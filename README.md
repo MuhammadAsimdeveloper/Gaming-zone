@@ -2,7 +2,7 @@
 
 A free, instant-play browser gaming portal. Original branding, original games, no account and no download.
 
-**Status:** the platform and 10 internal games are implemented. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). **The 15 shortlisted games are designs only — they are not implemented, and no catalogue entry claims otherwise.**
+**Status:** the platform and 25 internal games are implemented. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). **The 15 shortlisted games are designs only — they are not implemented, and no catalogue entry claims otherwise.**
 
 ---
 
@@ -40,22 +40,24 @@ Playwright's Chromium is the only browser target in CI. Install it once with
 
 ---
 
-## Verification snapshot (2026-11-02)
+## Verification snapshot (2026-11-04)
 
 | Command | Result |
 |---|---|
-| `npm ci` | Completed; no lockfile changes |
+| `npm ci` | Completed previously; lockfile unchanged |
 | `npm run typecheck` | Passed with no output |
-| `npm test` | 49 tests passed in 5 files |
-| `npm run build` | Passed; 2,143 modules transformed; Three.js scenery chunk 561.48 kB raw / 140.49 kB gzip triggers the existing >500 kB warning |
-| `npx playwright test --workers=2` | 37 tests passed in 2.4 minutes |
+| `npm test` | 234 tests passed in 27 files |
+| `npm run build` | Passed; Three.js scenery chunk 561.57 kB raw / 140.51 kB gzip triggers the existing >500 kB warning |
+| `npx playwright test --workers=2` | 66 tests passed in 5 files |
 
-The browser suite covers the homepage, catalogue, search, category filters, all ten game pages,
+The browser suite covers the homepage, catalogue, search, category filters, all twenty-five game pages,
 launch/pause/resume/restart, favorites after reload, recently played, fullscreen state, 404,
-mobile navigation, consent behavior, error-boundary recovery, hidden-tab fairness, keyboard and
-touch input, and 2D game completion/game-over. The three 3D games are verified for loading,
-input, pause/resume, restart, mute and route-away cleanup; a complete race or 90-second match is
-not automated. No game is described as manually played beyond what these tests exercised.
+mobile navigation, the absence of analytics/ad scripts in the default build, error-boundary
+recovery, hidden-tab fairness, keyboard and touch input for the 2D games, and 2D game
+completion/game-over. The three 3D games are verified for loading, pause/resume, restart, mute
+and route-away console cleanliness; their action keys are covered by unit-level keyboard-capture
+tests, not by a full browser playthrough, and a complete race or 120-second match is not
+automated. No game is described as manually played beyond what these tests exercised.
 
 CI runs on every push to `main`/`master` and every pull request in
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
@@ -69,7 +71,7 @@ CI runs on every push to `main`/`master` and every pull request in
 - axe-core WCAG 2.2 AA scans report zero critical/serious violations on `/`, `/games`,
   `/about`, and `/game/neon-apex` at 1440px and 390px.
 - Verification: `npm ci`, `npm run typecheck`, `npm test`, `npm run build`,
-  `npx playwright test --workers=2` all pass — 70 unit tests and 51 browser tests.
+  `npx playwright test --workers=2` — 234 unit tests and 66 browser tests, all passing.
 
 ---
 
@@ -105,8 +107,23 @@ CI runs on every push to `main`/`master` and every pull request in
 | Neon Apex | Racing | Three.js |
 | Rift Striker | Sports | Three.js |
 | Neon City Drive | Racing | Three.js |
+| Neon Harvest | Simulation | React |
+| Rift Transit | Simulation | React |
+| Grid Supply | Simulation | React |
+| Rift Colony | Simulation | React |
+| Orbit Market | Simulation | React |
+| Neon Diner | Simulation | React |
+| Skyport | Simulation | React |
+| Rift Hospital | Simulation | React |
+| Park Pulse | Simulation | React |
+| Factory Line | Simulation | React |
+| Cargo Ring | Simulation | React |
+| Aqua Grid | Simulation | React |
+| Signal Stack | Puzzle | React |
+| Rift Runner | Arcade | Canvas 2D |
+| Rift Tactics | Strategy | React |
 
-All ten are original implementations. No commercial game assets, code or branding are used.
+All twenty-five are original implementations. No commercial game assets, code or branding are used.
 
 ---
 
@@ -171,7 +188,7 @@ entry yet**. The gated implementation plan, licence checks and milestones are in
 - Progress, favourites and records are stored in this browser only. There is no account or cloud save.
 - Full 3D race/match completion is not covered by automated tests and has not been manually played to the end. Load, controls, pause/resume, restart, mute and cleanup are covered.
 - Clearing site data removes local progress.
-- No admin dashboard is shipped; the admin helper modules are dormant scaffolding and are not authentication.
+- No admin dashboard is shipped. `adminAuth.ts` is dormant scaffolding and is not authentication. `adminStore.ts` only applies optional local catalogue overrides from this browser; it is not authentication and is never a server-side admin feature.
 - Ads are disabled by default. No ad script loads unless ads are explicitly enabled, configured, and advertising consent is granted.
 - Analytics is disabled by default and loads only after analytics consent is granted.
 - External game embedding is deny-by-default and requires an explicit HTTPS allowlist.

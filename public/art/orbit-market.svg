@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Orbit Market orbital trading docks">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#080512" />
+      <stop offset="0.55" stop-color="#160d2c" />
+      <stop offset="1" stop-color="#070b1a" />
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b285ff" />
+      <stop offset="1" stop-color="#4c8dff" />
+    </linearGradient>
+    <radialGradient id="planet" cx="0.4" cy="0.35" r="0.65">
+      <stop offset="0" stop-color="#3a4b8a" />
+      <stop offset="1" stop-color="#0b1024" />
+    </radialGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6" result="b" />
+      <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+    </filter>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)" />
+  <g fill="#f2eaff">
+    <circle cx="80" cy="70" r="1.4" opacity="0.8" />
+    <circle cx="200" cy="48" r="1.1" opacity="0.6" />
+    <circle cx="420" cy="66" r="1.5" opacity="0.7" />
+    <circle cx="560" cy="48" r="1.2" opacity="0.7" />
+    <circle cx="600" cy="150" r="1.6" opacity="0.6" />
+    <circle cx="120" cy="170" r="1" opacity="0.5" />
+  </g>
+  <circle cx="470" cy="230" r="92" fill="url(#planet)" />
+  <ellipse cx="470" cy="240" rx="150" ry="34" fill="none" stroke="url(#ring)" stroke-width="5" opacity="0.65" transform="rotate(-14 470 240)" filter="url(#glow)" />
+  <g filter="url(#glow)">
+    <circle cx="180" cy="190" r="34" fill="#0d1930" stroke="#b285ff" stroke-width="2" />
+    <circle cx="180" cy="190" r="13" fill="#b285ff" fill-opacity="0.35" />
+    <path d="M146 190 H214" stroke="#b285ff" stroke-width="5" opacity="0.6" />
+    <circle cx="320" cy="120" r="18" fill="#0d1930" stroke="#4c8dff" stroke-width="2" />
+    <circle cx="320" cy="120" r="7" fill="#4c8dff" fill-opacity="0.4" />
+    <path d="M302 120 H338" stroke="#4c8dff" stroke-width="3" opacity="0.6" />
+  </g>
+  <g transform="translate(230 255)" filter="url(#glow)">
+    <path d="M0 30 L32 0 H96 L128 30 Z" fill="#1a1640" stroke="#b285ff" stroke-opacity="0.6" />
+    <rect x="18" y="32" width="92" height="26" rx="8" fill="#241a4a" stroke="#b285ff" stroke-opacity="0.5" />
+    <circle cx="40" cy="62" r="6" fill="#4c8dff" opacity="0.8" />
+    <circle cx="88" cy="62" r="6" fill="#4c8dff" opacity="0.8" />
+  </g>
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <text x="40" y="46" fill="#f5ecff" font-size="30" font-weight="700">Orbit Market</text>
+    <text x="40" y="70" fill="#b5a4d6" font-size="12" letter-spacing="2.4">FOUR DOCKS · ONE CARGO HOLD</text>
+    <g fill="#b285ff" font-size="11" letter-spacing="1.2">
+      <text x="460" y="352">ORE 21c · FOOD 12c · TECH 48c</text>
+    </g>
+  </g>
+</svg>

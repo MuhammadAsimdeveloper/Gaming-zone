@@ -251,6 +251,16 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
       if (phase !== 'live' && phase !== 'paused') return;
       if (event.code === 'KeyP' || (event.code === 'Escape' && phase === 'paused')) {
         event.preventDefault();
@@ -260,7 +270,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
         event.preventDefault();
         cycleCamera();
       }
-      if (event.code === 'Tab') {
+      if (event.code === 'KeyQ' && phase === 'live') {
         event.preventDefault();
         switchPlayer();
       }
@@ -391,7 +401,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
               <span><b className="text-ink">J</b> shoot (hold)</span>
               <span><b className="text-ink">K</b> pass</span>
               <span><b className="text-ink">Space</b> press / tackle</span>
-              <span><b className="text-ink">Tab</b> switch player</span>
+              <span><b className="text-ink">Q</b> switch player</span>
               <span><b className="text-ink">C</b> camera</span>
               <span><b className="text-ink">P</b> pause</span>
             </div>

@@ -11,6 +11,21 @@ export const GAMES = [
   { slug: 'neon-apex', title: 'Neon Apex' },
   { slug: 'rift-striker', title: 'Rift Striker' },
   { slug: 'neon-city-drive', title: 'Neon City Drive' },
+  { slug: 'neon-harvest', title: 'Neon Harvest' },
+  { slug: 'rift-transit', title: 'Rift Transit' },
+  { slug: 'grid-supply', title: 'Grid Supply' },
+  { slug: 'rift-colony', title: 'Rift Colony' },
+  { slug: 'orbit-market', title: 'Orbit Market' },
+  { slug: 'neon-diner', title: 'Neon Diner' },
+  { slug: 'skyport', title: 'Skyport' },
+  { slug: 'rift-hospital', title: 'Rift Hospital' },
+  { slug: 'park-pulse', title: 'Park Pulse' },
+  { slug: 'factory-line', title: 'Factory Line' },
+  { slug: 'cargo-ring', title: 'Cargo Ring' },
+  { slug: 'aqua-grid', title: 'Aqua Grid' },
+  { slug: 'signal-stack', title: 'Signal Stack' },
+  { slug: 'rift-runner', title: 'Rift Runner' },
+  { slug: 'rift-tactics', title: 'Rift Tactics' },
 ] as const;
 
 export interface ErrorLog {

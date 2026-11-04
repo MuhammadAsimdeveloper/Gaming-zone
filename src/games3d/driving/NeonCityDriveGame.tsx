@@ -273,6 +273,16 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
       if (phase !== 'drive' && phase !== 'paused') return;
       if (event.code === 'KeyP' || (event.code === 'Escape' && phase === 'paused')) {
         event.preventDefault();

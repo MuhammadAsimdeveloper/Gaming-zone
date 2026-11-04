@@ -103,7 +103,7 @@ test.describe('player shell and local preferences', () => {
   });
 });
 
-test.describe('all ten games boot and accept input', () => {
+test.describe('all twenty-five games boot and accept input', () => {
   test.describe.configure({ timeout: 150_000 });
 
   for (const game of GAMES) {
@@ -180,6 +180,69 @@ test.describe('all ten games boot and accept input', () => {
           await expect(page.getByRole('button', { name: 'Pause drive' })).toBeVisible();
           await pauseUntilPaused(page, 'Drive paused');
           await page.getByRole('button', { name: 'Restart run' }).click();
+          break;
+        case 'neon-harvest':
+          await page.getByRole('button', { name: 'Start season', exact: true }).click();
+          await page.getByRole('button', { name: /^Plant Rift Lettuce in plot 1/ }).click();
+          await expect(page.getByRole('button', { name: /^Water plot 1/ })).toBeVisible();
+          break;
+        case 'rift-transit':
+          await page.getByRole('button', { name: 'Start service', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause service' })).toBeVisible();
+          break;
+        case 'grid-supply':
+          await page.getByRole('button', { name: 'Start grid', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause grid' })).toBeVisible();
+          break;
+        case 'rift-colony':
+          await page.getByRole('button', { name: 'Start colony', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause colony' })).toBeVisible();
+          break;
+        case 'orbit-market':
+          await page.getByRole('button', { name: 'Start trading', exact: true }).click();
+          await expect(page.getByText('Current dock', { exact: true })).toBeVisible();
+          break;
+        case 'neon-diner':
+          await page.getByRole('button', { name: 'Open diner', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause service' })).toBeVisible();
+          break;
+        case 'skyport':
+          await page.getByRole('button', { name: 'Start tower', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause tower' })).toBeVisible();
+          break;
+        case 'rift-hospital':
+          await page.getByRole('button', { name: 'Open clinic', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause clinic' })).toBeVisible();
+          break;
+        case 'park-pulse':
+          await page.getByRole('button', { name: 'Open park', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause park' })).toBeVisible();
+          break;
+        case 'factory-line':
+          await page.getByRole('button', { name: 'Start line', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause line' })).toBeVisible();
+          break;
+        case 'cargo-ring':
+          await page.getByRole('button', { name: 'Open depot', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause depot' })).toBeVisible();
+          break;
+        case 'aqua-grid':
+          await page.getByRole('button', { name: 'Start grid', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause water grid' })).toBeVisible();
+          break;
+        case 'signal-stack':
+          await page.getByRole('button', { name: 'Start stacking', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Drop', exact: true })).toBeEnabled();
+          break;
+        case 'rift-runner':
+          await page.getByRole('button', { name: 'Start run', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause run' })).toBeVisible();
+          break;
+        case 'rift-tactics':
+          await page.getByRole('button', { name: 'Start battle', exact: true }).click();
+          await page.getByRole('button', { name: /^Cell 1,5: squad Vanguard/ }).click();
+          await page.getByRole('button', { name: /^Cell 1,4: empty/ }).click();
+          await expect(page.getByRole('button', { name: /^Cell 1,4: squad Vanguard/ })).toBeVisible();
           break;
       }
 

@@ -7,20 +7,20 @@ test.describe('catalogue and navigation', () => {
     await page.goto('/');
 
     await expect(page.getByRole('heading', { name: /one click away/i })).toBeVisible();
-    await expect(page.getByText(/10 original games/i)).toBeVisible();
-    await expect(page.getByRole('link', { name: /Neon Apex/i }).first()).toBeVisible();
+    await expect(page.getByText(/25 original games/i)).toBeVisible();
+    await expect(page.getByRole('link', { name: /Neon Snake/i }).first()).toBeVisible();
     await expect(page.getByRole('link', { name: /Browse all games/i }).first()).toBeVisible();
 
     expectNoErrors(errors);
   });
 
-  test('all ten published games appear in the catalogue', async ({ page }) => {
+  test('all twenty-five published games appear in the catalogue', async ({ page }) => {
     const errors = collectErrors(page);
     await page.goto('/games');
     await expect(page.getByRole('heading', { name: /All games/i })).toBeVisible();
 
     const loadMore = page.getByRole('button', { name: /Load more games/i });
-    if (await loadMore.isVisible()) await loadMore.click();
+    while (await loadMore.isVisible()) await loadMore.click();
 
     for (const game of GAMES) {
       await expect(page.getByRole('link', { name: new RegExp(game.title) }).first(), game.title).toBeVisible();
