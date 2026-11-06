@@ -44,6 +44,7 @@ export const INTERNAL_GAME_KEYS = [
   'neon-rush',
   'penalty-protocol',
   'hoop-circuit',
+  'lawn-protocol',
 ] as const;
 
 export type InternalGameKey = (typeof INTERNAL_GAME_KEYS)[number];

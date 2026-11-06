@@ -1337,5 +1337,64 @@
     "createdAt": "2026-11-06T20:00:00.000Z",
     "featured": false,
     "popularityRank": 29
+  },
+  {
+    "id": "lawn-protocol",
+    "slug": "lawn-protocol",
+    "title": "Lawn Protocol",
+    "tagline": "Grow the grid. Hold the line.",
+    "description": "A five-lane rooftop defence game. Plant eight bio-modules on a 5 by 9 grid, collect light and hold back ten rust-swarm enemy types across twelve authored levels. Every lane has one emergency purge, stars reward a clean defence, and endless mode escalates until the core falls; all progress stays in this browser.",
+    "category": "strategy",
+    "secondaryCategories": [
+      "puzzle",
+      "casual"
+    ],
+    "thumbnail": "/art/lawn-protocol.svg",
+    "accent": "#fbbf24",
+    "type": "internal",
+    "internalKey": "lawn-protocol",
+    "instructions": [
+      "Pick a level or endless mode, then deploy the defence.",
+      "Select a seed card and tap an empty grid cell to plant a module.",
+      "Collect light tokens by tapping them; Photoferns also generate light over time.",
+      "Each lane has one emergency purge that clears it when a rust unit reaches the core.",
+      "Shovel a module for half its cost, or use it to rebuild a lane mid-wave.",
+      "Survive all waves to win; earn three stars by retaking no damage and using no purges.",
+      "Campaign stars, unlocks and endless bests stay in this browser."
+    ],
+    "controls": [
+      {
+        "label": "Select seed",
+        "keys": "1 to 8"
+      },
+      {
+        "label": "Plant",
+        "keys": "Click or tap an empty cell"
+      },
+      {
+        "label": "Shovel",
+        "keys": "X, then click a module"
+      },
+      {
+        "label": "Pause",
+        "keys": "P or Escape"
+      },
+      {
+        "label": "Speed",
+        "keys": "F"
+      },
+      {
+        "label": "Mute",
+        "keys": "M"
+      },
+      {
+        "label": "Touch",
+        "keys": "Tap a seed card, then tap a cell"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-06T21:00:00.000Z",
+    "featured": false,
+    "popularityRank": 30
   }
 ]

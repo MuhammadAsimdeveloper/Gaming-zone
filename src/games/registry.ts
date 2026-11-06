@@ -35,4 +35,5 @@ export const gameRegistry: Record<
   'neon-rush': lazy(() => import('../games/neon-rush/NeonRushGame')),
   'penalty-protocol': lazy(() => import('../games/sports/penalty/PenaltyProtocolGame')),
   'hoop-circuit': lazy(() => import('../games/sports/hoop/HoopCircuitGame')),
+  'lawn-protocol': lazy(() => import('../games/lawn-protocol/LawnProtocolGame')),
 };

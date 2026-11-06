@@ -103,7 +103,7 @@ test.describe('player shell and local preferences', () => {
   });
 });
 
-test.describe('all twenty-nine games boot and accept input', () => {
+test.describe('all thirty games boot and accept input', () => {
   test.describe.configure({ timeout: 150_000 });
 
   for (const game of GAMES) {
@@ -275,6 +275,16 @@ test.describe('all twenty-nine games boot and accept input', () => {
           await page.getByRole('button', { name: 'Pause game' }).click();
           await expect(page.getByRole('button', { name: 'Resume game' })).toBeVisible();
           await page.getByRole('button', { name: 'Resume game' }).click();
+          break;
+        case 'lawn-protocol':
+          await page.getByRole('button', { name: 'Deploy level' }).click();
+          await expect(page.getByRole('button', { name: 'Pause defense' })).toBeVisible();
+          await page.getByRole('button', { name: 'Select Photofern, 50 light' }).click();
+          await page.getByRole('button', { name: 'Lane 3 column 2, empty' }).click();
+          await expect(page.getByRole('button', { name: 'Lane 3 column 2, Photofern' })).toBeVisible();
+          await page.getByRole('button', { name: 'Pause defense' }).click();
+          await expect(page.getByRole('button', { name: 'Resume defense' })).toBeVisible();
+          await page.getByRole('button', { name: 'Resume defense' }).click();
           break;
       }
 
