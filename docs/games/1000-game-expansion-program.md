@@ -1,6 +1,6 @@
 # NeonRift 1000-Game Expansion Program
 
-**Status:** program definition, 2026-11-06. The catalogue currently ships **31 original games**.
+**Status:** program definition, 2026-11-06; Wave 1 complete 2026-11-07. The catalogue currently ships **32 original games**.
 This document defines how the library grows to **1000 playable, tested games** without
 fabricating entries, cloning proprietary content, or diluting quality.
 
@@ -34,22 +34,22 @@ These rules are not negotiable, and they override any "ship faster" pressure.
 
 | Metric | Value |
 |---|---|
-| Published games | 31 |
-| Simulation suites (pure rules) | Included in the 59 Vitest files |
-| Unit tests | 572 passing |
-| Dedicated browser suites | Penalty Protocol, Hoop Circuit, Neon Rush, Rift Chess, Lawn Protocol, Apex Time Trial, plus the shared gameplay matrix |
-| Catalogue boot matrix | All 31 slugs boot, start, unmount and leave no console errors |
+| Published games | 32 |
+| Simulation suites (pure rules) | Included in the 73 Vitest files |
+| Unit tests | 682 passing |
+| Dedicated browser suites | Penalty Protocol, Hoop Circuit, Neon Rush, Rift Chess, Lawn Protocol, Apex Time Trial, Street Cricket, plus the shared gameplay matrix |
+| Catalogue boot matrix | All 32 slugs boot, start, unmount and leave no console errors |
 
 Current category distribution is concentrated in simulation (12) and thin in sports,
 board, card, trivia, racing and action. The program's first phases deliberately correct
 that imbalance.
 
-**Shipped today (31):** Neon Snake, Tic-Tac-Toe, Memory Match, Rock Paper Scissors,
+**Shipped today (32):** Neon Snake, Tic-Tac-Toe, Memory Match, Rock Paper Scissors,
 Reaction Time Challenge, Rift Breaker, Math Sprint, Neon Apex, Rift Striker, Neon City Drive,
 Neon Harvest, Rift Transit, Grid Supply, Rift Colony, Orbit Market, Neon Diner, Skyport,
 Rift Hospital, Park Pulse, Factory Line, Cargo Ring, Aqua Grid, Signal Stack, Rift Runner,
 Rift Tactics, Rift Chess, Neon Rush, Penalty Protocol, Hoop Circuit, Lawn Protocol,
-Apex Time Trial.
+Apex Time Trial, Street Cricket.
 
 ---
 
@@ -107,7 +107,7 @@ A variant is publishable only when all of these are true:
 
 ## 4. Portfolio allocation to 1000
 
-31 games ship today. The remaining **969** are allocated across 27 kit families. Counts are
+32 games ship today. The remaining **968** are allocated across 27 kit families. Counts are
 deliberate: puzzle and board families scale with authored content, simulation scales with
 scenario packs, and action families stay smaller because each variant needs bespoke tuning.
 
@@ -140,8 +140,8 @@ scenario packs, and action families stay smaller because each variant needs besp
 | 25 | Sandbox & creative | 19 | Neon Craft worlds, drawing, music maker, level editor challenges | 9 |
 | 26 | Idle & incremental | 25 | neon factory, space mining, diner rush, garden growth | 9 |
 | 27 | Hidden object & detective | 10 | scene search, clue deduction, alibi logic | 9 |
-| | **Total new** | **969** | | |
-| | **Shipped** | **31** | | |
+| | **Total new** | **968** | | |
+| | **Shipped** | **32** | | |
 | | **Grand total** | **1000** | | |
 
 ### 4.1 Family scaling rules
@@ -163,9 +163,9 @@ not start until the previous phase's published count is verified against
 
 | Phase | Scope | Adds | Cumulative | Exit gate |
 |---|---|---:|---:|---|
-| 0 | Platform + current library | 31 | 31 | Full suite green (current baseline) |
-| 1 | Scale foundation (no games) | 0 | 31 | Catalogue split, manifest generator, generated boot sweep, search pagination |
-| 2 | Finish Wave 1 + Wave 2 + sports flagships | 9 | 40 | Street Cricket, six Wave 2 titles, two sports flagships |
+| 0 | Platform + current library | 32 | 32 | Full suite green (current baseline) |
+| 1 | Scale foundation (no games) | 0 | 32 | Catalogue split, manifest generator, generated boot sweep, search pagination |
+| 2 | Finish Wave 2 + sports flagships | 8 | 40 | Six Wave 2 titles, two sports flagships |
 | 3 | Puzzle families 1–6 | 206 | 246 | 206 variants; kit cores under budget; sampled e2e green |
 | 4 | Board, card and trivia | 145 | 391 | 391 |
 | 5 | Arcade, runners, rhythm, party | 125 | 516 | 516 |
@@ -182,14 +182,14 @@ why Phase 6 adds 85 rather than 96.
 This is a multi-quarter program. A credible cadence with the current single-maintainer
 workflow is **10–20 published variants per month**, and less during kit construction
 (a new kit typically takes 2–4 weeks before its first variant ships). At 15/month, the
-remaining 969 take roughly five years. The roadmap is honest about that: the alternative —
+remaining 968 take roughly five years. The roadmap is honest about that: the alternative —
 fast catalogue inflation — is explicitly rejected in §1.
 
 ---
 
 ## 6. Catalogue architecture at 1000 records
 
-The current single `src/data/games.json` (31 records) is fine now and will not be at 1000.
+The current single `src/data/games.json` (32 records) is fine now and will not be at 1000.
 The Phase 1 foundation replaces it with a generated, chunked catalogue.
 
 ### 6.1 Data split
@@ -311,9 +311,10 @@ exceeds budget without an explicit, documented exception.
 ## 11. Immediate next work (after this document)
 
 1. **Phase 1 foundation:** catalogue split + manifest generator + generated boot sweep.
-2. **Phase 2 Wave 1 completion:** Lawn Protocol, Apex Time Trial, Street Cricket.
-3. **Phase 2 Wave 2:** Neon Craft and its five companion designs, one sub-wave at a time.
-4. **Kit 1 pilot:** solitaire core with three variants (Klondike, FreeCell, Spider) proving the
+2. **Phase 2 Wave 2:** Neon Craft and its five companion designs, one sub-wave at a time.
+   Wave 1 is complete as of 2026-11-07 (Rift Chess, Neon Rush, Lawn Protocol, Apex Time
+   Trial, Street Cricket).
+3. **Kit 1 pilot:** solitaire core with three variants (Klondike, FreeCell, Spider) proving the
    kit pipeline end to end before scaling the puzzle phase.
 
 Progress against this roadmap is tracked only by published, tested catalogue records. The

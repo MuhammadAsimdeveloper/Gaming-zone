@@ -103,7 +103,7 @@ test.describe('player shell and local preferences', () => {
   });
 });
 
-test.describe('all thirty-one games boot and accept input', () => {
+test.describe('all thirty-two games boot and accept input', () => {
   test.describe.configure({ timeout: 150_000 });
 
   for (const game of GAMES) {
@@ -296,6 +296,18 @@ test.describe('all thirty-one games boot and accept input', () => {
           await pauseUntilPaused(page, 'Time trial paused');
           await page.getByRole('button', { name: 'Restart run' }).click();
           await expect(page.getByText('Ready', { exact: true })).toBeVisible();
+          break;
+        case 'street-cricket':
+          await page.getByRole('button', { name: 'Take the rooftop', exact: true }).click();
+          await assertSizedCanvas(page);
+          await expect(page.getByRole('button', { name: 'Mute audio' })).toBeVisible();
+          await page.getByRole('button', { name: 'Mute audio' }).click();
+          await expect(page.getByRole('button', { name: 'Unmute audio' })).toBeVisible();
+          await page.getByRole('button', { name: 'Unmute audio' }).click();
+          await page.getByRole('button', { name: 'Pause match' }).click();
+          await expect(page.getByRole('button', { name: 'Resume match' })).toBeVisible();
+          await page.getByRole('button', { name: 'Resume match' }).click();
+          await expect(page.getByRole('button', { name: 'Pause match' })).toBeVisible();
           break;
       }
 

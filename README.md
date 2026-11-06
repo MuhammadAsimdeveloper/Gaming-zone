@@ -2,7 +2,7 @@
 
 A free, instant-play browser gaming portal. Original branding, original games, no account and no download.
 
-**Status:** the platform and 31 internal games are implemented. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). Four of the 15 shortlisted games are shipped — Rift Chess, Neon Rush, Lawn Protocol and Apex Time Trial — and the rest remain designs. A six-game Wave 2 design spec (Neon Craft plus five companions) was written on 2026-11-04; none of it is implemented and no catalogue entry exists for it. The path to a 1000-game library is defined in the [1000-game expansion program](docs/games/1000-game-expansion-program.md): 31 shipped, 969 planned across 27 kit families, with no placeholder entries.
+**Status:** the platform and 32 internal games are implemented. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). Five of the 15 shortlisted games are shipped — Rift Chess, Neon Rush, Lawn Protocol, Apex Time Trial and Street Cricket — completing Wave 1; the rest remain designs. A six-game Wave 2 design spec (Neon Craft plus five companions) was written on 2026-11-04; none of it is implemented and no catalogue entry exists for it. The path to a 1000-game library is defined in the [1000-game expansion program](docs/games/1000-game-expansion-program.md): 32 shipped, 968 planned across 27 kit families, with no placeholder entries.
 
 ---
 
@@ -46,17 +46,17 @@ Playwright's Chromium is the only browser target in CI. Install it once with
 |---|---|
 | `npm ci` | Completed previously; lockfile unchanged |
 | `npm run typecheck` | Passed with no output |
-| `npm test` | 609 tests passed in 64 files |
-| `npm run build` | Passed; Apex Time Trial loads as its own 52.13 kB / 14.41 kB gzip chunk; the shared Three.js scenery chunk is 563.13 kB raw / 140.93 kB gzip and still triggers the existing >500 kB warning |
-| `npx playwright test --workers=2` | 95 tests passed in 11 files |
+| `npm test` | 682 tests passed in 73 files |
+| `npm run build` | Passed; Street Cricket loads as its own 48.60 kB / 15.11 kB gzip chunk; the shared Three.js scenery chunk is 565.24 kB raw / 141.54 kB gzip and still triggers the existing >500 kB warning |
+| `npx playwright test --workers=2` | 96 tests passed in 11 files |
 
-The browser suite covers the homepage, catalogue, search, category filters, all thirty-one game pages,
+The browser suite covers the homepage, catalogue, search, category filters, all thirty-two game pages,
 launch/pause/resume/restart, favorites after reload, recently played, fullscreen state, 404,
 mobile navigation, the absence of analytics/ad scripts in the default build, error-boundary
 recovery, hidden-tab fairness, keyboard and touch input for the 2D games, and 2D game
-completion/game-over. The four 3D games are verified for loading, pause/resume, restart, mute
+completion/game-over. The five 3D games are verified for loading, pause/resume, restart, mute
 and route-away console cleanliness; their action keys are covered by unit-level keyboard-capture
-tests, not by a full browser playthrough, and a complete race, time trial or 120-second match is
+tests, not by a full browser playthrough, and a complete race, time trial, match or over is
 not automated. No game is described as manually played beyond what these tests exercised.
 
 CI runs on every push to `main`/`master` and every pull request in
@@ -128,8 +128,9 @@ CI runs on every push to `main`/`master` and every pull request in
 | Hoop Circuit | Sports | Canvas 2D |
 | Lawn Protocol | Strategy | Canvas 2D |
 | Apex Time Trial | Racing | Three.js |
+| Street Cricket | Sports | Three.js |
 
-All thirty-one are original implementations. No commercial game assets, code or branding are used.
+All thirty-two are original implementations. No commercial game assets, code or branding are used.
 Rift Chess uses the open-source chess.js library (BSD-2-Clause) for move generation; see
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
@@ -144,7 +145,7 @@ The full deliverable is indexed at [`docs/research/README.md`](docs/research/REA
 - 15 game design documents with features, architecture, milestones, testing and limitations.
 - Licence audit, source-repository directory, technical architecture and delivery roadmap.
 - Six-game Wave 2 design spec (2026-11-04): Neon Craft plus Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology. Design only; implementation has not started. See [`docs/superpowers/specs/2026-11-04-games-wave2-design.md`](docs/superpowers/specs/2026-11-04-games-wave2-design.md).
-- [1000-game expansion program](docs/games/1000-game-expansion-program.md): kit and variant architecture, the 27-family portfolio allocation to 1000 games, the nine-phase roadmap, quality gates, catalogue scaling and licensing policy. 31 games carry catalogue entries today; the remaining 969 are planned, not shipped.
+- [1000-game expansion program](docs/games/1000-game-expansion-program.md): kit and variant architecture, the 27-family portfolio allocation to 1000 games, the nine-phase roadmap, quality gates, catalogue scaling and licensing policy. 32 games carry catalogue entries today; the remaining 968 are planned, not shipped.
 - [25-game enhancement report (2026-11-05)](docs/ENHANCEMENT-REPORT-2026-11-05.md): verified fixes, a per-game status table and a prioritized file-specific backlog.
 
 Start with the [package index](docs/research/README.md).
@@ -191,14 +192,15 @@ The build is a static site. `public/_redirects` provides the SPA fallback for de
 Three tracks are queued. **Only the shipped games have catalogue entries.**
 
 - **1000-game expansion program (2026-11-06):** kit and variant architecture plus a
-  nine-phase roadmap from 31 to 1000 tested games. Phase 1 is the catalogue scale
-  foundation; Phase 2 finishes Wave 1 and the Wave 2 slate. See
+  nine-phase roadmap from 32 to 1000 tested games. Phase 1 is the catalogue scale
+  foundation; Phase 2 covers the Wave 2 slate. See
   [`docs/games/1000-game-expansion-program.md`](docs/games/1000-game-expansion-program.md).
 - **Wave 2 six-game slate (2026-11-04):** Neon Craft, Rift Rally, Neon Duel, Riftfall, Rift
   Life and Rift Ecology, split into three sub-waves. The design spec is written and awaiting
   review at
   [`docs/superpowers/specs/2026-11-04-games-wave2-design.md`](docs/superpowers/specs/2026-11-04-games-wave2-design.md).
-- **Wave 1 remainder:** Street Cricket is designed in the research package but not implemented.
+- **Wave 1:** complete as of 2026-11-07 — Rift Chess, Neon Rush, Lawn Protocol, Apex Time
+  Trial and Street Cricket are shipped, integrated and tested.
 
 ---
 
@@ -211,9 +213,9 @@ Three tracks are queued. **Only the shipped games have catalogue entries.**
 - Ads are disabled by default. No ad script loads unless ads are explicitly enabled, configured, and advertising consent is granted.
 - Analytics is disabled by default and loads only after analytics consent is granted.
 - External game embedding is deny-by-default and requires an explicit HTTPS allowlist.
-- Four of the 15 shortlist games are shipped (Rift Chess, Neon Rush, Lawn Protocol, Apex Time Trial); the remaining eleven are designs, not shipped features.
+- Five of the 15 shortlist games are shipped (Rift Chess, Neon Rush, Lawn Protocol, Apex Time Trial, Street Cricket); the remaining ten are designs, not shipped features.
 - The six games in the 2026-11-04 Wave 2 spec are designs only. No game code, catalogue entry, thumbnail or test exists for them yet.
-- The 1000-game target is a documented program, not a shipped library. 31 games have catalogue entries today; the remaining 969 are planned. No placeholder records exist.
+- The 1000-game target is a documented program, not a shipped library. 32 games have catalogue entries today; the remaining 968 are planned. No placeholder records exist.
 - Game records are local; the site does not display invented player counts, ratings or revenue.
 - No Content-Security-Policy ships yet; the optional analytics and ad integrations must be validated against it before one is added.
 - The production build warns about the shared Three.js chunk exceeding 500 kB raw. It is lazy-loaded and compressed to ~140 kB gzip, but further splitting is still an open performance task.

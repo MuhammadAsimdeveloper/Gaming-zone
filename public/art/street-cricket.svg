@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Street Cricket key art: a floodlit rooftop pitch at dusk with a batter, stumps, a fielder and a lofted ball arcing toward the skyline">
+  <defs>
+    <linearGradient id="scSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#04121a"/>
+      <stop offset="0.55" stop-color="#07242c"/>
+      <stop offset="1" stop-color="#0b3a3a"/>
+    </linearGradient>
+    <linearGradient id="scRoof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#123f42"/>
+      <stop offset="1" stop-color="#071d22"/>
+    </linearGradient>
+    <linearGradient id="scPitch" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c5c55"/>
+      <stop offset="1" stop-color="#0e3a38"/>
+    </linearGradient>
+    <linearGradient id="scArc" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#5ef2c0"/>
+      <stop offset="1" stop-color="#c9ff6b"/>
+    </linearGradient>
+    <radialGradient id="scHaze" cx="0.5" cy="0.4" r="0.62">
+      <stop offset="0" stop-color="#5ef2c0" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#5ef2c0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="scBall" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#fff8d8"/>
+      <stop offset="1" stop-color="#ffb454"/>
+    </radialGradient>
+    <filter id="scGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="scSoft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.2"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#scSky)"/>
+  <ellipse cx="400" cy="250" rx="440" ry="250" fill="url(#scHaze)"/>
+
+  <g opacity="0.55" fill="#0a2b33">
+    <rect x="18" y="168" width="58" height="200"/>
+    <rect x="86" y="128" width="44" height="240"/>
+    <rect x="140" y="196" width="62" height="172"/>
+    <rect x="212" y="150" width="38" height="218"/>
+    <rect x="560" y="140" width="52" height="228"/>
+    <rect x="622" y="184" width="66" height="184"/>
+    <rect x="698" y="126" width="42" height="242"/>
+    <rect x="750" y="176" width="34" height="192"/>
+  </g>
+  <g fill="#5ef2c0" opacity="0.45">
+    <rect x="26" y="184" width="7" height="4"/>
+    <rect x="94" y="144" width="7" height="4"/>
+    <rect x="150" y="212" width="7" height="4"/>
+    <rect x="220" y="166" width="7" height="4"/>
+    <rect x="568" y="156" width="7" height="4"/>
+    <rect x="632" y="200" width="7" height="4"/>
+    <rect x="706" y="142" width="7" height="4"/>
+  </g>
+
+  <g opacity="0.5" fill="#7fe8d0">
+    <rect x="34" y="196" width="5" height="5"/>
+    <rect x="102" y="162" width="5" height="5"/>
+    <rect x="158" y="228" width="5" height="5"/>
+    <rect x="576" y="174" width="5" height="5"/>
+    <rect x="640" y="216" width="5" height="5"/>
+  </g>
+
+  <text x="44" y="72" fill="#f2fffa" font-family="ui-sans-serif, system-ui, sans-serif" font-size="38" font-weight="700">Street Cricket</text>
+  <text x="46" y="100" fill="#8fd9c6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">SIX BALLS · ONE ROOFTOP · TIMING OVER STATISTICS</text>
+
+  <g opacity="0.18" stroke="#5ef2c0" stroke-width="1.4">
+    <path d="M44 120 H286 M44 132 H246 M44 144 H206"/>
+  </g>
+
+  <path d="M-20 370 L190 300 L610 300 L820 370 Z" fill="url(#scRoof)"/>
+  <path d="M-20 370 L190 300 L610 300 L820 370 L820 500 L-20 500 Z" fill="#071a1f" opacity="0.7"/>
+
+  <g stroke="#5ef2c0" stroke-opacity="0.25" stroke-width="1.2">
+    <path d="M60 356 L740 356 M20 372 H780 M0 392 H800 M-10 414 H810 M-20 438 H820"/>
+  </g>
+
+  <path d="M330 500 L372 340 L436 340 L472 500 Z" fill="url(#scPitch)"/>
+  <path d="M372 340 L436 340 M366 366 H442 M360 396 H448 M354 428 H454 M348 462 H460" stroke="#9ffbe0" stroke-opacity="0.28" stroke-width="2"/>
+
+  <g stroke="#eafff7" stroke-width="3" stroke-linecap="round" opacity="0.85">
+    <path d="M396 330 V306 M410 330 V306 M424 330 V306"/>
+    <path d="M392 306 H428"/>
+  </g>
+  <g opacity="0.9">
+    <rect x="384" y="302" width="5" height="16" rx="1.5" fill="#f6ffdc"/>
+    <rect x="404" y="300" width="5" height="18" rx="1.5" fill="#f6ffdc"/>
+    <rect x="424" y="302" width="5" height="16" rx="1.5" fill="#f6ffdc"/>
+  </g>
+
+  <path d="M330 500 L372 340 L436 340 L472 500" fill="none" stroke="#5ef2c0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="8 10"/>
+
+  <g transform="translate(300 320)">
+    <ellipse cx="0" cy="66" rx="44" ry="9" fill="#000" opacity="0.45"/>
+    <circle cx="-4" cy="-38" r="15" fill="#0b1f26" stroke="#5ef2c0" stroke-opacity="0.65" stroke-width="2"/>
+    <rect x="-12" y="-24" width="18" height="46" rx="7" fill="#0e2a30" stroke="#5ef2c0" stroke-opacity="0.55" stroke-width="2"/>
+    <path d="M-12 0 L-30 12 M-12 8 L-26 32" stroke="#0e2a30" stroke-width="9" stroke-linecap="round"/>
+    <path d="M6 -20 L26 -38 L56 -66" stroke="#c9ff6b" stroke-width="4" stroke-linecap="round" filter="url(#scGlow)"/>
+    <path d="M-8 20 L-20 58 M4 20 L14 58" stroke="#0e2a30" stroke-width="8" stroke-linecap="round"/>
+    <path d="M-28 60 H-10 M6 60 H24" stroke="#eafff7" stroke-width="4" stroke-linecap="round"/>
+    <path d="M56 -66 L74 -34" stroke="#1c4a4a" stroke-width="9" stroke-linecap="round"/>
+    <path d="M60 -70 L88 -50 L76 -36 L52 -58 Z" fill="#b9ff8f" opacity="0.9"/>
+  </g>
+
+  <path d="M200 296 C250 250 330 196 414 158 C498 120 560 150 604 196" fill="none" stroke="url(#scArc)" stroke-width="2.6" stroke-dasharray="3 9" opacity="0.85"/>
+  <circle cx="414" cy="158" r="9" fill="url(#scBall)" filter="url(#scGlow)"/>
+  <circle cx="414" cy="158" r="4" fill="#fffdf0"/>
+
+  <g transform="translate(612 268)">
+    <ellipse cx="0" cy="52" rx="24" ry="6" fill="#000" opacity="0.4"/>
+    <circle cx="0" cy="-8" r="10" fill="#0b1f26" stroke="#5ef2c0" stroke-opacity="0.55" stroke-width="2"/>
+    <path d="M-4 2 V26 M-4 10 L-18 22 M-4 10 L12 20 M-4 26 L-14 48 M-4 26 L8 48" stroke="#0e2a30" stroke-width="6" stroke-linecap="round"/>
+    <path d="M-32 54 H-6 M-18 54 L-30 32 M6 54 L-2 34" stroke="#8fd9c6" stroke-opacity="0.6" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(690 108)">
+    <path d="M0 96 V0" stroke="#0e2a30" stroke-width="8"/>
+    <path d="M0 6 H-52 M0 6 H52" stroke="#0e2a30" stroke-width="5"/>
+    <rect x="-62" y="-4" width="26" height="16" rx="3" fill="#102f34" stroke="#5ef2c0" stroke-opacity="0.7" stroke-width="2"/>
+    <rect x="36" y="-4" width="26" height="16" rx="3" fill="#102f34" stroke="#5ef2c0" stroke-opacity="0.7" stroke-width="2"/>
+    <circle cx="-49" cy="4" r="9" fill="#eaffc9" opacity="0.9" filter="url(#scGlow)"/>
+    <circle cx="49" cy="4" r="9" fill="#eaffc9" opacity="0.9" filter="url(#scGlow)"/>
+    <path d="M-62 10 L-120 190 M60 10 L118 190" stroke="#eaffc9" stroke-opacity="0.14" stroke-width="46" filter="url(#scSoft)"/>
+  </g>
+
+  <g transform="translate(126 132)">
+    <path d="M0 80 V0" stroke="#0e2a30" stroke-width="6"/>
+    <path d="M0 4 H-40 M0 4 H40" stroke="#0e2a30" stroke-width="4"/>
+    <circle cx="-38" cy="2" r="7" fill="#eaffc9" opacity="0.85" filter="url(#scGlow)"/>
+    <circle cx="38" cy="2" r="7" fill="#eaffc9" opacity="0.85" filter="url(#scGlow)"/>
+    <path d="M-42 8 L-96 230 M46 8 L96 230" stroke="#eaffc9" stroke-opacity="0.1" stroke-width="40" filter="url(#scSoft)"/>
+  </g>
+
+  <g transform="translate(640 404)">
+    <text x="0" y="0" fill="#8fd9c6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="2">SUPER OVER · ROOFTOP CHASE · NETS</text>
+    <g transform="translate(20 22)">
+      <circle cx="0" cy="0" r="6" fill="#5ef2c0"/>
+      <circle cx="24" cy="0" r="6" fill="#5ef2c0"/>
+      <circle cx="48" cy="0" r="6" fill="#5ef2c0" opacity="0.45"/>
+      <circle cx="72" cy="0" r="6" fill="#5ef2c0" opacity="0.45"/>
+      <circle cx="96" cy="0" r="6" fill="#5ef2c0" opacity="0.45"/>
+      <circle cx="120" cy="0" r="6" fill="#5ef2c0" opacity="0.45"/>
+    </g>
+  </g>
+
+  <text x="44" y="474" fill="#5f9c92" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" letter-spacing="2.4">RECORDS AND DISTRICT SETTINGS STAY IN THIS BROWSER</text>
+</svg>

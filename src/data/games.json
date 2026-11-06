@@ -1464,5 +1464,64 @@
     "createdAt": "2026-11-06T23:00:00.000Z",
     "featured": false,
     "popularityRank": 31
+  },
+  {
+    "id": "street-cricket",
+    "slug": "street-cricket",
+    "title": "Street Cricket",
+    "tagline": "Six balls. One rooftop. Timing over statistics.",
+    "description": "A 3D rooftop cricket game built around timing, placement and shot choice instead of spreadsheets. Bat through a Super Over, chase a rolled target on a rooftop, or grind a net session; then bowl the same over back with line, length and variation. Six original districts, run records and personal bests stay in this browser.",
+    "category": "sports",
+    "secondaryCategories": [
+      "arcade",
+      "casual"
+    ],
+    "thumbnail": "/art/street-cricket.svg",
+    "accent": "#5ef2c0",
+    "type": "internal",
+    "internalKey": "street-cricket",
+    "instructions": [
+      "Pick a format and a district, then start the match.",
+      "Bat: read the line and length, aim your shot, choose block, drive or loft, and swing as the ball arrives.",
+      "Timing beats power: perfect contact finds gaps, mistimed contact loops catches.",
+      "Bowl: choose line, length and variation, then release; the rooftop fielders do the rest.",
+      "Super Over alternates six-ball innings and replays a tie up to three times.",
+      "Rooftop Chase hands you a target and a wicket budget; Nets is a pure batting session.",
+      "Records and district settings are stored in this browser only."
+    ],
+    "controls": [
+      {
+        "label": "Swing / bowl",
+        "keys": "Space"
+      },
+      {
+        "label": "Aim shot / line",
+        "keys": "A D / ArrowLeft ArrowRight"
+      },
+      {
+        "label": "Shot type / length",
+        "keys": "W S / ArrowUp ArrowDown"
+      },
+      {
+        "label": "Variation",
+        "keys": "Q E"
+      },
+      {
+        "label": "Pause",
+        "keys": "P or Escape"
+      },
+      {
+        "label": "Mute",
+        "keys": "M"
+      },
+      {
+        "label": "Touch",
+        "keys": "On-screen aim, shot and bowl controls"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-07T09:00:00.000Z",
+    "featured": false,
+    "popularityRank": 32
   }
 ]

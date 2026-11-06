@@ -32,6 +32,7 @@ export const GAMES = [
   { slug: 'hoop-circuit', title: 'Hoop Circuit' },
   { slug: 'lawn-protocol', title: 'Lawn Protocol' },
   { slug: 'apex-time-trial', title: 'Apex Time Trial' },
+  { slug: 'street-cricket', title: 'Street Cricket' },
 ] as const;
 
 export interface ErrorLog {
