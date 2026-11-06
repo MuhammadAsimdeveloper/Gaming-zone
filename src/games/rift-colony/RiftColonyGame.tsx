@@ -19,12 +19,14 @@ import {
   BUILD_ORDER,
   COLONY_BUILDS,
   COLONY_DAYS,
+  COLONY_MORALE_FLOOR,
   COLONY_TARGET,
   JOBS,
   JOB_ORDER,
   advanceColonyDay,
   assignWorker,
   buildColony,
+  colonyOutcome,
   colonyScore,
   createColonyState,
   cycleColonySpeed,
@@ -70,7 +72,7 @@ export default function RiftColonyGame({ onStart, onComplete }: GameComponentPro
     finishedRef.current = true;
     const score = colonyScore(state);
     submit(score);
-    onCompleteRef.current?.({ score, outcome: score >= COLONY_TARGET ? 'win' : 'loss' });
+    onCompleteRef.current?.({ score, outcome: colonyOutcome(state) });
   }, [state, submit]);
 
   const begin = useCallback(() => {
@@ -85,7 +87,8 @@ export default function RiftColonyGame({ onStart, onComplete }: GameComponentPro
   }, []);
 
   const score = colonyScore(state);
-  const win = score >= COLONY_TARGET;
+  const win = colonyOutcome(state) === 'win';
+  const moraleFailed = state.morale < COLONY_MORALE_FLOOR;
   const unassigned = unassignedWorkers(state);
   const overlayOpen = state.phase !== 'running' || state.paused;
   const status =
@@ -294,7 +297,9 @@ export default function RiftColonyGame({ onStart, onComplete }: GameComponentPro
               {score}.
             </p>
             <p className="text-[11px] text-muted">
-              Target: {COLONY_TARGET} points · best {best === null ? '—' : `${best} points`}
+              {moraleFailed
+                ? `Morale finished at ${state.morale}% — the colony needs ${COLONY_MORALE_FLOOR}% or better.`
+                : `Target: ${COLONY_TARGET} points · morale floor ${COLONY_MORALE_FLOOR}% · best ${best === null ? '—' : `${best} points`}`}
             </p>
             <GameButton variant="primary" onClick={restart}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />

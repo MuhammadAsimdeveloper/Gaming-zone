@@ -46,14 +46,37 @@ export function useBestScore(storageKey: string, lowerIsBetter = false): BestSco
     (score: number) => {
       if (!Number.isFinite(score)) return;
 
-      const normalized = Math.max(0, Math.round(score));
-      const current = bestRef.current;
-      const improves = current === null || (lowerIsBetter ? normalized < current : normalized > current);
-      if (!improves) return;
+      const normalized = Math.round(score);
+      const stored = readScore(storageKey);
+      const current =
+        stored === null
+          ? bestRef.current
+          : bestRef.current === null
+            ? stored
+            : lowerIsBetter
+              ? Math.min(stored, bestRef.current)
+              : Math.max(stored, bestRef.current);
 
-      bestRef.current = normalized;
-      setBest(normalized);
-      writeScore(storageKey, normalized);
+      if (current === null) {
+        bestRef.current = normalized;
+        setBest(normalized);
+        writeScore(storageKey, normalized);
+        return;
+      }
+
+      const improves = lowerIsBetter ? normalized < current : normalized > current;
+      if (improves) {
+        bestRef.current = normalized;
+        setBest(normalized);
+        writeScore(storageKey, normalized);
+        return;
+      }
+
+      if (current !== bestRef.current || current !== stored) {
+        bestRef.current = current;
+        setBest(current);
+        writeScore(storageKey, current);
+      }
     },
     [lowerIsBetter, storageKey],
   );

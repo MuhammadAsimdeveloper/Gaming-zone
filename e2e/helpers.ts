@@ -26,6 +26,7 @@ export const GAMES = [
   { slug: 'signal-stack', title: 'Signal Stack' },
   { slug: 'rift-runner', title: 'Rift Runner' },
   { slug: 'rift-tactics', title: 'Rift Tactics' },
+  { slug: 'rift-chess', title: 'Rift Chess' },
 ] as const;
 
 export interface ErrorLog {

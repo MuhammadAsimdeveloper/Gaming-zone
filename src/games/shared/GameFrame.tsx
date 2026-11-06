@@ -1,4 +1,4 @@
-import { useId, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { useEffect, useId, useRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '../../lib/cn';
 
@@ -56,6 +56,8 @@ export function GameFrame({
   return (
     <section
       aria-labelledby={headingId}
+      data-game-frame=""
+      tabIndex={-1}
       className={cn(
         'relative flex min-h-[420px] w-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-night-900/90 text-ink shadow-[0_30px_80px_-40px_rgba(5,8,20,0.95)]',
         className,
@@ -144,9 +146,9 @@ const buttonVariantClasses: Record<GameButtonVariant, string> = {
 };
 
 const buttonSizeClasses: Record<GameButtonSize, string> = {
-  sm: 'h-8 px-3 text-xs',
+  sm: 'h-8 px-3 text-xs [@media(pointer:coarse)]:h-11',
   md: 'h-10 px-4 text-sm',
-  icon: 'h-9 w-9',
+  icon: 'h-9 w-9 [@media(pointer:coarse)]:h-11 [@media(pointer:coarse)]:w-11',
 };
 
 interface GameButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -173,13 +175,30 @@ export function GameOverlay({
   children,
   className,
   tone = 'default',
+  label = 'Game status',
 }: {
   children: ReactNode;
   className?: string;
   tone?: 'default' | 'win' | 'loss';
+  label?: string;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    ref.current?.focus({ preventScroll: true });
+    return () => {
+      const frame = document.querySelector<HTMLElement>('[data-game-frame]');
+      if (frame?.isConnected) frame.focus({ preventScroll: true });
+    };
+  }, []);
+
   return (
     <div
+      ref={ref}
+      role="dialog"
+      aria-modal="true"
+      aria-label={label}
+      tabIndex={-1}
       className={cn(
         'absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 rounded-2xl border border-white/10 bg-night-950/90 p-4 text-center backdrop-blur-sm',
         tone === 'win' && 'border-mint/25',

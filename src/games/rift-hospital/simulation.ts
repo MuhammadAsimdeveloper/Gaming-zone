@@ -94,18 +94,20 @@ export function advanceHospitalDay(state: HospitalState): HospitalState {
   const service = patients > 0 ? treated / patients : 1;
   const reputation = Math.max(0, Math.min(100, Math.round(state.reputation + (service * 100 - state.reputation) * 0.18)));
   const nextDay = state.day + 1;
-  const finished = nextDay > state.seasonDays;
+  const insolvent = state.credits + profit < 0;
+  const finished = nextDay > state.seasonDays || insolvent;
   const log = [...state.log];
 
   log.unshift(
     `Day ${state.day}: ${treated}/${patients} patients · ${profit >= 0 ? '+' : ''}${profit} credits.`,
   );
   if (untreated > 0) log.unshift(`${untreated} patients left untreated — ${untreatedCritical} critical.`);
-  if (finished) log.unshift(`Clinic closed with ${state.credits + profit} credits.`);
+  if (insolvent) log.unshift('Insolvent: creditors closed the clinic.');
+  else if (finished) log.unshift(`Clinic closed with ${state.credits + profit} credits.`);
 
   return {
     ...state,
-    day: finished ? state.seasonDays : nextDay,
+    day: finished ? state.day : nextDay,
     credits: state.credits + profit,
     patients,
     treated,

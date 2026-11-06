@@ -747,5 +747,39 @@
     "createdAt": "2026-11-03T23:00:00.000Z",
     "featured": false,
     "popularityRank": 25
+  },
+  {
+    "id": "rift-chess",
+    "slug": "rift-chess",
+    "title": "Rift Chess",
+    "tagline": "Real chess. Five levels. Forty original puzzles.",
+    "description": "A complete chess board with legal-move validation, castling, en passant, promotion, local clocks, five computer levels and forty original mate puzzles. Play a friend on one device or face the browser opponent; saved computer games and records stay in this browser.",
+    "category": "strategy",
+    "secondaryCategories": ["puzzle", "casual"],
+    "thumbnail": "/art/rift-chess.svg",
+    "accent": "#8b7cff",
+    "type": "internal",
+    "internalKey": "rift-chess",
+    "instructions": [
+      "Select a piece, then a highlighted square. Drag-and-drop also works.",
+      "Castling, en passant and promotion follow standard chess rules.",
+      "Pick 2 players for a shared board with an optional local clock.",
+      "Face the computer at one of five internal strength levels; these labels are not Elo ratings.",
+      "Solve forty original mate-in-one and mate-in-two puzzles at your own pace.",
+      "Saved computer games resume after a reload in the same browser."
+    ],
+    "controls": [
+      { "label": "Select", "keys": "Click / tap a piece" },
+      { "label": "Move", "keys": "Click / tap a highlighted square or drag the piece" },
+      { "label": "Keyboard", "keys": "Arrow keys move focus; Enter or Space selects" },
+      { "label": "Undo", "keys": "Undo button (not in puzzles)" },
+      { "label": "Flip", "keys": "Flip board button" },
+      { "label": "Mute", "keys": "Speaker button" },
+      { "label": "Restart", "keys": "Restart button" }
+    ],
+    "published": true,
+    "createdAt": "2026-11-06T12:00:00.000Z",
+    "featured": false,
+    "popularityRank": 26
   }
 ]

@@ -54,7 +54,7 @@ export function GameToolbar({
             onChange={(event) => onQueryChange(event.target.value)}
             placeholder={placeholder}
             aria-label="Search games"
-            className="field h-11 w-full rounded-full pl-11 pr-10 text-sm focus:outline-none"
+            className="field h-11 w-full rounded-full pl-11 pr-10 text-sm"
           />
           {query ? (
             <button
@@ -76,7 +76,7 @@ export function GameToolbar({
             id="game-sort"
             value={sort}
             onChange={(event) => onSortChange(event.target.value as GameSort)}
-            className="h-11 w-full appearance-none rounded-full border border-line-strong bg-raised pl-4 pr-10 text-sm font-medium text-ink transition hover:border-ink/40 focus:outline-none sm:w-auto"
+            className="h-11 w-full appearance-none rounded-full border border-line-strong bg-raised pl-4 pr-10 text-sm font-medium text-ink transition hover:border-ink/40 sm:w-auto"
           >
             {(Object.keys(sortLabels) as GameSort[]).map((value) => (
               <option key={value} value={value}>

@@ -40,6 +40,7 @@ export const INTERNAL_GAME_KEYS = [
   'signal-stack',
   'rift-runner',
   'rift-tactics',
+  'rift-chess',
 ] as const;
 
 export type InternalGameKey = (typeof INTERNAL_GAME_KEYS)[number];

@@ -1,9 +1,11 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { Home, RefreshCw, RotateCcw, TriangleAlert } from 'lucide-react';
+import { isChunkLoadError } from '../../lib/chunkError';
 import { Button } from '../ui/Button';
 
 interface Props {
   children: ReactNode;
+  reload?: () => void;
 }
 
 interface State {
@@ -24,6 +26,10 @@ export class AppErrorBoundary extends Component<Props, State> {
   }
 
   private retry = () => {
+    if (isChunkLoadError(this.state.error)) {
+      (this.props.reload ?? (() => window.location.reload()))();
+      return;
+    }
     this.setState({ error: null, info: null });
   };
 

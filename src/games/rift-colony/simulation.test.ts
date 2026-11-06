@@ -5,6 +5,7 @@ import {
   advanceColonyDay,
   assignWorker,
   buildColony,
+  colonyOutcome,
   colonyScore,
   createColonyState,
   jobOutput,
@@ -85,5 +86,18 @@ describe('Rift Colony simulation', () => {
   it('does not advance while paused', () => {
     const paused = { ...running(), paused: true };
     expect(advanceColonyDay(paused)).toBe(paused);
+  });
+
+  it('only wins when morale stays at or above the floor', () => {
+    const thriving = { ...running(), population: 20, morale: 70 };
+    expect(colonyOutcome(thriving)).toBe('win');
+    expect(colonyOutcome({ ...thriving, morale: 50 })).toBe('win');
+    expect(colonyOutcome({ ...thriving, morale: 49 })).toBe('loss');
+  });
+
+  it('loses when morale holds but the score misses the target', () => {
+    const underTarget = { ...running(), population: 6, morale: 90 };
+    expect(colonyScore(underTarget)).toBeLessThan(COLONY_TARGET);
+    expect(colonyOutcome(underTarget)).toBe('loss');
   });
 });

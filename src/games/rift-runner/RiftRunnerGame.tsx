@@ -2,15 +2,11 @@ import { Gauge, Pause, Play, RotateCcw, Rocket, Trophy } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GameComponentProps } from '../../types/game';
 import { GameButton, GameFrame, GameOverlay, GameStat } from '../shared/GameFrame';
+import { isInteractiveTarget } from '../shared/keyboard';
 import { useBestScore } from '../shared/useBestScore';
 import { useVisibilityPause } from '../shared/useVisibilityPause';
+import { drawRunnerScene } from './renderer';
 import {
-  RUNNER_GROUND,
-  RUNNER_HEIGHT,
-  RUNNER_PLAYER_HEIGHT,
-  RUNNER_PLAYER_WIDTH,
-  RUNNER_PLAYER_X,
-  RUNNER_WIDTH,
   createRunnerState,
   runnerJump,
   runnerStep,
@@ -18,15 +14,18 @@ import {
 } from './simulation';
 
 const BEST_KEY = 'neonrift:game:rift-runner:best';
+const HUD_INTERVAL_MS = 100;
 
 type Phase = 'ready' | 'playing' | 'over';
 
 export default function RiftRunnerGame({ onStart, onComplete }: GameComponentProps) {
-  const [state, setState] = useState<RunnerState>(createRunnerState);
+  const [view, setView] = useState<RunnerState>(createRunnerState);
   const [phase, setPhase] = useState<Phase>('ready');
   const [paused, setPaused] = useState(false);
   const { best, submit } = useBestScore(BEST_KEY);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
+  const stateRef = useRef<RunnerState>(view);
   const onStartRef = useRef(onStart);
   const onCompleteRef = useRef(onComplete);
   const finishedRef = useRef(false);
@@ -37,14 +36,45 @@ export default function RiftRunnerGame({ onStart, onComplete }: GameComponentPro
   }, [onStart, onComplete]);
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    contextRef.current = canvas.getContext('2d');
+    if (contextRef.current) drawRunnerScene(contextRef.current, canvas, stateRef.current);
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = contextRef.current;
+    if (canvas && context) drawRunnerScene(context, canvas, view);
+  }, [view]);
+
+  useEffect(() => {
     if (phase !== 'playing' || paused) return undefined;
     let raf = 0;
     let last = performance.now();
+    let lastHud = last;
 
     const loop = (now: number) => {
       const delta = Math.min(0.05, (now - last) / 1000);
       last = now;
-      setState((current) => runnerStep(current, delta));
+      const next = runnerStep(stateRef.current, delta);
+      stateRef.current = next;
+
+      const canvas = canvasRef.current;
+      const context = contextRef.current;
+      if (canvas && context) drawRunnerScene(context, canvas, next);
+
+      if (!next.alive) {
+        setView(next);
+        setPhase('over');
+        return;
+      }
+
+      if (now - lastHud >= HUD_INTERVAL_MS) {
+        lastHud = now;
+        setView(next);
+      }
+
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
@@ -52,99 +82,36 @@ export default function RiftRunnerGame({ onStart, onComplete }: GameComponentPro
   }, [paused, phase]);
 
   useEffect(() => {
-    if (!state.alive && phase === 'playing') setPhase('over');
-  }, [phase, state.alive]);
-
-  useEffect(() => {
     if (phase !== 'over' || finishedRef.current) return;
     finishedRef.current = true;
-    submit(state.score);
-    onCompleteRef.current?.({ score: state.score, outcome: 'complete' });
-  }, [phase, state.score, submit]);
+    submit(view.score);
+    onCompleteRef.current?.({ score: view.score, outcome: 'complete' });
+  }, [phase, submit, view.score]);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext('2d');
-    if (!context) return;
-
-    const width = RUNNER_WIDTH;
-    const height = RUNNER_HEIGHT;
-    canvas.width = width;
-    canvas.height = height;
-
-    const sky = context.createLinearGradient(0, 0, 0, height);
-    sky.addColorStop(0, '#050814');
-    sky.addColorStop(0.65, '#081a2b');
-    sky.addColorStop(1, '#0a241f');
-    context.fillStyle = sky;
-    context.fillRect(0, 0, width, height);
-
-    context.fillStyle = 'rgba(255,255,255,0.5)';
-    for (let index = 0; index < 26; index += 1) {
-      const x = (index * 97 + 41) % width;
-      const y = (index * 53 + 29) % (RUNNER_GROUND - 60);
-      context.globalAlpha = 0.15 + (index % 5) * 0.08;
-      context.fillRect(x, y, 2, 2);
-    }
-    context.globalAlpha = 1;
-
-    context.fillStyle = 'rgba(74,222,157,0.09)';
-    for (let x = 0; x < width; x += 48) context.fillRect(x, 0, 1, RUNNER_GROUND);
-    for (let y = 0; y < RUNNER_GROUND; y += 48) context.fillRect(0, y, width, 1);
-
-    context.fillStyle = '#0b1a22';
-    context.fillRect(0, RUNNER_GROUND, width, height - RUNNER_GROUND);
-    context.fillStyle = '#4ade9d';
-    context.fillRect(0, RUNNER_GROUND, width, 2);
-    context.fillStyle = 'rgba(74,222,157,0.18)';
-    for (let x = -((state.distance * 0.8) % 64); x < width; x += 64) {
-      context.fillRect(x, RUNNER_GROUND + 18, 34, 3);
-    }
-
-    for (const obstacle of state.obstacles) {
-      const top = RUNNER_GROUND - obstacle.height;
-      context.fillStyle = '#ff6b81';
-      context.shadowColor = '#ff6b81';
-      context.shadowBlur = 12;
-      context.fillRect(obstacle.x, top, obstacle.width, obstacle.height);
-      context.shadowBlur = 0;
-      context.fillStyle = 'rgba(255,255,255,0.25)';
-      context.fillRect(obstacle.x + 4, top + 4, obstacle.width - 8, 3);
-    }
-
-    const playerTop = RUNNER_GROUND - state.y - RUNNER_PLAYER_HEIGHT;
-    context.fillStyle = '#4c8dff';
-    context.shadowColor = '#4c8dff';
-    context.shadowBlur = 18;
-    context.beginPath();
-    context.roundRect(RUNNER_PLAYER_X, playerTop, RUNNER_PLAYER_WIDTH, RUNNER_PLAYER_HEIGHT, 8);
-    context.fill();
-    context.shadowBlur = 0;
-    context.fillStyle = '#eaffff';
-    context.fillRect(RUNNER_PLAYER_X + 7, playerTop + 9, 14, 5);
-    context.fillStyle = '#0b1120';
-    context.fillRect(RUNNER_PLAYER_X + 8, playerTop + 29, 4, 8);
-    context.fillRect(RUNNER_PLAYER_X + 18, playerTop + 29, 4, 8);
-  }, [state]);
+  const reset = useCallback(() => {
+    const fresh = createRunnerState();
+    stateRef.current = fresh;
+    setView(fresh);
+  }, []);
 
   const begin = useCallback(() => {
     finishedRef.current = false;
-    setState(createRunnerState());
+    reset();
     setPhase('playing');
     setPaused(false);
     onStartRef.current?.();
-  }, []);
+  }, [reset]);
 
   const restart = useCallback(() => {
     finishedRef.current = false;
-    setState(createRunnerState());
+    reset();
     setPhase('ready');
     setPaused(false);
-  }, []);
+  }, [reset]);
 
   const jump = useCallback(() => {
-    setState((current) => runnerJump(current));
+    stateRef.current = runnerJump(stateRef.current);
+    setView(stateRef.current);
   }, []);
 
   const togglePause = useCallback(() => {
@@ -159,16 +126,7 @@ export default function RiftRunnerGame({ onStart, onComplete }: GameComponentPro
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      const target = event.target;
-      if (
-        target instanceof HTMLElement &&
-        (target.tagName === 'INPUT' ||
-          target.tagName === 'TEXTAREA' ||
-          target.tagName === 'SELECT' ||
-          target.isContentEditable)
-      ) {
-        return;
-      }
+      if (event.repeat || isInteractiveTarget(event.target)) return;
       if (event.code === 'Space' || event.code === 'ArrowUp' || event.code === 'KeyW') {
         if (phase === 'playing' && !paused) {
           event.preventDefault();
@@ -189,8 +147,8 @@ export default function RiftRunnerGame({ onStart, onComplete }: GameComponentPro
     phase === 'ready'
       ? 'Runner ready. Press Space, Arrow Up, W or tap to jump.'
       : phase === 'over'
-        ? `Run ended with a score of ${state.score} after ${Math.round(state.distance)} metres.`
-        : `${state.score} points, ${state.passed} obstacles cleared, speed ${Math.round(state.speed)}.`;
+        ? `Run ended with a score of ${view.score} after ${Math.round(view.distance)} metres.`
+        : `${view.score} points, ${view.passed} obstacles cleared, speed ${Math.round(view.speed)}.`;
 
   return (
     <GameFrame
@@ -200,8 +158,8 @@ export default function RiftRunnerGame({ onStart, onComplete }: GameComponentPro
       accent="electric"
       hud={
         <div className="grid grid-cols-3 gap-2">
-          <GameStat label="Score" value={state.score} tone="mint" />
-          <GameStat label="Distance" value={`${Math.round(state.distance)}m`} />
+          <GameStat label="Score" value={view.score} tone="mint" />
+          <GameStat label="Distance" value={`${Math.round(view.distance)}m`} />
           <GameStat label="Best" value={best === null ? '—' : best} tone="electric" />
         </div>
       }
@@ -246,7 +204,7 @@ export default function RiftRunnerGame({ onStart, onComplete }: GameComponentPro
           </div>
           <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
             <p className="text-[10px] text-muted">
-              Speed {Math.round(state.speed)} · obstacles cleared {state.passed}
+              Speed {Math.round(view.speed)} · obstacles cleared {view.passed}
             </p>
             <GameButton variant="primary" size="sm" onClick={jump} disabled={phase !== 'playing' || paused}>
               <Gauge className="h-3.5 w-3.5" aria-hidden="true" />
@@ -296,8 +254,8 @@ export default function RiftRunnerGame({ onStart, onComplete }: GameComponentPro
             </span>
             <h3 className="font-display text-xl font-semibold text-ink">Run ended</h3>
             <p className="text-sm text-muted">
-              Score <b className="text-ink">{state.score}</b> · {Math.round(state.distance)} metres ·{' '}
-              {state.passed} cleared.
+              Score <b className="text-ink">{view.score}</b> · {Math.round(view.distance)} metres ·{' '}
+              {view.passed} cleared.
             </p>
             <p className="flex items-center gap-1.5 text-[11px] text-muted">
               <Trophy className="h-3.5 w-3.5 text-mint" aria-hidden="true" />

@@ -7,6 +7,12 @@ export function useVisibilityPause(onHidden: () => void, active: boolean): void 
       if (document.visibilityState === 'hidden') onHidden();
     }
     document.addEventListener('visibilitychange', handleVisibility);
-    return () => document.removeEventListener('visibilitychange', handleVisibility);
+    window.addEventListener('blur', onHidden);
+    window.addEventListener('pagehide', onHidden);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility);
+      window.removeEventListener('blur', onHidden);
+      window.removeEventListener('pagehide', onHidden);
+    };
   }, [active, onHidden]);
 }

@@ -221,7 +221,13 @@ export default function RiftTacticsGame({ onStart, onComplete }: GameComponentPr
 
               <section aria-label="Battle log" className="rounded-2xl border border-white/10 bg-night-900/70 p-3">
                 <h3 className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted">Battle log</h3>
-                <ul className="mt-2 space-y-1 text-[10px] leading-4 text-muted">
+                <ul
+                  role="log"
+                  aria-live="polite"
+                  aria-relevant="additions"
+                  aria-label="Battle log entries"
+                  className="mt-2 space-y-1 text-[10px] leading-4 text-muted"
+                >
                   {state.log.map((entry, index) => (
                     <li key={`${entry}-${index}`} className="truncate">
                       · {entry}

@@ -3,11 +3,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GameComponentProps } from '../../types/game';
 import { cn } from '../../lib/cn';
 import { GameButton, GameFrame, GameOverlay, GameStat } from '../shared/GameFrame';
+import { isInteractiveTarget } from '../shared/keyboard';
 import { useBestScore } from '../shared/useBestScore';
 import {
   STACK_WIDTH,
   createStackState,
   dropBlock,
+  isStackWin,
   startStack,
   topBlock,
   type StackState,
@@ -17,9 +19,10 @@ const BEST_KEY = 'neonrift:game:signal-stack:best';
 
 export default function SignalStackGame({ onStart, onComplete }: GameComponentProps) {
   const [state, setState] = useState<StackState>(createStackState);
-  const [markerX, setMarkerX] = useState(0);
   const [paused, setPaused] = useState(false);
   const { best, submit } = useBestScore(BEST_KEY);
+  const markerRef = useRef<HTMLDivElement>(null);
+  const markerXRef = useRef(0);
   const directionRef = useRef(1);
   const lastDropRef = useRef(0);
   const onStartRef = useRef(onStart);
@@ -34,6 +37,12 @@ export default function SignalStackGame({ onStart, onComplete }: GameComponentPr
   const top = topBlock(state);
   const markerWidth = top.width;
 
+  const resetMarker = useCallback(() => {
+    markerXRef.current = 0;
+    directionRef.current = 1;
+    if (markerRef.current) markerRef.current.style.left = '0%';
+  }, []);
+
   useEffect(() => {
     if (state.phase !== 'playing' || paused) return undefined;
     let frame = 0;
@@ -42,18 +51,18 @@ export default function SignalStackGame({ onStart, onComplete }: GameComponentPr
     const loop = (now: number) => {
       const delta = Math.min(0.05, (now - last) / 1000);
       last = now;
-      setMarkerX((current) => {
-        let next = current + directionRef.current * state.speed * delta;
-        const max = STACK_WIDTH - markerWidth;
-        if (next > max) {
-          next = max;
-          directionRef.current = -1;
-        } else if (next < 0) {
-          next = 0;
-          directionRef.current = 1;
-        }
-        return next;
-      });
+      let next = markerXRef.current + directionRef.current * state.speed * delta;
+      const max = STACK_WIDTH - markerWidth;
+      if (next > max) {
+        next = max;
+        directionRef.current = -1;
+      } else if (next < 0) {
+        next = 0;
+        directionRef.current = 1;
+      }
+      markerXRef.current = next;
+      // Move the marker directly: a React state update every frame re-renders the whole frame.
+      if (markerRef.current) markerRef.current.style.left = `${next}%`;
       frame = requestAnimationFrame(loop);
     };
 
@@ -71,49 +80,35 @@ export default function SignalStackGame({ onStart, onComplete }: GameComponentPr
   const begin = useCallback(() => {
     finishedRef.current = false;
     setState((current) => startStack(current));
-    setMarkerX(0);
-    directionRef.current = 1;
+    resetMarker();
     lastDropRef.current = 0;
     setPaused(false);
     onStartRef.current?.();
-  }, []);
+  }, [resetMarker]);
 
   const restart = useCallback(() => {
     finishedRef.current = false;
     setState(createStackState());
-    setMarkerX(0);
-    directionRef.current = 1;
+    resetMarker();
     setPaused(false);
-  }, []);
+  }, [resetMarker]);
 
   const drop = useCallback(() => {
     if (state.phase !== 'playing' || paused) return;
     const now = performance.now();
     if (now - lastDropRef.current < 120) return;
     lastDropRef.current = now;
-    const next = dropBlock(state, markerX);
+    const next = dropBlock(state, markerXRef.current);
     setState(next);
-    if (next.phase !== 'over') {
-      setMarkerX(0);
-      directionRef.current = 1;
-    }
-  }, [markerX, paused, state]);
+    if (next.phase !== 'over') resetMarker();
+  }, [paused, resetMarker, state]);
 
   const dropRef = useRef(drop);
   dropRef.current = drop;
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      const target = event.target;
-      if (
-        target instanceof HTMLElement &&
-        (target.tagName === 'INPUT' ||
-          target.tagName === 'TEXTAREA' ||
-          target.tagName === 'SELECT' ||
-          target.isContentEditable)
-      ) {
-        return;
-      }
+      if (event.repeat || isInteractiveTarget(event.target)) return;
       if (event.code === 'Space' && state.phase === 'playing') {
         event.preventDefault();
         dropRef.current();
@@ -127,7 +122,7 @@ export default function SignalStackGame({ onStart, onComplete }: GameComponentPr
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [paused, state.phase]);
 
-  const win = state.blocks.length >= 20;
+  const win = isStackWin(state);
   const overlayOpen = state.phase !== 'playing' || paused;
   const status =
     state.phase === 'ready'
@@ -199,8 +194,9 @@ export default function SignalStackGame({ onStart, onComplete }: GameComponentPr
             ))}
             {state.phase === 'playing' ? (
               <div
+                ref={markerRef}
                 className="absolute h-[10px] rounded-sm border border-mint/60 bg-mint/80 shadow-[0_0_18px_rgba(74,222,157,0.7)]"
-                style={{ left: `${markerX}%`, width: `${markerWidth}%`, bottom: `${state.blocks.length * 10 + 18}px` }}
+                style={{ left: '0%', width: `${markerWidth}%`, bottom: `${state.blocks.length * 10 + 18}px` }}
               />
             ) : null}
             <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-night-950 to-transparent" />

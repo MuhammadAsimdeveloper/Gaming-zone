@@ -40,17 +40,17 @@ Playwright's Chromium is the only browser target in CI. Install it once with
 
 ---
 
-## Verification snapshot (2026-11-04)
+## Verification snapshot (2026-11-06)
 
 | Command | Result |
 |---|---|
 | `npm ci` | Completed previously; lockfile unchanged |
 | `npm run typecheck` | Passed with no output |
-| `npm test` | 234 tests passed in 27 files |
-| `npm run build` | Passed; Three.js scenery chunk 561.57 kB raw / 140.51 kB gzip triggers the existing >500 kB warning |
-| `npx playwright test --workers=2` | 66 tests passed in 5 files |
+| `npm test` | 407 tests passed in 45 files |
+| `npm run build` | Passed; Three.js scenery chunk 561.42 kB raw / 140.60 kB gzip triggers the existing >500 kB warning |
+| `npx playwright test --workers=2` | 76 tests passed in 6 files |
 
-The browser suite covers the homepage, catalogue, search, category filters, all twenty-five game pages,
+The browser suite covers the homepage, catalogue, search, category filters, all twenty-six game pages,
 launch/pause/resume/restart, favorites after reload, recently played, fullscreen state, 404,
 mobile navigation, the absence of analytics/ad scripts in the default build, error-boundary
 recovery, hidden-tab fairness, keyboard and touch input for the 2D games, and 2D game
@@ -71,7 +71,7 @@ CI runs on every push to `main`/`master` and every pull request in
 - axe-core WCAG 2.2 AA scans report zero critical/serious violations on `/`, `/games`,
   `/about`, and `/game/neon-apex` at 1440px and 390px.
 - Verification: `npm ci`, `npm run typecheck`, `npm test`, `npm run build`,
-  `npx playwright test --workers=2` — 234 unit tests and 66 browser tests, all passing.
+  `npx playwright test --workers=2` — 407 unit tests and 76 browser tests, all passing.
 
 ---
 
@@ -122,8 +122,11 @@ CI runs on every push to `main`/`master` and every pull request in
 | Signal Stack | Puzzle | React |
 | Rift Runner | Arcade | Canvas 2D |
 | Rift Tactics | Strategy | React |
+| Rift Chess | Strategy | React DOM + chess.js |
 
-All twenty-five are original implementations. No commercial game assets, code or branding are used.
+All twenty-six are original implementations. No commercial game assets, code or branding are used.
+Rift Chess uses the open-source chess.js library (BSD-2-Clause) for move generation; see
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 ---
 
@@ -136,6 +139,7 @@ The full deliverable is indexed at [`docs/research/README.md`](docs/research/REA
 - 15 game design documents with features, architecture, milestones, testing and limitations.
 - Licence audit, source-repository directory, technical architecture and delivery roadmap.
 - Six-game Wave 2 design spec (2026-11-04): Neon Craft plus Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology. Design only; implementation has not started. See [`docs/superpowers/specs/2026-11-04-games-wave2-design.md`](docs/superpowers/specs/2026-11-04-games-wave2-design.md).
+- [25-game enhancement report (2026-11-05)](docs/ENHANCEMENT-REPORT-2026-11-05.md): verified fixes, a per-game status table and a prioritized file-specific backlog.
 
 Start with the [package index](docs/research/README.md).
 

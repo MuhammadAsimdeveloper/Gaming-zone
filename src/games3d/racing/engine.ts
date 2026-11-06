@@ -584,6 +584,7 @@ export class RaceEngine {
     player.finishTime = this.raceTime;
     player.speed = 0;
     this.phase = 'finished';
+    this.audio.setEngineVolume(0.0001);
     this.audio.beep(880, 160, 'sine', 0.08);
     window.setTimeout(() => this.audio.beep(1320, 320, 'sine', 0.08), 170);
 

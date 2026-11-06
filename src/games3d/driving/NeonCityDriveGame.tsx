@@ -23,6 +23,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useVisibilityPause } from '../../games/shared/useVisibilityPause';
 import type { GameComponentProps } from '../../types/game';
+import { WebGLContextNotice } from '../shared/WebGLContextNotice';
+import { useWebGLContextLoss } from '../shared/useContextLoss';
 import {
   DRIVE_CARS,
   DRIVE_EXTENT,
@@ -141,6 +143,7 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
   const [result, setResult] = useState<DriveResult | null>(null);
   const [record, setRecord] = useState<DriveRecord>(() => loadDriveRecord());
   const [error, setError] = useState<string | null>(null);
+  const contextLost = useWebGLContextLoss(canvasRef);
 
   const onStartRef = useRef(onStart);
   const onCompleteRef = useRef(onComplete);
@@ -156,6 +159,13 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
   }, []);
 
   useEffect(() => () => disposeEngine(), [disposeEngine]);
+
+  useEffect(() => {
+    const engine = engineRef.current;
+    if (!engine) return;
+    if (contextLost) engine.pause();
+    else engine.resume();
+  }, [contextLost]);
 
   const resetTouch = useCallback(() => {
     touchRef.current = { forward: false, back: false, left: false, right: false, handbrake: false };
@@ -513,6 +523,7 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
         tabIndex={0}
         aria-label="Neon City Drive. Use WASD or arrow keys to drive, Space for handbrake, C to change camera and P to pause."
       />
+      <WebGLContextNotice lost={contextLost} />
 
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-night-950/80 to-transparent" />

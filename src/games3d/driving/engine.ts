@@ -4,7 +4,9 @@ import { createKeyboard, readDriveInput, type TouchDriveState } from '../shared/
 import { clamp, damp, normalizeAngle } from '../shared/math';
 import { createCar, disposeObject, type VehicleVisual } from '../shared/scenery';
 import {
+  DRIVE_CHECKPOINT_RADIUS,
   DRIVE_EXTENT,
+  DRIVE_SPAWN,
   ROAD_HALF_WIDTH,
   ROAD_LINES,
   createCityEnvironment,
@@ -72,7 +74,7 @@ interface TrafficCar {
 
 const COUNTDOWN_SECONDS = 3.2;
 const CAR_RADIUS = 1.75;
-const CHECKPOINT_RADIUS = 6.2;
+const CHECKPOINT_RADIUS = DRIVE_CHECKPOINT_RADIUS;
 const DAY_LENGTH_SECONDS = 240;
 
 function approach(current: number, target: number, maxDelta: number): number {
@@ -122,8 +124,8 @@ export class DriveEngine {
   private hudTimer = 0;
   private timeOfDay = 0.36;
   private player: VehicleVisual;
-  private playerX = 0;
-  private playerZ = 72;
+  private playerX = DRIVE_SPAWN.x;
+  private playerZ = DRIVE_SPAWN.z;
   private playerHeading = 0;
   private playerSpeed = 0;
   private steerVisual = 0;

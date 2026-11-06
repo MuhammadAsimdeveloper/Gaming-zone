@@ -90,4 +90,24 @@ describe('Neon Diner simulation', () => {
     const paused = { ...running(), paused: true };
     expect(advanceDinerDay(paused)).toBe(paused);
   });
+
+  it('does not let maxed prices beat a balanced menu across the season', () => {
+    const runSeason = (prices: { burger: number; noodles: number; shake: number }) => {
+      let state = { ...running(), prices };
+      for (let day = 1; day <= DINER_DAYS; day += 1) state = advanceDinerDay(state);
+      return state;
+    };
+
+    const balanced = runSeason({ burger: 12, noodles: 9, shake: 6 });
+    const gouged = runSeason({ burger: 25, noodles: 25, shake: 25 });
+
+    expect(balanced.credits).toBeGreaterThan(gouged.credits);
+  });
+
+  it('drops reputation when the menu is priced at the cap', () => {
+    let state = { ...running(), prices: { burger: 25, noodles: 25, shake: 25 } };
+    for (let day = 1; day <= 5; day += 1) state = advanceDinerDay(state);
+
+    expect(state.reputation).toBeLessThan(70);
+  });
 });

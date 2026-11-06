@@ -196,6 +196,12 @@ export function advanceColonyDay(state: ColonyState): ColonyState {
   };
 }
 
+export const COLONY_MORALE_FLOOR = 50;
+
 export function colonyScore(state: ColonyState): number {
   return state.population * 100 + state.research * 15 + state.materials * 2;
+}
+
+export function colonyOutcome(state: ColonyState): 'win' | 'loss' {
+  return colonyScore(state) >= COLONY_TARGET && state.morale >= COLONY_MORALE_FLOOR ? 'win' : 'loss';
 }

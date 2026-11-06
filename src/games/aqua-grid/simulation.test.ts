@@ -68,7 +68,10 @@ describe('Aqua Grid simulation', () => {
 
   it('closes the season after the final day', () => {
     let state = running();
-    for (let day = 1; day <= AQUA_DAYS; day += 1) state = advanceAquaDay(state);
+    for (let day = 1; day <= AQUA_DAYS; day += 1) {
+      state = advanceAquaDay(state);
+      if (state.phase === 'running') state = buildPump(state);
+    }
 
     expect(state.phase).toBe('over');
     expect(state.paused).toBe(true);
@@ -79,5 +82,15 @@ describe('Aqua Grid simulation', () => {
   it('does not advance while paused', () => {
     const paused = { ...running(), paused: true };
     expect(advanceAquaDay(paused)).toBe(paused);
+  });
+
+  it('closes early when the grid cannot pay its bills', () => {
+    const strained = { ...running(), credits: 10, pumps: 1, condition: 0, reservoir: 0 };
+
+    const next = advanceAquaDay(strained);
+
+    expect(next.credits).toBeLessThan(0);
+    expect(next.phase).toBe('over');
+    expect(next.log.some((entry) => /insolvent/i.test(entry))).toBe(true);
   });
 });

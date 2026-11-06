@@ -5,6 +5,7 @@ import { Button, ButtonLink } from '../components/ui/Button';
 import { Container } from '../components/ui/Container';
 import { PageHeader } from '../components/ui/PageHeader';
 import { CONTACT_EMAIL } from '../config/site';
+import { copyText } from '../lib/clipboard';
 import { useToast } from '../providers/ToastProvider';
 
 const topics = [
@@ -28,12 +29,12 @@ export default function ContactPage() {
 
   async function copyEmail() {
     if (!CONTACT_EMAIL) return;
-    try {
-      await navigator.clipboard.writeText(CONTACT_EMAIL);
-      setCopied(true);
+    const copied = await copyText(CONTACT_EMAIL);
+    setCopied(copied);
+    if (copied) {
       window.setTimeout(() => setCopied(false), 2000);
       showToast('Email address copied');
-    } catch {
+    } else {
       showToast('Copy failed — select the address manually');
     }
   }

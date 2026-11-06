@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { applyTheme, themeForPath } from '../../lib/theme';
 import { Footer } from './Footer';
@@ -8,9 +8,19 @@ import { ScrollToTop } from './ScrollToTop';
 
 export function SiteLayout() {
   const { pathname } = useLocation();
+  const mainRef = useRef<HTMLElement>(null);
+  const firstRoute = useRef(true);
 
   useLayoutEffect(() => {
     applyTheme(themeForPath(pathname));
+  }, [pathname]);
+
+  useEffect(() => {
+    if (firstRoute.current) {
+      firstRoute.current = false;
+      return;
+    }
+    mainRef.current?.focus({ preventScroll: true });
   }, [pathname]);
 
   return (
@@ -22,7 +32,7 @@ export function SiteLayout() {
         Skip to content
       </a>
       <Header />
-      <main id="main-content" className="flex-1">
+      <main id="main-content" ref={mainRef} tabIndex={-1} className="flex-1 outline-none">
         <Outlet />
       </main>
       <Footer />

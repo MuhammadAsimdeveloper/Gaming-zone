@@ -1,10 +1,12 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { TriangleAlert } from 'lucide-react';
+import { isChunkLoadError } from '../../lib/chunkError';
 import { Button } from '../ui/Button';
 
 interface Props {
   children: ReactNode;
   onReset?: () => void;
+  reload?: () => void;
 }
 
 interface State {
@@ -23,6 +25,10 @@ export class GameErrorBoundary extends Component<Props, State> {
   }
 
   private reset = () => {
+    if (isChunkLoadError(this.state.error)) {
+      (this.props.reload ?? (() => window.location.reload()))();
+      return;
+    }
     this.setState({ error: null });
     this.props.onReset?.();
   };

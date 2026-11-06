@@ -101,18 +101,20 @@ export function advanceFactoryDay(state: FactoryState): FactoryState {
   const penalty = backlog * 4;
   const profit = revenue - costs - penalty;
   const nextDay = state.day + 1;
-  const finished = nextDay > state.seasonDays;
+  const insolvent = state.credits + profit < 0;
+  const finished = nextDay > state.seasonDays || insolvent;
   const log = [...state.log];
 
   log.unshift(
     `Day ${state.day}: ${produced}/${orders} units · ${profit >= 0 ? '+' : ''}${profit} credits.`,
   );
   if (backlog > 0) log.unshift(`${backlog} orders went to backlog.`);
-  if (finished) log.unshift(`Line closed with ${state.credits + profit} credits.`);
+  if (insolvent) log.unshift('Insolvent: creditors closed the line.');
+  else if (finished) log.unshift(`Line closed with ${state.credits + profit} credits.`);
 
   return {
     ...state,
-    day: finished ? state.seasonDays : nextDay,
+    day: finished ? state.day : nextDay,
     credits: state.credits + profit,
     orders,
     produced,

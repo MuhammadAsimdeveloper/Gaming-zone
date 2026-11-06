@@ -22,6 +22,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useVisibilityPause } from '../../games/shared/useVisibilityPause';
 import type { GameComponentProps } from '../../types/game';
+import { WebGLContextNotice } from '../shared/WebGLContextNotice';
+import { useWebGLContextLoss } from '../shared/useContextLoss';
 import { FootballEngine, type FootballCamera, type FootballDifficulty, type FootballHud, type FootballResult } from './engine';
 
 type Phase = 'menu' | 'live' | 'paused' | 'finished';
@@ -143,6 +145,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
   const [result, setResult] = useState<FootballResult | null>(null);
   const [record, setRecord] = useState<MatchRecord>(() => loadRecord());
   const [error, setError] = useState<string | null>(null);
+  const contextLost = useWebGLContextLoss(canvasRef);
 
   const onStartRef = useRef(onStart);
   const onCompleteRef = useRef(onComplete);
@@ -155,6 +158,13 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
   }, []);
 
   useEffect(() => () => disposeEngine(), [disposeEngine]);
+
+  useEffect(() => {
+    const engine = engineRef.current;
+    if (!engine) return;
+    if (contextLost) engine.pause();
+    else engine.resume();
+  }, [contextLost]);
 
   const resetTouch = useCallback(() => {
     touchRef.current = { moveX: 0, moveZ: 0, sprint: false, shoot: false, pass: false, tackle: false };
@@ -427,6 +437,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
         tabIndex={0}
         aria-label="Rift Striker 3D football match. Use WASD to move, Shift to sprint, J to shoot, K to pass and Space to tackle."
       />
+      <WebGLContextNotice lost={contextLost} />
 
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-night-950/85 to-transparent" />

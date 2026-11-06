@@ -73,6 +73,28 @@ describe('useVisibilityPause', () => {
     expect(onHidden).not.toHaveBeenCalled();
   });
 
+  it('pauses when the window loses focus', async () => {
+    const onHidden = vi.fn();
+    await render({ onHidden, active: true });
+
+    await act(async () => {
+      window.dispatchEvent(new Event('blur'));
+    });
+
+    expect(onHidden).toHaveBeenCalledTimes(1);
+  });
+
+  it('pauses when the page is being unloaded', async () => {
+    const onHidden = vi.fn();
+    await render({ onHidden, active: true });
+
+    await act(async () => {
+      window.dispatchEvent(new Event('pagehide'));
+    });
+
+    expect(onHidden).toHaveBeenCalledTimes(1);
+  });
+
   it('removes its listener on unmount', async () => {
     const onHidden = vi.fn();
     await render({ onHidden, active: true });

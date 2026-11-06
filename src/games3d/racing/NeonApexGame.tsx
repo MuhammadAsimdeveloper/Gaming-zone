@@ -20,6 +20,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useVisibilityPause } from '../../games/shared/useVisibilityPause';
 import { formatRaceTime } from '../shared/math';
+import { WebGLContextNotice } from '../shared/WebGLContextNotice';
+import { useWebGLContextLoss } from '../shared/useContextLoss';
 import type { GameComponentProps } from '../../types/game';
 import {
   VEHICLES,
@@ -126,6 +128,7 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
   const [result, setResult] = useState<RaceResultData | null>(null);
   const [progress, setProgress] = useState<RaceProgress>(() => loadProgress());
   const [error, setError] = useState<string | null>(null);
+  const contextLost = useWebGLContextLoss(canvasRef);
 
   const onStartRef = useRef(onStart);
   const onCompleteRef = useRef(onComplete);
@@ -141,6 +144,13 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
   }, []);
 
   useEffect(() => () => disposeEngine(), [disposeEngine]);
+
+  useEffect(() => {
+    const engine = engineRef.current;
+    if (!engine) return;
+    if (contextLost) engine.pause();
+    else engine.resume();
+  }, [contextLost]);
 
   const startRace = useCallback(() => {
     const canvas = canvasRef.current;
@@ -497,6 +507,7 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
         tabIndex={0}
         aria-label="Neon Apex 3D race. Use arrow keys or WASD to drive, Space for handbrake, P to pause and C to change camera."
       />
+      <WebGLContextNotice lost={contextLost} />
 
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-night-950/80 to-transparent" />

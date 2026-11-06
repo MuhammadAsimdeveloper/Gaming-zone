@@ -179,12 +179,12 @@ export function SearchBar({
           aria-autocomplete="list"
           aria-haspopup="listbox"
           aria-expanded={showPanel}
-          aria-controls={showPanel ? `${id}-results` : undefined}
+          aria-controls={showPanel && results.length > 0 ? `${id}-results` : undefined}
           aria-activedescendant={activeGame ? `${id}-option-${activeIndex}` : undefined}
           autoComplete="off"
           spellCheck={false}
           className={cn(
-            'field w-full text-ink transition focus:outline-none',
+            'field w-full text-ink transition',
             size === 'hero'
               ? 'h-14 rounded-2xl pl-12 pr-28 text-[15px]'
               : 'h-10 rounded-full pl-9 pr-16 text-sm',
@@ -211,11 +211,11 @@ export function SearchBar({
 
       {showPanel ? (
         <div
-          id={`${id}-results`}
           className="absolute inset-x-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border border-line bg-raised shadow-2xl shadow-black/15 backdrop-blur-xl night:bg-night-900 night:shadow-black/60"
         >
           {results.length > 0 ? (
             <div
+              id={`${id}-results`}
               role="listbox"
               aria-label="Game suggestions"
               className="max-h-[320px] overflow-y-auto p-2"

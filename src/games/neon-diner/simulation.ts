@@ -109,11 +109,18 @@ export function cycleDinerSpeed(state: DinerState): DinerState {
   return { ...state, speed: state.speed === 1 ? 2 : 1 };
 }
 
+const REFERENCE_PRICE =
+  MENU_ORDER.reduce((sum, id) => sum + MENU[id].basePrice, 0) / MENU_ORDER.length;
+
+/** Demand response to the menu price. Doubling the price cuts footfall several-fold. */
+export function priceFactor(state: DinerState): number {
+  const ratio = averagePrice(state) / REFERENCE_PRICE;
+  return Math.max(0.05, Math.min(1.2, Math.pow(1 / ratio, 2.5)));
+}
+
 export function customerDemand(state: DinerState): number {
-  const priceIndex = averagePrice(state) / 9;
-  const priceFactor = Math.max(0.35, 1.15 - priceIndex * 0.35);
   const regulars = 22 + state.reputation * 0.35;
-  return Math.max(5, Math.round(regulars * priceFactor));
+  return Math.max(5, Math.round(regulars * priceFactor(state)));
 }
 
 export function advanceDinerDay(state: DinerState): DinerState {
@@ -129,7 +136,12 @@ export function advanceDinerDay(state: DinerState): DinerState {
   const rent = 35;
   const profit = revenue - ingredientCost - payroll - rent;
   const service = customers > 0 ? served / customers : 1;
-  const reputation = Math.max(0, Math.min(100, Math.round(state.reputation + (service * 100 - state.reputation) * 0.2)));
+  const fairness = Math.max(0.3, priceFactor(state));
+  const reputationTarget = service * 100 * fairness;
+  const reputation = Math.max(
+    0,
+    Math.min(100, Math.round(state.reputation + (reputationTarget - state.reputation) * 0.2)),
+  );
   const nextDay = state.day + 1;
   const finished = nextDay > state.seasonDays;
   const log = [...state.log];

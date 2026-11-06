@@ -90,7 +90,8 @@ export function advanceAquaDay(state: AquaState): AquaState {
   const reservoir = Math.max(0, available - delivered);
   const condition = Math.max(0, state.condition - 1);
   const nextDay = state.day + 1;
-  const finished = nextDay > state.seasonDays;
+  const insolvent = state.credits + profit < 0;
+  const finished = nextDay > state.seasonDays || insolvent;
   const log = [...state.log];
 
   log.unshift(
@@ -98,11 +99,12 @@ export function advanceAquaDay(state: AquaState): AquaState {
   );
   if (shortfall > 0) log.unshift(`Shortfall: ${shortfall} units could not be delivered.`);
   if (leak > 12) log.unshift(`Pipes are leaking ${leak} units per day.`);
-  if (finished) log.unshift(`Grid closed with ${state.credits + profit} credits.`);
+  if (insolvent) log.unshift('Insolvent: creditors closed the grid.');
+  else if (finished) log.unshift(`Grid closed with ${state.credits + profit} credits.`);
 
   return {
     ...state,
-    day: finished ? state.seasonDays : nextDay,
+    day: finished ? state.day : nextDay,
     credits: state.credits + profit,
     reservoir,
     condition,

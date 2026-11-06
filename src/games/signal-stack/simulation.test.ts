@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
+  STACK_TARGET,
   STACK_WIDTH,
   createStackState,
   dropBlock,
+  isStackWin,
   overlapWidth,
   startStack,
   topBlock,
@@ -68,5 +70,24 @@ describe('Signal Stack simulation', () => {
   it('increases speed after a successful drop', () => {
     const state = playing();
     expect(dropBlock(state, topBlock(state).x).speed).toBeGreaterThan(state.speed);
+  });
+
+  it('ends and wins the run once the tower reaches its target', () => {
+    let state = playing();
+    for (let drop = 0; drop < 40 && state.phase === 'playing'; drop += 1) {
+      state = dropBlock(state, topBlock(state).x);
+    }
+
+    expect(state.phase).toBe('over');
+    expect(state.blocks).toHaveLength(STACK_TARGET);
+    expect(isStackWin(state)).toBe(true);
+  });
+
+  it('does not report a win for a collapsed tower', () => {
+    const state = playing();
+    const top = topBlock(state);
+    const collapsed = dropBlock(state, top.x + top.width + 5);
+
+    expect(isStackWin(collapsed)).toBe(false);
   });
 });

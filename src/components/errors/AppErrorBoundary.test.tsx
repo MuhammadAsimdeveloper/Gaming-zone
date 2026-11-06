@@ -8,16 +8,17 @@ let container: HTMLDivElement;
 let root: Root;
 let consoleError: ReturnType<typeof vi.spyOn>;
 let shouldThrow = true;
+let errorMessage = 'synthetic render failure';
 
 function Unstable() {
-  if (shouldThrow) throw new Error('synthetic render failure');
+  if (shouldThrow) throw new Error(errorMessage);
   return <p>Recovered content</p>;
 }
 
-async function renderBoundary() {
+async function renderBoundary(reload?: () => void) {
   await act(async () => {
     root.render(
-      <AppErrorBoundary>
+      <AppErrorBoundary reload={reload}>
         <Unstable />
       </AppErrorBoundary>,
     );
@@ -36,6 +37,7 @@ async function clickButton(label: RegExp) {
 
 beforeEach(() => {
   shouldThrow = true;
+  errorMessage = 'synthetic render failure';
   container = document.createElement('div');
   document.body.appendChild(container);
   root = createRoot(container);
@@ -76,6 +78,17 @@ describe('AppErrorBoundary', () => {
 
     expect(container.textContent).toContain('Recovered content');
     expect(container.textContent).not.toContain('Something went wrong');
+  });
+
+  it('reloads instead of retrying when the failure is a missing chunk', async () => {
+    errorMessage = 'Failed to fetch dynamically imported module: /assets/game.js';
+    const reload = vi.fn();
+    await renderBoundary(reload);
+
+    await clickButton(/try again/i);
+
+    expect(reload).toHaveBeenCalledTimes(1);
+    expect(container.textContent).toContain('Something went wrong');
   });
 
   it('logs the crash for diagnostics', async () => {

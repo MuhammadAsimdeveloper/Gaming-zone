@@ -81,3 +81,21 @@ test('footer links meet the 24px target minimum', async ({ page }) => {
   expect(heights.length).toBeGreaterThan(0);
   expect(Math.min(...heights)).toBeGreaterThanOrEqual(24);
 });
+
+test('SPA route changes move focus to the main landmark', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'All Games', exact: true }).first().click();
+
+  await expect(page).toHaveURL(/\/games$/);
+  await expect(page.locator('#main-content')).toBeFocused();
+});
+
+test('the search combobox points at its listbox', async ({ page }) => {
+  await page.goto('/');
+  const input = page.getByRole('combobox', { name: 'Search games' }).first();
+  await input.fill('neon');
+
+  const controls = await input.getAttribute('aria-controls');
+  expect(controls).toBeTruthy();
+  await expect(page.locator(`#${controls}`)).toHaveAttribute('role', 'listbox');
+});

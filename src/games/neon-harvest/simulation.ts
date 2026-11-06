@@ -185,6 +185,7 @@ export function waterPlot(state: GameState, index: number): GameState {
   if (
     !plot?.crop ||
     state.phase !== 'running' ||
+    isMature(plot) ||
     plot.moisture >= MOISTURE_MAX ||
     state.water < WATER_COST
   ) {
@@ -241,7 +242,7 @@ export function advanceDay(state: GameState): GameState {
   let ready = 0;
 
   const plots = state.plots.map((plot) => {
-    if (!plot.crop) return plot;
+    if (!plot.crop || isMature(plot)) return plot;
     const spec = CROPS[plot.crop];
     if (plot.moisture > 0 && energy >= spec.energyPerDay) {
       energy -= spec.energyPerDay;

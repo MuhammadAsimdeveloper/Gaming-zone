@@ -3,6 +3,10 @@ import * as THREE from 'three';
 export const DRIVE_EXTENT = 96;
 export const ROAD_HALF_WIDTH = 6;
 export const ROAD_LINES = [-72, -36, 0, 36, 72];
+
+/** Where every run begins, facing down the grid. */
+export const DRIVE_SPAWN = { x: 0, z: 72 };
+export const DRIVE_CHECKPOINT_RADIUS = 6.2;
 export const BLOCK_SPAN = 36;
 
 export interface DrivePoint {
@@ -84,7 +88,7 @@ export const DRIVE_MISSIONS: DriveMission[] = [
     name: 'First Light',
     brief: 'Learn the grid: five checkpoint gates through the morning streets.',
     timeLimit: 85,
-    route: [point(2, 4), point(4, 2), point(3, 0), point(1, 1), point(0, 2)],
+    route: [point(2, 3), point(4, 2), point(3, 0), point(1, 1), point(0, 2)],
   },
   {
     id: 'neon-courier',

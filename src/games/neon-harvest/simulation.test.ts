@@ -98,6 +98,33 @@ describe('Neon Harvest simulation', () => {
     expect(isMature(planted.plots[0]!)).toBe(false);
   });
 
+  it('does not spend water on a crop that is already mature', () => {
+    const state = plant(running(), 0);
+    const mature = {
+      ...state,
+      plots: state.plots.map((plot, index) =>
+        index === 0 ? { ...plot, growth: CROPS.lettuce.growthDays, moisture: 0 } : plot,
+      ),
+    };
+
+    expect(waterPlot(mature, 0)).toBe(mature);
+  });
+
+  it('stops charging upkeep for crops waiting to be harvested', () => {
+    const state = plant(running(), 0);
+    const mature = {
+      ...state,
+      plots: state.plots.map((plot, index) =>
+        index === 0 ? { ...plot, growth: CROPS.lettuce.growthDays, moisture: 1 } : plot,
+      ),
+    };
+    const next = advanceDay(mature);
+
+    expect(next.energy).toBe(mature.energy + 8);
+    expect(next.plots[0]?.moisture).toBe(1);
+    expect(next.plots[0]?.health).toBe(100);
+  });
+
   it('buys facilities up to their maximum', () => {
     const state = { ...running(), credits: 500 };
     const bought = buyFacility(state, 'solar');

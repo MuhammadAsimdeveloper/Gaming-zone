@@ -35,6 +35,7 @@ import { cn } from '../lib/cn';
 import { useCatalogue } from '../providers/CatalogueProvider';
 import { usePreferences } from '../providers/PreferencesProvider';
 import { useToast } from '../providers/ToastProvider';
+import { copyText } from '../lib/clipboard';
 import type { PlayEvent } from '../types/game';
 import NotFoundPage from './NotFoundPage';
 
@@ -153,13 +154,10 @@ export default function GamePage() {
         .catch(() => undefined);
       return;
     }
-    void navigator.clipboard
-      .writeText(url)
-      .then(() => {
-        showToast('Game link copied');
-        track('share', { game: game.slug, method: 'clipboard' });
-      })
-      .catch(() => showToast('Could not copy the link'));
+    void copyText(url).then((copied) => {
+      showToast(copied ? 'Game link copied' : 'Could not copy the link');
+      if (copied) track('share', { game: game.slug, method: 'clipboard' });
+    });
   }
 
   function handleFavorite() {

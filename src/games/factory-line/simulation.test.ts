@@ -77,4 +77,14 @@ describe('Factory Line simulation', () => {
     const paused = { ...running(), paused: true };
     expect(advanceFactoryDay(paused)).toBe(paused);
   });
+
+  it('closes early when the line cannot pay its bills', () => {
+    const strained = { ...running(), credits: 10, machines: 1, workers: 1 };
+
+    const next = advanceFactoryDay(strained);
+
+    expect(next.credits).toBeLessThan(0);
+    expect(next.phase).toBe('over');
+    expect(next.log.some((entry) => /insolvent/i.test(entry))).toBe(true);
+  });
 });
