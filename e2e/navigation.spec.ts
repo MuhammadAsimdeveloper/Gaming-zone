@@ -7,14 +7,14 @@ test.describe('catalogue and navigation', () => {
     await page.goto('/');
 
     await expect(page.getByRole('heading', { name: /one click away/i })).toBeVisible();
-    await expect(page.getByText(/26 original games/i)).toBeVisible();
+    await expect(page.getByText(/29 original games/i)).toBeVisible();
     await expect(page.getByRole('link', { name: /Neon Snake/i }).first()).toBeVisible();
     await expect(page.getByRole('link', { name: /Browse all games/i }).first()).toBeVisible();
 
     expectNoErrors(errors);
   });
 
-  test('all twenty-six published games appear in the catalogue', async ({ page }) => {
+  test('all twenty-nine published games appear in the catalogue', async ({ page }) => {
     const errors = collectErrors(page);
     await page.goto('/games');
     await expect(page.getByRole('heading', { name: /All games/i })).toBeVisible();
@@ -83,6 +83,7 @@ test.describe('catalogue and navigation', () => {
   });
 
   test('every published game page renders its runtime', async ({ page }) => {
+    test.setTimeout(120_000);
     for (const game of GAMES) {
       const errors = collectErrors(page);
       await page.goto(`/game/${game.slug}`);

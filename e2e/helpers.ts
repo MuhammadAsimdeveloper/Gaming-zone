@@ -27,6 +27,9 @@ export const GAMES = [
   { slug: 'rift-runner', title: 'Rift Runner' },
   { slug: 'rift-tactics', title: 'Rift Tactics' },
   { slug: 'rift-chess', title: 'Rift Chess' },
+  { slug: 'neon-rush', title: 'Neon Rush' },
+  { slug: 'penalty-protocol', title: 'Penalty Protocol' },
+  { slug: 'hoop-circuit', title: 'Hoop Circuit' },
 ] as const;
 
 export interface ErrorLog {

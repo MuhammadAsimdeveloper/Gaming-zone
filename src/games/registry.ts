@@ -32,4 +32,7 @@ export const gameRegistry: Record<
   'rift-runner': lazy(() => import('../games/rift-runner/RiftRunnerGame')),
   'rift-tactics': lazy(() => import('../games/rift-tactics/RiftTacticsGame')),
   'rift-chess': lazy(() => import('../games/rift-chess/RiftChessGame')),
+  'neon-rush': lazy(() => import('../games/neon-rush/NeonRushGame')),
+  'penalty-protocol': lazy(() => import('../games/sports/penalty/PenaltyProtocolGame')),
+  'hoop-circuit': lazy(() => import('../games/sports/hoop/HoopCircuitGame')),
 };

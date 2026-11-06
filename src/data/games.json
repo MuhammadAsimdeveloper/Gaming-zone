@@ -6,7 +6,9 @@
     "tagline": "Grow the glow. Don't bite yourself.",
     "description": "A glowing twist on the arcade classic. Collect energy orbs, grow your serpent and thread the neon grid without hitting the walls or your own tail.",
     "category": "arcade",
-    "secondaryCategories": ["action"],
+    "secondaryCategories": [
+      "action"
+    ],
     "thumbnail": "/art/neon-snake.svg",
     "accent": "#4ade9d",
     "type": "internal",
@@ -18,9 +20,18 @@
       "The serpent speeds up as your score climbs."
     ],
     "controls": [
-      { "label": "Steer", "keys": "Arrow keys / WASD" },
-      { "label": "Pause", "keys": "Space" },
-      { "label": "Mobile", "keys": "Swipe or on-screen pad" }
+      {
+        "label": "Steer",
+        "keys": "Arrow keys / WASD"
+      },
+      {
+        "label": "Pause",
+        "keys": "Space"
+      },
+      {
+        "label": "Mobile",
+        "keys": "Swipe or on-screen pad"
+      }
     ],
     "published": true,
     "createdAt": "2026-10-12T09:00:00.000Z",
@@ -34,7 +45,9 @@
     "tagline": "Three in a row, neon style.",
     "description": "Classic three-in-a-row on a clean neon board. Face the computer at three difficulty levels or share the device for a local two-player match.",
     "category": "strategy",
-    "secondaryCategories": ["casual"],
+    "secondaryCategories": [
+      "casual"
+    ],
     "thumbnail": "/art/tic-tac-toe.svg",
     "accent": "#6ba4ff",
     "type": "internal",
@@ -46,9 +59,18 @@
       "Round scores reset when you start a new match."
     ],
     "controls": [
-      { "label": "Place mark", "keys": "Click / tap a square" },
-      { "label": "AI difficulty", "keys": "Selector above the board" },
-      { "label": "Restart", "keys": "New round / Reset match" }
+      {
+        "label": "Place mark",
+        "keys": "Click / tap a square"
+      },
+      {
+        "label": "AI difficulty",
+        "keys": "Selector above the board"
+      },
+      {
+        "label": "Restart",
+        "keys": "New round / Reset match"
+      }
     ],
     "published": true,
     "createdAt": "2026-10-15T10:30:00.000Z",
@@ -62,7 +84,9 @@
     "tagline": "Flip, match, remember.",
     "description": "Reveal pairs of glowing icons and clear the board in as few moves as possible. A calm, focused memory challenge you can finish in one coffee break.",
     "category": "puzzle",
-    "secondaryCategories": ["casual"],
+    "secondaryCategories": [
+      "casual"
+    ],
     "thumbnail": "/art/memory-match.svg",
     "accent": "#b285ff",
     "type": "internal",
@@ -74,9 +98,18 @@
       "Try the quicker 6-pair board or the full 8-pair board."
     ],
     "controls": [
-      { "label": "Flip card", "keys": "Click / tap" },
-      { "label": "Difficulty", "keys": "6-pair / 8-pair selector" },
-      { "label": "Restart", "keys": "New game button" }
+      {
+        "label": "Flip card",
+        "keys": "Click / tap"
+      },
+      {
+        "label": "Difficulty",
+        "keys": "6-pair / 8-pair selector"
+      },
+      {
+        "label": "Restart",
+        "keys": "New game button"
+      }
     ],
     "published": true,
     "createdAt": "2026-10-19T14:00:00.000Z",
@@ -90,7 +123,9 @@
     "tagline": "Best of five. No excuses.",
     "description": "A best-of-five showdown against the house. Read the rhythm, pick your throw and take the match with a clean, animated reveal.",
     "category": "casual",
-    "secondaryCategories": ["strategy"],
+    "secondaryCategories": [
+      "strategy"
+    ],
     "thumbnail": "/art/rock-paper-scissors.svg",
     "accent": "#fbbf24",
     "type": "internal",
@@ -102,9 +137,18 @@
       "Ties replay the round without changing the score."
     ],
     "controls": [
-      { "label": "Throw", "keys": "Click / tap an option" },
-      { "label": "Restart", "keys": "Rematch button" },
-      { "label": "Score", "keys": "First to 3 round wins" }
+      {
+        "label": "Throw",
+        "keys": "Click / tap an option"
+      },
+      {
+        "label": "Restart",
+        "keys": "Rematch button"
+      },
+      {
+        "label": "Score",
+        "keys": "First to 3 round wins"
+      }
     ],
     "published": true,
     "createdAt": "2026-10-23T11:15:00.000Z",
@@ -118,7 +162,9 @@
     "tagline": "Wait for green. Then move.",
     "description": "Five rounds. Wait for the signal, tap as fast as you can and find out how quick your reflexes really are. False starts cost you milliseconds.",
     "category": "casual",
-    "secondaryCategories": ["action"],
+    "secondaryCategories": [
+      "action"
+    ],
     "thumbnail": "/art/reaction-time-challenge.svg",
     "accent": "#f472b6",
     "type": "internal",
@@ -130,9 +176,18 @@
       "Five rounds make one run; your best average is saved locally."
     ],
     "controls": [
-      { "label": "React", "keys": "Click / tap / Space" },
-      { "label": "Start", "keys": "Start run button" },
-      { "label": "Rounds", "keys": "5 rounds per run" }
+      {
+        "label": "React",
+        "keys": "Click / tap / Space"
+      },
+      {
+        "label": "Start",
+        "keys": "Start run button"
+      },
+      {
+        "label": "Rounds",
+        "keys": "5 rounds per run"
+      }
     ],
     "published": true,
     "createdAt": "2026-10-27T16:45:00.000Z",
@@ -146,7 +201,9 @@
     "tagline": "Break every brick in the rift.",
     "description": "Smash a wall of neon bricks with a bouncing energy ball. Move the paddle, protect your three lives and clear the rift before it clears you.",
     "category": "arcade",
-    "secondaryCategories": ["action"],
+    "secondaryCategories": [
+      "action"
+    ],
     "thumbnail": "/art/rift-breaker.svg",
     "accent": "#38bdf8",
     "type": "internal",
@@ -158,9 +215,18 @@
       "Clearing all bricks wins the run; higher rows score more."
     ],
     "controls": [
-      { "label": "Move paddle", "keys": "Arrow keys / A and D" },
-      { "label": "Mouse / touch", "keys": "Move pointer over the board" },
-      { "label": "Pause", "keys": "Space" }
+      {
+        "label": "Move paddle",
+        "keys": "Arrow keys / A and D"
+      },
+      {
+        "label": "Mouse / touch",
+        "keys": "Move pointer over the board"
+      },
+      {
+        "label": "Pause",
+        "keys": "Space"
+      }
     ],
     "published": true,
     "createdAt": "2026-10-30T08:20:00.000Z",
@@ -174,7 +240,9 @@
     "tagline": "Sixty seconds of quick math.",
     "description": "A fast, friendly arithmetic sprint. Solve as many questions as you can in sixty seconds, chain correct answers for a streak bonus and beat your best score.",
     "category": "educational",
-    "secondaryCategories": ["casual"],
+    "secondaryCategories": [
+      "casual"
+    ],
     "thumbnail": "/art/math-sprint.svg",
     "accent": "#a3e635",
     "type": "internal",
@@ -186,9 +254,18 @@
       "The run lasts 60 seconds — beat your saved high score."
     ],
     "controls": [
-      { "label": "Answer", "keys": "Click / tap" },
-      { "label": "Keyboard", "keys": "1 – 4 keys" },
-      { "label": "Start", "keys": "Start button" }
+      {
+        "label": "Answer",
+        "keys": "Click / tap"
+      },
+      {
+        "label": "Keyboard",
+        "keys": "1 – 4 keys"
+      },
+      {
+        "label": "Start",
+        "keys": "Start button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-01T12:00:00.000Z",
@@ -202,7 +279,10 @@
     "tagline": "Three laps. Three machines. One city.",
     "description": "A full 3D arcade racer with three original circuits, three unlockable cars, AI rivals, lap timing and three camera views. Built in WebGL with procedural neon scenery and original vehicle models.",
     "category": "racing",
-    "secondaryCategories": ["arcade", "action"],
+    "secondaryCategories": [
+      "arcade",
+      "action"
+    ],
     "thumbnail": "/art/neon-apex.svg",
     "accent": "#4c8dff",
     "type": "internal",
@@ -216,13 +296,34 @@
       "P pauses, C changes camera and M mutes sound."
     ],
     "controls": [
-      { "label": "Accelerate", "keys": "W / ArrowUp" },
-      { "label": "Brake / reverse", "keys": "S / ArrowDown" },
-      { "label": "Steer", "keys": "A D / ArrowLeft ArrowRight" },
-      { "label": "Handbrake", "keys": "Space" },
-      { "label": "Camera", "keys": "C" },
-      { "label": "Pause", "keys": "P" },
-      { "label": "Mobile", "keys": "On-screen steering, drift and pedals" }
+      {
+        "label": "Accelerate",
+        "keys": "W / ArrowUp"
+      },
+      {
+        "label": "Brake / reverse",
+        "keys": "S / ArrowDown"
+      },
+      {
+        "label": "Steer",
+        "keys": "A D / ArrowLeft ArrowRight"
+      },
+      {
+        "label": "Handbrake",
+        "keys": "Space"
+      },
+      {
+        "label": "Camera",
+        "keys": "C"
+      },
+      {
+        "label": "Pause",
+        "keys": "P"
+      },
+      {
+        "label": "Mobile",
+        "keys": "On-screen steering, drift and pedals"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-02T08:00:00.000Z",
@@ -236,7 +337,10 @@
     "tagline": "Three-a-side under the floodlights.",
     "description": "A 3D football match with original low-poly athletes, ball physics, passing, charged shooting, pressing, goalkeeper AI and three difficulty levels. Play a two-minute match under a custom neon stadium.",
     "category": "sports",
-    "secondaryCategories": ["action", "arcade"],
+    "secondaryCategories": [
+      "action",
+      "arcade"
+    ],
     "thumbnail": "/art/rift-striker.svg",
     "accent": "#4ade9d",
     "type": "internal",
@@ -250,15 +354,42 @@
       "Q switches your controlled player, C changes camera and P pauses."
     ],
     "controls": [
-      { "label": "Move", "keys": "WASD / Arrow keys" },
-      { "label": "Sprint", "keys": "Shift" },
-      { "label": "Shoot", "keys": "J (hold and release)" },
-      { "label": "Pass", "keys": "K" },
-      { "label": "Press / tackle", "keys": "Space" },
-      { "label": "Switch player", "keys": "Q" },
-      { "label": "Camera", "keys": "C" },
-      { "label": "Pause", "keys": "P" },
-      { "label": "Mobile", "keys": "On-screen pad plus action buttons" }
+      {
+        "label": "Move",
+        "keys": "WASD / Arrow keys"
+      },
+      {
+        "label": "Sprint",
+        "keys": "Shift"
+      },
+      {
+        "label": "Shoot",
+        "keys": "J (hold and release)"
+      },
+      {
+        "label": "Pass",
+        "keys": "K"
+      },
+      {
+        "label": "Press / tackle",
+        "keys": "Space"
+      },
+      {
+        "label": "Switch player",
+        "keys": "Q"
+      },
+      {
+        "label": "Camera",
+        "keys": "C"
+      },
+      {
+        "label": "Pause",
+        "keys": "P"
+      },
+      {
+        "label": "Mobile",
+        "keys": "On-screen pad plus action buttons"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-02T08:30:00.000Z",
@@ -272,7 +403,10 @@
     "tagline": "Checkpoint runs through a living city grid.",
     "description": "A compact 3D open-world driving sandbox. Explore a procedural city with roads, intersections, buildings, parks and traffic, chase checkpoint gates against the clock and watch the day-night cycle roll in.",
     "category": "racing",
-    "secondaryCategories": ["adventure", "casual"],
+    "secondaryCategories": [
+      "adventure",
+      "casual"
+    ],
     "thumbnail": "/art/neon-city-drive.svg",
     "accent": "#38e8ff",
     "type": "internal",
@@ -286,13 +420,34 @@
       "Complete a mission to unlock the next route. P pauses and C changes camera."
     ],
     "controls": [
-      { "label": "Accelerate", "keys": "W / ArrowUp" },
-      { "label": "Brake / reverse", "keys": "S / ArrowDown" },
-      { "label": "Steer", "keys": "A D / ArrowLeft ArrowRight" },
-      { "label": "Handbrake", "keys": "Space" },
-      { "label": "Camera", "keys": "C" },
-      { "label": "Pause", "keys": "P" },
-      { "label": "Mobile", "keys": "On-screen steering, drift and pedals" }
+      {
+        "label": "Accelerate",
+        "keys": "W / ArrowUp"
+      },
+      {
+        "label": "Brake / reverse",
+        "keys": "S / ArrowDown"
+      },
+      {
+        "label": "Steer",
+        "keys": "A D / ArrowLeft ArrowRight"
+      },
+      {
+        "label": "Handbrake",
+        "keys": "Space"
+      },
+      {
+        "label": "Camera",
+        "keys": "C"
+      },
+      {
+        "label": "Pause",
+        "keys": "P"
+      },
+      {
+        "label": "Mobile",
+        "keys": "On-screen steering, drift and pedals"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-02T09:00:00.000Z",
@@ -306,7 +461,10 @@
     "tagline": "Grow the grid. Feed the rift.",
     "description": "A twenty-day rooftop farming simulation. Plant three original crops, balance water and power, buy solar canopies, recyclers and a market uplink, then sell before the season closes.",
     "category": "simulation",
-    "secondaryCategories": ["strategy", "casual"],
+    "secondaryCategories": [
+      "strategy",
+      "casual"
+    ],
     "thumbnail": "/art/neon-harvest.svg",
     "accent": "#4ade9d",
     "type": "internal",
@@ -319,11 +477,26 @@
       "Finish the twenty-day season with at least 650 credits to make a profit."
     ],
     "controls": [
-      { "label": "Plant / harvest", "keys": "Click or tap a plot action" },
-      { "label": "Water", "keys": "Plot water button (2 water)" },
-      { "label": "Pause", "keys": "Pause button" },
-      { "label": "Speed", "keys": "1x / 2x button" },
-      { "label": "Restart", "keys": "Restart season button" }
+      {
+        "label": "Plant / harvest",
+        "keys": "Click or tap a plot action"
+      },
+      {
+        "label": "Water",
+        "keys": "Plot water button (2 water)"
+      },
+      {
+        "label": "Pause",
+        "keys": "Pause button"
+      },
+      {
+        "label": "Speed",
+        "keys": "1x / 2x button"
+      },
+      {
+        "label": "Restart",
+        "keys": "Restart season button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T09:00:00.000Z",
@@ -337,7 +510,10 @@
     "tagline": "Move the city. Keep the lines moving.",
     "description": "A twenty-day bus network simulation. Assign a limited fleet across three routes, read the rush-hour demand curve, and upgrade capacity before service levels collapse.",
     "category": "simulation",
-    "secondaryCategories": ["strategy", "casual"],
+    "secondaryCategories": [
+      "strategy",
+      "casual"
+    ],
     "thumbnail": "/art/rift-transit.svg",
     "accent": "#4c8dff",
     "type": "internal",
@@ -350,10 +526,22 @@
       "Finish the twenty-day season with at least 1200 credits."
     ],
     "controls": [
-      { "label": "Assign / recall bus", "keys": "Plus / minus on a route" },
-      { "label": "Pause", "keys": "Pause button" },
-      { "label": "Speed", "keys": "1x / 2x button" },
-      { "label": "Restart", "keys": "Restart season button" }
+      {
+        "label": "Assign / recall bus",
+        "keys": "Plus / minus on a route"
+      },
+      {
+        "label": "Pause",
+        "keys": "Pause button"
+      },
+      {
+        "label": "Speed",
+        "keys": "1x / 2x button"
+      },
+      {
+        "label": "Restart",
+        "keys": "Restart season button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T10:00:00.000Z",
@@ -367,7 +555,10 @@
     "tagline": "Balance the city. Keep the lights on.",
     "description": "A twenty-day power grid simulation. Dispatch solar, wind and gas generation against a moving demand curve, avoid blackout penalties, and expand capacity before the city grows.",
     "category": "simulation",
-    "secondaryCategories": ["strategy", "educational"],
+    "secondaryCategories": [
+      "strategy",
+      "educational"
+    ],
     "thumbnail": "/art/grid-supply.svg",
     "accent": "#b285ff",
     "type": "internal",
@@ -380,10 +571,22 @@
       "Finish the twenty-day season with at least 700 credits."
     ],
     "controls": [
-      { "label": "Plant output", "keys": "−10 / +10 buttons" },
-      { "label": "Expand capacity", "keys": "+15 cap button" },
-      { "label": "Pause", "keys": "Pause button" },
-      { "label": "Speed", "keys": "1x / 2x button" }
+      {
+        "label": "Plant output",
+        "keys": "−10 / +10 buttons"
+      },
+      {
+        "label": "Expand capacity",
+        "keys": "+15 cap button"
+      },
+      {
+        "label": "Pause",
+        "keys": "Pause button"
+      },
+      {
+        "label": "Speed",
+        "keys": "1x / 2x button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T11:00:00.000Z",
@@ -397,7 +600,10 @@
     "tagline": "Six colonists. One fragile habitat.",
     "description": "A twenty-four-day colony management simulation. Assign workers across food, power, ore and research, build habitat rings, keep morale alive, and grow the settlement before the season closes.",
     "category": "simulation",
-    "secondaryCategories": ["strategy", "casual"],
+    "secondaryCategories": [
+      "strategy",
+      "casual"
+    ],
     "thumbnail": "/art/rift-colony.svg",
     "accent": "#4ade9d",
     "type": "internal",
@@ -410,10 +616,22 @@
       "Finish the twenty-four-day season with at least 1400 points."
     ],
     "controls": [
-      { "label": "Assign / recall worker", "keys": "Plus / minus on a deck" },
-      { "label": "Build", "keys": "Construction buttons" },
-      { "label": "Pause", "keys": "Pause button" },
-      { "label": "Speed", "keys": "1x / 2x button" }
+      {
+        "label": "Assign / recall worker",
+        "keys": "Plus / minus on a deck"
+      },
+      {
+        "label": "Build",
+        "keys": "Construction buttons"
+      },
+      {
+        "label": "Pause",
+        "keys": "Pause button"
+      },
+      {
+        "label": "Speed",
+        "keys": "1x / 2x button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T12:00:00.000Z",
@@ -427,7 +645,10 @@
     "tagline": "Buy low. Jump far. Sell high.",
     "description": "A twenty-jump trading simulation across four orbital docks. Read shifting prices, spend fuel to jump, fill an eight-slot cargo hold, and finish with more credits than you started.",
     "category": "simulation",
-    "secondaryCategories": ["strategy", "casual"],
+    "secondaryCategories": [
+      "strategy",
+      "casual"
+    ],
     "thumbnail": "/art/orbit-market.svg",
     "accent": "#b285ff",
     "type": "internal",
@@ -440,10 +661,22 @@
       "Finish the twenty-jump window with at least 800 credits."
     ],
     "controls": [
-      { "label": "Buy / sell", "keys": "Goods buttons" },
-      { "label": "Jump", "keys": "Route buttons" },
-      { "label": "Refuel", "keys": "Refuel button" },
-      { "label": "Restart", "keys": "Restart season button" }
+      {
+        "label": "Buy / sell",
+        "keys": "Goods buttons"
+      },
+      {
+        "label": "Jump",
+        "keys": "Route buttons"
+      },
+      {
+        "label": "Refuel",
+        "keys": "Refuel button"
+      },
+      {
+        "label": "Restart",
+        "keys": "Restart season button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T13:00:00.000Z",
@@ -457,7 +690,10 @@
     "tagline": "Set the menu. Fill the floor.",
     "description": "A twenty-day restaurant simulation. Price three original dishes, hire servers, add tables and protect your reputation when the lunch queue outgrows the floor.",
     "category": "simulation",
-    "secondaryCategories": ["casual", "strategy"],
+    "secondaryCategories": [
+      "casual",
+      "strategy"
+    ],
     "thumbnail": "/art/neon-diner.svg",
     "accent": "#ff6b81",
     "type": "internal",
@@ -470,10 +706,22 @@
       "Finish the twenty-day season with at least 900 credits."
     ],
     "controls": [
-      { "label": "Price", "keys": "−1 / +1 / +2 buttons" },
-      { "label": "Hire server", "keys": "Hire button" },
-      { "label": "Add tables", "keys": "Add tables button" },
-      { "label": "Pause", "keys": "Pause button" }
+      {
+        "label": "Price",
+        "keys": "−1 / +1 / +2 buttons"
+      },
+      {
+        "label": "Hire server",
+        "keys": "Hire button"
+      },
+      {
+        "label": "Add tables",
+        "keys": "Add tables button"
+      },
+      {
+        "label": "Pause",
+        "keys": "Pause button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T14:00:00.000Z",
@@ -487,7 +735,10 @@
     "tagline": "Every slot counts. Every delay shows.",
     "description": "A twenty-day airport operations simulation. Open gates and runways, hire ground crew, and balance capacity against a rising wave of inbound flights.",
     "category": "simulation",
-    "secondaryCategories": ["strategy", "casual"],
+    "secondaryCategories": [
+      "strategy",
+      "casual"
+    ],
     "thumbnail": "/art/skyport.svg",
     "accent": "#4c8dff",
     "type": "internal",
@@ -500,10 +751,22 @@
       "Finish the twenty-day season with at least 1000 credits."
     ],
     "controls": [
-      { "label": "Expand", "keys": "Gate / runway / crew buttons" },
-      { "label": "Pause", "keys": "Pause button" },
-      { "label": "Speed", "keys": "1x / 2x button" },
-      { "label": "Restart", "keys": "Restart season button" }
+      {
+        "label": "Expand",
+        "keys": "Gate / runway / crew buttons"
+      },
+      {
+        "label": "Pause",
+        "keys": "Pause button"
+      },
+      {
+        "label": "Speed",
+        "keys": "1x / 2x button"
+      },
+      {
+        "label": "Restart",
+        "keys": "Restart season button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T15:00:00.000Z",
@@ -517,7 +780,10 @@
     "tagline": "Triage the rush. Keep the clinic open.",
     "description": "A twenty-day clinic simulation. Balance beds, doctors and nurses against a growing patient queue, treat critical cases first and keep the clinic funded.",
     "category": "simulation",
-    "secondaryCategories": ["strategy", "casual"],
+    "secondaryCategories": [
+      "strategy",
+      "casual"
+    ],
     "thumbnail": "/art/rift-hospital.svg",
     "accent": "#ff6b81",
     "type": "internal",
@@ -530,10 +796,22 @@
       "Finish the twenty-day season with at least 1000 credits."
     ],
     "controls": [
-      { "label": "Expand", "keys": "Bed / doctor / nurse buttons" },
-      { "label": "Pause", "keys": "Pause button" },
-      { "label": "Speed", "keys": "1x / 2x button" },
-      { "label": "Restart", "keys": "Restart season button" }
+      {
+        "label": "Expand",
+        "keys": "Bed / doctor / nurse buttons"
+      },
+      {
+        "label": "Pause",
+        "keys": "Pause button"
+      },
+      {
+        "label": "Speed",
+        "keys": "1x / 2x button"
+      },
+      {
+        "label": "Restart",
+        "keys": "Restart season button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T16:00:00.000Z",
@@ -547,7 +825,10 @@
     "tagline": "Price the day. Keep the queues moving.",
     "description": "A twenty-day theme-park simulation. Set the ticket price, build rides, hire attendants and run campaigns while balancing demand against queue capacity.",
     "category": "simulation",
-    "secondaryCategories": ["casual", "strategy"],
+    "secondaryCategories": [
+      "casual",
+      "strategy"
+    ],
     "thumbnail": "/art/park-pulse.svg",
     "accent": "#b285ff",
     "type": "internal",
@@ -560,10 +841,22 @@
       "Finish the twenty-day season with at least 5000 credits."
     ],
     "controls": [
-      { "label": "Ticket price", "keys": "−2 / +2 buttons" },
-      { "label": "Build ride", "keys": "Build ride button" },
-      { "label": "Hire attendant", "keys": "Hire button" },
-      { "label": "Campaign", "keys": "Marketing button" }
+      {
+        "label": "Ticket price",
+        "keys": "−2 / +2 buttons"
+      },
+      {
+        "label": "Build ride",
+        "keys": "Build ride button"
+      },
+      {
+        "label": "Hire attendant",
+        "keys": "Hire button"
+      },
+      {
+        "label": "Campaign",
+        "keys": "Marketing button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T17:00:00.000Z",
@@ -577,7 +870,10 @@
     "tagline": "Keep the line fed. Ship every order.",
     "description": "A twenty-day production simulation. Balance machines, operators and automation against a growing order book, and keep the backlog from eating your margin.",
     "category": "simulation",
-    "secondaryCategories": ["strategy", "educational"],
+    "secondaryCategories": [
+      "strategy",
+      "educational"
+    ],
     "thumbnail": "/art/factory-line.svg",
     "accent": "#4c8dff",
     "type": "internal",
@@ -590,10 +886,22 @@
       "Finish the twenty-day season with at least 1500 credits."
     ],
     "controls": [
-      { "label": "Buy machine", "keys": "Machine button" },
-      { "label": "Hire operator", "keys": "Operator button" },
-      { "label": "Automation", "keys": "Automation button" },
-      { "label": "Pause", "keys": "Pause button" }
+      {
+        "label": "Buy machine",
+        "keys": "Machine button"
+      },
+      {
+        "label": "Hire operator",
+        "keys": "Operator button"
+      },
+      {
+        "label": "Automation",
+        "keys": "Automation button"
+      },
+      {
+        "label": "Pause",
+        "keys": "Pause button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T18:00:00.000Z",
@@ -607,7 +915,10 @@
     "tagline": "Fill the contracts. Keep the fleet rolling.",
     "description": "A twenty-day freight simulation. Assign trucks across three contract lanes, buy depot capacity, and sign bigger contracts while fuel costs eat into every crate.",
     "category": "simulation",
-    "secondaryCategories": ["strategy", "casual"],
+    "secondaryCategories": [
+      "strategy",
+      "casual"
+    ],
     "thumbnail": "/art/cargo-ring.svg",
     "accent": "#4ade9d",
     "type": "internal",
@@ -620,10 +931,22 @@
       "Finish the twenty-day season with at least 2000 credits."
     ],
     "controls": [
-      { "label": "Assign / recall", "keys": "Plus / minus on a lane" },
-      { "label": "Buy truck", "keys": "Truck button" },
-      { "label": "Contracts", "keys": "Contract button" },
-      { "label": "Fuel", "keys": "Fuel button" }
+      {
+        "label": "Assign / recall",
+        "keys": "Plus / minus on a lane"
+      },
+      {
+        "label": "Buy truck",
+        "keys": "Truck button"
+      },
+      {
+        "label": "Contracts",
+        "keys": "Contract button"
+      },
+      {
+        "label": "Fuel",
+        "keys": "Fuel button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T19:00:00.000Z",
@@ -637,7 +960,10 @@
     "tagline": "Every drop has to reach the city.",
     "description": "A twenty-day water-network simulation. Balance pumps, reservoir storage and aging pipes against city demand, repairing leaks before the shortfall penalty lands.",
     "category": "simulation",
-    "secondaryCategories": ["strategy", "educational"],
+    "secondaryCategories": [
+      "strategy",
+      "educational"
+    ],
     "thumbnail": "/art/aqua-grid.svg",
     "accent": "#4c8dff",
     "type": "internal",
@@ -650,10 +976,22 @@
       "Finish the twenty-day season with at least 1200 credits."
     ],
     "controls": [
-      { "label": "Install pump", "keys": "Pump button" },
-      { "label": "Repair pipes", "keys": "Repair button" },
-      { "label": "Pause", "keys": "Pause button" },
-      { "label": "Speed", "keys": "1x / 2x button" }
+      {
+        "label": "Install pump",
+        "keys": "Pump button"
+      },
+      {
+        "label": "Repair pipes",
+        "keys": "Repair button"
+      },
+      {
+        "label": "Pause",
+        "keys": "Pause button"
+      },
+      {
+        "label": "Speed",
+        "keys": "1x / 2x button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T20:00:00.000Z",
@@ -667,7 +1005,10 @@
     "tagline": "Drop on the line. Keep the signal alive.",
     "description": "A timing puzzle about stacking signal bars. Drop the moving bar on the block below; overhang is cut away, perfect drops widen the next bar, and a complete miss ends the run.",
     "category": "puzzle",
-    "secondaryCategories": ["casual", "arcade"],
+    "secondaryCategories": [
+      "casual",
+      "arcade"
+    ],
     "thumbnail": "/art/signal-stack.svg",
     "accent": "#b285ff",
     "type": "internal",
@@ -680,9 +1021,18 @@
       "Build the tallest signal tower you can."
     ],
     "controls": [
-      { "label": "Drop", "keys": "Space / click / Drop button" },
-      { "label": "Pause", "keys": "P button" },
-      { "label": "Restart", "keys": "Restart button" }
+      {
+        "label": "Drop",
+        "keys": "Space / click / Drop button"
+      },
+      {
+        "label": "Pause",
+        "keys": "P button"
+      },
+      {
+        "label": "Restart",
+        "keys": "Restart button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T21:00:00.000Z",
@@ -696,7 +1046,10 @@
     "tagline": "Jump the signal. Outrun the dark.",
     "description": "An endless neon runner. Jump incoming barriers as the speed climbs, clear obstacles for bonus points, and keep the runner alive for the best local score.",
     "category": "arcade",
-    "secondaryCategories": ["action", "casual"],
+    "secondaryCategories": [
+      "action",
+      "casual"
+    ],
     "thumbnail": "/art/rift-runner.svg",
     "accent": "#4c8dff",
     "type": "internal",
@@ -709,9 +1062,18 @@
       "Survive as long as you can and beat your best score."
     ],
     "controls": [
-      { "label": "Jump", "keys": "Space / ArrowUp / W / tap" },
-      { "label": "Pause", "keys": "P" },
-      { "label": "Restart", "keys": "Restart button" }
+      {
+        "label": "Jump",
+        "keys": "Space / ArrowUp / W / tap"
+      },
+      {
+        "label": "Pause",
+        "keys": "P"
+      },
+      {
+        "label": "Restart",
+        "keys": "Restart button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T22:00:00.000Z",
@@ -725,7 +1087,10 @@
     "tagline": "A small squad. A tight grid.",
     "description": "A turn-based tactics battle on a five-by-five grid. Move squad units one square or attack in range; every action gives one hostile a turn, so finish the sector fast.",
     "category": "strategy",
-    "secondaryCategories": ["puzzle", "casual"],
+    "secondaryCategories": [
+      "puzzle",
+      "casual"
+    ],
     "thumbnail": "/art/rift-tactics.svg",
     "accent": "#b285ff",
     "type": "internal",
@@ -738,10 +1103,22 @@
       "Win in fewer turns for a higher score."
     ],
     "controls": [
-      { "label": "Select", "keys": "Click / tap a squad unit" },
-      { "label": "Move", "keys": "Click / tap adjacent square" },
-      { "label": "Attack", "keys": "Click / tap hostile in range" },
-      { "label": "Restart", "keys": "Restart button" }
+      {
+        "label": "Select",
+        "keys": "Click / tap a squad unit"
+      },
+      {
+        "label": "Move",
+        "keys": "Click / tap adjacent square"
+      },
+      {
+        "label": "Attack",
+        "keys": "Click / tap hostile in range"
+      },
+      {
+        "label": "Restart",
+        "keys": "Restart button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-03T23:00:00.000Z",
@@ -755,7 +1132,10 @@
     "tagline": "Real chess. Five levels. Forty original puzzles.",
     "description": "A complete chess board with legal-move validation, castling, en passant, promotion, local clocks, five computer levels and forty original mate puzzles. Play a friend on one device or face the browser opponent; saved computer games and records stay in this browser.",
     "category": "strategy",
-    "secondaryCategories": ["puzzle", "casual"],
+    "secondaryCategories": [
+      "puzzle",
+      "casual"
+    ],
     "thumbnail": "/art/rift-chess.svg",
     "accent": "#8b7cff",
     "type": "internal",
@@ -769,17 +1149,193 @@
       "Saved computer games resume after a reload in the same browser."
     ],
     "controls": [
-      { "label": "Select", "keys": "Click / tap a piece" },
-      { "label": "Move", "keys": "Click / tap a highlighted square or drag the piece" },
-      { "label": "Keyboard", "keys": "Arrow keys move focus; Enter or Space selects" },
-      { "label": "Undo", "keys": "Undo button (not in puzzles)" },
-      { "label": "Flip", "keys": "Flip board button" },
-      { "label": "Mute", "keys": "Speaker button" },
-      { "label": "Restart", "keys": "Restart button" }
+      {
+        "label": "Select",
+        "keys": "Click / tap a piece"
+      },
+      {
+        "label": "Move",
+        "keys": "Click / tap a highlighted square or drag the piece"
+      },
+      {
+        "label": "Keyboard",
+        "keys": "Arrow keys move focus; Enter or Space selects"
+      },
+      {
+        "label": "Undo",
+        "keys": "Undo button (not in puzzles)"
+      },
+      {
+        "label": "Flip",
+        "keys": "Flip board button"
+      },
+      {
+        "label": "Mute",
+        "keys": "Speaker button"
+      },
+      {
+        "label": "Restart",
+        "keys": "Restart button"
+      }
     ],
     "published": true,
     "createdAt": "2026-11-06T12:00:00.000Z",
     "featured": false,
     "popularityRank": 26
+  },
+  {
+    "id": "neon-rush",
+    "slug": "neon-rush",
+    "title": "Neon Rush",
+    "tagline": "Three lanes. One runner. No finish line.",
+    "description": "A three-lane endless runner through a procedurally generated neon corridor. Jump barriers, roll under gates and dodge trains while shards build a combo; shield, magnet and overdrive power-ups change each run. Endless and time-attack modes, with bests saved only in this browser.",
+    "category": "arcade",
+    "secondaryCategories": [
+      "action",
+      "racing"
+    ],
+    "thumbnail": "/art/neon-rush.svg",
+    "accent": "#4c8dff",
+    "type": "internal",
+    "internalKey": "neon-rush",
+    "instructions": [
+      "Choose Endless or Time Attack, then start the run.",
+      "Switch lanes to line up a clear route; trains cannot be jumped or rolled.",
+      "Jump barriers and roll under overhead gates.",
+      "Collect shards to build a combo multiplier up to 6x.",
+      "Shield absorbs one hit, magnet pulls shards from nearby lanes, overdrive speeds you up and phases through obstacles.",
+      "Endless ends after two crashes; Time Attack charges two seconds per crash instead.",
+      "Best score, distance and shard records stay in this browser."
+    ],
+    "controls": [
+      {
+        "label": "Switch lanes",
+        "keys": "A / D or Left / Right"
+      },
+      {
+        "label": "Jump",
+        "keys": "W / Up / Space"
+      },
+      {
+        "label": "Roll",
+        "keys": "S / Down"
+      },
+      {
+        "label": "Pause",
+        "keys": "P or Escape"
+      },
+      {
+        "label": "Mute",
+        "keys": "M"
+      },
+      {
+        "label": "Touch",
+        "keys": "Swipe the track or use the on-screen buttons"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-06T18:00:00.000Z",
+    "featured": false,
+    "popularityRank": 27
+  },
+  {
+    "id": "penalty-protocol",
+    "slug": "penalty-protocol",
+    "title": "Penalty Protocol",
+    "tagline": "Five kicks. Six corners. One keeper read.",
+    "description": "A penalty shootout against a keeper who learns your favourite corner. Pick one of six corners to shoot, then dive to the CPU's corner when they step up. Level after five kicks goes to sudden death, with three keeper difficulty levels and browser-local records.",
+    "category": "sports",
+    "secondaryCategories": [
+      "casual",
+      "arcade"
+    ],
+    "thumbnail": "/art/penalty-protocol.svg",
+    "accent": "#4ade9d",
+    "type": "internal",
+    "internalKey": "penalty-protocol",
+    "instructions": [
+      "Choose a keeper difficulty, then start the shootout.",
+      "When you shoot, pick one of the six corners of the goal.",
+      "When the CPU shoots, pick where your keeper dives.",
+      "The keeper reads your most-used corner more often on higher difficulties.",
+      "Outscore the CPU over five kicks to win; a tie goes to sudden death.",
+      "Kick history, best score, win streak and record stay in this browser."
+    ],
+    "controls": [
+      {
+        "label": "Aim high",
+        "keys": "Q / W / E"
+      },
+      {
+        "label": "Aim low",
+        "keys": "A / S / D"
+      },
+      {
+        "label": "Pointer",
+        "keys": "Click or tap a goal corner"
+      },
+      {
+        "label": "Pause",
+        "keys": "P or Escape"
+      },
+      {
+        "label": "Mute",
+        "keys": "M"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-06T19:00:00.000Z",
+    "featured": false,
+    "popularityRank": 28
+  },
+  {
+    "id": "hoop-circuit",
+    "slug": "hoop-circuit",
+    "title": "Hoop Circuit",
+    "tagline": "Sixty seconds. Four spots. One drifting rim.",
+    "description": "A sixty-second arcade basketball run. Set your arc and power from four spots around the half court, then shoot before the clock runs out. Swishes score three, rim-ins two, and every third make multiplies your streak. Rookie leaves the rim still, Pro drifts it gently and All-Star sweeps it fast.",
+    "category": "sports",
+    "secondaryCategories": [
+      "arcade",
+      "casual"
+    ],
+    "thumbnail": "/art/hoop-circuit.svg",
+    "accent": "#4c8dff",
+    "type": "internal",
+    "internalKey": "hoop-circuit",
+    "instructions": [
+      "Choose a rim difficulty, then tip off.",
+      "Aim with the up and down controls and set power with left and right.",
+      "Shoot before the sixty-second clock expires; a shot in flight still counts.",
+      "Swishes score three, rim-ins two, and a streak of three or more multiplies points.",
+      "On Pro and All-Star the rim drifts, so lead the target.",
+      "Best score, best streak and shooting totals stay in this browser."
+    ],
+    "controls": [
+      {
+        "label": "Aim",
+        "keys": "Up / Down or W / S"
+      },
+      {
+        "label": "Power",
+        "keys": "Left / Right or A / D"
+      },
+      {
+        "label": "Shoot",
+        "keys": "Space"
+      },
+      {
+        "label": "Pause",
+        "keys": "P or Escape"
+      },
+      {
+        "label": "Mute",
+        "keys": "M"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-06T20:00:00.000Z",
+    "featured": false,
+    "popularityRank": 29
   }
 ]

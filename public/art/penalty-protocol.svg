@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Penalty Protocol night shootout with a glowing goal and diving keeper">
+  <defs>
+    <linearGradient id="pen-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#03060f"/><stop offset=".6" stop-color="#0a1430"/><stop offset="1" stop-color="#101f42"/></linearGradient>
+    <linearGradient id="pen-pitch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b3a2a"/><stop offset="1" stop-color="#04120f"/></linearGradient>
+    <linearGradient id="pen-net" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dbe8ff" stop-opacity=".22"/><stop offset="1" stop-color="#8fb4ff" stop-opacity=".06"/></linearGradient>
+    <filter id="pen-glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="pen-soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+
+  <rect width="640" height="400" fill="url(#pen-bg)"/>
+  <circle cx="320" cy="96" r="150" fill="#4ade9d" opacity=".10"/>
+
+  <text x="40" y="60" fill="#f5ecff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="34" font-weight="700">Penalty Protocol</text>
+  <text x="40" y="86" fill="#8fa9d6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="2.6">FIVE KICKS · SIX CORNERS</text>
+
+  <g opacity=".28">
+    <rect x="0" y="128" width="640" height="34" fill="#081228"/>
+    <g fill="#4ade9d">
+      <circle cx="40" cy="145" r="2"/><circle cx="96" cy="151" r="2"/><circle cx="152" cy="143" r="2"/><circle cx="208" cy="150" r="2"/><circle cx="264" cy="146" r="2"/>
+      <circle cx="376" cy="148" r="2"/><circle cx="432" cy="143" r="2"/><circle cx="488" cy="151" r="2"/><circle cx="544" cy="145" r="2"/><circle cx="600" cy="149" r="2"/>
+    </g>
+    <g fill="#4c8dff">
+      <circle cx="68" cy="148" r="2"/><circle cx="124" cy="143" r="2"/><circle cx="180" cy="150" r="2"/><circle cx="236" cy="145" r="2"/>
+      <circle cx="404" cy="146" r="2"/><circle cx="460" cy="149" r="2"/><circle cx="516" cy="143" r="2"/><circle cx="572" cy="150" r="2"/>
+    </g>
+  </g>
+
+  <g stroke="#dfe9ff" stroke-opacity=".35" stroke-width="2">
+    <path d="M52 128 L36 46" stroke-opacity=".18"/>
+    <path d="M588 128 L604 46" stroke-opacity=".18"/>
+  </g>
+  <rect x="24" y="40" width="24" height="10" rx="3" fill="#f5f7ff" opacity=".85"/>
+  <rect x="592" y="40" width="24" height="10" rx="3" fill="#f5f7ff" opacity=".85"/>
+
+  <rect x="0" y="208" width="640" height="192" fill="url(#pen-pitch)"/>
+  <g fill="#ffffff" opacity=".022">
+    <rect x="0" y="212" width="640" height="26"/><rect x="0" y="264" width="640" height="26"/><rect x="0" y="316" width="640" height="26"/><rect x="0" y="368" width="640" height="26"/>
+  </g>
+  <path d="M0 336 L640 336" stroke="#95dcff" stroke-opacity=".22" stroke-width="2"/>
+  <ellipse cx="320" cy="366" rx="120" ry="20" fill="none" stroke="#95dcff" stroke-opacity=".16" stroke-width="2"/>
+
+  <g transform="translate(320 152)">
+    <rect x="-206" y="0" width="412" height="132" fill="url(#pen-net)"/>
+    <g stroke="#dfe9ff" stroke-opacity=".28" stroke-width="1">
+      <path d="M-160 0 V132 M-114 0 V132 M-68 0 V132 M-22 0 V132 M24 0 V132 M70 0 V132 M116 0 V132 M162 0 V132"/>
+      <path d="M-206 30 H206 M-206 60 H206 M-206 90 H206 M-206 120 H206"/>
+    </g>
+    <g stroke="#8fd8ff" stroke-opacity=".16" stroke-width="1.5">
+      <path d="M-69 0 V132 M68 0 V132"/>
+      <path d="M-206 66 H206"/>
+    </g>
+    <rect x="-206" y="0" width="137" height="66" rx="8" fill="#4ade9d" opacity=".12" stroke="#4ade9d" stroke-opacity=".7" stroke-width="2" filter="url(#pen-glow)"/>
+    <rect x="-206" y="0" width="412" height="132" fill="none" stroke="#f5f7ff" stroke-width="6" stroke-linecap="round" filter="url(#pen-glow)"/>
+  </g>
+
+  <g transform="translate(262 196)">
+    <path d="M-40 14 Q-12 -6 34 8" stroke="#69f0ff" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <rect x="-26" y="-14" width="40" height="58" rx="12" fill="#101a34" stroke="#4c8dff" stroke-width="2" transform="rotate(-18)"/>
+    <circle cx="-34" cy="-20" r="11" fill="#ffcf9f"/>
+    <rect x="-46" y="-24" width="24" height="6" rx="3" fill="#4ade9d" filter="url(#pen-glow)"/>
+  </g>
+
+  <g transform="translate(330 322)">
+    <ellipse cx="0" cy="16" rx="34" ry="8" fill="#000" opacity=".35"/>
+    <rect x="-16" y="-36" width="32" height="40" rx="8" fill="#101a34" stroke="#4c8dff" stroke-width="2"/>
+    <circle cx="0" cy="-48" r="11" fill="#ffcf9f"/>
+    <g stroke="#141a2c" stroke-width="9" stroke-linecap="round">
+      <path d="M-6 -2 L-20 22"/><path d="M6 -2 L16 24"/>
+    </g>
+    <rect x="-12" y="-28" width="24" height="6" rx="3" fill="#4ade9d"/>
+  </g>
+  <circle cx="366" cy="300" r="13" fill="#f5f7ff" stroke="#1b2a52" stroke-width="2"/>
+  <g fill="#1b2a52">
+    <circle cx="366" cy="294" r="2.4"/><circle cx="361" cy="303" r="2.4"/><circle cx="371" cy="303" r="2.4"/>
+  </g>
+  <path d="M352 338 Q330 296 300 236" stroke="#4ade9d" stroke-opacity=".5" stroke-width="3" stroke-dasharray="5 7" fill="none"/>
+  <circle cx="300" cy="234" r="5" fill="#4ade9d" filter="url(#pen-glow)"/>
+
+  <rect x="40" y="352" width="120" height="6" rx="3" fill="#4ade9d" opacity=".75"/>
+  <rect x="172" y="352" width="58" height="6" rx="3" fill="#4c8dff" opacity=".6"/>
+  <rect x="242" y="352" width="26" height="6" rx="3" fill="#69f0ff" opacity=".5"/>
+</svg>

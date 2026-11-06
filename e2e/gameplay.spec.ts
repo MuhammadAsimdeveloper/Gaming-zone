@@ -103,7 +103,7 @@ test.describe('player shell and local preferences', () => {
   });
 });
 
-test.describe('all twenty-six games boot and accept input', () => {
+test.describe('all twenty-nine games boot and accept input', () => {
   test.describe.configure({ timeout: 150_000 });
 
   for (const game of GAMES) {
@@ -249,6 +249,32 @@ test.describe('all twenty-six games boot and accept input', () => {
           await page.locator('[data-square="e2"]').click();
           await page.locator('[data-square="e4"]').click();
           await expect(page.locator('[data-square="e4"]')).toHaveAttribute('aria-label', 'e4, white pawn');
+          break;
+        case 'neon-rush':
+          await page.getByRole('button', { name: 'Start endless' }).click();
+          await expect(page.getByRole('button', { name: 'Pause run' })).toBeVisible();
+          await page.getByRole('button', { name: 'Pause run' }).click();
+          await expect(page.getByRole('button', { name: 'Resume run' })).toBeVisible();
+          await page.getByRole('button', { name: 'Resume run' }).click();
+          break;
+        case 'penalty-protocol':
+          await page.getByRole('button', { name: 'Start shootout' }).click();
+          await expect(page.getByRole('button', { name: 'Shoot top left' })).toBeEnabled();
+          await page.getByRole('button', { name: 'Shoot top left' }).click();
+          await expect(page.getByRole('list', { name: 'Kick history' }).getByRole('listitem')).toHaveCount(1);
+          await page.getByRole('button', { name: 'Pause shootout' }).click();
+          await expect(page.getByRole('button', { name: 'Resume shootout' })).toBeVisible();
+          await page.getByRole('button', { name: 'Resume shootout' }).click();
+          break;
+        case 'hoop-circuit':
+          await page.getByRole('button', { name: 'Tip off' }).click();
+          await expect(page.getByRole('button', { name: 'Aim up' })).toBeEnabled();
+          await expect(page.getByRole('button', { name: 'Shoot' })).toBeEnabled();
+          await page.getByRole('button', { name: 'Shoot' }).click();
+          await expect(page.getByRole('button', { name: 'Shoot' })).toBeDisabled();
+          await page.getByRole('button', { name: 'Pause game' }).click();
+          await expect(page.getByRole('button', { name: 'Resume game' })).toBeVisible();
+          await page.getByRole('button', { name: 'Resume game' }).click();
           break;
       }
 
