@@ -103,7 +103,7 @@ test.describe('player shell and local preferences', () => {
   });
 });
 
-test.describe('all thirty games boot and accept input', () => {
+test.describe('all thirty-one games boot and accept input', () => {
   test.describe.configure({ timeout: 150_000 });
 
   for (const game of GAMES) {
@@ -285,6 +285,17 @@ test.describe('all thirty games boot and accept input', () => {
           await page.getByRole('button', { name: 'Pause defense' }).click();
           await expect(page.getByRole('button', { name: 'Resume defense' })).toBeVisible();
           await page.getByRole('button', { name: 'Resume defense' }).click();
+          break;
+        case 'apex-time-trial':
+          await page.getByRole('button', { name: 'Start time trial', exact: true }).click();
+          await assertSizedCanvas(page);
+          await assertMuteToggle(page);
+          await pauseUntilPaused(page, 'Time trial paused');
+          await page.getByRole('button', { name: 'Resume', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause time trial' })).toBeVisible();
+          await pauseUntilPaused(page, 'Time trial paused');
+          await page.getByRole('button', { name: 'Restart run' }).click();
+          await expect(page.getByText('Ready', { exact: true })).toBeVisible();
           break;
       }
 

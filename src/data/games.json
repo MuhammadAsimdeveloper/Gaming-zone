@@ -1396,5 +1396,73 @@
     "createdAt": "2026-11-06T21:00:00.000Z",
     "featured": false,
     "popularityRank": 30
+  },
+  {
+    "id": "apex-time-trial",
+    "slug": "apex-time-trial",
+    "title": "Apex Time Trial",
+    "tagline": "One machine. Three circuits. The clock.",
+    "description": "A solo 3D precision racer with three original circuits, two laps, ordered checkpoints and a bronze-to-author medal ladder. Glass and metal sectors cut grip, respawns cost time, and every personal best saves a ghost you can race against. Records and ghosts stay in this browser.",
+    "category": "racing",
+    "secondaryCategories": [
+      "casual",
+      "arcade"
+    ],
+    "thumbnail": "/art/apex-time-trial.svg",
+    "accent": "#38e8ff",
+    "type": "internal",
+    "internalKey": "apex-time-trial",
+    "instructions": [
+      "Choose a circuit, machine and camera, then start the trial.",
+      "The clock starts when you cross the start line, not when the countdown ends.",
+      "Take both checkpoints in order on each lap; skipping one invalidates the run.",
+      "Leaving the course for more than 1.5 seconds also invalidates the run.",
+      "Press R to respawn at the last checkpoint at the cost of a slower time.",
+      "Finish two laps to earn a medal from bronze up to the author target.",
+      "A faster personal best saves a ghost for that circuit and car pair.",
+      "Records, medals and ghosts are stored in this browser only."
+    ],
+    "controls": [
+      {
+        "label": "Accelerate",
+        "keys": "W / ArrowUp"
+      },
+      {
+        "label": "Brake / reverse",
+        "keys": "S / ArrowDown"
+      },
+      {
+        "label": "Steer",
+        "keys": "A D / ArrowLeft ArrowRight"
+      },
+      {
+        "label": "Handbrake",
+        "keys": "Space"
+      },
+      {
+        "label": "Respawn",
+        "keys": "R"
+      },
+      {
+        "label": "Camera",
+        "keys": "C"
+      },
+      {
+        "label": "Pause",
+        "keys": "P or Escape"
+      },
+      {
+        "label": "Mute",
+        "keys": "M"
+      },
+      {
+        "label": "Mobile",
+        "keys": "On-screen steering, drift and pedals"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-06T23:00:00.000Z",
+    "featured": false,
+    "popularityRank": 31
   }
 ]

@@ -45,6 +45,7 @@ export const INTERNAL_GAME_KEYS = [
   'penalty-protocol',
   'hoop-circuit',
   'lawn-protocol',
+  'apex-time-trial',
 ] as const;
 
 export type InternalGameKey = (typeof INTERNAL_GAME_KEYS)[number];

@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Apex Time Trial key art: a glowing circuit loop with checkpoint gates, a start gantry and a stopwatch">
+  <defs>
+    <linearGradient id="attSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#03060f"/>
+      <stop offset="0.6" stop-color="#071127"/>
+      <stop offset="1" stop-color="#0d1b36"/>
+    </linearGradient>
+    <linearGradient id="attRoad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16233f"/>
+      <stop offset="1" stop-color="#080f1f"/>
+    </linearGradient>
+    <linearGradient id="attCurb" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38e8ff"/>
+      <stop offset="1" stop-color="#a06bff"/>
+    </linearGradient>
+    <linearGradient id="attCar" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8fe9ff"/>
+      <stop offset="0.5" stop-color="#38e8ff"/>
+      <stop offset="1" stop-color="#1f6fbf"/>
+    </linearGradient>
+    <radialGradient id="attHaze" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#38e8ff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#38e8ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="attClock" cx="0.5" cy="0.5" r="0.55">
+      <stop offset="0" stop-color="#0f2a3d"/>
+      <stop offset="1" stop-color="#06111f"/>
+    </radialGradient>
+    <filter id="attGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#attSky)"/>
+  <ellipse cx="420" cy="260" rx="430" ry="250" fill="url(#attHaze)"/>
+
+  <g opacity="0.5" fill="#0d1b36">
+    <rect x="24" y="170" width="64" height="190"/>
+    <rect x="98" y="132" width="48" height="228"/>
+    <rect x="156" y="200" width="58" height="160"/>
+    <rect x="632" y="158" width="60" height="202"/>
+    <rect x="702" y="188" width="50" height="172"/>
+    <rect x="760" y="146" width="40" height="214"/>
+  </g>
+  <g fill="#38e8ff" opacity="0.4">
+    <rect x="34" y="188" width="8" height="4"/>
+    <rect x="108" y="150" width="8" height="4"/>
+    <rect x="166" y="218" width="8" height="4"/>
+    <rect x="642" y="176" width="8" height="4"/>
+    <rect x="712" y="206" width="8" height="4"/>
+  </g>
+
+  <text x="44" y="74" fill="#f5f7ff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="38" font-weight="700">Apex Time Trial</text>
+  <text x="46" y="102" fill="#7fb3d9" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">ONE MACHINE · THREE CIRCUITS · THE CLOCK</text>
+
+  <g opacity="0.16" stroke="#5eead4" stroke-width="1.4">
+    <path d="M44 122 H300 M44 134 H260 M44 146 H220"/>
+  </g>
+
+  <path
+    d="M120 420 C40 372 48 292 128 258 C196 228 268 262 312 226 C356 190 340 118 408 100 C486 80 574 122 604 186 C634 250 600 322 540 348 C476 376 402 344 352 372 C302 400 238 452 164 442 C144 439 130 430 120 420 Z"
+    fill="none"
+    stroke="url(#attCurb)"
+    stroke-width="34"
+    stroke-linejoin="round"
+    opacity="0.9"
+  />
+  <path
+    d="M120 420 C40 372 48 292 128 258 C196 228 268 262 312 226 C356 190 340 118 408 100 C486 80 574 122 604 186 C634 250 600 322 540 348 C476 376 402 344 352 372 C302 400 238 452 164 442 C144 439 130 430 120 420 Z"
+    fill="none"
+    stroke="url(#attRoad)"
+    stroke-width="24"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M120 420 C40 372 48 292 128 258 C196 228 268 262 312 226 C356 190 340 118 408 100 C486 80 574 122 604 186 C634 250 600 322 540 348 C476 376 402 344 352 372 C302 400 238 452 164 442 C144 439 130 430 120 420 Z"
+    fill="none"
+    stroke="#eaf6ff"
+    stroke-width="1.6"
+    stroke-dasharray="10 18"
+    opacity="0.7"
+  />
+
+  <g filter="url(#attGlow)">
+    <circle cx="312" cy="226" r="7" fill="#ffe08a"/>
+    <circle cx="540" cy="348" r="7" fill="#ffe08a"/>
+  </g>
+  <g stroke="#ffe08a" stroke-width="3" stroke-linecap="round">
+    <path d="M300 214 V182 M300 182 H324 M312 214 V196"/>
+    <path d="M528 336 V304 M528 304 H552 M540 336 V318"/>
+  </g>
+
+  <g transform="translate(120 420) rotate(-12)">
+    <rect x="-46" y="-34" width="8" height="68" fill="#0b1526" stroke="#38e8ff" stroke-width="1.6"/>
+    <rect x="38" y="-34" width="8" height="68" fill="#0b1526" stroke="#38e8ff" stroke-width="1.6"/>
+    <rect x="-46" y="-34" width="92" height="10" fill="#0b1526" stroke="#38e8ff" stroke-width="1.6"/>
+    <g fill="#eaf6ff">
+      <rect x="-38" y="-32" width="9" height="6"/>
+      <rect x="-20" y="-32" width="9" height="6"/>
+      <rect x="-2" y="-32" width="9" height="6"/>
+      <rect x="16" y="-32" width="9" height="6"/>
+      <rect x="34" y="-32" width="9" height="6"/>
+    </g>
+    <rect x="-40" y="-20" width="80" height="6" fill="#38e8ff" opacity="0.6"/>
+  </g>
+
+  <g transform="translate(352 372) rotate(18)">
+    <ellipse cx="0" cy="10" rx="34" ry="8" fill="#000" opacity="0.4"/>
+    <path d="M-32 2 L20 2 L30 -8 L12 -8 L-2 -18 L-20 -18 L-24 -8 L-34 -8 Z" fill="url(#attCar)"/>
+    <rect x="-20" y="-16" width="14" height="6" rx="2" fill="#dff7ff" opacity="0.85"/>
+    <circle cx="-22" cy="6" r="7" fill="#050b14" stroke="#38e8ff" stroke-width="2"/>
+    <circle cx="22" cy="6" r="7" fill="#050b14" stroke="#38e8ff" stroke-width="2"/>
+    <rect x="-38" y="2" width="8" height="3" fill="#9ff3ff" filter="url(#attGlow)"/>
+  </g>
+
+  <g transform="translate(660 120)">
+    <circle cx="0" cy="0" r="66" fill="url(#attClock)" stroke="#38e8ff" stroke-opacity="0.55" stroke-width="3"/>
+    <circle cx="0" cy="0" r="52" fill="none" stroke="#7fb3d9" stroke-opacity="0.3" stroke-width="1.5"/>
+    <path d="M0 -52 A52 52 0 0 1 44 28" fill="none" stroke="#38e8ff" stroke-width="4" stroke-linecap="round"/>
+    <g stroke="#7fb3d9" stroke-width="2" opacity="0.7">
+      <path d="M0 -46 V-40 M0 46 V40 M-46 0 H-40 M46 0 H40"/>
+      <path d="M-33 -33 L-29 -29 M33 33 L29 29 M33 -33 L29 -29 M-33 33 L-29 29"/>
+    </g>
+    <path d="M0 0 V-28" stroke="#eaf6ff" stroke-width="4" stroke-linecap="round"/>
+    <path d="M0 0 L22 14" stroke="#38e8ff" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="5" fill="#eaf6ff"/>
+    <rect x="-14" y="-84" width="28" height="12" rx="4" fill="#0b1526" stroke="#38e8ff" stroke-opacity="0.6" stroke-width="2"/>
+  </g>
+
+  <g transform="translate(668 268)">
+    <circle cx="-40" cy="0" r="11" fill="#ffe08a" opacity="0.9"/>
+    <circle cx="0" cy="0" r="11" fill="#dce7f5" opacity="0.85"/>
+    <circle cx="40" cy="0" r="11" fill="#e79a5b" opacity="0.85"/>
+    <path d="M-40 -4 L-40 4 M-44 0 H-36 M-3 -3 L3 3 M3 -3 L-3 3 M36 -3 H44 M40 4 V-4" stroke="#06111f" stroke-width="1.6" stroke-linecap="round"/>
+  </g>
+
+  <text x="604" y="306" fill="#7fb3d9" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="2">AUTHOR · GOLD · SILVER · BRONZE</text>
+  <text x="44" y="474" fill="#5b7ea3" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" letter-spacing="2.4">PERSONAL BESTS AND GHOSTS STAY IN THIS BROWSER</text>
+</svg>

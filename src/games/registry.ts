@@ -36,4 +36,5 @@ export const gameRegistry: Record<
   'penalty-protocol': lazy(() => import('../games/sports/penalty/PenaltyProtocolGame')),
   'hoop-circuit': lazy(() => import('../games/sports/hoop/HoopCircuitGame')),
   'lawn-protocol': lazy(() => import('../games/lawn-protocol/LawnProtocolGame')),
+  'apex-time-trial': lazy(() => import('../games3d/time-trial/ApexTimeTrialGame')),
 };
