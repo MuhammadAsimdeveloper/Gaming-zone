@@ -35,6 +35,17 @@ function isKnownBlock(id: number): id is BlockId {
   return Object.prototype.hasOwnProperty.call(BLOCKS, id);
 }
 
+/** Narrows one untrusted save entry; `null` means the entry is skipped. */
+function asVoxelEdit(value: unknown): VoxelEdit | null {
+  if (typeof value !== 'object' || value === null) return null;
+  const { x, y, z, id } = value as { x?: unknown; y?: unknown; z?: unknown; id?: unknown };
+  if (typeof x !== 'number' || !Number.isInteger(x)) return null;
+  if (typeof y !== 'number' || !Number.isInteger(y) || y < 0 || y >= CHUNK_HEIGHT) return null;
+  if (typeof z !== 'number' || !Number.isInteger(z)) return null;
+  if (typeof id !== 'number' || !isKnownBlock(id)) return null;
+  return { x, y, z, id };
+}
+
 export class VoxelWorld {
   readonly seed: string;
   private readonly terrain: TerrainSampler;
@@ -76,6 +87,8 @@ export class VoxelWorld {
   }
 
   setBlock(x: number, y: number, z: number, id: BlockId): boolean {
+    // Integer coordinates are required before any index arithmetic or the y-range check.
+    if (!Number.isInteger(x) || !Number.isInteger(y) || !Number.isInteger(z)) return false;
     if (y < 0 || y >= CHUNK_HEIGHT) return false;
     if (!isKnownBlock(id)) return false;
 
@@ -133,14 +146,23 @@ export class VoxelWorld {
   }
 
   applyEdits(edits: readonly VoxelEdit[]): void {
-    for (const edit of edits) {
-      if (!isKnownBlock(edit.id)) continue;
-      if (edit.y < 0 || edit.y >= CHUNK_HEIGHT) continue;
+    // Save data is untrusted: revalidate every entry and skip anything malformed.
+    for (const value of edits as readonly unknown[]) {
+      const edit = asVoxelEdit(value);
+      if (!edit) continue;
+
       const { cx, cz } = worldToChunk(edit.x, edit.z);
       const lx = edit.x - cx * CHUNK_SIZE;
       const lz = edit.z - cz * CHUNK_SIZE;
-      this.recordEdit(cx, cz, blockIndex(lx, edit.y, lz), edit.id);
-      this.chunks.delete(chunkKey(cx, cz));
+      const index = blockIndex(lx, edit.y, lz);
+      this.recordEdit(cx, cz, index, edit.id);
+
+      // Runtime edits must refresh already-built meshes without forcing generation.
+      const chunk = this.chunks.get(chunkKey(cx, cz));
+      if (!chunk) continue;
+      chunk.blocks[index] = edit.id;
+      chunk.dirty = true;
+      this.markBorderNeighbours(cx, cz, lx, lz, false);
     }
   }
 
@@ -158,13 +180,25 @@ export class VoxelWorld {
    * Border invalidation policy: an unloaded neighbour has no mesh to invalidate, so
    * high borders (+x / +z) load the neighbouring chunk eagerly and mark it dirty,
    * while low borders (-x / -z) only mark a neighbour that is already cached.
+   * `generate = false` (used by `applyEdits`) never generates: every border
+   * neighbour is simply marked dirty when it is already cached.
    */
-  private markBorderNeighbours(cx: number, cz: number, lx: number, lz: number): void {
-    if (lx === CHUNK_SIZE - 1) this.ensureChunk(cx + 1, cz).dirty = true;
-    else if (lx === 0) this.markCachedDirty(cx - 1, cz);
+  private markBorderNeighbours(
+    cx: number,
+    cz: number,
+    lx: number,
+    lz: number,
+    generate = true,
+  ): void {
+    if (lx === CHUNK_SIZE - 1) {
+      if (generate) this.ensureChunk(cx + 1, cz).dirty = true;
+      else this.markCachedDirty(cx + 1, cz);
+    } else if (lx === 0) this.markCachedDirty(cx - 1, cz);
 
-    if (lz === CHUNK_SIZE - 1) this.ensureChunk(cx, cz + 1).dirty = true;
-    else if (lz === 0) this.markCachedDirty(cx, cz - 1);
+    if (lz === CHUNK_SIZE - 1) {
+      if (generate) this.ensureChunk(cx, cz + 1).dirty = true;
+      else this.markCachedDirty(cx, cz + 1);
+    } else if (lz === 0) this.markCachedDirty(cx, cz - 1);
   }
 
   private markCachedDirty(cx: number, cz: number): void {

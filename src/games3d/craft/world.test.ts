@@ -66,3 +66,69 @@ describe('VoxelWorld', () => {
     expect(restored.editsForSave()).toEqual(edits);
   });
 });
+
+describe('VoxelWorld edit validation', () => {
+  type Edit = Parameters<VoxelWorld['applyEdits']>[0][number];
+
+  it('rejects fractional coordinates in setBlock without writing or saving', () => {
+    const world = new VoxelWorld('world-test');
+    const reference = new VoxelWorld('world-test');
+
+    expect(world.setBlock(5, 40.5, 5, BLOCK.Bricks)).toBe(false);
+    expect(world.setBlock(2.5, 40, 2, BLOCK.Bricks)).toBe(false);
+    expect(world.setBlock(2, 40, 2.5, BLOCK.Bricks)).toBe(false);
+    expect(world.editsForSave()).toEqual([]);
+    expect(world.ensureChunk(0, 0).blocks).toEqual(reference.ensureChunk(0, 0).blocks);
+  });
+
+  it('rejects NaN coordinates in setBlock without writing or saving', () => {
+    const world = new VoxelWorld('world-test');
+    const reference = new VoxelWorld('world-test');
+
+    expect(world.setBlock(Number.NaN, 40, 5, BLOCK.Bricks)).toBe(false);
+    expect(world.setBlock(5, 40, Number.NaN, BLOCK.Bricks)).toBe(false);
+    expect(world.editsForSave()).toEqual([]);
+    expect(world.ensureChunk(0, 0).blocks).toEqual(reference.ensureChunk(0, 0).blocks);
+  });
+
+  it('skips malformed edits in applyEdits without throwing or dirtying save data', () => {
+    const world = new VoxelWorld('world-test');
+    const malformed = [
+      { id: BLOCK.Bricks },
+      null,
+      undefined,
+      { x: null, y: null, z: null, id: BLOCK.Bricks },
+      { x: 1.5, y: 40, z: 2, id: BLOCK.Bricks },
+      { x: 3, y: 40.5, z: 3, id: BLOCK.Bricks },
+      { x: 3, y: 40, z: 3.25, id: BLOCK.Bricks },
+      { x: Number.NaN, y: 40, z: Number.NaN, id: BLOCK.Bricks },
+      { x: 3, y: 40, z: 3, id: 9999 },
+    ] as unknown as Edit[];
+
+    expect(() => world.applyEdits(malformed)).not.toThrow();
+    expect(world.editsForSave()).toEqual([]);
+    expect(world.getChunk(0, 0)).toBeUndefined();
+    expect(world.getBlock(0, 0, 0)).toBe(BLOCK.Bedrock);
+  });
+
+  it('writes edits into cached chunks and dirties cached border neighbours', () => {
+    const world = new VoxelWorld('world-test');
+    world.ensureChunk(0, 0);
+    world.ensureChunk(1, 0);
+    world.takeDirtyChunks();
+
+    world.applyEdits([{ x: 15, y: 40, z: 5, id: BLOCK.Bricks }]);
+
+    expect(world.getChunk(0, 0)).toBeDefined();
+    expect(world.getBlock(15, 40, 5)).toBe(BLOCK.Bricks);
+    expect(world.getChunk(0, 0)?.dirty).toBe(true);
+    expect(world.getChunk(1, 0)?.dirty).toBe(true);
+    const dirty = world.takeDirtyChunks().map((chunk) => chunkKey(chunk.cx, chunk.cz)).sort();
+    expect(dirty).toEqual(['0,0', '1,0']);
+
+    world.unloadChunk(0, 0);
+    expect(world.getChunk(0, 0)).toBeUndefined();
+    expect(world.getBlock(15, 40, 5)).toBe(BLOCK.Bricks);
+    expect(world.editsForSave()).toEqual([{ x: 15, y: 40, z: 5, id: BLOCK.Bricks }]);
+  });
+});
