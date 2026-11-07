@@ -69,6 +69,7 @@ export interface RaceSetup {
   carId: CarId;
   difficulty: Difficulty;
   camera: CameraMode;
+  muted?: boolean;
 }
 
 interface RaceCallbacks {
@@ -198,6 +199,7 @@ export class RaceEngine {
       this.resizeObserver.observe(this.canvas.parentElement);
     }
 
+    this.audio.setMuted(setup.muted ?? false);
     this.audio.start();
     this.audio.beep(330, 80, 'sine', 0.05);
     this.renderer.setAnimationLoop(this.loop);
