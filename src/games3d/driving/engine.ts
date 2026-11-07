@@ -701,8 +701,8 @@ export class DriveEngine {
     this.keyboard.dispose();
     this.audio.dispose();
     disposeObject(this.scene);
-    this.renderer.dispose();
     this.renderer.forceContextLoss();
+    this.renderer.dispose();
     this.traffic = [];
     this.colliders = [];
   }
