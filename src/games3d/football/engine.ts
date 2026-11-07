@@ -40,6 +40,7 @@ export interface FootballResult {
 export interface FootballSetup {
   difficulty: FootballDifficulty;
   camera: FootballCamera;
+  muted?: boolean;
 }
 
 interface Footballer {
@@ -192,6 +193,7 @@ export class FootballEngine {
     window.addEventListener('blur', this.handleWindowBlur);
     this.canvas.addEventListener('pointerdown', this.handlePointerDown);
 
+    this.audio.setMuted(setup.muted ?? false);
     this.audio.start();
     this.audio.whistle();
     this.renderer.setAnimationLoop(this.loop);
