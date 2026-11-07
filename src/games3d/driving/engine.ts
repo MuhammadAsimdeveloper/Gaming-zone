@@ -108,6 +108,7 @@ export class DriveEngine {
   private callbackHud: (hud: DriveHud) => void;
   private callbackFinish: (result: DriveResult) => void;
   private disposed = false;
+  private resizeObserver: ResizeObserver | null = null;
   private paused = false;
   private phase: DrivePhase = 'countdown';
   private countdown = COUNTDOWN_SECONDS;
@@ -222,6 +223,10 @@ export class DriveEngine {
     this.applyTimeOfDay();
     this.resize();
     window.addEventListener('resize', this.handleResize);
+    if (typeof ResizeObserver !== 'undefined' && this.canvas.parentElement) {
+      this.resizeObserver = new ResizeObserver(this.handleResize);
+      this.resizeObserver.observe(this.canvas.parentElement);
+    }
     this.canvas.focus();
 
     this.audio.start();
@@ -501,8 +506,9 @@ export class DriveEngine {
   private finish(completed: boolean): void {
     if (this.phase === 'finished') return;
     this.phase = 'finished';
+    this.renderer.setAnimationLoop(null);
     this.checkpointGroup.visible = false;
-    this.audio.setEngineVolume(0.0001);
+    this.audio.pause();
     if (completed) this.audio.lap();
     this.callbackFinish({
       missionId: this.mission.id,
@@ -675,7 +681,7 @@ export class DriveEngine {
 
   pause(): void {
     this.paused = true;
-    this.audio.suspend();
+    this.audio.pause();
   }
 
   resume(): void {
@@ -689,10 +695,13 @@ export class DriveEngine {
     this.disposed = true;
     this.renderer.setAnimationLoop(null);
     window.removeEventListener('resize', this.handleResize);
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
     this.keyboard.dispose();
     this.audio.dispose();
     disposeObject(this.scene);
     this.renderer.dispose();
+    this.renderer.forceContextLoss();
     this.traffic = [];
     this.colliders = [];
   }
