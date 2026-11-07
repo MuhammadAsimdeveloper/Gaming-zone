@@ -59,6 +59,7 @@ export interface DriveSetup {
   missionId: string;
   carId: DriveCarId;
   camera: DriveCameraMode;
+  muted?: boolean;
 }
 
 interface TrafficCar {
@@ -230,6 +231,7 @@ export class DriveEngine {
     }
     this.canvas.focus();
 
+    this.audio.setMuted(setup.muted ?? false);
     this.audio.start();
     this.audio.setEngineVolume(0.03);
     this.renderer.setAnimationLoop(this.loop);
