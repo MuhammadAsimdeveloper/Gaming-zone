@@ -7,9 +7,9 @@ import RiftChessGame from './RiftChessGame';
 let container: HTMLDivElement;
 let root: Root;
 
-async function render(initialFen?: string) {
+async function render(initialFen?: string, onComplete: (event: { outcome?: string }) => void = vi.fn()) {
   await act(async () => {
-    root.render(<RiftChessGame initialFen={initialFen} onStart={vi.fn()} onComplete={vi.fn()} />);
+    root.render(<RiftChessGame initialFen={initialFen} onStart={vi.fn()} onComplete={onComplete} />);
   });
 }
 
@@ -105,6 +105,17 @@ describe('Rift Chess playable board', () => {
     });
     expect(container.querySelector('[role="dialog"]')).toBeNull();
     expect(document.activeElement?.getAttribute('data-square')).toBe('a7');
+  });
+
+  it('reports a fifty-move-rule ending as a draw', async () => {
+    const onComplete = vi.fn();
+    await render('8/8/8/8/8/5k2/8/4K2R w - - 99 51', onComplete);
+    await clickButton('Play local game');
+    await clickSquare('h1');
+    await clickSquare('h2');
+
+    expect(container.textContent).toContain('Draw by the fifty-move rule');
+    expect(onComplete).toHaveBeenCalledWith({ outcome: 'draw' });
   });
 
   it('uses the correct piece colour when black promotes', async () => {
