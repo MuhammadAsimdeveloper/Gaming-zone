@@ -2,7 +2,7 @@
 
 A free, instant-play browser gaming portal. Original branding, original games, no account and no download.
 
-**Status:** the platform and 25 internal games are implemented. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). **The 15 shortlisted games are designs only — they are not implemented, and no catalogue entry claims otherwise.**
+**Status:** the platform and 25 internal games are implemented. Rift Chess, the first Wave 1 game, has entered implementation: its pinned rules-library adapter and regression tests are in progress, but it is **not yet playable and has no catalogue entry**. The remaining 14 shortlisted games are still designs only.
 
 ---
 
@@ -33,7 +33,7 @@ npm run preview    # preview the production build
 npm run test:e2e   # build, then Playwright browser tests against the preview
 ```
 
-Node 20+ is required. The project is developed on Node 24.
+Node 24+ is required for the full development and test workflow (Vitest 5).
 
 Playwright's Chromium is the only browser target in CI. Install it once with
 `npx playwright install chromium` before running `npm run test:e2e` locally.
@@ -168,18 +168,21 @@ Cloudflare Pages (not deployed by this repository):
 ```text
 Build command:    npm run build
 Output directory: dist
-Node version:     20+
+Node version:     24+
 ```
 
 The build is a static site. `public/_redirects` provides the SPA fallback for deep links, and `public/_headers` sets baseline security headers. A Content-Security-Policy is not yet configured because the optional analytics and ad integrations must be validated against it first.
 
 ---
 
-## Next game: Rift Chess
+## Next game: Rift Chess — Wave 1, M1 in progress
 
-Rift Chess is the first approved shortlist game. It is **not implemented and has no catalogue
-entry yet**. The gated implementation plan, licence checks and milestones are in
-[`docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md`](docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md).
+The `chess.js` 1.4.0 dependency is pinned and its BSD-2-Clause notice is recorded in
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). The first rules adapter and regression
+suite are being built in `src/games/rift-chess/`. This is a rules foundation only: the board,
+AI, clocks, persistence and catalogue integration are not implemented yet. Do not describe
+Rift Chess as playable until M2–M6 and their QA gates are complete. See the
+[`implementation plan`](docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md).
 
 ---
 
