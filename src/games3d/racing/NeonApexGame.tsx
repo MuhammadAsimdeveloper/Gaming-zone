@@ -20,6 +20,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useVisibilityPause } from '../../games/shared/useVisibilityPause';
 import { formatRaceTime } from '../shared/math';
+import { readMutedPreference } from '../shared/mutePreference';
 import { WebGLContextNotice } from '../shared/WebGLContextNotice';
 import { useWebGLContextLoss } from '../shared/useContextLoss';
 import type { GameComponentProps } from '../../types/game';
@@ -124,7 +125,7 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
   const [carId, setCarId] = useState<CarId>('rift-gt');
   const [difficulty, setDifficulty] = useState<Difficulty>('pro');
   const [camera, setCamera] = useState<CameraMode>('chase');
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(readMutedPreference);
   const [result, setResult] = useState<RaceResultData | null>(null);
   const [progress, setProgress] = useState<RaceProgress>(() => loadProgress());
   const [error, setError] = useState<string | null>(null);

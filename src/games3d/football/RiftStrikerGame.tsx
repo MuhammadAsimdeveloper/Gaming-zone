@@ -23,6 +23,7 @@ import type { ReactNode } from 'react';
 import { useVisibilityPause } from '../../games/shared/useVisibilityPause';
 import type { GameComponentProps } from '../../types/game';
 import { WebGLContextNotice } from '../shared/WebGLContextNotice';
+import { readMutedPreference } from '../shared/mutePreference';
 import { useWebGLContextLoss } from '../shared/useContextLoss';
 import { FootballEngine, type FootballCamera, type FootballDifficulty, type FootballHud, type FootballResult } from './engine';
 
@@ -141,7 +142,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
   const [hud, setHud] = useState<FootballHud>(START_HUD);
   const [difficulty, setDifficulty] = useState<FootballDifficulty>('pro');
   const [camera, setCamera] = useState<FootballCamera>('broadcast');
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(readMutedPreference);
   const [result, setResult] = useState<FootballResult | null>(null);
   const [record, setRecord] = useState<MatchRecord>(() => loadRecord());
   const [error, setError] = useState<string | null>(null);

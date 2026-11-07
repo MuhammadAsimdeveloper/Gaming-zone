@@ -152,6 +152,9 @@ test.describe('all thirty-two games boot and accept input', () => {
           break;
         case 'neon-apex':
           await page.getByRole('button', { name: 'Start race', exact: true }).click();
+          const countdown = await readCountdownSequence(page);
+          expect(countdown[0], 'countdown starts at three').toBe('3');
+          expect(countdown, 'countdown never shows an extra step').not.toContain('4');
           await assertSizedCanvas(page);
           await assertMuteToggle(page);
           await pauseUntilPaused(page, 'Race paused');
@@ -356,6 +359,24 @@ test.describe('mobile input and hidden-tab fairness', () => {
     expectNoErrors(errors);
   });
 
+  test('rock paper scissors holds the round while the tab is hidden', async ({ page }) => {
+    const errors = collectErrors(page);
+    await stubVisibility(page);
+
+    await page.goto('/game/rock-paper-scissors');
+    await page.getByRole('button', { name: /^Throw Rock/ }).click();
+
+    // The reveal lands 450 ms after the throw, so hiding inside that window must
+    // pause it instead of settling the round in the background.
+    await setVisibility(page, 'hidden');
+    await page.waitForTimeout(1200);
+    await expect(page.getByText('No throws yet')).toBeVisible();
+
+    await setVisibility(page, 'visible');
+    await expect(page.getByText('1 rounds')).toBeVisible({ timeout: 3000 });
+    expectNoErrors(errors);
+  });
+
   test('reaction time re-arms the round after the tab is hidden', async ({ page }) => {
     const errors = collectErrors(page);
     await stubVisibility(page);
@@ -432,6 +453,28 @@ async function readRemainingSeconds(page: import('@playwright/test').Page): Prom
   const status = await page.getByText(/\d+ seconds left/).first().textContent();
   const match = status?.match(/(\d+) seconds left/);
   return match ? Number(match[1]) : -1;
+}
+
+async function readCountdownSequence(page: import('@playwright/test').Page): Promise<string[]> {
+  const overlay = page.getByText('Get ready', { exact: true }).locator('..');
+  const number = overlay.locator('p').nth(1);
+  const seen: string[] = [];
+  const deadline = Date.now() + 15_000;
+
+  while (Date.now() < deadline) {
+    const visible = await overlay.count();
+    if (visible === 0) {
+      if (seen.length > 0) break;
+      await page.waitForTimeout(30);
+      continue;
+    }
+    const text = (await number.textContent())?.trim() ?? '';
+    if (text && seen.at(-1) !== text) seen.push(text);
+    if (text === 'GO') break;
+    await page.waitForTimeout(30);
+  }
+
+  return seen;
 }
 
 async function assertSizedCanvas(page: import('@playwright/test').Page): Promise<void> {

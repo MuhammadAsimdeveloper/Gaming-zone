@@ -131,7 +131,8 @@ export class RaceEngine {
   private paused = false;
   private disposed = false;
   private phase: RacePhase = 'countdown';
-  private countdown = 3.99;
+  // Three full seconds, so the overlay shows 3, 2, 1 and never a leading 4.
+  private countdown = 3;
   private lastCountdownBeep = 4;
   private raceTime = 0;
   private hudTimer = 0;

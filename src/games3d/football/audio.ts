@@ -1,8 +1,10 @@
+import { readMutedPreference, writeMutedPreference } from '../shared/mutePreference';
+
 export class StadiumAudio {
   private context: AudioContext | null = null;
   private master: GainNode | null = null;
   private crowdGain: GainNode | null = null;
-  private muted = false;
+  private muted = readMutedPreference();
 
   start(): void {
     if (this.context) {
@@ -134,6 +136,7 @@ export class StadiumAudio {
 
   toggleMute(): boolean {
     this.muted = !this.muted;
+    writeMutedPreference(this.muted);
     if (this.context && this.master) {
       this.master.gain.setTargetAtTime(this.muted ? 0 : 0.8, this.context.currentTime, 0.05);
     }

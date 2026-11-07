@@ -95,9 +95,9 @@ Ordered by player impact. Every item below was reproduced with a failing test (o
 
 | Area | Files | Work |
 |---|---|---|
-| 3D mute persistence | `src/games3d/shared/audio.ts`, each `*Game.tsx` | Persist the mute choice in a versioned browser-local record so it survives reloads and applies to all three 3D games. |
-| Neon Apex countdown | `src/games3d/racing/engine.ts` | The starting countdown can display one extra step; make the sequence start at 3 and add a browser assertion. |
-| Hidden-tab timers | `src/games/rock-paper-scissors/RockPaperScissorsGame.tsx` | Stop the round timer while the tab is hidden, as the simulation games already do. |
+| 3D mute persistence | `src/games3d/shared/audio.ts`, each `*Game.tsx` | Persist the mute choice in a versioned browser-local record so it survives reloads and applies to all three 3D games. *Resolved 2026-11-07 — see §6.* |
+| Neon Apex countdown | `src/games3d/racing/engine.ts` | The starting countdown can display one extra step; make the sequence start at 3 and add a browser assertion. *Resolved 2026-11-07 — see §6.* |
+| Hidden-tab timers | `src/games/rock-paper-scissors/RockPaperScissorsGame.tsx` | Stop the round timer while the tab is hidden, as the simulation games already do. *Resolved 2026-11-07 — see §6.* |
 | Snake key scope | `src/games/snake/SnakeGame.tsx` | Call `preventDefault` only for keys the game consumes, so page scrolling and browser shortcuts still work outside the board. |
 | Math Sprint | `src/games/math-sprint/MathSprintGame.tsx` | Announce each new problem through a polite live region and verify the one-second tick against fake timers. |
 | Difficulty targets | `src/games/rift-hospital/simulation.ts`, `park-pulse/simulation.ts`, `factory-line/simulation.ts`, `cargo-ring/simulation.ts` | The audited final scores sit far above the advertised targets (hospital 1,120 vs 1,000; Park Pulse 28,852 vs 5,000; factory 3,868 vs 1,500; cargo 6,940 vs 2,000). Tune with simulation-first tests rather than guesses. |
@@ -121,3 +121,17 @@ Ordered by player impact. Every item below was reproduced with a failing test (o
 - Rift Chess is verified for rules, AI, clocks, persistence, puzzles, audio, keyboard and touch input by unit and browser tests. There is no online play, no Elo rating, no PGN export and no account; all records stay in the browser. The five level labels are internal difficulty names, not ratings.
 - The remaining 15 shortlisted games and the six Wave 2 designs are not implemented.
 - Changes are committed and pushed to `feat/games-wave2` under the repository owner's explicit standing instruction for this task.
+
+---
+
+## 6. Phase C fix log (7 November 2026)
+
+The master directive's Phase C names ten game defects. Each completed item records its reproduction, the failing test and the correction.
+
+| # | Defect | Reproduction and failing test | Correction | Verification |
+|---|---|---|---|---|
+| 1 | 3D mute was forgotten on reload and each game kept its own choice | New `src/games3d/shared/mutePreference.test.ts`: defaults to unmuted, reads back a stored choice, ignores malformed JSON, and `GameAudio` starts muted from the stored value and persists toggles | `mutePreference.ts` wraps the shared storage helpers over the `neonrift:3d-muted` key; both audio engines seed from it and write on toggle, and the three 3D screens seed their mute state from it | 4 unit tests pass |
+| 2 | Neon Apex could display a leading `4` in the starting countdown | `e2e/gameplay.spec.ts` "countdown starts at three" received `4` before the fix | The engine starts its countdown at exactly 3.00 s while `lastCountdownBeep` stays at 4, so the first `3` beep still fires | Targeted Playwright test passes |
+| 3 | Rock Paper Scissors settled the round while the tab was hidden | `e2e/gameplay.spec.ts` "rock paper scissors holds the round while the tab is hidden" failed: after 1.2 s hidden the round had already been played | The countdown and result hold are deadline-driven; the 50 ms ticker skips while `document.visibilityState` is `hidden`, and the visibility handler pushes both deadlines forward by the hidden duration | All three RPS Playwright tests pass (boot, hidden tab, first-to-three rematch) |
+
+Items 4–10 remain open.

@@ -38,6 +38,11 @@ const THROWS: Record<Throw, ThrowMeta> = {
 
 const THROW_ORDER: ReadonlyArray<Throw> = ['rock', 'paper', 'scissors'];
 
+const COUNTDOWN_STEP_MS = 150;
+const COUNTDOWN_TOTAL_MS = COUNTDOWN_STEP_MS * 3;
+const RESULT_HOLD_MS = 1050;
+const DRAW_HOLD_MS = 850;
+
 function verdictFor(player: Throw, house: Throw): Verdict {
   if (player === house) return 'draw';
   if (
@@ -69,13 +74,19 @@ export default function RockPaperScissorsGame({ onStart, onComplete }: GameCompo
   const [matchResult, setMatchResult] = useState<Verdict | null>(null);
 
   const scoresRef = useRef({ player: 0, house: 0 });
-  const countdownRef = useRef<number | null>(null);
-  const resetTimerRef = useRef<number | null>(null);
+  // Deadlines rather than running timers, so a hidden tab can push the whole
+  // round forward by exactly the time it was out of sight.
+  const revealAtRef = useRef<number | null>(null);
+  const resetAtRef = useRef<number | null>(null);
+  const pendingRoundRef = useRef<{ player: Throw; house: Throw } | null>(null);
+  const hiddenAtRef = useRef<number | null>(null);
   const startedRef = useRef(false);
   const finishedRef = useRef(false);
   const onStartRef = useRef(onStart);
   const onCompleteRef = useRef(onComplete);
   const playRef = useRef<(choice: Throw) => void>(() => undefined);
+  const revealRef = useRef<(player: Throw, house: Throw) => void>(() => undefined);
+  const resetRoundRef = useRef<() => void>(() => undefined);
 
   useEffect(() => {
     onStartRef.current = onStart;
@@ -83,23 +94,11 @@ export default function RockPaperScissorsGame({ onStart, onComplete }: GameCompo
   }, [onStart, onComplete]);
 
   const clearTimers = () => {
-    if (countdownRef.current !== null) {
-      window.clearInterval(countdownRef.current);
-      countdownRef.current = null;
-    }
-    if (resetTimerRef.current !== null) {
-      window.clearTimeout(resetTimerRef.current);
-      resetTimerRef.current = null;
-    }
+    revealAtRef.current = null;
+    resetAtRef.current = null;
+    pendingRoundRef.current = null;
+    hiddenAtRef.current = null;
   };
-
-  useEffect(
-    () => () => {
-      if (countdownRef.current !== null) window.clearInterval(countdownRef.current);
-      if (resetTimerRef.current !== null) window.clearTimeout(resetTimerRef.current);
-    },
-    [],
-  );
 
   const resetMatch = () => {
     clearTimers();
@@ -143,17 +142,16 @@ export default function RockPaperScissorsGame({ onStart, onComplete }: GameCompo
       return;
     }
 
-    resetTimerRef.current = window.setTimeout(
-      () => {
-        resetTimerRef.current = null;
-        setPhase('ready');
-        setRoundOutcome(null);
-        setPlayerChoice(null);
-        setHouseChoice(null);
-        setCountdown(3);
-      },
-      outcome === 'draw' ? 850 : 1050,
-    );
+    resetAtRef.current = Date.now() + (outcome === 'draw' ? DRAW_HOLD_MS : RESULT_HOLD_MS);
+  };
+
+  const resetRound = () => {
+    resetAtRef.current = null;
+    setPhase('ready');
+    setRoundOutcome(null);
+    setPlayerChoice(null);
+    setHouseChoice(null);
+    setCountdown(3);
   };
 
   const play = (choice: Throw) => {
@@ -161,6 +159,10 @@ export default function RockPaperScissorsGame({ onStart, onComplete }: GameCompo
 
     clearTimers();
     const house = THROW_ORDER[Math.floor(Math.random() * THROW_ORDER.length)];
+    pendingRoundRef.current = { player: choice, house };
+    revealAtRef.current = Date.now() + COUNTDOWN_TOTAL_MS;
+    if (document.visibilityState === 'hidden') hiddenAtRef.current = Date.now();
+
     setPlayerChoice(choice);
     setHouseChoice(null);
     setRoundOutcome(null);
@@ -171,25 +173,70 @@ export default function RockPaperScissorsGame({ onStart, onComplete }: GameCompo
       startedRef.current = true;
       onStartRef.current?.();
     }
-
-    let step = 0;
-    countdownRef.current = window.setInterval(() => {
-      step += 1;
-      if (step < 3) {
-        setCountdown(3 - step);
-      } else {
-        if (countdownRef.current !== null) {
-          window.clearInterval(countdownRef.current);
-          countdownRef.current = null;
-        }
-        reveal(choice, house);
-      }
-    }, 150);
   };
 
   useEffect(() => {
     playRef.current = play;
+    revealRef.current = reveal;
+    resetRoundRef.current = resetRound;
   });
+
+  useEffect(() => {
+    if (phase !== 'countdown' && phase !== 'result') return undefined;
+
+    const tick = () => {
+      // A hidden tab must not settle the round; the visibility handler shifts the
+      // deadline forward by the time that elapsed off-screen.
+      if (document.visibilityState === 'hidden') return;
+      const now = Date.now();
+
+      const revealAt = revealAtRef.current;
+      if (revealAt !== null) {
+        if (now >= revealAt) {
+          const pending = pendingRoundRef.current;
+          revealAtRef.current = null;
+          pendingRoundRef.current = null;
+          if (pending) revealRef.current(pending.player, pending.house);
+          return;
+        }
+        setCountdown(Math.max(1, Math.ceil((revealAt - now) / COUNTDOWN_STEP_MS)));
+        return;
+      }
+
+      const resetAt = resetAtRef.current;
+      if (resetAt !== null && now >= resetAt) resetRoundRef.current();
+    };
+
+    tick();
+    const interval = window.setInterval(tick, 50);
+    return () => window.clearInterval(interval);
+  }, [phase]);
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.visibilityState === 'hidden') {
+        if (revealAtRef.current !== null || resetAtRef.current !== null) {
+          hiddenAtRef.current = Date.now();
+        }
+        return;
+      }
+
+      const hiddenAt = hiddenAtRef.current;
+      hiddenAtRef.current = null;
+      if (hiddenAt === null) return;
+
+      const hiddenFor = Date.now() - hiddenAt;
+      if (revealAtRef.current !== null) {
+        revealAtRef.current += hiddenFor;
+        const remaining = revealAtRef.current - Date.now();
+        setCountdown(Math.max(1, Math.ceil(remaining / COUNTDOWN_STEP_MS)));
+      }
+      if (resetAtRef.current !== null) resetAtRef.current += hiddenFor;
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

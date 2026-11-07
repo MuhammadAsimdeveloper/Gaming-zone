@@ -24,6 +24,7 @@ import type { ReactNode } from 'react';
 import { useVisibilityPause } from '../../games/shared/useVisibilityPause';
 import type { GameComponentProps } from '../../types/game';
 import { WebGLContextNotice } from '../shared/WebGLContextNotice';
+import { readMutedPreference } from '../shared/mutePreference';
 import { useWebGLContextLoss } from '../shared/useContextLoss';
 import {
   DRIVE_CARS,
@@ -139,7 +140,7 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
   const [missionId, setMissionId] = useState(DRIVE_MISSIONS[0]!.id);
   const [carId, setCarId] = useState<DriveCarId>('nova-gt');
   const [camera, setCamera] = useState<DriveCameraMode>('chase');
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(readMutedPreference);
   const [result, setResult] = useState<DriveResult | null>(null);
   const [record, setRecord] = useState<DriveRecord>(() => loadDriveRecord());
   const [error, setError] = useState<string | null>(null);

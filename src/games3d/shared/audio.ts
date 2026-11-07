@@ -1,3 +1,5 @@
+import { readMutedPreference, writeMutedPreference } from './mutePreference';
+
 type OscillatorType = 'sine' | 'square' | 'sawtooth' | 'triangle';
 
 export class GameAudio {
@@ -9,7 +11,7 @@ export class GameAudio {
   private engineFilter: BiquadFilterNode | null = null;
   private musicTimer: number | null = null;
   private musicStep = 0;
-  private muted = false;
+  private muted = readMutedPreference();
 
   get isMuted(): boolean {
     return this.muted;
@@ -124,6 +126,7 @@ export class GameAudio {
 
   toggleMute(): boolean {
     this.muted = !this.muted;
+    writeMutedPreference(this.muted);
     if (this.context && this.master) {
       this.master.gain.setTargetAtTime(this.muted ? 0 : 0.7, this.context.currentTime, 0.05);
     }
