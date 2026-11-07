@@ -203,6 +203,7 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
           },
         },
       );
+      if (muted) engine.toggleMute();
       engineRef.current = engine;
       engine.setCamera(camera);
       onStartRef.current?.();
@@ -214,7 +215,7 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
       );
       setPhase('menu');
     }
-  }, [camera, carId, difficulty, disposeEngine, trackId]);
+  }, [camera, carId, difficulty, disposeEngine, muted, trackId]);
 
   const togglePause = useCallback(() => {
     const engine = engineRef.current;
