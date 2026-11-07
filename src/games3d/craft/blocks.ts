@@ -34,6 +34,7 @@ export const BLOCK = {
   Bricks: 32,
   Water: 33,
   Lava: 34,
+  RiftLantern: 35,
 } as const;
 
 export type BlockId = (typeof BLOCK)[keyof typeof BLOCK];
@@ -47,7 +48,7 @@ export type TextureKey =
   | 'coal_ore' | 'iron_ore' | 'gold_ore' | 'crystal_ore'
   | 'planks' | 'workbench_top' | 'workbench_side'
   | 'kiln_top' | 'kiln_side' | 'torch' | 'lantern'
-  | 'glass' | 'gilded' | 'bricks' | 'water' | 'lava';
+  | 'glass' | 'gilded' | 'bricks' | 'water' | 'lava' | 'rift_lantern';
 
 export interface BlockSpec {
   id: BlockId;
@@ -229,6 +230,11 @@ export const BLOCKS: Record<number, BlockSpec> = {
     solid: false, opaque: false, liquid: true, light: 15, tool: 'none', minTier: 0, hardness: 0,
     drop: BLOCK.Air, replaceable: true,
     textures: { top: 'lava', bottom: 'lava', side: 'lava' },
+  }),
+  [BLOCK.RiftLantern]: spec(BLOCK.RiftLantern, 'Rift Lantern', {
+    solid: false, opaque: false, cutout: true, light: 15, tool: 'pickaxe', minTier: 0,
+    hardness: 0.3, replaceable: true,
+    textures: { top: 'rift_lantern', bottom: 'rift_lantern', side: 'rift_lantern' },
   }),
 };
 

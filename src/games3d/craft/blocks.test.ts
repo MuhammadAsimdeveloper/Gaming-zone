@@ -41,6 +41,7 @@ describe('block registry', () => {
     expect(lightOf(BLOCK.Lantern)).toBe(14);
     expect(lightOf(BLOCK.Glowcap)).toBe(7);
     expect(lightOf(BLOCK.Lava)).toBe(15);
+    expect(lightOf(BLOCK.RiftLantern)).toBe(15);
     expect(lightOf(BLOCK.Stone)).toBe(0);
   });
 
@@ -52,6 +53,6 @@ describe('block registry', () => {
     expect(isReplaceable(BLOCK.Air)).toBe(true);
     expect(isReplaceable(BLOCK.Reeds)).toBe(true);
     expect(isReplaceable(BLOCK.Stone)).toBe(false);
-    expect(Object.keys(BLOCKS)).toHaveLength(35);
+    expect(Object.keys(BLOCKS)).toHaveLength(36);
   });
 });
