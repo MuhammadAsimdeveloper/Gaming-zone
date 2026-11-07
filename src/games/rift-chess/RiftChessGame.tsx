@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { KeyboardEvent } from 'react';
 import { ArrowLeft, FlipHorizontal, RotateCcw, Undo2 } from 'lucide-react';
 import type { Chess } from 'chess.js';
 import type { GameComponentProps } from '../../types/game';
@@ -82,11 +83,28 @@ export default function RiftChessGame({
   const finishedRef = useRef(false);
   const onStartRef = useRef(onStart);
   const onCompleteRef = useRef(onComplete);
+  const boardContainerRef = useRef<HTMLDivElement>(null);
+  const promotionFirstButtonRef = useRef<HTMLButtonElement>(null);
+  const pendingFocusSquareRef = useRef<ChessMoveInput['from'] | null>(null);
 
   useEffect(() => {
     onStartRef.current = onStart;
     onCompleteRef.current = onComplete;
   }, [onStart, onComplete]);
+
+  useEffect(() => {
+    if (promotion) {
+      promotionFirstButtonRef.current?.focus();
+      return;
+    }
+
+    const squareToFocus = pendingFocusSquareRef.current;
+    if (!squareToFocus) return;
+    pendingFocusSquareRef.current = null;
+    boardContainerRef.current
+      ?.querySelector<HTMLButtonElement>(`[data-square="${squareToFocus}"]`)
+      ?.focus();
+  }, [promotion]);
 
   const statusText = useMemo(() => {
     if (positionStatus.reason === 'checkmate') {
@@ -178,7 +196,32 @@ export default function RiftChessGame({
 
   function choosePromotion(piece: PromotionPiece) {
     if (!promotion) return;
+    pendingFocusSquareRef.current = promotion.to;
     applyMove({ ...promotion, promotion: piece });
+  }
+
+  function handlePromotionDialogKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (!promotion) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      pendingFocusSquareRef.current = promotion.from;
+      setPromotion(null);
+      return;
+    }
+    if (event.key !== 'Tab') return;
+
+    const controls = event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not([disabled])');
+    const first = controls.item(0);
+    const last = controls.item(controls.length - 1);
+    if (!first || !last) return;
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   }
 
   function undo() {
@@ -296,7 +339,7 @@ export default function RiftChessGame({
                 {positionStatus.inCheck ? 'King in check' : 'Standard chess'}
               </p>
             </div>
-            <div className="relative">
+            <div ref={boardContainerRef} className="relative">
               <ChessBoard
                 pieces={pieces}
                 orientation={orientation}
@@ -313,6 +356,7 @@ export default function RiftChessGame({
                   role="dialog"
                   aria-modal="true"
                   aria-labelledby="promotion-title"
+                  onKeyDown={handlePromotionDialogKeyDown}
                   className="absolute inset-0 z-30 flex items-center justify-center rounded-xl bg-night-950/90 p-4 backdrop-blur-sm"
                 >
                   <div className="w-full max-w-xs rounded-2xl border border-white/15 bg-night-900 p-4 text-center shadow-2xl">
@@ -325,6 +369,7 @@ export default function RiftChessGame({
                           type="button"
                           onClick={() => choosePromotion(option.value)}
                           aria-label={option.label}
+                          ref={option.value === "q" ? promotionFirstButtonRef : undefined}
                           className="flex min-h-16 flex-col items-center justify-center rounded-xl border border-white/10 bg-white/5 text-3xl text-ink transition hover:border-electric-300 hover:bg-electric-400/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-300"
                         >
                           <span aria-hidden="true">{turn === 'w' ? option.whiteGlyph : option.blackGlyph}</span>
@@ -332,7 +377,7 @@ export default function RiftChessGame({
                         </button>
                       ))}
                     </div>
-                    <GameButton className="mt-3 w-full" size="sm" onClick={() => setPromotion(null)}>
+                    <GameButton className="mt-3 w-full" size="sm" onClick={() => { pendingFocusSquareRef.current = promotion.from; setPromotion(null); }}>
                       Cancel
                     </GameButton>
                   </div>
