@@ -37,6 +37,7 @@ export default function ReactionTimeGame({ onStart, onComplete }: GameComponentP
   const nextTimerRef = useRef<number | null>(null);
   const startedRef = useRef(false);
   const finishedRef = useRef(false);
+  const suspendedRef = useRef(false);
   const bestRef = useRef<number | null>(best);
   const panelRef = useRef<HTMLButtonElement | null>(null);
   const onStartRef = useRef(onStart);
@@ -75,6 +76,14 @@ export default function ReactionTimeGame({ onStart, onComplete }: GameComponentP
     [],
   );
 
+  const pauseForHiddenTab = useCallback(() => {
+    if (document.visibilityState !== 'hidden') return false;
+    suspendedRef.current = true;
+    waitingRef.current = false;
+    goAtRef.current = null;
+    return true;
+  }, []);
+
   const armRound = useCallback(() => {
     clearTimers();
     waitingRef.current = true;
@@ -87,13 +96,14 @@ export default function ReactionTimeGame({ onStart, onComplete }: GameComponentP
     waitTimerRef.current = window.setTimeout(
       () => {
         waitTimerRef.current = null;
+        if (pauseForHiddenTab()) return;
         waitingRef.current = false;
         goAtRef.current = performance.now();
         setPhaseSafe('go');
       },
       1200 + Math.random() * 2300,
     );
-  }, [clearTimers, setPhaseSafe]);
+  }, [clearTimers, pauseForHiddenTab, setPhaseSafe]);
 
   const finishRun = useCallback(
     (times: number[]) => {
@@ -125,6 +135,7 @@ export default function ReactionTimeGame({ onStart, onComplete }: GameComponentP
     setNotice(null);
     startedRef.current = true;
     finishedRef.current = false;
+    suspendedRef.current = false;
     onStartRef.current?.();
     armRound();
   }, [armRound, clearTimers]);
@@ -179,13 +190,14 @@ export default function ReactionTimeGame({ onStart, onComplete }: GameComponentP
     waitTimerRef.current = window.setTimeout(
       () => {
         waitTimerRef.current = null;
+        if (pauseForHiddenTab()) return;
         waitingRef.current = false;
         goAtRef.current = performance.now();
         setPhaseSafe('go');
       },
       1200 + Math.random() * 2300,
     );
-  }, [armRound, finishRun, setPhaseSafe]);
+  }, [armRound, finishRun, pauseForHiddenTab, setPhaseSafe]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -212,13 +224,11 @@ export default function ReactionTimeGame({ onStart, onComplete }: GameComponentP
   }, [handleReact, startRun]);
 
   useEffect(() => {
-    let suspended = false;
-
     function handleVisibility() {
       if (document.visibilityState === 'hidden') {
         const current = phaseRef.current;
         if (current === 'idle' || current === 'over') return;
-        suspended = true;
+        suspendedRef.current = true;
         if (current === 'waiting' || current === 'go') {
           clearTimers();
           waitingRef.current = false;
@@ -227,8 +237,8 @@ export default function ReactionTimeGame({ onStart, onComplete }: GameComponentP
         return;
       }
 
-      if (!suspended) return;
-      suspended = false;
+      if (!suspendedRef.current) return;
+      suspendedRef.current = false;
       if (finishedRef.current) return;
       armRound();
     }

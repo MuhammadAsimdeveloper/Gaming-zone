@@ -49,7 +49,17 @@ export function collectErrors(page: Page): ErrorLog {
   return log;
 }
 
+/**
+ * The browser emits this when the host's network interface changes mid-load
+ * (VPN, Wi-Fi switch). No application code can raise or prevent it, so it is
+ * excluded; every other console error still fails the test.
+ */
+const ENVIRONMENTAL_CONSOLE_ERRORS = ['Failed to load resource: net::ERR_NETWORK_CHANGED'];
+
 export function expectNoErrors(log: ErrorLog): void {
   expect(log.pageErrors, 'uncaught page errors').toEqual([]);
-  expect(log.consoleErrors, 'console errors').toEqual([]);
+  expect(
+    log.consoleErrors.filter((entry) => !ENVIRONMENTAL_CONSOLE_ERRORS.includes(entry)),
+    'console errors',
+  ).toEqual([]);
 }

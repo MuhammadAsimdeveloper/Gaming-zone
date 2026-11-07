@@ -373,11 +373,33 @@ test.describe('mobile input and hidden-tab fairness', () => {
     await expect(page.getByText(/^False start — 500 ms/)).toBeVisible();
     expectNoErrors(errors);
   });
+
+  test('reaction time pauses a round started while the tab is hidden', async ({ page }) => {
+    const errors = collectErrors(page);
+    await stubVisibility(page, 'hidden');
+
+    // The game mounts and starts while the page claims to be hidden, so no
+    // visibilitychange event is ever delivered. The pending round timer itself
+    // must notice and pause instead of turning green in the background.
+    await page.goto('/game/reaction-time-challenge');
+    await page.getByRole('button', { name: 'Start run', exact: true }).click();
+    await page.waitForTimeout(4000);
+
+    await setVisibility(page, 'visible');
+
+    await expect(page.getByRole('button', { name: /^Wait for green/ })).toBeVisible();
+    await page.getByRole('button', { name: /^Wait for green/ }).click();
+    await expect(page.getByText(/^False start — 500 ms/)).toBeVisible();
+    expectNoErrors(errors);
+  });
 });
 
-async function stubVisibility(page: import('@playwright/test').Page): Promise<void> {
-  await page.addInitScript(() => {
-    let visibility = 'visible';
+async function stubVisibility(
+  page: import('@playwright/test').Page,
+  initial: 'visible' | 'hidden' = 'visible',
+): Promise<void> {
+  await page.addInitScript((initialState) => {
+    let visibility: string = initialState;
     Object.defineProperty(document, 'visibilityState', {
       configurable: true,
       get: () => visibility,
@@ -392,7 +414,7 @@ async function stubVisibility(page: import('@playwright/test').Page): Promise<vo
       visibility = value;
       document.dispatchEvent(new Event('visibilitychange'));
     };
-  });
+  }, initial);
 }
 
 async function setVisibility(

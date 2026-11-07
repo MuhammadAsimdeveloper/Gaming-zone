@@ -16,7 +16,7 @@ export default defineConfig({
     baseURL: BASE_URL,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    video: 'on-first-retry',
   },
   webServer: {
     command: `npm run preview -- --host 127.0.0.1 --port ${PORT} --strictPort`,

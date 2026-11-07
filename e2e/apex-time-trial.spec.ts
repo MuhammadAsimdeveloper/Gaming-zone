@@ -87,6 +87,9 @@ test.describe('apex time trial on mobile', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
   test('exposes on-screen steering, drift and pedals', async ({ page }) => {
+    // WebGL context teardown runs inside the test budget and can exceed 45 s
+    // when the suite is under load; assertions themselves finish quickly.
+    test.slow();
     const errors = collectErrors(page);
     await page.goto('/game/apex-time-trial');
     await page.getByRole('button', { name: 'Start time trial', exact: true }).click();

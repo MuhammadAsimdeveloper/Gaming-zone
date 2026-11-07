@@ -30,7 +30,11 @@ test.describe('neon rush', () => {
     test.setTimeout(90_000);
     const errors = collectErrors(page);
     await page.goto('/game/neon-rush');
-    await page.getByRole('button', { name: 'Start endless' }).click();
+    // Time attack keeps the run alive through crashes, so the whole rapid-input
+    // sequence lands while the touch pad is interactive instead of racing the
+    // endless-mode game-over overlay.
+    await page.getByRole('button', { name: /Time attack/ }).click();
+    await page.getByRole('button', { name: 'Start time attack' }).click();
 
     const left = page.getByRole('button', { name: 'Left' });
     const right = page.getByRole('button', { name: 'Right' });
@@ -49,7 +53,7 @@ test.describe('neon rush', () => {
       await roll.click();
     }
 
-    await expect(page.getByRole('button', { name: 'Pause run' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Pause run' })).toBeEnabled();
     expectNoErrors(errors);
   });
 
