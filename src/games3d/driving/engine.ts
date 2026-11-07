@@ -5,6 +5,7 @@ import { clamp, damp, normalizeAngle } from '../shared/math';
 import { createCar, disposeObject, type VehicleVisual } from '../shared/scenery';
 import {
   DRIVE_EXTENT,
+  DRIVE_SPAWN,
   ROAD_HALF_WIDTH,
   ROAD_LINES,
   createCityEnvironment,
@@ -123,8 +124,8 @@ export class DriveEngine {
   private hudTimer = 0;
   private timeOfDay = 0.36;
   private player: VehicleVisual;
-  private playerX = 0;
-  private playerZ = 72;
+  private playerX = DRIVE_SPAWN.x;
+  private playerZ = DRIVE_SPAWN.z;
   private playerHeading = 0;
   private playerSpeed = 0;
   private steerVisual = 0;
