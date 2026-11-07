@@ -1,7 +1,7 @@
 # Rift Chess — Implementation Plan
 
 > Prepared 2026-11-02 after the platform hardening and quality gates passed.
-> **Status (2026-11-07):** M0 dependency/licence gate complete; M1 rules adapter and tests started on `fix/platform-hardening-2026-11`. Not yet playable; no catalogue entry exists.
+> **Status (2026-11-07):** M0 dependency/licence gate complete; M1 rules adapter and tests authored; M2 local board prototype authored on `fix/platform-hardening-2026-11`. GitHub Actions did not start because of an account billing lock, so neither milestone is runtime-verified. Not registered in the catalogue; not ready to publish.
 > Source design: [GDD/01-rift-chess.md](GDD/01-rift-chess.md).
 
 ---
@@ -13,11 +13,11 @@ The GDD requires platform hardening and the baseline quality gates to pass befor
 | Gate | Result |
 |---|---|
 | `npm run typecheck` | Passed, no output |
-| `npm test` | Historical 2026-11-04 baseline: 234 tests in 27 files; new rules tests pending CI |
+| `npm test` | Historical 2026-11-04 baseline: 234 tests in 27 files; new rules and board tests are authored but not run |
 | `npm run build` | Passed; 2,143 modules; only the existing >500 kB Three.js chunk warning |
-| `npx playwright test` | Historical 2026-11-04 baseline: 66 tests; new branch changes pending CI |
+| `npx playwright test` | Historical 2026-11-04 baseline: 66 tests; new branch changes are not run |
 
-Rift Chess implementation may start. Planned platform work that is **not** complete (CSP, automated full-match 3D QA) does not block a React DOM game.
+M2 is a source prototype only. Do not advance to the worker AI milestone until the rules and board tests pass in a working Node 24 CI run. CSP and automated full-match 3D QA remain separate platform follow-ups.
 
 ---
 
