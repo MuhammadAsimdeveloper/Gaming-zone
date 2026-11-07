@@ -69,11 +69,26 @@ describe('Rift Chess playable board', () => {
     await clickSquare('a8');
 
     expect(container.querySelector('[role="dialog"][aria-labelledby="promotion-title"]')).not.toBeNull();
+    const choices = ['Queen', 'Rook', 'Bishop', 'Knight'];
+    expect(choices.every((label) => container.querySelector(`button[aria-label="${label}"]`))).toBe(true);
     const knight = container.querySelector<HTMLButtonElement>('button[aria-label="Knight"]');
     expect(knight).not.toBeNull();
     await act(async () => knight!.click());
 
     expect(container.querySelector('[aria-label="a8, white knight"]')).not.toBeNull();
     expect(container.querySelector('[role="dialog"]')).toBeNull();
+  });
+
+  it('uses the correct piece colour when black promotes', async () => {
+    await render('4k3/8/8/8/8/8/p7/4K3 b - - 0 1');
+    await clickButton('Play local game');
+    await clickSquare('a2');
+    await clickSquare('a1');
+
+    const rook = container.querySelector<HTMLButtonElement>('button[aria-label="Rook"]');
+    expect(rook?.textContent).toContain('♜');
+    await act(async () => rook!.click());
+
+    expect(container.querySelector('[aria-label="a1, black rook"]')).not.toBeNull();
   });
 });
