@@ -53,6 +53,31 @@ describe('useVisibilityPause', () => {
     expect(onHidden).toHaveBeenCalledTimes(1);
   });
 
+  it('pauses when the browser window loses focus', async () => {
+    const onHidden = vi.fn();
+    await render({ onHidden, active: true });
+
+    await act(async () => {
+      window.dispatchEvent(new Event('blur'));
+    });
+
+    expect(onHidden).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not toggle pause twice when blur and pagehide happen together', async () => {
+    const onHidden = vi.fn();
+    await render({ onHidden, active: true });
+
+    await act(async () => {
+      window.dispatchEvent(new Event('blur'));
+      window.dispatchEvent(new Event('pagehide'));
+      setVisibility('hidden');
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+
+    expect(onHidden).toHaveBeenCalledTimes(1);
+  });
+
   it('does nothing while the tab is still visible', async () => {
     const onHidden = vi.fn();
     await render({ onHidden, active: true });
