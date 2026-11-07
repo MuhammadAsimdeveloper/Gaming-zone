@@ -1,5 +1,18 @@
 # NeonRift — Deep Audit
 
+> **Current remediation snapshot — 7 November 2026 (branch fix/platform-hardening-2026-11)**
+>
+> This branch implements additional fixes beyond the 4 November audit baseline:
+> - Window blur/pagehide pause is idempotent; turn-based simulation clocks also stop while the window is blurred.
+> - 3D mute state survives engine recreation; finished 3D games stop their render loops, release WebGL contexts on disposal, observe container resizing, and update HUD state at 5 Hz rather than 12.5 Hz.
+> - Neon City Drive's first checkpoint is moved away from the spawn point.
+> - Same-origin external-game embeds are rejected; clipboard access is guarded; the 3D reset action is labelled as returning to setup.
+> - CI uses Node 24, and a second configured build/browser test now exercises analytics and advertising consent with dummy IDs.
+> - Rift Chess M0 is complete and its M1 rules adapter/test foundation has started. It is not a playable game and has no catalogue entry.
+>
+> **Verification status:** the edits and regression tests are committed to this branch, but this environment could not run the repository's Node/Chromium toolchain. Treat all new tests and fixes as **pending GitHub Actions verification** until the PR checks finish. The detailed findings below describe the 4 November baseline; the list is historical and is not a claim that every item remains open.
+
+
 > **Remediation update (3 November 2026):** C1 (Rift Striker keyboard actions), H1 (Tab trap, replaced with `Q`), H2 (stuck pointer shoot), M1 (Memory clock), M2 (Reaction Time Space), the admin-edit validation part of H5, and the H6/D1/D2/D3 documentation errors have been fixed in the working tree. Neon Harvest plus fourteen further original games (Rift Transit, Grid Supply, Rift Colony, Orbit Market, Neon Diner, Skyport, Rift Hospital, Park Pulse, Factory Line, Cargo Ring, Aqua Grid, Signal Stack, Rift Runner and Rift Tactics) and a shared simulation clock were added. The unit suite is now 234 tests in 27 files; typecheck and build pass. The findings below remain as the audit record for everything not marked fixed.
 
 **Date:** 3 November 2026  
