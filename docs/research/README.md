@@ -75,16 +75,15 @@ This folder is the complete deliverable for the “Top 50 Video Games — resear
 
 ## Approval gate
 
-Implementation of the 15 games has **not** started. The next step requires an explicit decision:
+Five of the 15 games shipped as Wave 1 (Rift Chess, Neon Rush, Lawn Protocol, Apex Time
+Trial and Street Cricket). For the remaining ten, the next step requires an explicit decision:
 
-- approve all 15,
+- approve all remaining ten,
 - approve with changes, or
-- approve a smaller first wave (for example Wave 1 only).
-
-Until then: no game code, no new dependencies, no asset downloads, no destructive Git operations and no public deployment.
+- reorder a smaller next wave.
 
 A second, user-directed six-game Wave 2 slate (Neon Craft plus five companions) has a written
 design spec at
 [`../superpowers/specs/2026-11-04-games-wave2-design.md`](../superpowers/specs/2026-11-04-games-wave2-design.md).
-That spec is awaiting review; implementation has not started, and none of its six games has a
-catalogue entry.
+Neon Craft (sub-wave 2A) shipped on 2026-11-07; the other five are designs with no catalogue
+entry yet.

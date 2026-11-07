@@ -1,7 +1,7 @@
 # NeonRift Wave 2 — six original games ("go bigger and deeper")
 
 - Date: 2026-11-04
-- Status: Draft — awaiting user spec review
+- Status: Sub-wave 2A (Neon Craft) shipped 2026-11-07; sub-waves 2B and 2C remain designs
 - Branch: `feat/games-wave2`
 - Scope owner: NeonRift platform
 - Revises: the six-game slate and Neon Craft scope discussed in chat on 2026-11-04

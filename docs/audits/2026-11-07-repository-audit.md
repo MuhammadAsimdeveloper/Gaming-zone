@@ -6,6 +6,12 @@
 **Working tree:** clean at the start of the audit (only `test-results/` artefacts from the browser run, which are git-ignored)
 **Audit method:** commands were executed against this checkout; every result below is copied from actual output. Nothing in this report is inferred from documentation counts alone.
 
+**Post-audit update (same day, after commit `d17b74d`):** Neon Craft shipped and was
+registered as the 33rd game, so the catalogue is now 33 shipped / 967 planned, and the suite
+is 902 unit tests in 103 files plus 114 browser tests. The body below remains the record of
+the inspected commit and its 32-game state; the Wave 2 flagship finding and the stale-count
+part of M-02 are resolved.
+
 ---
 
 ## 1. Baseline verification

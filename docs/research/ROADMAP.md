@@ -277,14 +277,14 @@ This is a long programme. The wave structure exists so that value ships early an
 ## 11. Separate six-game Wave 2 design (2026-11-04)
 
 This is a second, user-directed slate, separate from the 15 research games. It does not reorder
-Phases 1–3. The design is complete; implementation has not started and the spec is awaiting
-review.
+Phases 1–3. The design is complete; sub-wave 2A shipped on 2026-11-07 and sub-waves 2B and
+2C have not started.
 
 | Sub-wave | Games | Renderer | Status |
 |---|---|---|---|
-| 2A | Neon Craft | Self-contained Three.js voxel engine | Design complete; awaiting review |
-| 2B | Rift Rally, Neon Duel | Three.js; Canvas 2D + React | Design complete; awaiting review |
-| 2C | Riftfall, Rift Life, Rift Ecology | Canvas 2D + React | Design complete; awaiting review |
+| 2A | Neon Craft | Self-contained Three.js voxel engine | Shipped 2026-11-07 |
+| 2B | Rift Rally, Neon Duel | Three.js; Canvas 2D + React | Design complete; not started |
+| 2C | Riftfall, Rift Life, Rift Ecology | Canvas 2D + React | Design complete; not started |
 
 - Spec: [2026-11-04-games-wave2-design.md](../superpowers/specs/2026-11-04-games-wave2-design.md)
 - Gates: each sub-wave must be playable end to end, tested, built and reviewed before the next

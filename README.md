@@ -2,7 +2,7 @@
 
 A free, instant-play browser gaming portal. Original branding, original games, no account and no download.
 
-**Status:** the platform and 32 internal games are implemented. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). Five of the 15 shortlisted games are shipped — Rift Chess, Neon Rush, Lawn Protocol, Apex Time Trial and Street Cricket — completing Wave 1; the rest remain designs. A six-game Wave 2 design spec (Neon Craft plus five companions) was written on 2026-11-04; none of it is implemented and no catalogue entry exists for it. The path to a 1000-game library is defined in the [1000-game expansion program](docs/games/1000-game-expansion-program.md): 32 shipped, 968 planned across 27 kit families, with no placeholder entries.
+**Status:** the platform and 33 internal games are implemented, including Neon Craft, the first Wave 2 title. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). Five of the 15 shortlisted games are shipped — Rift Chess, Neon Rush, Lawn Protocol, Apex Time Trial and Street Cricket — completing Wave 1; the rest remain designs. The six-game Wave 2 spec (2026-11-04) is one-sixth shipped: Neon Craft released on 2026-11-07, while Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology remain designs with no catalogue entries. The path to a 1000-game library is defined in the [1000-game expansion program](docs/games/1000-game-expansion-program.md): 33 shipped, 967 planned across 27 kit families, with no placeholder entries.
 
 ---
 
@@ -53,12 +53,12 @@ Playwright's Chromium is the only browser target in CI. Install it once with
 |---|---|
 | `npm ci` | Completed previously; lockfile unchanged |
 | `npm run typecheck` | Passed with no output |
-| `npm test` | 748 tests passed in 84 files |
-| `npm run build` | Passed; Street Cricket loads as its own 48.60 kB / 15.11 kB gzip chunk; the shared Three.js scenery chunk is 565.24 kB raw / 141.54 kB gzip and still triggers the existing >500 kB warning |
+| `npm test` | 902 tests passed in 103 files |
+| `npm run build` | Passed; Neon Craft loads as its own 143.87 kB / 43.60 kB gzip chunk and Street Cricket as 48.64 kB / 15.12 kB gzip; the shared Three.js chunk is 567.37 kB raw / 140.87 kB gzip and still triggers the existing >500 kB warning |
 | `npm run build:consent` | Passed; same chunks with analytics and AdSense identifiers configured |
-| `npx playwright test --workers=2` | 110 tests passed in 13 files |
+| `npx playwright test --workers=2` | 114 tests passed in 14 files |
 
-The browser suite covers the homepage, catalogue, search, category filters, all thirty-two game pages,
+The browser suite covers the homepage, catalogue, search, category filters, all thirty-three game pages,
 launch/pause/resume/restart, favorites after reload, recently played, fullscreen state, 404,
 mobile navigation, the absence of analytics/ad scripts in the default build, error-boundary
 recovery, hidden-tab fairness, keyboard and touch input for the 2D games, and 2D game
@@ -67,11 +67,16 @@ with both provider hosts intercepted, that nothing loads before a decision, each
 independent, denials and grants survive a reload, and clearing a choice revokes only that
 provider. A separate CSP check confirms the report-only policy is served, that five key
 routes raise no `securitypolicyviolation` events in the default build, and that the
-configured build stays clean once both consents are allowed. The five 3D games are verified
+configured build stays clean once both consents are allowed. The six 3D games are verified
 for loading, pause/resume, restart, mute
-and route-away console cleanliness; their action keys are covered by unit-level keyboard-capture
-tests, not by a full browser playthrough, and a complete race, time trial, match or over is
-not automated. No game is described as manually played beyond what these tests exercised.
+and route-away console cleanliness. Neon Craft also has a dedicated browser lifecycle:
+create a seeded world, open the crafting panel, resume, save, reload, resume the same world,
+delete it, and fall back to an unsaved world when IndexedDB is unavailable; its touch
+controls are exercised on a mobile viewport. The other 3D games' action keys are covered by
+unit-level keyboard-capture tests, not by a full browser playthrough, and a complete race,
+time trial, match or over is not automated. Neon Craft's mining, crafting progression,
+combat and farming loops are covered by unit tests, not played to completion in a browser.
+No game is described as manually played beyond what these tests exercised.
 
 CI runs on every pushed branch and every pull request in
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
@@ -143,8 +148,9 @@ CI runs on every pushed branch and every pull request in
 | Lawn Protocol | Strategy | Canvas 2D |
 | Apex Time Trial | Racing | Three.js |
 | Street Cricket | Sports | Three.js |
+| Neon Craft | Simulation | Three.js |
 
-All thirty-two are original implementations. No commercial game assets, code or branding are used.
+All thirty-three are original implementations. No commercial game assets, code or branding are used.
 Rift Chess uses the open-source chess.js library (BSD-2-Clause) for move generation; see
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
@@ -158,8 +164,8 @@ The full deliverable is indexed at [`docs/research/README.md`](docs/research/REA
 - Weighted shortlist of the best 15 concepts.
 - 15 game design documents with features, architecture, milestones, testing and limitations.
 - Licence audit, source-repository directory, technical architecture and delivery roadmap.
-- Six-game Wave 2 design spec (2026-11-04): Neon Craft plus Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology. Design only; implementation has not started. See [`docs/superpowers/specs/2026-11-04-games-wave2-design.md`](docs/superpowers/specs/2026-11-04-games-wave2-design.md).
-- [1000-game expansion program](docs/games/1000-game-expansion-program.md): kit and variant architecture, the 27-family portfolio allocation to 1000 games, the nine-phase roadmap, quality gates, catalogue scaling and licensing policy. 32 games carry catalogue entries today; the remaining 968 are planned, not shipped.
+- Six-game Wave 2 design spec (2026-11-04): Neon Craft plus Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology. Neon Craft shipped on 2026-11-07; the other five are design only. See [`docs/superpowers/specs/2026-11-04-games-wave2-design.md`](docs/superpowers/specs/2026-11-04-games-wave2-design.md).
+- [1000-game expansion program](docs/games/1000-game-expansion-program.md): kit and variant architecture, the 27-family portfolio allocation to 1000 games, the nine-phase roadmap, quality gates, catalogue scaling and licensing policy. 33 games carry catalogue entries today; the remaining 967 are planned, not shipped.
 - [25-game enhancement report (2026-11-05)](docs/ENHANCEMENT-REPORT-2026-11-05.md): verified fixes, a per-game status table and a prioritized file-specific backlog.
 
 Start with the [package index](docs/research/README.md).
@@ -205,12 +211,12 @@ The build is a static site. `public/_redirects` provides the SPA fallback for de
 Three tracks are queued. **Only the shipped games have catalogue entries.**
 
 - **1000-game expansion program (2026-11-06):** kit and variant architecture plus a
-  nine-phase roadmap from 32 to 1000 tested games. Phase 1 is the catalogue scale
+  nine-phase roadmap from 33 to 1000 tested games. Phase 1 is the catalogue scale
   foundation; Phase 2 covers the Wave 2 slate. See
   [`docs/games/1000-game-expansion-program.md`](docs/games/1000-game-expansion-program.md).
 - **Wave 2 six-game slate (2026-11-04):** Neon Craft, Rift Rally, Neon Duel, Riftfall, Rift
-  Life and Rift Ecology, split into three sub-waves. The design spec is written and awaiting
-  review at
+  Life and Rift Ecology, split into three sub-waves. Neon Craft (sub-wave 2A) is shipped; the
+  remaining five are at the design stage in
   [`docs/superpowers/specs/2026-11-04-games-wave2-design.md`](docs/superpowers/specs/2026-11-04-games-wave2-design.md).
 - **Wave 1:** complete as of 2026-11-07 — Rift Chess, Neon Rush, Lawn Protocol, Apex Time
   Trial and Street Cricket are shipped, integrated and tested.
@@ -220,15 +226,15 @@ Three tracks are queued. **Only the shipped games have catalogue entries.**
 ## Limitations
 
 - Progress, favourites and records are stored in this browser only. There is no account or cloud save.
-- Full 3D race/match completion is not covered by automated tests and has not been manually played to the end. Load, controls, pause/resume, restart, mute and cleanup are covered.
+- Full 3D race/match completion is not covered by automated tests and has not been manually played to the end. Load, controls, pause/resume, restart, mute and cleanup are covered. Neon Craft's save/resume/delete lifecycle is covered in a browser; its mining, crafting, combat and farming progression is covered by unit tests, not played to completion.
 - Clearing site data removes local progress.
 - No admin dashboard or authentication is shipped. No browser passcode exists. `adminStore.ts` only applies optional local catalogue overrides from this browser; it is not authentication and is never a server-side admin feature.
 - Ads are disabled by default. No ad script loads unless ads are explicitly enabled, configured, and advertising consent is granted.
 - Analytics is disabled by default and loads only after analytics consent is granted.
 - External game embedding is deny-by-default and requires an explicit HTTPS allowlist.
 - Five of the 15 shortlist games are shipped (Rift Chess, Neon Rush, Lawn Protocol, Apex Time Trial, Street Cricket); the remaining ten are designs, not shipped features.
-- The six games in the 2026-11-04 Wave 2 spec are designs only. No game code, catalogue entry, thumbnail or test exists for them yet.
-- The 1000-game target is a documented program, not a shipped library. 32 games have catalogue entries today; the remaining 968 are planned. No placeholder records exist.
+- Five of the six games in the 2026-11-04 Wave 2 spec are designs only. Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology have no game code, catalogue entry, thumbnail or test yet.
+- The 1000-game target is a documented program, not a shipped library. 33 games have catalogue entries today; the remaining 967 are planned. No placeholder records exist.
 - Game records are local; the site does not display invented player counts, ratings or revenue.
 - The Content-Security-Policy is report-only, not enforced. Violations are collected but nothing is blocked; enforcement needs a real report collector and a period of clean reports.
 - The production build warns about the shared Three.js chunk exceeding 500 kB raw. It is lazy-loaded and compressed to ~140 kB gzip, but further splitting is still an open performance task.
