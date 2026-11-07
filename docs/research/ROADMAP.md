@@ -46,7 +46,7 @@ Before the first new game, close the existing platform gaps. These are small and
 | Task | Status |
 |---|---|
 | 0.1 App-level ErrorBoundary | Complete. `AppErrorBoundary` covers routes; game boundaries still contain game chunk failures. Playwright recovery test passes. |
-| 0.2 Admin route/dashboard | Not shipped by design. `adminAuth.ts`/`adminStore.ts` remain dormant scaffolding; README states that a browser passcode is not server authentication. |
+| 0.2 Admin route/dashboard | Not shipped by design. `adminAuth.ts` is dormant scaffolding; `adminStore.ts` is active localStorage-backed catalogue override state, but there is no admin UI or server authentication. |
 | 0.3 Privacy “NeoRift” typo | Complete. Brand audit found no remaining `NeoRift` or `Gaming Zone` references. |
 | 0.4 Invalid Tailwind utilities | No unknown-utility warnings in the production build; pages were exercised in Playwright. |
 | 0.5 `public/_redirects` | Complete. SPA fallback present and verified through preview deep links. |
@@ -103,8 +103,7 @@ Goal: prove the game pipeline five times with small, complete games.
 
 ### Rift Chess — implementation milestones
 
-**Status:** plan ready, implementation not started, no catalogue entry. The platform gates above
-pass; starting code requires explicit approval. Full plan:
+**Status (2026-11-07):** M0 dependency/licence gate is complete on the hardening branch and M1 rules-adapter work has started. The test suite is authored but not yet verified by CI. There is still no playable board and no catalogue entry. Full plan:
 [RIFT-CHESS-IMPLEMENTATION-PLAN.md](RIFT-CHESS-IMPLEMENTATION-PLAN.md).
 
 | Milestone | Deliverable | Exit criteria |
@@ -118,7 +117,7 @@ pass; starting code requires explicit approval. Full plan:
 | M6 — Integration and QA | Registry, catalogue, thumbnail, docs, browser tests | Existing 49 unit + 37 browser tests still pass; new tests pass; all gates green |
 
 Licence note: `js-chess-engine@2.4.6` is MIT but requires Node ≥24 as of 2026-11-02, while this
-project targets Node 20+. The plan therefore uses `chess.js` for rules and an in-house worker
+project now uses Node 24 for the full Vitest 5 workflow. The plan uses `chess.js` for rules and an in-house worker
 minimax. Do not add `js-chess-engine` without deliberately raising the Node baseline and recording
 that decision.
 
@@ -278,7 +277,7 @@ No game implementation begins until the shortlist and the specific game plan are
 is complete and verified. After approval, the order is:
 
 1. Phase 0 platform hardening. **Complete and verified 2026-11-02.**
-2. Rift Chess. **Plan ready; implementation not started.**
+2. Rift Chess. **M0 complete; M1 rules foundation in progress; not yet playable.**
 3. Neon Rush.
 4. Lawn Protocol.
 5. Apex Time Trial.
