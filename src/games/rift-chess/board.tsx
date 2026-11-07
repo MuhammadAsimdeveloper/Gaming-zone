@@ -1,4 +1,4 @@
-import { useRef, type KeyboardEvent } from 'react';
+import { useRef, useState, type KeyboardEvent } from 'react';
 import type { Color, Square } from 'chess.js';
 import { cn } from '../../lib/cn';
 import type { BoardPiece } from './rules';
@@ -49,6 +49,7 @@ export function ChessBoard({
   const ranks = orientation === 'w' ? RANKS : [...RANKS].reverse();
   const squares = ranks.flatMap((rank) => files.map((file) => `${file}${rank}` as Square));
   const rows = Array.from({ length: 8 }, (_, index) => squares.slice(index * 8, index * 8 + 8));
+  const [focusedSquare, setFocusedSquare] = useState<Square | null>(squares[0] ?? null);
 
   function handleGridKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key === 'Escape') {
@@ -101,7 +102,7 @@ export function ChessBoard({
         aria-rowcount={8}
         aria-colcount={8}
         onKeyDown={handleGridKeyDown}
-        className="grid grid-cols-8 overflow-hidden rounded-xl border border-white/20 shadow-[0_16px_48px_-28px_rgba(0,0,0,0.9)]"
+        className="grid overflow-hidden rounded-xl border border-white/20 shadow-[0_16px_48px_-28px_rgba(0,0,0,0.9)]"
       >
         {rows.map((rowSquares, rowIndex) => (
           <div key={rowIndex} role="row" className="grid grid-cols-8">
@@ -129,7 +130,12 @@ export function ChessBoard({
               aria-label={label}
               aria-selected={selected}
               aria-current={checked ? 'true' : undefined}
-              onClick={() => onSquareClick(square)}
+              tabIndex={focusedSquare === square ? 0 : -1}
+              onFocus={() => setFocusedSquare(square)}
+              onClick={() => {
+                setFocusedSquare(square);
+                onSquareClick(square);
+              }}
               className={cn(
                 'relative flex aspect-square min-w-0 touch-manipulation items-center justify-center outline-none transition-colors focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-cyan-300',
                 isLight ? 'bg-[#d9e2e9]' : 'bg-[#53677a]',
