@@ -293,7 +293,7 @@ export default function MathSprintGame({ onStart, onComplete }: GameComponentPro
           ? `Correct. ${feedback.points} points scored.`
           : 'Incorrect. Streak reset.'
         : phase === 'running'
-          ? `${timeLeft} seconds left. Streak ${streak}.`
+          ? `Problem: ${question.prompt}.`
           : 'Ready. Press start sprint.';
 
   return (
@@ -340,6 +340,7 @@ export default function MathSprintGame({ onStart, onComplete }: GameComponentPro
         </div>
       }
     >
+      <p className="sr-only">{phase === 'running' ? `${timeLeft} seconds left.` : ''}</p>
       <p className="sr-only" role="status" aria-live="polite">
         {statusLabel}
       </p>
