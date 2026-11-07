@@ -200,6 +200,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
           },
         },
       );
+      if (muted) engine.toggleMute();
       engineRef.current = engine;
       onStartRef.current?.();
     } catch (cause) {
@@ -210,7 +211,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
       );
       setPhase('menu');
     }
-  }, [camera, difficulty, disposeEngine, resetTouch]);
+  }, [camera, difficulty, disposeEngine, muted, resetTouch]);
 
   const togglePause = useCallback(() => {
     const engine = engineRef.current;
