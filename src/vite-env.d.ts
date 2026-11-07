@@ -12,7 +12,6 @@ interface ImportMetaEnv {
   readonly VITE_ADSENSE_SLOT_GAME?: string;
   readonly VITE_ADSENSE_SLOT_GAME_SIDEBAR?: string;
   readonly VITE_ADSENSE_SLOT_LISTING?: string;
-  readonly VITE_ADMIN_PASSCODE_HASH?: string;
   readonly VITE_EXTERNAL_GAME_ORIGINS?: string;
 }
 

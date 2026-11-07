@@ -173,6 +173,7 @@ Unit-test breakdown: `AppErrorBoundary` 4, `useVisibilityPause` 4, `theme` 4, `c
 **S3 — The "cannot read this page" iframe claim is conditional.** [`src/pages/GamePage.tsx#L343-L346`](src/pages/GamePage.tsx#L343-L346) says the external game cannot read favorites/stored data, but the iframe is sandboxed with `allow-scripts allow-same-origin` ([`#L322-L332`](src/pages/GamePage.tsx#L322-L332)). That is safe for a genuinely cross-origin host; if an operator ever allowlists the portal's own origin, the sandbox no longer isolates it. Fix: reject same-origin entries in `validateExternalGameUrl`, or qualify the copy.
 
 **S4 — The dormant admin passcode hash is brute-forceable if ever enabled.** `VITE_ADMIN_PASSCODE_HASH` ships to the client ([`src/lib/adminAuth.ts#L21-L25`](src/lib/adminAuth.ts#L21-L25)); a browser-side passcode is not authentication, which the README correctly says. No action needed while no admin route ships; keep the warning prominent.
+*Resolved 2026-11-07:* `adminAuth.ts`, the `VITE_ADMIN_PASSCODE_HASH` variable and its env documentation were removed, so no browser-side passcode ships at all.
 
 ### SEO, sharing and deployment
 
@@ -218,7 +219,7 @@ Unit-test breakdown: `AppErrorBoundary` 4, `useVisibilityPause` 4, `theme` 4, `c
 
 ### Code quality and low-risk observations
 
-- **Dead code:** `sanitizeThumbnailUrl` is only used by its test ([`src/lib/embed.ts#L76`](src/lib/embed.ts#L76)); `pageSlice` only by tests ([`src/lib/catalogue.ts#L72`](src/lib/catalogue.ts#L72)); `formatScore` is never rendered ([`src/lib/format.ts#L30`](src/lib/format.ts#L30)); `adminAuth.ts` is entirely unused. Either use them (especially the thumbnail sanitizer) or remove them.
+- **Dead code:** `sanitizeThumbnailUrl` is only used by its test ([`src/lib/embed.ts#L76`](src/lib/embed.ts#L76)); `pageSlice` only by tests ([`src/lib/catalogue.ts#L72`](src/lib/catalogue.ts#L72)); `formatScore` is never rendered ([`src/lib/format.ts#L30`](src/lib/format.ts#L30)); `adminAuth.ts` was entirely unused and was removed on 2026-11-07. Either use the rest (especially the thumbnail sanitizer) or remove them.
 - **`useBestScore` can overwrite a better score written by another tab** ([`src/games/shared/useBestScore.ts#L45-L57`](src/games/shared/useBestScore.ts#L45-L57)); it compares against a ref refreshed only on mount/key change. Re-read storage inside `submit`, and clamp negative values.
 - **Reaction Time can average six rounds after a tab hide during the final result** ([`src/games/reaction-time/ReactionTimeGame.tsx#L215-L235`](src/games/reaction-time/ReactionTimeGame.tsx#L215-L235) re-arms even when five results are already recorded). Guard on `results.length >= ROUNDS`.
 - **Snake starts the run on a reversal input without turning** ([`src/games/snake/SnakeGame.tsx#L128-L135`](src/games/snake/SnakeGame.tsx#L128-L135)); the first key is silently ignored while the run begins in the old direction.

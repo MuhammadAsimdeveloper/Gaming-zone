@@ -23,9 +23,6 @@ export const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL?.trim() ?? '';
 
 export const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim() ?? '';
 
-export const ADMIN_PASSCODE_HASH =
-  import.meta.env.VITE_ADMIN_PASSCODE_HASH?.trim().toLowerCase() ?? '';
-
 export const EXTERNAL_GAME_ORIGINS = parseOrigins(import.meta.env.VITE_EXTERNAL_GAME_ORIGINS);
 
 export const ADSENSE_CLIENT = import.meta.env.VITE_ADSENSE_CLIENT?.trim() ?? '';

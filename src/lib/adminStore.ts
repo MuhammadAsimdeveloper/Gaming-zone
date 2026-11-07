@@ -3,6 +3,10 @@ import { AD_PLACEMENTS } from '../config/site';
 import { CATEGORY_IDS, INTERNAL_GAME_KEYS } from '../types/game';
 import type { CategoryId, Game } from '../types/game';
 
+/*
+ * Local-only catalogue overrides. State lives in this browser's localStorage,
+ * is never synced, and carries no authority beyond the visitor who wrote it.
+ */
 export const ADMIN_STATE_KEY = 'neonrift:admin:v1';
 
 export interface AdminState {

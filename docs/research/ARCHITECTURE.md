@@ -298,11 +298,11 @@ produces a shared Three.js scenery chunk at 561.57 kB raw / 140.51 kB gzip and t
 ## 11. Security
 
 - No secrets in the client bundle.
-- Admin passcode remains a hash in an env var and is explicitly labelled as local-only, not real authentication.
+- No admin authentication ships. The dormant browser passcode module was removed on 2026-11-07; `adminStore.ts` only merges local, visitor-owned catalogue overrides and is labelled local-only.
 - External games remain on the HTTPS allowlist with a sandboxed iframe.
 - No `eval`, `new Function`, or untrusted dynamic script injection. The only injected scripts are the configured, consent-gated analytics and advertising loaders.
 - Sanitise any user-entered text before rendering.
-- Add a Content Security Policy compatible with Vite's static output; test it before deployment.
+- A Content Security Policy ships in report-only mode (`public/_headers`, mirrored by the preview server); enforcement is a follow-up after clean reports. See `docs/audits/2026-11-07-csp-evaluation.md`.
 - Do not add third-party analytics or ad scripts without configuration and approval.
 
 ---

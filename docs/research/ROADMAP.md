@@ -27,13 +27,13 @@ Before the first new game, close the existing platform gaps. These are small and
 | # | Task | Why | Done when |
 |---|---|---|---|
 | 0.1 | App-level ErrorBoundary | A game crash should not blank the whole site | A thrown route component shows a recoverable error page |
-| 0.2 | Admin route/dashboard with honest local-only notice | Existing auth utilities have no UI | Route works, is dev-only or clearly labelled, and does not claim server security |
+| 0.2 | Admin route/dashboard with honest local-only notice | No admin UI ships; a browser passcode was rejected as a security boundary | Route works, is dev-only or clearly labelled, and does not claim server security |
 | 0.3 | Fix Privacy page "NeoRift" typo | Brand consistency | No misspelling remains |
 | 0.4 | Check invalid Tailwind utilities (e.g. `h-4.5`) | Silent style failures | Build output has no unknown utility warnings; visual check passes |
 | 0.5 | Add `public/_redirects` | SPA deep links on Cloudflare Pages | Direct load of `/game/:slug` works in preview |
 | 0.6 | Add `public/_headers` | Cache and security headers | Headers verified in preview |
 | 0.7 | Add `.env.example` | Documents optional configuration without secrets | File lists every `VITE_*` variable with empty values |
-| 0.8 | Add passcode-hash helper script | Makes admin setup honest and repeatable | Script prints a SHA-256 hash; no secret is committed |
+| 0.8 | Passcode-hash helper script | Rejected: a client-side hash is not authentication | No script ships; no setup path is advertised |
 | 0.9 | README and testing report | Onboarding and honest status | Commands, architecture, limitations and test results documented |
 | 0.10 | Vitest coverage for existing helpers | Prevent regressions | Catalogue, embed validation, admin auth and format helpers tested |
 | 0.11 | `npm run typecheck`, `npm test`, `npm run build` | Baseline green | All three pass |
@@ -48,13 +48,13 @@ Before the first new game, close the existing platform gaps. These are small and
 | Task | Status |
 |---|---|
 | 0.1 App-level ErrorBoundary | Complete. `AppErrorBoundary` covers routes; game boundaries still contain game chunk failures. Playwright recovery test passes. |
-| 0.2 Admin route/dashboard | Not shipped by design. `adminAuth.ts`/`adminStore.ts` remain dormant scaffolding; README states that a browser passcode is not server authentication. |
+| 0.2 Admin route/dashboard | Not shipped by design. The dormant browser passcode module was removed on 2026-11-07 so no frontend passcode hash ships as a pretend security boundary. `adminStore.ts` remains as local-only catalogue overrides. |
 | 0.3 Privacy “NeoRift” typo | Complete. Brand audit found no remaining `NeoRift` or `Gaming Zone` references. |
 | 0.4 Invalid Tailwind utilities | No unknown-utility warnings in the production build; pages were exercised in Playwright. |
 | 0.5 `public/_redirects` | Complete. SPA fallback present and verified through preview deep links. |
-| 0.6 `public/_headers` | Complete. Nosniff, frame, referrer and permissions headers configured. CSP is still open (see limitations). |
+| 0.6 `public/_headers` | Complete. Nosniff, frame, referrer and permissions headers configured. A report-only CSP is now included; enforcement is still open (see limitations). |
 | 0.7 `.env.example` | Complete. Documents optional variables with empty values. |
-| 0.8 Passcode-hash helper script | Not implemented. Deferred with the admin dashboard; no setup path is advertised. |
+| 0.8 Passcode-hash helper script | Removed with the passcode module on 2026-11-07. No setup path exists or is advertised. |
 | 0.9 README and testing report | Complete. README contains commands, routes, configuration, actual results and limitations. |
 | 0.10 Vitest coverage | 234 tests across consent, ads, catalogue/storage helpers, admin-store validation, simulation rules, combobox, input capture, visibility pause and the error boundary. |
 | 0.11 Typecheck/test/build | Pass. See the verification snapshot below. |

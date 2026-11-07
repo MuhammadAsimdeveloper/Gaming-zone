@@ -175,7 +175,6 @@ Configuration is optional and read from Vite environment variables at build time
 | `VITE_SITE_URL` | Canonical site URL | `https://neonrift.pages.dev` |
 | `VITE_CONTACT_EMAIL` | Address shown on the contact page | empty |
 | `VITE_GA_MEASUREMENT_ID` | Analytics ID; analytics stays idle when empty | empty |
-| `VITE_ADMIN_PASSCODE_HASH` | Reserved for dormant local admin scaffolding; no admin route ships | empty |
 | `VITE_EXTERNAL_GAME_ORIGINS` | Comma-separated HTTPS origins approved for embedding | empty |
 | `VITE_ADS_ENABLED` | Enables ad slots when exactly `true` | disabled |
 | `VITE_ADSENSE_CLIENT` | AdSense client ID | empty |
@@ -183,7 +182,7 @@ Configuration is optional and read from Vite environment variables at build time
 
 Do not commit `.env` files. The `.gitignore` already excludes them.
 
-**Admin note:** no admin route or dashboard is shipped in this build. `src/lib/adminAuth.ts` is dormant scaffolding. If a dashboard is added later it must be described as local-only convenience, never as secure server authentication, because there is no server and a browser passcode cannot protect one. See `docs/research/ROADMAP.md` for the planned honest admin work.
+**Admin note:** no admin route, dashboard or authentication is shipped in this build, and no browser passcode mechanism exists. `src/lib/adminStore.ts` only merges optional local catalogue overrides that a visitor's own browser stores; it is a local convenience, not a security control. A real multi-user administration system would need a separately approved backend and authentication architecture, which this static project does not have. See `docs/research/ROADMAP.md` for the planned honest admin work.
 
 ---
 
@@ -223,7 +222,7 @@ Three tracks are queued. **Only the shipped games have catalogue entries.**
 - Progress, favourites and records are stored in this browser only. There is no account or cloud save.
 - Full 3D race/match completion is not covered by automated tests and has not been manually played to the end. Load, controls, pause/resume, restart, mute and cleanup are covered.
 - Clearing site data removes local progress.
-- No admin dashboard is shipped. `adminAuth.ts` is dormant scaffolding and is not authentication. `adminStore.ts` only applies optional local catalogue overrides from this browser; it is not authentication and is never a server-side admin feature.
+- No admin dashboard or authentication is shipped. No browser passcode exists. `adminStore.ts` only applies optional local catalogue overrides from this browser; it is not authentication and is never a server-side admin feature.
 - Ads are disabled by default. No ad script loads unless ads are explicitly enabled, configured, and advertising consent is granted.
 - Analytics is disabled by default and loads only after analytics consent is granted.
 - External game embedding is deny-by-default and requires an explicit HTTPS allowlist.

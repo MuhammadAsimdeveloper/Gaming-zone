@@ -276,8 +276,8 @@ export default function PrivacyPage() {
         <p>
           Local data stays until you delete it or clear browser storage. Because NeonRift has no
           account system, there is no server-side profile to delete. We keep the site static and
-          avoid collecting data we do not need. No admin dashboard is shipped in this build, so no
-          passcode is used to protect server data.
+          avoid collecting data we do not need. No admin dashboard or passcode exists in this
+          build, and there is no server-side data to protect.
         </p>
       </LegalSection>
 
