@@ -1,4 +1,4 @@
-import { isLiquidBlock, isSolidBlock } from './blocks';
+import { isSolidBlock } from './blocks';
 import type { VoxelWorld } from './world';
 
 export interface Vec3 {
@@ -18,11 +18,13 @@ export interface RayHit {
 }
 
 export const DEFAULT_REACH = 5.5;
+/** Absorbs accumulated floating-point drift on oblique rays at the reach limit. */
+const REACH_EPSILON = 1e-9;
 
 /**
  * Amanatides–Woo grid traversal. Entry distance is the ray parameter at which the current
  * cell was entered, so the reported `distance` is the hit face's distance from the origin.
- * Liquids are transparent to picking.
+ * Liquids are skipped by the block registry (`solid: false`), not by a second check here.
  */
 export function raycastVoxel(
   world: VoxelWorld,
@@ -58,12 +60,48 @@ export function raycastVoxel(
   let nz = 0;
   let distance = 0;
 
-  while (distance <= maxDistance) {
+  // An origin exactly on a voxel boundary steps with tMax 0. Take those steps before the
+  // first cell check so the cell behind the ray is never reported with an empty normal.
+  while (tMaxX === 0 || tMaxY === 0 || tMaxZ === 0) {
+    if (tMaxX === 0) {
+      x += stepX;
+      tMaxX = tDeltaX;
+      nx = -stepX;
+      ny = 0;
+      nz = 0;
+    } else if (tMaxY === 0) {
+      y += stepY;
+      tMaxY = tDeltaY;
+      nx = 0;
+      ny = -stepY;
+      nz = 0;
+    } else {
+      z += stepZ;
+      tMaxZ = tDeltaZ;
+      nx = 0;
+      ny = 0;
+      nz = -stepZ;
+    }
+  }
+
+  while (distance <= maxDistance + REACH_EPSILON) {
     const id = world.getBlock(x, y, z);
-    if (isSolidBlock(id) && !isLiquidBlock(id)) {
+    if (isSolidBlock(id)) {
+      // The origin itself can be solid when the eye is inside a block; there is no entry
+      // face, so the normal faces back along the dominant axis to keep placement valid.
+      if (nx === 0 && ny === 0 && nz === 0) {
+        const ax = Math.abs(dx);
+        const ay = Math.abs(dy);
+        const az = Math.abs(dz);
+        if (ax >= ay && ax >= az) nx = -stepX;
+        else if (ay >= az) ny = -stepY;
+        else nz = -stepZ;
+      }
       return { x, y, z, nx, ny, nz, distance };
     }
 
+    // Axis ties are resolved X, then Y, then Z: a ray through a voxel edge enters the
+    // cells on both sides, and this order is the one the unit tests pin down.
     if (tMaxX <= tMaxY && tMaxX <= tMaxZ) {
       x += stepX;
       distance = tMaxX;

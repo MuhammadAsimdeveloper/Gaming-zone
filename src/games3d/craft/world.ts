@@ -1,5 +1,6 @@
 import { BLOCK, BLOCKS, isSolidBlock, type BlockId } from './blocks';
 import {
+  BEDROCK_Y,
   CHUNK_HEIGHT,
   CHUNK_SIZE,
   blockIndex,
@@ -155,11 +156,10 @@ export class VoxelWorld {
       const lx = edit.x - cx * CHUNK_SIZE;
       const lz = edit.z - cz * CHUNK_SIZE;
       const index = blockIndex(lx, edit.y, lz);
-      if (this.isBedrock(cx, cz, index, edit.y)) continue;
+      const key = chunkKey(cx, cz);
+      const chunk = this.chunks.get(key);
+      if (this.isBedrock(key, chunk, index, edit.y)) continue;
       this.recordEdit(cx, cz, index, edit.id);
-
-      // Runtime edits must refresh already-built meshes without forcing generation.
-      const chunk = this.chunks.get(chunkKey(cx, cz));
       if (!chunk) continue;
       chunk.blocks[index] = edit.id;
       chunk.dirty = true;
@@ -172,13 +172,16 @@ export class VoxelWorld {
    * directly; an uncached one is judged from its pending edits or, failing that, the
    * generator's floor layer, so a save is never trusted to delete the floor.
    */
-  private isBedrock(cx: number, cz: number, index: number, y: number): boolean {
-    const key = chunkKey(cx, cz);
-    const chunk = this.chunks.get(key);
+  private isBedrock(
+    key: string,
+    chunk: Chunk | undefined,
+    index: number,
+    y: number,
+  ): boolean {
     if (chunk) return chunk.blocks[index] === BLOCK.Bedrock;
     const pending = this.edits.get(key)?.get(index);
     if (pending !== undefined) return pending === BLOCK.Bedrock;
-    return y === 0;
+    return y === BEDROCK_Y;
   }
 
   private recordEdit(cx: number, cz: number, index: number, id: BlockId): void {

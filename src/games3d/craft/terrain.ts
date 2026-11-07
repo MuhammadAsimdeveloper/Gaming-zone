@@ -4,6 +4,8 @@ import { fbm2, fbm3, hashSeed, makeNoise2D, makeNoise3D, mulberry32 } from './no
 export const CHUNK_SIZE = 16;
 export const CHUNK_HEIGHT = 64;
 export const SEA_LEVEL = 32;
+/** The generator's bedrock floor layer, which no edit may replace. */
+export const BEDROCK_Y = 0;
 
 export type BiomeId = 'plains' | 'ridge' | 'glowwood' | 'marsh';
 
@@ -203,7 +205,7 @@ export function createTerrain(seed: string): TerrainSampler {
 
   function blockAt(x: number, y: number, z: number): BlockId {
     if (y < 0 || y >= CHUNK_HEIGHT) return BLOCK.Air;
-    if (y === 0) return BLOCK.Bedrock;
+    if (y === BEDROCK_Y) return BLOCK.Bedrock;
 
     sampleColumn(x, z);
     const height = cacheHeight;
