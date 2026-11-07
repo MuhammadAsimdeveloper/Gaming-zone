@@ -41,7 +41,9 @@ describe('Rift Chess board', () => {
       onClearSelection: vi.fn(),
     });
 
+    expect(container.querySelectorAll('[role="row"]')).toHaveLength(8);
     expect(container.querySelectorAll('[role="gridcell"]')).toHaveLength(64);
+    expect(container.querySelectorAll('button[tabindex="0"]')).toHaveLength(1);
     expect(container.querySelector('[aria-label="e2, white pawn"]')).not.toBeNull();
     expect(container.querySelector('[aria-label="e4, empty square"]')).not.toBeNull();
   });
@@ -96,7 +98,7 @@ describe('Rift Chess board', () => {
     });
 
     const e2 = container.querySelector<HTMLButtonElement>('[data-square="e2"]')!;
-    e2.focus();
+    await act(async () => e2.focus());
     await act(async () => {
       e2.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     });
