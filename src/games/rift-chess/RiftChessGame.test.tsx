@@ -80,6 +80,33 @@ describe('Rift Chess playable board', () => {
     expect(container.querySelector('[role="dialog"]')).toBeNull();
   });
 
+  it('traps promotion dialog focus and restores it to the source square on Escape', async () => {
+    await render('4k3/P7/8/8/8/8/8/4K3 w - - 0 1');
+    await clickButton('Play local game');
+    await clickSquare('a7');
+    await clickSquare('a8');
+
+    const queen = container.querySelector<HTMLButtonElement>('button[aria-label="Queen"]')!;
+    const cancel = [...container.querySelectorAll('button')].find((button) => button.textContent?.trim() === 'Cancel')!;
+    expect(document.activeElement).toBe(queen);
+
+    await act(async () => {
+      queen.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true }));
+    });
+    expect(document.activeElement).toBe(cancel);
+
+    await act(async () => {
+      cancel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+    });
+    expect(document.activeElement).toBe(queen);
+
+    await act(async () => {
+      queen.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    });
+    expect(container.querySelector('[role="dialog"]')).toBeNull();
+    expect(document.activeElement?.getAttribute('data-square')).toBe('a7');
+  });
+
   it('uses the correct piece colour when black promotes', async () => {
     await render('4k3/8/8/8/8/8/p7/4K3 b - - 0 1');
     await clickButton('Play local game');
