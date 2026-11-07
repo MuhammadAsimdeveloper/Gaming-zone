@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BLOCK } from './blocks';
+import { BLOCK, type BlockId } from './blocks';
 import { computeChunkLight } from './light';
 import { meshChunk, type ChunkMesh, type MeshBuffers } from './mesher';
 import { VoxelWorld } from './world';
@@ -17,7 +17,7 @@ function floated(): VoxelWorld {
   return new VoxelWorld('mesh-test');
 }
 
-function place(world: VoxelWorld, x: number, y: number, z: number, id: number): void {
+function place(world: VoxelWorld, x: number, y: number, z: number, id: BlockId): void {
   expect(world.getBlock(x, y, z)).toBe(BLOCK.Air);
   expect(world.setBlock(x, y, z, id)).toBe(true);
 }
