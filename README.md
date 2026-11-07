@@ -2,7 +2,7 @@
 
 A free, instant-play browser gaming portal. Original branding, original games, no account and no download.
 
-**Status:** the platform and 25 internal games are implemented. Rift Chess, the first Wave 1 game, has entered implementation: its pinned rules-library adapter and regression tests are in progress, but it is **not yet playable and has no catalogue entry**. The remaining 14 shortlisted games are still designs only.
+**Status:** the platform and 25 internal games are implemented. Rift Chess has entered Wave 1 development: M0 is complete, the M1 rules adapter and tests are authored, and an initial M2 local-play board prototype now exists on the hardening PR. It is **not yet verified, registered in the catalogue, or ready to publish**. The remaining 14 shortlisted games are still designs only.
 
 ---
 
@@ -175,13 +175,16 @@ The build is a static site. `public/_redirects` provides the SPA fallback for de
 
 ---
 
-## Next game: Rift Chess — Wave 1, M1 in progress
+## Next game: Rift Chess — M2 prototype in progress
 
 The `chess.js` 1.4.0 dependency is pinned and its BSD-2-Clause notice is recorded in
-[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). The first rules adapter and regression
-suite are being built in `src/games/rift-chess/`. This is a rules foundation only: the board,
-AI, clocks, persistence and catalogue integration are not implemented yet. Do not describe
-Rift Chess as playable until M2–M6 and their QA gates are complete. See the
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). `src/games/rift-chess/` now contains the
+rules adapter, legal-move/draw tests, an accessible 8×8 board, local two-player/free-board
+modes, promotion selection, move history, undo, flip and restart. These components are not
+yet registered in the public catalogue. AI, clocks, save/resume, puzzles, custom SVG pieces,
+audio and full desktop/mobile browser QA remain. GitHub Actions could not start because the
+repository owner's account is locked over a billing issue, so the new source and tests have
+not been compiled or run. Do not describe this prototype as production-ready. See the
 [`implementation plan`](docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md).
 
 ---
