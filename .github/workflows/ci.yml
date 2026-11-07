@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node.js 20
+      - name: Use Node.js 24
         uses: actions/setup-node@v4
         with:
           node-version: 24
@@ -37,6 +37,18 @@ jobs:
 
       - name: Browser tests
         run: npx playwright test
+
+      - name: Build with dummy analytics and advertising configuration
+        run: npm run build
+        env:
+          VITE_GA_MEASUREMENT_ID: G-NEONRIFTTEST
+          VITE_ADS_ENABLED: "true"
+          VITE_ADSENSE_CLIENT: ca-pub-0000000000000000
+          VITE_ADSENSE_SLOT_HOME: "1234567890"
+          VITE_ADSENSE_SLOT_HOME_BOTTOM: "1234567891"
+
+      - name: Verify configured consent gates in Chromium
+        run: npx playwright test e2e/privacy-configured.spec.ts --workers=1
 
       - name: Upload browser test artefacts
         if: failure()
