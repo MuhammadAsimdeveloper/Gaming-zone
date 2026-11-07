@@ -103,80 +103,84 @@ export function ChessBoard({
         {rows.map((rowSquares, rowIndex) => (
           <div key={rowIndex} role="row" className="grid grid-cols-8">
             {rowSquares.map((square, columnIndex) => {
-          const index = rowIndex * 8 + columnIndex;
-          const piece = pieceAt.get(square);
-          const selected = square === selectedSquare;
-          const target = legalTargets.includes(square);
-          const last = lastMove?.from === square || lastMove?.to === square;
-          const checked = checkedKing === square;
-          const fileIndex = index % 8;
-          const rankIndex = Math.floor(index / 8);
-          const isLight = (fileIndex + rankIndex) % 2 === 1;
-          const labelParts = [
-            square,
-            piece ? `${piece.color === 'w' ? 'white' : 'black'} ${PIECE_LABEL[piece.type]}` : 'empty square',
-            target ? 'legal move target' : '',
-            checked ? 'in check' : '',
-          ].filter(Boolean);
-          const label = labelParts.join(', ');
+              const index = rowIndex * 8 + columnIndex;
+              const piece = pieceAt.get(square);
+              const selected = square === selectedSquare;
+              const target = legalTargets.includes(square);
+              const last = lastMove?.from === square || lastMove?.to === square;
+              const checked = checkedKing === square;
+              const fileIndex = index % 8;
+              const rankIndex = Math.floor(index / 8);
+              const isLight = (fileIndex + rankIndex) % 2 === 1;
+              const labelParts = [
+                square,
+                piece
+                  ? `${piece.color === 'w' ? 'white' : 'black'} ${PIECE_LABEL[piece.type]}`
+                  : 'empty square',
+                target ? 'legal move target' : '',
+                checked ? 'in check' : '',
+              ].filter(Boolean);
+              const label = labelParts.join(', ');
 
-          return (
-            <button
-              key={square}
-              type="button"
-              role="gridcell"
-              data-square={square}
-              data-legal-target={target ? 'true' : undefined}
-              aria-label={label}
-              aria-selected={selected}
-              tabIndex={focusedSquare === square ? 0 : -1}
-              onFocus={() => setFocusedSquare(square)}
-              onClick={() => {
-                setFocusedSquare(square);
-                onSquareClick(square);
-              }}
-              className={cn(
-                'relative flex aspect-square min-w-0 touch-manipulation items-center justify-center outline-none transition-colors focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-cyan-300',
-                isLight ? 'bg-[#d9e2e9]' : 'bg-[#53677a]',
-                last && 'bg-[#91a8b2]',
-                checked && 'bg-rose-500/80',
-                selected && 'z-[1] bg-cyan-300/80 ring-4 ring-inset ring-cyan-200',
-              )}
-            >
-              {rankIndex === 7 ? (
-                <span
-                  aria-hidden="true"
+              return (
+                <button
+                  key={square}
+                  type="button"
+                  role="gridcell"
+                  data-square={square}
+                  data-legal-target={target ? 'true' : undefined}
+                  aria-label={label}
+                  aria-selected={selected}
+                  tabIndex={focusedSquare === square ? 0 : -1}
+                  onFocus={() => setFocusedSquare(square)}
+                  onClick={() => {
+                    setFocusedSquare(square);
+                    onSquareClick(square);
+                  }}
                   className={cn(
-                    'absolute bottom-0.5 left-1 text-[8px] font-bold sm:text-[10px]',
-                    isLight ? 'text-slate-600' : 'text-slate-100',
+                    'relative flex aspect-square min-w-0 touch-manipulation items-center justify-center outline-none transition-colors focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-cyan-300',
+                    isLight ? 'bg-[#d9e2e9]' : 'bg-[#53677a]',
+                    last && 'bg-[#91a8b2]',
+                    checked && 'bg-rose-500/80',
+                    selected && 'z-[1] bg-cyan-300/80 ring-4 ring-inset ring-cyan-200',
                   )}
                 >
-                  {square[0]}
-                </span>
-              ) : null}
-              {fileIndex === 0 ? (
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    'absolute left-1 top-0.5 text-[8px] font-bold sm:text-[10px]',
-                    isLight ? 'text-slate-600' : 'text-slate-100',
-                  )}
-                >
-                  {square[1]}
-                </span>
-              ) : null}
-              {piece ? <ChessPiece type={piece.type} color={piece.color} /> : null}
-              {target ? (
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    'pointer-events-none absolute rounded-full',
-                    piece ? 'inset-[8%] border-[3px] border-emerald-600/80' : 'h-[22%] w-[22%] bg-emerald-700/55',
-                  )}
-                />
-              ) : null}
-            </button>
-          );
+                  {rankIndex === 7 ? (
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        'absolute bottom-0.5 left-1 text-[8px] font-bold sm:text-[10px]',
+                        isLight ? 'text-slate-600' : 'text-slate-100',
+                      )}
+                    >
+                      {square[0]}
+                    </span>
+                  ) : null}
+                  {fileIndex === 0 ? (
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        'absolute left-1 top-0.5 text-[8px] font-bold sm:text-[10px]',
+                        isLight ? 'text-slate-600' : 'text-slate-100',
+                      )}
+                    >
+                      {square[1]}
+                    </span>
+                  ) : null}
+                  {piece ? <ChessPiece type={piece.type} color={piece.color} /> : null}
+                  {target ? (
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        'pointer-events-none absolute rounded-full',
+                        piece
+                          ? 'inset-[8%] border-[3px] border-emerald-600/80'
+                          : 'h-[22%] w-[22%] bg-emerald-700/55',
+                      )}
+                    />
+                  ) : null}
+                </button>
+              );
             })}
           </div>
         ))}
