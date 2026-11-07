@@ -225,6 +225,7 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
             },
           },
         );
+        if (muted) engine.toggleMute();
         engineRef.current = engine;
         onStartRef.current?.();
       } catch (cause) {
@@ -236,7 +237,7 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
         setPhase('menu');
       }
     },
-    [camera, carId, disposeEngine, missionId, resetTouch],
+    [camera, carId, disposeEngine, missionId, muted, resetTouch],
   );
 
   const togglePause = useCallback(() => {
