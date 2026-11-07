@@ -40,11 +40,11 @@ const MODE_OPTIONS: ReadonlyArray<SegmentOption<Mode>> = [
   { value: 'free', label: 'Free board' },
 ];
 
-const PROMOTION_OPTIONS: ReadonlyArray<{ value: PromotionPiece; label: string; glyph: string }> = [
-  { value: 'q', label: 'Queen', glyph: '♕' },
-  { value: 'r', label: 'Rook', glyph: '♖' },
-  { value: 'b', label: 'Bishop', glyph: '♗' },
-  { value: 'n', label: 'Knight', glyph: '♘' },
+const PROMOTION_OPTIONS: ReadonlyArray<{ value: PromotionPiece; label: string; whiteGlyph: string; blackGlyph: string }> = [
+  { value: 'q', label: 'Queen', whiteGlyph: '♕', blackGlyph: '♛' },
+  { value: 'r', label: 'Rook', whiteGlyph: '♖', blackGlyph: '♜' },
+  { value: 'b', label: 'Bishop', whiteGlyph: '♗', blackGlyph: '♝' },
+  { value: 'n', label: 'Knight', whiteGlyph: '♘', blackGlyph: '♞' },
 ];
 
 const DRAW_LABELS: Record<EndReason, string> = {
@@ -327,7 +327,7 @@ export default function RiftChessGame({
                           aria-label={option.label}
                           className="flex min-h-16 flex-col items-center justify-center rounded-xl border border-white/10 bg-white/5 text-3xl text-ink transition hover:border-electric-300 hover:bg-electric-400/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-300"
                         >
-                          <span aria-hidden="true">{option.glyph}</span>
+                          <span aria-hidden="true">{turn === 'w' ? option.whiteGlyph : option.blackGlyph}</span>
                           <span className="mt-1 text-[9px] font-medium text-muted">{option.label}</span>
                         </button>
                       ))}
