@@ -48,6 +48,7 @@ export function ChessBoard({
   const files = orientation === 'w' ? FILES : [...FILES].reverse();
   const ranks = orientation === 'w' ? RANKS : [...RANKS].reverse();
   const squares = ranks.flatMap((rank) => files.map((file) => `${file}${rank}` as Square));
+  const rows = Array.from({ length: 8 }, (_, index) => squares.slice(index * 8, index * 8 + 8));
 
   function handleGridKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key === 'Escape') {
@@ -102,7 +103,10 @@ export function ChessBoard({
         onKeyDown={handleGridKeyDown}
         className="grid grid-cols-8 overflow-hidden rounded-xl border border-white/20 shadow-[0_16px_48px_-28px_rgba(0,0,0,0.9)]"
       >
-        {squares.map((square, index) => {
+        {rows.map((rowSquares, rowIndex) => (
+          <div key={rowIndex} role="row" className="grid grid-cols-8">
+            {rowSquares.map((square, columnIndex) => {
+          const index = rowIndex * 8 + columnIndex;
           const piece = pieceAt.get(square);
           const selected = square === selectedSquare;
           const target = legalTargets.includes(square);
@@ -180,7 +184,9 @@ export function ChessBoard({
               ) : null}
             </button>
           );
-        })}
+            })}
+          </div>
+        ))}
       </div>
     </div>
   );
