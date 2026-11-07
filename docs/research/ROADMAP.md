@@ -103,7 +103,7 @@ Goal: prove the game pipeline five times with small, complete games.
 
 ### Rift Chess — implementation milestones
 
-**Status (2026-11-07):** M0 dependency/licence gate is complete on the hardening branch and M1 rules-adapter work has started. The test suite is authored but not yet verified by CI. There is still no playable board and no catalogue entry. Full plan:
+**Status (2026-11-07):** M0 dependency/licence gate is complete. M1 rules adapter and 30-position regression suite are authored. An M2 board prototype now supports local two-player/free-board play, legal selection, promotion choice, SAN history, undo, flip and restart. Neither M1 nor M2 has passed runtime verification: GitHub Actions did not start because the repository owner's account is locked over a billing issue. The game remains unregistered and unpublished. Full plan:
 [RIFT-CHESS-IMPLEMENTATION-PLAN.md](RIFT-CHESS-IMPLEMENTATION-PLAN.md).
 
 | Milestone | Deliverable | Exit criteria |
@@ -277,7 +277,7 @@ No game implementation begins until the shortlist and the specific game plan are
 is complete and verified. After approval, the order is:
 
 1. Phase 0 platform hardening. **Complete and verified 2026-11-02.**
-2. Rift Chess. **M0 complete; M1 rules foundation in progress; not yet playable.**
+2. Rift Chess. **M0 complete; M1/M2 source authored; CI verification blocked; not registered or publishable.**
 3. Neon Rush.
 4. Lawn Protocol.
 5. Apex Time Trial.
