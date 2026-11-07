@@ -108,6 +108,7 @@ The two browser failures are real and are listed as defects in §6. The Playwrig
 
 **H-04 — No Content-Security-Policy.**
 `public/_headers` ships `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy` and `Permissions-Policy`, but no CSP. A report-only policy must be designed around React/Vite output, Three.js, workers, optional analytics/AdSense and approved frames before anything is enforced.
+*Resolved 2026-11-07:* a report-only policy now ships from `public/_headers` and is served by the preview server. Enforcement remains open. See [`2026-11-07-csp-evaluation.md`](2026-11-07-csp-evaluation.md).
 
 **H-05 — Neon Craft cannot be played.**
 No raycast, controller, inventory, crafting, farming, survival, creatures or save flow. The flagship Wave 2 game cannot be registered until the loop in directive D11 completes.

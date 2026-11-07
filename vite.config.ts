@@ -97,8 +97,29 @@ function seoFiles(): Plugin {
   };
 }
 
+function previewCsp(): Plugin {
+  const headers = readFileSync(new URL('./public/_headers', import.meta.url), 'utf-8');
+  const line = headers
+    .split(/\r?\n/)
+    .find((entry) => entry.trim().toLowerCase().startsWith('content-security-policy-report-only:'));
+  if (!line) {
+    throw new Error('public/_headers is missing a Content-Security-Policy-Report-Only header');
+  }
+  const policy = line.slice(line.indexOf(':') + 1).trim();
+
+  return {
+    name: 'neonrift-csp-report-only',
+    configurePreviewServer(server) {
+      server.middlewares.use((_req, res, next) => {
+        res.setHeader('Content-Security-Policy-Report-Only', policy);
+        next();
+      });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), tailwindcss(), seoFiles()],
+  plugins: [react(), tailwindcss(), seoFiles(), previewCsp()],
   server: {
     port: 5173,
     strictPort: false,

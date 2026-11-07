@@ -53,10 +53,10 @@ Playwright's Chromium is the only browser target in CI. Install it once with
 |---|---|
 | `npm ci` | Completed previously; lockfile unchanged |
 | `npm run typecheck` | Passed with no output |
-| `npm test` | 723 tests passed in 79 files |
+| `npm test` | 727 tests passed in 80 files |
 | `npm run build` | Passed; Street Cricket loads as its own 48.60 kB / 15.11 kB gzip chunk; the shared Three.js scenery chunk is 565.24 kB raw / 141.54 kB gzip and still triggers the existing >500 kB warning |
 | `npm run build:consent` | Passed; same chunks with analytics and AdSense identifiers configured |
-| `npx playwright test --workers=2` | 104 tests passed in 12 files |
+| `npx playwright test --workers=2` | 107 tests passed in 13 files |
 
 The browser suite covers the homepage, catalogue, search, category filters, all thirty-two game pages,
 launch/pause/resume/restart, favorites after reload, recently played, fullscreen state, 404,
@@ -65,7 +65,10 @@ recovery, hidden-tab fairness, keyboard and touch input for the 2D games, and 2D
 completion/game-over. The configured-consent matrix runs against a second build and checks,
 with both provider hosts intercepted, that nothing loads before a decision, each category is
 independent, denials and grants survive a reload, and clearing a choice revokes only that
-provider. The five 3D games are verified for loading, pause/resume, restart, mute
+provider. A separate CSP check confirms the report-only policy is served, that five key
+routes raise no `securitypolicyviolation` events in the default build, and that the
+configured build stays clean once both consents are allowed. The five 3D games are verified
+for loading, pause/resume, restart, mute
 and route-away console cleanliness; their action keys are covered by unit-level keyboard-capture
 tests, not by a full browser playthrough, and a complete race, time trial, match or over is
 not automated. No game is described as manually played beyond what these tests exercised.
@@ -194,7 +197,7 @@ Output directory: dist
 Node version:     20+
 ```
 
-The build is a static site. `public/_redirects` provides the SPA fallback for deep links, and `public/_headers` sets baseline security headers. A Content-Security-Policy is not yet configured because the optional analytics and ad integrations must be validated against it first.
+The build is a static site. `public/_redirects` provides the SPA fallback for deep links, and `public/_headers` sets baseline security headers plus a **report-only** Content-Security-Policy. The policy is not enforced; it is served by the preview server from the same `public/_headers` line and reports violations so the remaining directives can be tightened safely. See [`docs/audits/2026-11-07-csp-evaluation.md`](docs/audits/2026-11-07-csp-evaluation.md).
 
 ---
 
@@ -228,7 +231,7 @@ Three tracks are queued. **Only the shipped games have catalogue entries.**
 - The six games in the 2026-11-04 Wave 2 spec are designs only. No game code, catalogue entry, thumbnail or test exists for them yet.
 - The 1000-game target is a documented program, not a shipped library. 32 games have catalogue entries today; the remaining 968 are planned. No placeholder records exist.
 - Game records are local; the site does not display invented player counts, ratings or revenue.
-- No Content-Security-Policy ships yet; the optional analytics and ad integrations must be validated against it before one is added.
+- The Content-Security-Policy is report-only, not enforced. Violations are collected but nothing is blocked; enforcement needs a real report collector and a period of clean reports.
 - The production build warns about the shared Three.js chunk exceeding 500 kB raw. It is lazy-loaded and compressed to ~140 kB gzip, but further splitting is still an open performance task.
 
 ---
