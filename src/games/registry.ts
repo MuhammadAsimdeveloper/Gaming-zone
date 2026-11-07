@@ -38,4 +38,5 @@ export const gameRegistry: Record<
   'lawn-protocol': lazy(() => import('../games/lawn-protocol/LawnProtocolGame')),
   'apex-time-trial': lazy(() => import('../games3d/time-trial/ApexTimeTrialGame')),
   'street-cricket': lazy(() => import('../games3d/street-cricket/StreetCricketGame')),
+  'neon-craft': lazy(() => import('../games3d/craft/NeonCraftGame')),
 };

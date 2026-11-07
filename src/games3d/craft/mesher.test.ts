@@ -171,6 +171,45 @@ describe('mesher', () => {
     expect(mesh.opaque.tiles).toHaveLength(mesh.opaque.positions.length / 3);
   });
 
+  it('maps face uvs to world axes so side textures stay upright', () => {
+    const world = floated();
+    place(world, 2, FLOAT_Y, 2, BLOCK.Grass);
+    const mesh = meshOf(world);
+
+    const checked: Record<string, number> = { '0,0,1': 0, '1,0,0': 0, '0,1,0': 0 };
+    for (const corners of quadsOf(mesh.opaque)) {
+      for (const vertex of corners) {
+        const base = vertex * 3;
+        const nx = mesh.opaque.normals[base]!;
+        const ny = mesh.opaque.normals[base + 1]!;
+        const nz = mesh.opaque.normals[base + 2]!;
+        const x = mesh.opaque.positions[base]!;
+        const y = mesh.opaque.positions[base + 1]!;
+        const z = mesh.opaque.positions[base + 2]!;
+        if (x < 2 || x > 3 || y < FLOAT_Y || y > FLOAT_Y + 1 || z < 2 || z > 3) continue;
+        const u = mesh.opaque.uvs[vertex * 2]!;
+        const v = mesh.opaque.uvs[vertex * 2 + 1]!;
+        const key = `${nx},${ny},${nz}`;
+        if (!(key in checked)) continue;
+        if (key === '0,0,1') {
+          expect(u).toBeCloseTo(x, 9);
+          expect(v).toBeCloseTo(y, 9);
+        } else if (key === '1,0,0') {
+          expect(u).toBeCloseTo(z, 9);
+          expect(v).toBeCloseTo(y, 9);
+        } else {
+          expect(u).toBeCloseTo(x, 9);
+          expect(v).toBeCloseTo(z, 9);
+        }
+        checked[key] += 1;
+      }
+    }
+
+    expect(checked['0,0,1']).toBeGreaterThan(0);
+    expect(checked['1,0,0']).toBeGreaterThan(0);
+    expect(checked['0,1,0']).toBeGreaterThan(0);
+  });
+
   it('produces stable geometry arrays', () => {
     const world = floated();
     place(world, 2, FLOAT_Y, 2, BLOCK.Stone);

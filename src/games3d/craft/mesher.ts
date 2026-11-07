@@ -70,6 +70,13 @@ const REVERSED_WINDING: readonly number[] = [0, 3, 2, 1];
 /** Both face directions, outside first for readability; order only affects array order. */
 const DIRECTIONS: readonly number[] = [1, -1];
 
+/** Per-face uv axes: u runs across the face, v runs up it, so side art stays upright. */
+const FACE_UV_AXES: ReadonlyArray<readonly [number, number]> = [
+  [2, 1],
+  [0, 2],
+  [0, 1],
+];
+
 /** Corner signs, in the canonical order used by both the mask and the AO pass. */
 const CORNER_SIGNS: ReadonlyArray<readonly [number, number]> = [
   [-1, -1],
@@ -362,7 +369,10 @@ function emitQuad(
 
     target.positions.push(position[0], position[1], position[2]);
     target.normals.push(normal[0], normal[1], normal[2]);
-    target.uvs.push(signU * width, signV * height);
+    // Block-unit uvs from chunk-local positions: the shader wraps them per tile, so a
+    // merged quad repeats its texture and every vertical face samples upright.
+    const [uAxis, vAxis] = FACE_UV_AXES[d]!;
+    target.uvs.push(position[uAxis]!, position[vAxis]!);
     target.tiles.push(entry.tile);
 
     const ao = 1 - entry.occlusion[corner] / MAX_OCCLUSION;

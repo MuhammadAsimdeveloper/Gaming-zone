@@ -5,6 +5,7 @@ import {
   clockAt,
   phaseAt,
   skyLightAt,
+  skyPalette,
 } from './daynight';
 
 describe('day/night cycle', () => {
@@ -64,5 +65,50 @@ describe('day/night cycle', () => {
     expect(skyLightAt(540)).toBeCloseTo(0.25);
     expect(skyLightAt(675)).toBeCloseTo(0.625);
     expect(skyLightAt(720)).toBe(1);
+  });
+  it('paints a bright daytime sky with no stars', () => {
+    const noon = skyPalette(180);
+    expect(noon.daylight).toBe(1);
+    expect(noon.starOpacity).toBe(0);
+    expect(noon.sunIntensity).toBeGreaterThan(2);
+    expect(noon.top.b).toBeGreaterThan(noon.top.r);
+    expect(noon.skyLight).toBe(1);
+  });
+
+  it('switches to a dark starry night', () => {
+    const midnight = skyPalette(540);
+    const luminance = (midnight.top.r + midnight.top.g + midnight.top.b) / 3;
+    expect(midnight.daylight).toBeCloseTo(0.25);
+    expect(midnight.starOpacity).toBe(1);
+    expect(luminance).toBeLessThan(0.08);
+    expect(midnight.sunIntensity).toBeLessThan(0.5);
+    expect(midnight.ambientIntensity).toBeLessThan(skyPalette(180).ambientIntensity);
+  });
+
+  it('warms the horizon during dusk', () => {
+    const dusk = skyPalette(405);
+    expect(dusk.horizon.r).toBeGreaterThan(dusk.horizon.b);
+    expect(dusk.starOpacity).toBeGreaterThan(0);
+    expect(dusk.starOpacity).toBeLessThan(1);
+    expect(dusk.daylight).toBeLessThan(1);
+  });
+
+  it('keeps every channel in range and wraps continuously', () => {
+    for (let time = 0; time < CYCLE_SECONDS; time += 15) {
+      const palette = skyPalette(time);
+      for (const color of [palette.top, palette.horizon, palette.fog, palette.sun]) {
+        for (const channel of [color.r, color.g, color.b]) {
+          expect(channel).toBeGreaterThanOrEqual(0);
+          expect(channel).toBeLessThanOrEqual(1);
+        }
+      }
+      expect(palette.starOpacity).toBeGreaterThanOrEqual(0);
+      expect(palette.starOpacity).toBeLessThanOrEqual(1);
+    }
+    const end = skyPalette(CYCLE_SECONDS - 0.001);
+    const start = skyPalette(0.001);
+    expect(end.top.r).toBeCloseTo(start.top.r, 2);
+    expect(end.fog.b).toBeCloseTo(start.fog.b, 2);
+    expect(end.sunIntensity).toBeCloseTo(start.sunIntensity, 2);
   });
 });

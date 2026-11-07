@@ -132,7 +132,7 @@ test.describe('reduced-motion preference', () => {
   });
 });
 
-test.describe('all thirty-two games boot and accept input', () => {
+test.describe('all thirty-three games boot and accept input', () => {
   test.describe.configure({ timeout: 150_000 });
 
   for (const game of GAMES) {
@@ -340,6 +340,27 @@ test.describe('all thirty-two games boot and accept input', () => {
           await expect(page.getByRole('button', { name: 'Resume match' })).toBeVisible();
           await page.getByRole('button', { name: 'Resume match' }).click();
           await expect(page.getByRole('button', { name: 'Pause match' })).toBeVisible();
+          break;
+        case 'neon-craft':
+          await page.getByRole('button', { name: 'Create world' }).first().click();
+          await page.getByLabel('World name').fill('QA Rift');
+          await page.getByLabel('Seed (optional)').fill('qa-seed');
+          await page.getByRole('button', { name: 'Create and enter' }).click();
+          await expect(page.getByRole('heading', { name: 'World paused' })).toBeVisible({
+            timeout: 40_000,
+          });
+          await assertSizedCanvas(page);
+          await page.getByRole('button', { name: 'Sound is on' }).click();
+          await expect(page.getByRole('button', { name: 'Sound is muted' })).toBeVisible();
+          await page.getByRole('button', { name: 'Sound is muted' }).click();
+          await expect(page.getByRole('button', { name: 'Sound is on' })).toBeVisible();
+          await page.getByRole('button', { name: 'Resume', exact: true }).click();
+          await expect(page.getByRole('heading', { name: 'World paused' })).toBeHidden();
+          await expect(page.getByRole('button', { name: 'Pause world' })).toBeVisible();
+          await page.keyboard.press('Escape');
+          await expect(page.getByRole('heading', { name: 'World paused' })).toBeVisible();
+          await page.getByRole('button', { name: 'Save and quit' }).click();
+          await expect(page.getByRole('heading', { name: 'Worlds', level: 3 })).toBeVisible();
           break;
       }
 

@@ -1523,5 +1523,78 @@
     "createdAt": "2026-11-07T09:00:00.000Z",
     "featured": false,
     "popularityRank": 32
+  },
+  {
+    "id": "neon-craft",
+    "slug": "neon-craft",
+    "title": "Neon Craft",
+    "tagline": "Mine, build and survive a seeded voxel frontier.",
+    "description": "A first-person voxel sandbox with four biomes, caves, ores, farming, crafting stations and a full day-night cycle. Every world is generated from a seed, every texture is drawn procedurally in the browser, and three IndexedDB save slots keep your builds on this device. Survive Gloomlings and Cinder Wisps, light your base, plant crops and shape the terrain block by block.",
+    "category": "simulation",
+    "secondaryCategories": [
+      "adventure",
+      "action"
+    ],
+    "thumbnail": "/art/neon-craft.svg",
+    "accent": "#2dd4bf",
+    "type": "internal",
+    "internalKey": "neon-craft",
+    "instructions": [
+      "Create a seeded world in one of three save slots, or start an unsaved session.",
+      "Click the world to capture the mouse, then look with the mouse and move with WASD.",
+      "Hold left click to mine the highlighted block; it drops into your hotbar inventory.",
+      "Right click places the selected hotbar block, uses tools, or opens a Workbench and Kiln.",
+      "Press E for the inventory to rearrange items and open the crafting panel.",
+      "Craft tools and stations from 33 recipes spread across hand, workbench and kiln stations.",
+      "Eat food to restore hunger, and plant seeds on watered farmland to grow crops.",
+      "Light your base before dusk: hostile creatures spawn in the dark.",
+      "The world autosaves on pause, on page hide and every minute; Esc pauses and opens settings."
+    ],
+    "controls": [
+      {
+        "label": "Move",
+        "keys": "W A S D"
+      },
+      {
+        "label": "Jump",
+        "keys": "Space"
+      },
+      {
+        "label": "Sprint / sneak",
+        "keys": "Ctrl / Shift"
+      },
+      {
+        "label": "Look",
+        "keys": "Mouse (pointer lock)"
+      },
+      {
+        "label": "Mine / use or place",
+        "keys": "Left click / Right click"
+      },
+      {
+        "label": "Hotbar",
+        "keys": "1–9"
+      },
+      {
+        "label": "Inventory and crafting",
+        "keys": "E"
+      },
+      {
+        "label": "Drop item",
+        "keys": "Q"
+      },
+      {
+        "label": "Pause and settings",
+        "keys": "Esc or P"
+      },
+      {
+        "label": "Touch",
+        "keys": "On-screen stick, look pad and action buttons"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-07T15:00:00.000Z",
+    "featured": true,
+    "popularityRank": 33
   }
 ]
