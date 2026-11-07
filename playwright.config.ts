@@ -2,6 +2,8 @@ import { defineConfig, devices } from '@playwright/test';
 
 const PORT = 4175;
 const BASE_URL = `http://127.0.0.1:${PORT}`;
+const CONSENT_PORT = 4176;
+const CONSENT_BASE_URL = `http://127.0.0.1:${CONSENT_PORT}`;
 
 export default defineConfig({
   testDir: './e2e',
@@ -18,12 +20,22 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'on-first-retry',
   },
-  webServer: {
-    command: `npm run preview -- --host 127.0.0.1 --port ${PORT} --strictPort`,
-    url: BASE_URL,
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
+  webServer: [
+    {
+      command: `npm run preview -- --host 127.0.0.1 --port ${PORT} --strictPort`,
+      url: BASE_URL,
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+    },
+    {
+      // Second production build with analytics and advertising configured, used
+      // by the configured-consent matrix.
+      command: `npm run build:consent && npm run preview:consent -- --host 127.0.0.1 --port ${CONSENT_PORT} --strictPort`,
+      url: CONSENT_BASE_URL,
+      reuseExistingServer: !process.env.CI,
+      timeout: 180_000,
+    },
+  ],
   projects: [
     {
       name: 'chromium',

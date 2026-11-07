@@ -38,7 +38,11 @@ interface ChoiceProps {
 
 function ConsentChoice({ title, description, onAllow, onDecline }: ChoiceProps) {
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-line bg-sunken/60 p-3 sm:flex-row sm:items-center sm:justify-between">
+    <div
+      role="group"
+      aria-label={title}
+      className="flex flex-col gap-3 rounded-xl border border-line bg-sunken/60 p-3 sm:flex-row sm:items-center sm:justify-between"
+    >
       <div>
         <p className="text-sm font-medium text-ink">{title}</p>
         <p className="mt-0.5 text-xs leading-5 text-muted">{description}</p>

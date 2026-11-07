@@ -30,8 +30,15 @@ npm run typecheck  # tsc --noEmit
 npm test           # Vitest unit tests
 npm run build      # typecheck + production build to dist/
 npm run preview    # preview the production build
+npm run build:consent   # second build with analytics + ads configured, to dist-consent/
+npm run preview:consent # preview the configured-consent build
 npm run test:e2e   # build, then Playwright browser tests against the preview
 ```
+
+Playwright also builds and serves `dist-consent` on port 4176 automatically; the
+configured-consent matrix uses it to prove provider loading against a build where
+analytics and advertising are actually configured. Both provider hosts are
+intercepted, so no test contacts Google.
 
 Node 20+ is required. The project is developed on Node 24.
 
@@ -46,20 +53,24 @@ Playwright's Chromium is the only browser target in CI. Install it once with
 |---|---|
 | `npm ci` | Completed previously; lockfile unchanged |
 | `npm run typecheck` | Passed with no output |
-| `npm test` | 682 tests passed in 73 files |
+| `npm test` | 723 tests passed in 79 files |
 | `npm run build` | Passed; Street Cricket loads as its own 48.60 kB / 15.11 kB gzip chunk; the shared Three.js scenery chunk is 565.24 kB raw / 141.54 kB gzip and still triggers the existing >500 kB warning |
-| `npx playwright test --workers=2` | 96 tests passed in 11 files |
+| `npm run build:consent` | Passed; same chunks with analytics and AdSense identifiers configured |
+| `npx playwright test --workers=2` | 104 tests passed in 12 files |
 
 The browser suite covers the homepage, catalogue, search, category filters, all thirty-two game pages,
 launch/pause/resume/restart, favorites after reload, recently played, fullscreen state, 404,
 mobile navigation, the absence of analytics/ad scripts in the default build, error-boundary
 recovery, hidden-tab fairness, keyboard and touch input for the 2D games, and 2D game
-completion/game-over. The five 3D games are verified for loading, pause/resume, restart, mute
+completion/game-over. The configured-consent matrix runs against a second build and checks,
+with both provider hosts intercepted, that nothing loads before a decision, each category is
+independent, denials and grants survive a reload, and clearing a choice revokes only that
+provider. The five 3D games are verified for loading, pause/resume, restart, mute
 and route-away console cleanliness; their action keys are covered by unit-level keyboard-capture
 tests, not by a full browser playthrough, and a complete race, time trial, match or over is
 not automated. No game is described as manually played beyond what these tests exercised.
 
-CI runs on every push to `main`/`master` and every pull request in
+CI runs on every pushed branch and every pull request in
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ### Editorial Arcade refresh (2026-11-02)
