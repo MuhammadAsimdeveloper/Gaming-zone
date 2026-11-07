@@ -154,7 +154,7 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
     try {
       const engine = new RaceEngine(
         canvas,
-        { trackId, carId, difficulty, camera },
+        { trackId, carId, difficulty, camera, muted },
         {
           onHud: (nextHud) => {
             setHud(nextHud);
@@ -203,7 +203,7 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
           },
         },
       );
-      if (muted) engine.toggleMute();
+
       engineRef.current = engine;
       engine.setCamera(camera);
       onStartRef.current?.();
