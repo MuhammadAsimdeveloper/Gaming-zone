@@ -92,7 +92,10 @@ export default function GamePage() {
   const route = useMemo(() => {
     if (!game || game.type !== 'external' || !game.externalUrl) return null;
     const origins = [...EXTERNAL_GAME_ORIGINS, ...(game.allowedOrigins ?? [])];
-    return validateExternalGameUrl(game.externalUrl, origins, { allowLocalhost: import.meta.env.DEV });
+    return validateExternalGameUrl(game.externalUrl, origins, {
+      allowLocalhost: import.meta.env.DEV,
+      siteOrigin: window.location.origin,
+    });
   }, [game]);
 
   const related = useMemo(() => {
@@ -322,7 +325,7 @@ export default function GamePage() {
                         src={route.url}
                         title={`${game.title} — external game`}
                         className="relative h-[min(70vh,640px)] w-full border-0"
-                        sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-orientation-lock allow-forms"
+                        sandbox="allow-scripts allow-pointer-lock allow-orientation-lock allow-forms"
                         allow="fullscreen; gamepad; accelerometer; gyroscope"
                         allowFullScreen
                         referrerPolicy="no-referrer"

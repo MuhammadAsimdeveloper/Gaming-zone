@@ -21,7 +21,7 @@ function normalizeAllowedOrigin(entry: string): string | null {
 export function validateExternalGameUrl(
   rawUrl: string,
   allowedOrigins: string[],
-  options: { allowLocalhost?: boolean } = {},
+  options: { allowLocalhost?: boolean; siteOrigin?: string } = {},
 ): EmbedValidation {
   const candidate = rawUrl.trim();
   if (!candidate) {
@@ -57,13 +57,15 @@ export function validateExternalGameUrl(
     .filter((origin): origin is string => Boolean(origin));
 
   const origin = url.origin.toLowerCase();
-  const isAllowed = normalizedAllowed.some((allowed) => {
-    if (allowed === origin) return true;
-    const allowedHost = allowed.replace(/^https?:\/\//, '').split('/')[0] ?? '';
-    return allowedHost === url.host.toLowerCase();
-  });
+  const siteOrigin = options.siteOrigin?.trim().toLowerCase().replace(/\/+$/, '');
+  if (siteOrigin && origin === siteOrigin) {
+    return {
+      ok: false,
+      reason: 'External games cannot run on the same origin as this site.',
+    };
+  }
 
-  if (!isAllowed) {
+  if (!normalizedAllowed.includes(origin)) {
     return {
       ok: false,
       reason: `The origin ${url.origin} is not in the approved game origin list.`,

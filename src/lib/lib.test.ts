@@ -133,6 +133,30 @@ describe('external embed validation', () => {
       validateExternalGameUrl(url, ['http://localhost:5173'], { allowLocalhost: true }).ok,
     ).toBe(true);
   });
+
+  it('rejects javascript and data URLs', () => {
+    expect(validateExternalGameUrl('javascript:alert(1)', allowed).ok).toBe(false);
+    expect(validateExternalGameUrl('data:text/html,<h1>x</h1>', allowed).ok).toBe(false);
+  });
+
+  it('rejects lookalike hosts and non-default ports', () => {
+    expect(validateExternalGameUrl('https://games.example.com.evil.test/play', allowed).ok).toBe(
+      false,
+    );
+    expect(validateExternalGameUrl('https://evil.test/games.example.com', allowed).ok).toBe(false);
+    expect(validateExternalGameUrl('https://games.example.com:8443/play', allowed).ok).toBe(false);
+  });
+
+  it('normalises case and the default HTTPS port', () => {
+    expect(validateExternalGameUrl('https://GAMES.EXAMPLE.COM:443/play', allowed).ok).toBe(true);
+  });
+
+  it('rejects an approved origin when it is the site origin itself', () => {
+    const result = validateExternalGameUrl('https://neonrift.test/embed', ['https://neonrift.test'], {
+      siteOrigin: 'https://neonrift.test',
+    });
+    expect(result.ok).toBe(false);
+  });
 });
 
 describe('thumbnail sanitisation', () => {
