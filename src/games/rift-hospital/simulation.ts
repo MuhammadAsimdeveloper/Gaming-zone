@@ -1,5 +1,5 @@
 export const HOSPITAL_DAYS = 20;
-export const HOSPITAL_TARGET = 1000;
+export const HOSPITAL_TARGET = 4000;
 
 export type HospitalPhase = 'ready' | 'running' | 'over';
 

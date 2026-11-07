@@ -10,10 +10,30 @@ import {
   hospitalCapacity,
   patientDemand,
   startHospital,
+  type HospitalState,
 } from './simulation';
 
 function running() {
   return startHospital(createHospitalState());
+}
+
+function playSeason(act: (state: HospitalState) => HospitalState): HospitalState {
+  let state = act(running());
+  while (state.phase === 'running') state = advanceHospitalDay(act(state));
+  return state;
+}
+
+function investInCapacity(target: number) {
+  return (state: HospitalState): HospitalState => {
+    let next = state;
+    for (let step = 0; step < 3; step += 1) {
+      if (hospitalCapacity(next) >= target || next.credits < 150) break;
+      if (next.beds <= Math.min(next.doctors * 4, next.nurses * 3)) next = addBed(next);
+      else if (next.doctors * 4 <= next.nurses * 3) next = hireDoctor(next);
+      else next = hireNurse(next);
+    }
+    return next;
+  };
 }
 
 describe('Rift Hospital simulation', () => {
@@ -78,6 +98,14 @@ describe('Rift Hospital simulation', () => {
   it('does not advance while paused', () => {
     const paused = { ...running(), paused: true };
     expect(advanceHospitalDay(paused)).toBe(paused);
+  });
+
+  it('rewards expanding capacity over idling through the season', () => {
+    const passive = playSeason((state) => state);
+    const active = playSeason(investInCapacity(12));
+
+    expect(passive.credits).toBeLessThan(HOSPITAL_TARGET);
+    expect(active.credits).toBeGreaterThanOrEqual(HOSPITAL_TARGET);
   });
 
   it('closes early when the clinic cannot pay its bills', () => {

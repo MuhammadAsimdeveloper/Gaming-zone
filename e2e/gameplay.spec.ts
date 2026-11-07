@@ -103,6 +103,35 @@ test.describe('player shell and local preferences', () => {
   });
 });
 
+test.describe('reduced-motion preference', () => {
+  test('snake, signal stack and rift runner stay playable with motion reduced', async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+
+    await page.goto('/game/neon-snake');
+    expect(
+      await page.evaluate(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches),
+    ).toBe(true);
+    await page.getByRole('button', { name: 'Start run', exact: true }).click();
+    await page.keyboard.press('ArrowUp');
+    await expect(page.getByRole('button', { name: 'Pause game' })).toBeVisible();
+
+    await page.goto('/game/signal-stack');
+    await page.getByRole('button', { name: 'Start stacking', exact: true }).click();
+    await page.getByRole('button', { name: 'Drop', exact: true }).click();
+    await expect(page.getByRole('status').filter({ hasText: 'blocks stacked' })).toContainText(
+      '2 blocks stacked',
+    );
+
+    await page.goto('/game/rift-runner');
+    await page.getByRole('button', { name: 'Start run', exact: true }).click();
+    await page.getByRole('button', { name: 'Jump', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Pause run' })).toBeVisible();
+
+    expectNoErrors(errors);
+  });
+});
+
 test.describe('all thirty-two games boot and accept input', () => {
   test.describe.configure({ timeout: 150_000 });
 

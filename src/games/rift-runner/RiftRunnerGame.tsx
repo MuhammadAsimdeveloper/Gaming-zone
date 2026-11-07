@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GameComponentProps } from '../../types/game';
 import { GameButton, GameFrame, GameOverlay, GameStat } from '../shared/GameFrame';
 import { isInteractiveTarget } from '../shared/keyboard';
+import { useReducedMotion } from '../shared/motion';
 import { useBestScore } from '../shared/useBestScore';
 import { useVisibilityPause } from '../shared/useVisibilityPause';
 import { drawRunnerScene } from './renderer';
@@ -23,6 +24,7 @@ export default function RiftRunnerGame({ onStart, onComplete }: GameComponentPro
   const [phase, setPhase] = useState<Phase>('ready');
   const [paused, setPaused] = useState(false);
   const { best, submit } = useBestScore(BEST_KEY);
+  const reduceMotion = useReducedMotion();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const stateRef = useRef<RunnerState>(view);
@@ -39,14 +41,14 @@ export default function RiftRunnerGame({ onStart, onComplete }: GameComponentPro
     const canvas = canvasRef.current;
     if (!canvas) return;
     contextRef.current = canvas.getContext('2d');
-    if (contextRef.current) drawRunnerScene(contextRef.current, canvas, stateRef.current);
-  }, []);
+    if (contextRef.current) drawRunnerScene(contextRef.current, canvas, stateRef.current, reduceMotion);
+  }, [reduceMotion]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = contextRef.current;
-    if (canvas && context) drawRunnerScene(context, canvas, view);
-  }, [view]);
+    if (canvas && context) drawRunnerScene(context, canvas, view, reduceMotion);
+  }, [reduceMotion, view]);
 
   useEffect(() => {
     if (phase !== 'playing' || paused) return undefined;
@@ -62,7 +64,7 @@ export default function RiftRunnerGame({ onStart, onComplete }: GameComponentPro
 
       const canvas = canvasRef.current;
       const context = contextRef.current;
-      if (canvas && context) drawRunnerScene(context, canvas, next);
+      if (canvas && context) drawRunnerScene(context, canvas, next, reduceMotion);
 
       if (!next.alive) {
         setView(next);
@@ -79,7 +81,7 @@ export default function RiftRunnerGame({ onStart, onComplete }: GameComponentPro
     };
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
-  }, [paused, phase]);
+  }, [paused, phase, reduceMotion]);
 
   useEffect(() => {
     if (phase !== 'over' || finishedRef.current) return;

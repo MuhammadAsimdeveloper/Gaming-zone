@@ -10,10 +10,44 @@ import {
   installAutomation,
   orderDemand,
   startFactory,
+  type FactoryState,
 } from './simulation';
 
 function running() {
   return startFactory(createFactoryState());
+}
+
+function playSeason(act: (state: FactoryState) => FactoryState): FactoryState {
+  let state = act(running());
+  while (state.phase === 'running') state = advanceFactoryDay(act(state));
+  return state;
+}
+
+// Automate first, then add operators and machines only while the line is short
+// of the next three days of orders.
+function investInLine() {
+  return (state: FactoryState): FactoryState => {
+    let next = state;
+    for (let step = 0; step < 4; step += 1) {
+      if (next.credits < 300) break;
+      const horizon = Math.max(orderDemand(next.day), orderDemand(next.day + 1), orderDemand(next.day + 2));
+      const short = factoryOutput(next) < horizon;
+      if (next.automation < 2) {
+        next = installAutomation(next);
+        continue;
+      }
+      if (short && next.workers < 14) {
+        next = hireOperator(next);
+        continue;
+      }
+      if (short && next.machines < 9) {
+        next = buyMachine(next);
+        continue;
+      }
+      break;
+    }
+    return next;
+  };
 }
 
 describe('Factory Line simulation', () => {
@@ -76,6 +110,18 @@ describe('Factory Line simulation', () => {
   it('does not advance while paused', () => {
     const paused = { ...running(), paused: true };
     expect(advanceFactoryDay(paused)).toBe(paused);
+  });
+
+  it('lets the order book outgrow the starting line', () => {
+    expect(orderDemand(FACTORY_DAYS)).toBeGreaterThan(factoryOutput(createFactoryState()));
+  });
+
+  it('rewards automating and expanding over idling through the season', () => {
+    const passive = playSeason((state) => state);
+    const active = playSeason(investInLine());
+
+    expect(passive.credits).toBeLessThan(FACTORY_TARGET);
+    expect(active.credits).toBeGreaterThanOrEqual(FACTORY_TARGET);
   });
 
   it('closes early when the line cannot pay its bills', () => {

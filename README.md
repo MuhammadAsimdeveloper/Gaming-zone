@@ -53,10 +53,10 @@ Playwright's Chromium is the only browser target in CI. Install it once with
 |---|---|
 | `npm ci` | Completed previously; lockfile unchanged |
 | `npm run typecheck` | Passed with no output |
-| `npm test` | 727 tests passed in 80 files |
+| `npm test` | 748 tests passed in 84 files |
 | `npm run build` | Passed; Street Cricket loads as its own 48.60 kB / 15.11 kB gzip chunk; the shared Three.js scenery chunk is 565.24 kB raw / 141.54 kB gzip and still triggers the existing >500 kB warning |
 | `npm run build:consent` | Passed; same chunks with analytics and AdSense identifiers configured |
-| `npx playwright test --workers=2` | 107 tests passed in 13 files |
+| `npx playwright test --workers=2` | 110 tests passed in 13 files |
 
 The browser suite covers the homepage, catalogue, search, category filters, all thirty-two game pages,
 launch/pause/resume/restart, favorites after reload, recently played, fullscreen state, 404,

@@ -11,10 +11,39 @@ import {
   parkDemand,
   runCampaign,
   startPark,
+  type ParkState,
 } from './simulation';
 
 function running() {
   return startPark(createParkState());
+}
+
+function playSeason(act: (state: ParkState) => ParkState): ParkState {
+  let state = act(running());
+  while (state.phase === 'running') state = advanceParkDay(act(state));
+  return state;
+}
+
+function runThePark(ticket: number, campaigns: number) {
+  return (state: ParkState): ParkState => {
+    let next = state;
+    for (let step = 0; step < 3; step += 1) {
+      if (next.ticket < ticket) {
+        next = adjustTicket(next, 2);
+        continue;
+      }
+      if (next.marketing < campaigns && next.credits >= 150) {
+        next = runCampaign(next);
+        continue;
+      }
+      if (parkCapacity(next) < parkDemand(next) * 1.15 && next.credits >= 400) {
+        next = next.rides < 10 && next.rides * 32 <= next.staff * 6 ? buildRide(next) : hireParkStaff(next);
+        continue;
+      }
+      break;
+    }
+    return next;
+  };
 }
 
 describe('Park Pulse simulation', () => {
@@ -83,5 +112,13 @@ describe('Park Pulse simulation', () => {
   it('does not advance while paused', () => {
     const paused = { ...running(), paused: true };
     expect(advanceParkDay(paused)).toBe(paused);
+  });
+
+  it('rewards pricing, marketing and capacity over idling through the season', () => {
+    const passive = playSeason((state) => state);
+    const active = playSeason(runThePark(30, 2));
+
+    expect(passive.credits).toBeLessThan(PARK_TARGET);
+    expect(active.credits).toBeGreaterThanOrEqual(PARK_TARGET);
   });
 });

@@ -4,6 +4,7 @@ import type { GameComponentProps } from '../../types/game';
 import { cn } from '../../lib/cn';
 import { GameButton, GameFrame, GameOverlay, GameStat } from '../shared/GameFrame';
 import { isInteractiveTarget } from '../shared/keyboard';
+import { markerSpeed, useReducedMotion } from '../shared/motion';
 import { useBestScore } from '../shared/useBestScore';
 import {
   STACK_WIDTH,
@@ -21,6 +22,7 @@ export default function SignalStackGame({ onStart, onComplete }: GameComponentPr
   const [state, setState] = useState<StackState>(createStackState);
   const [paused, setPaused] = useState(false);
   const { best, submit } = useBestScore(BEST_KEY);
+  const reduceMotion = useReducedMotion();
   const markerRef = useRef<HTMLDivElement>(null);
   const markerXRef = useRef(0);
   const directionRef = useRef(1);
@@ -51,7 +53,7 @@ export default function SignalStackGame({ onStart, onComplete }: GameComponentPr
     const loop = (now: number) => {
       const delta = Math.min(0.05, (now - last) / 1000);
       last = now;
-      let next = markerXRef.current + directionRef.current * state.speed * delta;
+      let next = markerXRef.current + directionRef.current * markerSpeed(reduceMotion, state.speed) * delta;
       const max = STACK_WIDTH - markerWidth;
       if (next > max) {
         next = max;
@@ -68,7 +70,7 @@ export default function SignalStackGame({ onStart, onComplete }: GameComponentPr
 
     frame = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(frame);
-  }, [markerWidth, paused, state.phase, state.speed]);
+  }, [markerWidth, paused, reduceMotion, state.phase, state.speed]);
 
   useEffect(() => {
     if (state.phase !== 'over' || finishedRef.current) return;

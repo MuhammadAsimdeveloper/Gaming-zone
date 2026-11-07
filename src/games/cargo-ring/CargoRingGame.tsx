@@ -243,8 +243,8 @@ export default function CargoRingGame({ onStart, onComplete }: GameComponentProp
                 </GameButton>
               </div>
               <p className="mt-2 text-[10px] leading-4 text-muted">
-                Trucks add 12 crates of capacity. Contracts raise demand. Fuel improvements raise the
-                rate per crate.
+                Bought trucks wait in reserve — assign each one for 12 crates of capacity. Contracts
+                raise demand. Fuel improvements raise the rate per crate.
               </p>
             </section>
 
@@ -269,8 +269,9 @@ export default function CargoRingGame({ onStart, onComplete }: GameComponentProp
             </p>
             <h3 className="font-display text-xl font-semibold text-ink">A freight depot with three hungry lanes</h3>
             <p className="max-w-sm text-xs leading-5 text-muted">
-              Assign trucks to inner, outer and deep contracts. Demand moves every day; empty lanes
-              leave credits on the dock.
+              Six trucks already run the inner, outer and deep contracts. Demand moves every day —
+              buy spare trucks and assign them to the busiest lane before it leaves crates on the
+              dock.
             </p>
             <GameButton variant="primary" onClick={begin}>
               <Play className="h-4 w-4 fill-current" aria-hidden="true" />

@@ -1,3 +1,4 @@
+import { groundDashOffset } from '../shared/motion';
 import {
   RUNNER_GROUND,
   RUNNER_HEIGHT,
@@ -12,6 +13,7 @@ export function drawRunnerScene(
   context: CanvasRenderingContext2D,
   canvas: HTMLCanvasElement,
   state: RunnerState,
+  reducedMotion = false,
 ): void {
   if (canvas.width !== RUNNER_WIDTH) canvas.width = RUNNER_WIDTH;
   if (canvas.height !== RUNNER_HEIGHT) canvas.height = RUNNER_HEIGHT;
@@ -44,7 +46,7 @@ export function drawRunnerScene(
   context.fillStyle = '#4ade9d';
   context.fillRect(0, RUNNER_GROUND, width, 2);
   context.fillStyle = 'rgba(74,222,157,0.18)';
-  for (let x = -((state.distance * 0.8) % 64); x < width; x += 64) {
+  for (let x = groundDashOffset(reducedMotion, state.distance); x < width; x += 64) {
     context.fillRect(x, RUNNER_GROUND + 18, 34, 3);
   }
 

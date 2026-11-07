@@ -12,6 +12,7 @@ import {
 import type { GameComponentProps } from '../../types/game';
 import { GameButton, GameFrame, GameOverlay, GameStat, Kbd } from '../shared/GameFrame';
 import { isInteractiveTarget } from '../shared/keyboard';
+import { foodPulse, useReducedMotion } from '../shared/motion';
 import { useBestScore } from '../shared/useBestScore';
 import { useVisibilityPause } from '../shared/useVisibilityPause';
 
@@ -82,6 +83,8 @@ function roundedRectPath(
 
 export default function SnakeGame({ onStart, onComplete }: GameComponentProps) {
   const { best, submit } = useBestScore(BEST_KEY);
+  const reduceMotion = useReducedMotion();
+  const reduceMotionRef = useRef(reduceMotion);
   const boardRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [phase, setPhase] = useState<Phase>('idle');
@@ -110,6 +113,10 @@ export default function SnakeGame({ onStart, onComplete }: GameComponentProps) {
   useEffect(() => {
     bestRef.current = best;
   }, [best]);
+
+  useEffect(() => {
+    reduceMotionRef.current = reduceMotion;
+  }, [reduceMotion]);
 
   const changePhase = useCallback((next: Phase) => {
     phaseRef.current = next;
@@ -304,7 +311,7 @@ export default function SnakeGame({ onStart, onComplete }: GameComponentProps) {
       if (food.x >= 0) {
         const fx = (food.x + 0.5) * cell;
         const fy = (food.y + 0.5) * cell;
-        const pulse = 0.75 + Math.sin(time / 260) * 0.15;
+        const pulse = foodPulse(reduceMotionRef.current, time);
 
         ctx.save();
         ctx.shadowColor = 'rgba(74,222,157,0.85)';

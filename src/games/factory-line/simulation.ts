@@ -1,5 +1,5 @@
 export const FACTORY_DAYS = 20;
-export const FACTORY_TARGET = 1500;
+export const FACTORY_TARGET = 4800;
 
 export type FactoryPhase = 'ready' | 'running' | 'over';
 
@@ -42,7 +42,9 @@ export function factoryOutput(state: FactoryState): number {
 }
 
 export function orderDemand(day: number): number {
-  return Math.max(8, Math.round(30 + Math.sin((day - 1) * 0.55) * 6 + day * 0.55));
+  // Orders climb past the starting line's forty units, so capacity upgrades are
+  // the only way to clear the late-season backlog.
+  return Math.max(8, Math.round(30 + Math.sin((day - 1) * 0.6) * 7 + day * 1.8));
 }
 
 export function buyMachine(state: FactoryState): FactoryState {

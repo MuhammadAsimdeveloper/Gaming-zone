@@ -1,5 +1,5 @@
 export const CARGO_DAYS = 20;
-export const CARGO_TARGET = 2000;
+export const CARGO_TARGET = 12000;
 export const TRUCK_CAPACITY = 12;
 
 export type CargoRouteId = 'inner' | 'outer' | 'deep';

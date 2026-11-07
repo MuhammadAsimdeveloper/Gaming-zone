@@ -1,5 +1,5 @@
 export const PARK_DAYS = 20;
-export const PARK_TARGET = 5000;
+export const PARK_TARGET = 45000;
 
 export type ParkPhase = 'ready' | 'running' | 'over';
 
