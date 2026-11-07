@@ -183,7 +183,7 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
       try {
         const engine = new DriveEngine(
           canvas,
-          { missionId: selectedMission.id, carId, camera },
+          { missionId: selectedMission.id, carId, camera, muted },
           {
             onHud: (nextHud) => setHud(nextHud),
             onFinish: (runResult) => {
@@ -225,6 +225,7 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
             },
           },
         );
+
         engineRef.current = engine;
         onStartRef.current?.();
       } catch (cause) {
@@ -236,7 +237,7 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
         setPhase('menu');
       }
     },
-    [camera, carId, disposeEngine, missionId, resetTouch],
+    [camera, carId, disposeEngine, missionId, muted, resetTouch],
   );
 
   const togglePause = useCallback(() => {

@@ -21,7 +21,7 @@ function normalizeAllowedOrigin(entry: string): string | null {
 export function validateExternalGameUrl(
   rawUrl: string,
   allowedOrigins: string[],
-  options: { allowLocalhost?: boolean } = {},
+  options: { allowLocalhost?: boolean; currentOrigin?: string } = {},
 ): EmbedValidation {
   const candidate = rawUrl.trim();
   if (!candidate) {
@@ -43,6 +43,19 @@ export function validateExternalGameUrl(
 
   if (url.username || url.password) {
     return { ok: false, reason: 'URLs with embedded credentials are not allowed.' };
+  }
+
+  if (options.currentOrigin) {
+    try {
+      if (url.origin === new URL(options.currentOrigin).origin) {
+        return {
+          ok: false,
+          reason: 'The game origin must be different from the NeonRift site origin.',
+        };
+      }
+    } catch {
+      return { ok: false, reason: 'The configured site origin is invalid.' };
+    }
   }
 
   if (allowedOrigins.length === 0) {

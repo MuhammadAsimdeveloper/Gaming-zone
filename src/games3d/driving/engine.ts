@@ -5,6 +5,7 @@ import { clamp, damp, normalizeAngle } from '../shared/math';
 import { createCar, disposeObject, type VehicleVisual } from '../shared/scenery';
 import {
   DRIVE_EXTENT,
+  DRIVE_SPAWN,
   ROAD_HALF_WIDTH,
   ROAD_LINES,
   createCityEnvironment,
@@ -58,6 +59,7 @@ export interface DriveSetup {
   missionId: string;
   carId: DriveCarId;
   camera: DriveCameraMode;
+  muted?: boolean;
 }
 
 interface TrafficCar {
@@ -108,6 +110,7 @@ export class DriveEngine {
   private callbackHud: (hud: DriveHud) => void;
   private callbackFinish: (result: DriveResult) => void;
   private disposed = false;
+  private resizeObserver: ResizeObserver | null = null;
   private paused = false;
   private phase: DrivePhase = 'countdown';
   private countdown = COUNTDOWN_SECONDS;
@@ -122,8 +125,8 @@ export class DriveEngine {
   private hudTimer = 0;
   private timeOfDay = 0.36;
   private player: VehicleVisual;
-  private playerX = 0;
-  private playerZ = 72;
+  private playerX = DRIVE_SPAWN.x;
+  private playerZ = DRIVE_SPAWN.z;
   private playerHeading = 0;
   private playerSpeed = 0;
   private steerVisual = 0;
@@ -222,8 +225,13 @@ export class DriveEngine {
     this.applyTimeOfDay();
     this.resize();
     window.addEventListener('resize', this.handleResize);
+    if (typeof ResizeObserver !== 'undefined' && this.canvas.parentElement) {
+      this.resizeObserver = new ResizeObserver(this.handleResize);
+      this.resizeObserver.observe(this.canvas.parentElement);
+    }
     this.canvas.focus();
 
+    this.audio.setMuted(setup.muted ?? false);
     this.audio.start();
     this.audio.setEngineVolume(0.03);
     this.renderer.setAnimationLoop(this.loop);
@@ -348,7 +356,7 @@ export class DriveEngine {
     this.renderer.render(this.scene, this.camera);
 
     this.hudTimer += delta;
-    if (this.hudTimer >= 0.08) {
+    if (this.hudTimer >= 0.2) {
       this.hudTimer = 0;
       this.emitHud();
     }
@@ -501,8 +509,9 @@ export class DriveEngine {
   private finish(completed: boolean): void {
     if (this.phase === 'finished') return;
     this.phase = 'finished';
+    this.renderer.setAnimationLoop(null);
     this.checkpointGroup.visible = false;
-    this.audio.setEngineVolume(0.0001);
+    this.audio.pause();
     if (completed) this.audio.lap();
     this.callbackFinish({
       missionId: this.mission.id,
@@ -675,7 +684,7 @@ export class DriveEngine {
 
   pause(): void {
     this.paused = true;
-    this.audio.suspend();
+    this.audio.pause();
   }
 
   resume(): void {
@@ -689,9 +698,12 @@ export class DriveEngine {
     this.disposed = true;
     this.renderer.setAnimationLoop(null);
     window.removeEventListener('resize', this.handleResize);
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
     this.keyboard.dispose();
     this.audio.dispose();
     disposeObject(this.scene);
+    this.renderer.forceContextLoss();
     this.renderer.dispose();
     this.traffic = [];
     this.colliders = [];

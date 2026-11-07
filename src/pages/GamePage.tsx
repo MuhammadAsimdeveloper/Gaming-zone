@@ -65,6 +65,9 @@ export default function GamePage() {
   const { isFavorite, toggleFavorite, addRecent } = usePreferences();
   const { showToast } = useToast();
   const game = slug ? getGameBySlug(slug) : undefined;
+  const returnsToSetup =
+    game?.type === 'internal' &&
+    ['neon-apex', 'rift-striker', 'neon-city-drive'].includes(game.internalKey ?? '');
 
   const [restartKey, setRestartKey] = useState(0);
   const [launched, setLaunched] = useState(false);
@@ -91,7 +94,7 @@ export default function GamePage() {
   const route = useMemo(() => {
     if (!game || game.type !== 'external' || !game.externalUrl) return null;
     const origins = [...EXTERNAL_GAME_ORIGINS, ...(game.allowedOrigins ?? [])];
-    return validateExternalGameUrl(game.externalUrl, origins, { allowLocalhost: import.meta.env.DEV });
+    return validateExternalGameUrl(game.externalUrl, origins, { allowLocalhost: import.meta.env.DEV, currentOrigin: window.location.origin });
   }, [game]);
 
   const related = useMemo(() => {
@@ -153,13 +156,22 @@ export default function GamePage() {
         .catch(() => undefined);
       return;
     }
-    void navigator.clipboard
-      .writeText(url)
-      .then(() => {
-        showToast('Game link copied');
-        track('share', { game: game.slug, method: 'clipboard' });
-      })
-      .catch(() => showToast('Could not copy the link'));
+    try {
+      const clipboard = navigator.clipboard;
+      if (!clipboard?.writeText) {
+        showToast('Copying requires a secure browser connection');
+        return;
+      }
+      void clipboard
+        .writeText(url)
+        .then(() => {
+          showToast('Game link copied');
+          track('share', { game: game.slug, method: 'clipboard' });
+        })
+        .catch(() => showToast('Could not copy the link'));
+    } catch {
+      showToast('Could not copy the link');
+    }
   }
 
   function handleFavorite() {
@@ -175,7 +187,7 @@ export default function GamePage() {
     setLaunched((value) => (game.type === 'external' ? false : value));
     setFrameLoaded(false);
     track('game_restart', { game: game.slug });
-    showToast('Game restarted');
+    showToast(returnsToSetup ? 'Returned to game setup' : 'Game restarted');
   }
 
   function launchExternal() {
@@ -274,7 +286,7 @@ export default function GamePage() {
                 <button
                   type="button"
                   onClick={restart}
-                  aria-label="Restart game"
+                  aria-label={returnsToSetup ? "Return game to setup" : "Restart game"}
                   className={iconButtonClasses()}
                 >
                   <RotateCcw className="h-4 w-4" aria-hidden="true" />

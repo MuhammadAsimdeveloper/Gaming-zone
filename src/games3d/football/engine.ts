@@ -40,6 +40,7 @@ export interface FootballResult {
 export interface FootballSetup {
   difficulty: FootballDifficulty;
   camera: FootballCamera;
+  muted?: boolean;
 }
 
 interface Footballer {
@@ -116,6 +117,7 @@ export class FootballEngine {
   private callbackHud: (hud: FootballHud) => void;
   private callbackFinish: (result: FootballResult) => void;
   private disposed = false;
+  private resizeObserver: ResizeObserver | null = null;
   private paused = false;
   private phase: FootballPhase = 'countdown';
   private countdown = 3.4;
@@ -182,11 +184,16 @@ export class FootballEngine {
 
     this.resize();
     window.addEventListener('resize', this.handleResize);
+    if (typeof ResizeObserver !== 'undefined' && this.canvas.parentElement) {
+      this.resizeObserver = new ResizeObserver(this.handleResize);
+      this.resizeObserver.observe(this.canvas.parentElement);
+    }
     window.addEventListener('pointerup', this.handlePointerUp);
     window.addEventListener('pointercancel', this.handlePointerUp);
     window.addEventListener('blur', this.handleWindowBlur);
     this.canvas.addEventListener('pointerdown', this.handlePointerDown);
 
+    this.audio.setMuted(setup.muted ?? false);
     this.audio.start();
     this.audio.whistle();
     this.renderer.setAnimationLoop(this.loop);
@@ -343,7 +350,7 @@ export class FootballEngine {
     this.renderer.render(this.scene, this.camera);
 
     this.hudTimer += delta;
-    if (this.hudTimer >= 0.08) {
+    if (this.hudTimer >= 0.2) {
       this.hudTimer = 0;
       this.emitHud();
     }
@@ -1013,6 +1020,8 @@ export class FootballEngine {
     if (this.phase === 'finished') return;
     this.phase = 'finished';
     this.pointerShoot = false;
+    this.renderer.setAnimationLoop(null);
+    this.audio.pause();
     this.audio.whistle(true);
     const totalPossession = this.possessionFrames.home + this.possessionFrames.away;
     const possessionHome = totalPossession > 0 ? Math.round((this.possessionFrames.home / totalPossession) * 100) : 50;
@@ -1094,6 +1103,8 @@ export class FootballEngine {
     this.disposed = true;
     this.renderer.setAnimationLoop(null);
     window.removeEventListener('resize', this.handleResize);
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
     window.removeEventListener('pointerup', this.handlePointerUp);
     window.removeEventListener('pointercancel', this.handlePointerUp);
     window.removeEventListener('blur', this.handleWindowBlur);
@@ -1101,6 +1112,7 @@ export class FootballEngine {
     this.keyboard.dispose();
     this.audio.dispose();
     disposeObject(this.scene);
+    this.renderer.forceContextLoss();
     this.renderer.dispose();
     this.players = [];
   }

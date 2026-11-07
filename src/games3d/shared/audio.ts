@@ -122,12 +122,24 @@ export class GameAudio {
     source.start(now);
   }
 
-  toggleMute(): boolean {
-    this.muted = !this.muted;
+  setMuted(muted: boolean): void {
+    this.muted = muted;
     if (this.context && this.master) {
       this.master.gain.setTargetAtTime(this.muted ? 0 : 0.7, this.context.currentTime, 0.05);
     }
+  }
+
+  toggleMute(): boolean {
+    this.setMuted(!this.muted);
     return this.muted;
+  }
+
+  pause(): void {
+    if (this.musicTimer !== null) {
+      window.clearInterval(this.musicTimer);
+      this.musicTimer = null;
+    }
+    this.suspend();
   }
 
   suspend(): void {
@@ -136,6 +148,7 @@ export class GameAudio {
 
   resume(): void {
     this.resumeContext();
+    this.startMusic();
   }
 
   dispose(): void {

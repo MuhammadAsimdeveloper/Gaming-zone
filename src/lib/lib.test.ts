@@ -101,6 +101,15 @@ describe('external embed validation', () => {
     expect(result).toMatchObject({ ok: true, origin: 'https://games.example.com' });
   });
 
+  it('rejects the portal own origin even when it appears in the allowlist', () => {
+    const result = validateExternalGameUrl(
+      'https://portal.example.com/embed',
+      ['https://portal.example.com'],
+      { currentOrigin: 'https://portal.example.com' },
+    );
+    expect(result.ok).toBe(false);
+  });
+
   it('rejects HTTP URLs', () => {
     const result = validateExternalGameUrl('http://games.example.com/play', allowed);
     expect(result.ok).toBe(false);
