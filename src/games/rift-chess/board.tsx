@@ -112,9 +112,13 @@ export function ChessBoard({
           const fileIndex = index % 8;
           const rankIndex = Math.floor(index / 8);
           const isLight = (fileIndex + rankIndex) % 2 === 1;
-          const label = piece
-            ? `${square}, ${piece.color === 'w' ? 'white' : 'black'} ${PIECE_LABEL[piece.type]}`
-            : `${square}, empty square`;
+          const labelParts = [
+            square,
+            piece ? `${piece.color === 'w' ? 'white' : 'black'} ${PIECE_LABEL[piece.type]}` : 'empty square',
+            target ? 'legal move target' : '',
+            checked ? 'in check' : '',
+          ].filter(Boolean);
+          const label = labelParts.join(', ');
 
           return (
             <button
@@ -125,7 +129,6 @@ export function ChessBoard({
               data-legal-target={target ? 'true' : undefined}
               aria-label={label}
               aria-selected={selected}
-              aria-current={checked ? 'true' : undefined}
               tabIndex={focusedSquare === square ? 0 : -1}
               onFocus={() => setFocusedSquare(square)}
               onClick={() => {
