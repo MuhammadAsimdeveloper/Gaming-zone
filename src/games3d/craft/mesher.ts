@@ -8,12 +8,15 @@ import {
 } from './blocks';
 import { combinedLight, type ChunkLight } from './light';
 import { CHUNK_HEIGHT, CHUNK_SIZE } from './terrain';
+import { tileFor } from './textures';
 import type { VoxelWorld } from './world';
 
 export interface MeshBuffers {
   positions: number[];
   normals: number[];
   uvs: number[];
+  /** Atlas tile index per vertex, paired with a block-unit uv that the shader wraps. */
+  tiles: number[];
   colors: number[];
   indices: number[];
 }
@@ -76,7 +79,7 @@ const CORNER_SIGNS: ReadonlyArray<readonly [number, number]> = [
 ];
 
 function createBuffers(): MeshBuffers {
-  return { positions: [], normals: [], uvs: [], colors: [], indices: [] };
+  return { positions: [], normals: [], uvs: [], tiles: [], colors: [], indices: [] };
 }
 
 function paddedIndex(x: number, y: number, z: number): number {
@@ -196,12 +199,13 @@ function cornerOcclusion(
 
 /**
  * The subset of a mask entry the emitter consumes. A mask entry also carries its texture
- * key (`Mask.texture`), which takes part in the merge key but never reaches the vertex
- * buffers: materials are per bucket, not per face.
+ * key (`Mask.texture`), which takes part in the merge key; the emitter resolves it to an
+ * atlas tile so one material can serve every block face.
  */
 interface FaceEntry {
   id: number;
   light: number;
+  tile: number;
   /** Per corner occlusion counts in canonical order. */
   occlusion: [number, number, number, number];
 }
@@ -311,9 +315,11 @@ function slotMatches(mask: Mask, a: number, b: number): boolean {
 
 function readEntry(mask: Mask, slot: number): FaceEntry {
   const base = slot * 4;
+  const texture = mask.texture[slot];
   return {
     id: mask.id[slot],
     light: mask.light[slot],
+    tile: texture === null ? 0 : tileFor(texture),
     occlusion: [
       mask.occlusion[base],
       mask.occlusion[base + 1],
@@ -357,6 +363,7 @@ function emitQuad(
     target.positions.push(position[0], position[1], position[2]);
     target.normals.push(normal[0], normal[1], normal[2]);
     target.uvs.push(signU * width, signV * height);
+    target.tiles.push(entry.tile);
 
     const ao = 1 - entry.occlusion[corner] / MAX_OCCLUSION;
     const shade = brightness * ao;

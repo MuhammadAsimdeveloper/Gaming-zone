@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { BLOCK, type BlockId } from './blocks';
 import { computeChunkLight } from './light';
 import { meshChunk, type ChunkMesh, type MeshBuffers } from './mesher';
+import { tileFor } from './textures';
 import { VoxelWorld } from './world';
 
 /**
@@ -149,6 +150,25 @@ describe('mesher', () => {
 
     expect(shadowed).toBeLessThan(open);
     expect(open).toBeCloseTo(1, 9);
+  });
+
+  it('addresses the atlas tile for every emitted face', () => {
+    const world = floated();
+    place(world, 2, FLOAT_Y, 2, BLOCK.Grass);
+    const mesh = meshOf(world);
+    const box: Box = [2, FLOAT_Y, 2, 3, FLOAT_Y + 1, 3];
+    const tiles = new Set<number>();
+
+    for (const corners of quadsOf(mesh.opaque)) {
+      if (!corners.every((vertex) => vertexInside(mesh.opaque, vertex, box))) continue;
+      for (const vertex of corners) tiles.add(mesh.opaque.tiles[vertex]!);
+    }
+
+    expect(tiles).toContain(tileFor('grass_top'));
+    expect(tiles).toContain(tileFor('grass_side'));
+    expect(tiles).toContain(tileFor('dirt'));
+    expect(tiles).not.toContain(tileFor('stone'));
+    expect(mesh.opaque.tiles).toHaveLength(mesh.opaque.positions.length / 3);
   });
 
   it('produces stable geometry arrays', () => {
