@@ -174,7 +174,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
     try {
       const engine = new FootballEngine(
         canvas,
-        { difficulty, camera },
+        { difficulty, camera, muted },
         {
           onHud: (nextHud) => setHud(nextHud),
           onFinish: (matchResult) => {
@@ -200,7 +200,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
           },
         },
       );
-      if (muted) engine.toggleMute();
+
       engineRef.current = engine;
       onStartRef.current?.();
     } catch (cause) {
