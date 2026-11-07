@@ -131,4 +131,38 @@ describe('VoxelWorld edit validation', () => {
     expect(world.getBlock(15, 40, 5)).toBe(BLOCK.Bricks);
     expect(world.editsForSave()).toEqual([{ x: 15, y: 40, z: 5, id: BLOCK.Bricks }]);
   });
+
+  it('refuses saved edits that replace generated bedrock', () => {
+    const world = new VoxelWorld('world-test');
+    const reference = new VoxelWorld('world-test');
+
+    world.applyEdits([{ x: 0, y: 0, z: 0, id: BLOCK.Air }]);
+
+    expect(world.getBlock(0, 0, 0)).toBe(BLOCK.Bedrock);
+    expect(world.editsForSave()).toEqual([]);
+    expect(world.ensureChunk(0, 0).blocks).toEqual(reference.ensureChunk(0, 0).blocks);
+  });
+
+  it('keeps bedrock placed by an earlier edit when a later save clears it', () => {
+    const world = new VoxelWorld('world-test');
+    expect(world.setBlock(2, 10, 2, BLOCK.Bedrock)).toBe(true);
+    world.unloadChunk(0, 0);
+
+    world.applyEdits([{ x: 2, y: 10, z: 2, id: BLOCK.Air }]);
+
+    expect(world.getBlock(2, 10, 2)).toBe(BLOCK.Bedrock);
+    expect(world.editsForSave()).toEqual([{ x: 2, y: 10, z: 2, id: BLOCK.Bedrock }]);
+  });
+
+  it('keeps cached bedrock when a save clears it', () => {
+    const world = new VoxelWorld('world-test');
+    world.ensureChunk(0, 0);
+    world.takeDirtyChunks();
+
+    world.applyEdits([{ x: 4, y: 0, z: 4, id: BLOCK.Air }]);
+
+    expect(world.getBlock(4, 0, 4)).toBe(BLOCK.Bedrock);
+    expect(world.getChunk(0, 0)?.dirty).toBe(false);
+    expect(world.editsForSave()).toEqual([]);
+  });
 });
