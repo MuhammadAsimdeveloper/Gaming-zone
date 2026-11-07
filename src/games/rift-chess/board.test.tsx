@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import { act } from 'react';
+import type { ComponentProps } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ChessBoard } from './board';
