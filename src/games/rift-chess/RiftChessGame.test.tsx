@@ -55,7 +55,7 @@ describe('Rift Chess playable board', () => {
     await clickButton('Play local game');
     await clickSquare('e2');
     await clickSquare('e4');
-    await clickButton('Undo');
+    await clickButton('Undo move');
 
     expect(container.querySelector('[aria-label="e2, white pawn"]')).not.toBeNull();
     expect(container.textContent).toContain('White to move');
