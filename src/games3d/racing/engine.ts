@@ -130,6 +130,7 @@ export class RaceEngine {
   private callbacks: RaceCallbacks;
   private paused = false;
   private disposed = false;
+  private resizeObserver: ResizeObserver | null = null;
   private phase: RacePhase = 'countdown';
   private countdown = 3.99;
   private lastCountdownBeep = 4;
@@ -192,6 +193,10 @@ export class RaceEngine {
     this.spawnRacers();
     this.resize();
     window.addEventListener('resize', this.handleResize);
+    if (typeof ResizeObserver !== 'undefined' && this.canvas.parentElement) {
+      this.resizeObserver = new ResizeObserver(this.handleResize);
+      this.resizeObserver.observe(this.canvas.parentElement);
+    }
 
     this.audio.start();
     this.audio.beep(330, 80, 'sine', 0.05);
@@ -584,8 +589,8 @@ export class RaceEngine {
     player.finishTime = this.raceTime;
     player.speed = 0;
     this.phase = 'finished';
-    this.audio.beep(880, 160, 'sine', 0.08);
-    window.setTimeout(() => this.audio.beep(1320, 320, 'sine', 0.08), 170);
+    this.renderer.setAnimationLoop(null);
+    this.audio.pause();
 
     const rows = this.standings().map((racer, index) => ({
       position: index + 1,
@@ -764,7 +769,7 @@ export class RaceEngine {
   pause(): void {
     this.paused = true;
     this.audio.setEngineVolume(0.0001);
-    this.audio.suspend();
+    this.audio.pause();
   }
 
   resume(): void {
@@ -786,10 +791,13 @@ export class RaceEngine {
     this.disposed = true;
     this.renderer.setAnimationLoop(null);
     window.removeEventListener('resize', this.handleResize);
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
     this.keyboard.dispose();
     this.audio.dispose();
     disposeObject(this.scene);
     this.renderer.dispose();
+    this.renderer.forceContextLoss();
     this.racers = [];
   }
 }
