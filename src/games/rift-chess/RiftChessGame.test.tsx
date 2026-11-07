@@ -7,9 +7,9 @@ import RiftChessGame from './RiftChessGame';
 let container: HTMLDivElement;
 let root: Root;
 
-async function render() {
+async function render(initialFen?: string) {
   await act(async () => {
-    root.render(<RiftChessGame onStart={vi.fn()} onComplete={vi.fn()} />);
+    root.render(<RiftChessGame initialFen={initialFen} onStart={vi.fn()} onComplete={vi.fn()} />);
   });
 }
 
@@ -62,11 +62,18 @@ describe('Rift Chess playable board', () => {
     expect(container.textContent).not.toContain('e4');
   });
 
-  it('offers four promotion choices instead of auto-promoting', async () => {
-    await render();
+  it('offers all four promotion choices and applies the selected piece', async () => {
+    await render('4k3/P7/8/8/8/8/8/4K3 w - - 0 1');
     await clickButton('Play local game');
+    await clickSquare('a7');
+    await clickSquare('a8');
 
-    const newGameButton = [...container.querySelectorAll('button')].find((entry) => entry.textContent?.trim() === 'Load promotion test');
-    expect(newGameButton).toBeUndefined();
+    expect(container.querySelector('[role="dialog"][aria-labelledby="promotion-title"]')).not.toBeNull();
+    const knight = container.querySelector<HTMLButtonElement>('button[aria-label="Knight"]');
+    expect(knight).not.toBeNull();
+    await act(async () => knight!.click());
+
+    expect(container.querySelector('[aria-label="a8, white knight"]')).not.toBeNull();
+    expect(container.querySelector('[role="dialog"]')).toBeNull();
   });
 });
