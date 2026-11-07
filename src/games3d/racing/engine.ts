@@ -363,7 +363,7 @@ export class RaceEngine {
     this.renderer.render(this.scene, this.camera);
 
     this.hudTimer += delta;
-    if (this.hudTimer >= 0.08) {
+    if (this.hudTimer >= 0.2) {
       this.hudTimer = 0;
       this.emitHud();
     }
