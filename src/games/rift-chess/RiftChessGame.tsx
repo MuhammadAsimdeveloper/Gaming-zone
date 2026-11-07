@@ -140,7 +140,9 @@ export default function RiftChessGame({
 
     if (nextStatus.isGameOver && mode === 'local' && !finishedRef.current) {
       finishedRef.current = true;
-      onCompleteRef.current?.({ outcome: 'complete' });
+      onCompleteRef.current?.({
+        outcome: nextStatus.reason === 'checkmate' ? 'complete' : 'draw',
+      });
     }
   }
 
@@ -241,12 +243,21 @@ export default function RiftChessGame({
     setPieces(getBoardPieces(gameRef.current));
     setTurn(gameRef.current.turn());
     setMoveHistory([]);
-    setPositionStatus(getPositionStatus(gameRef.current));
+    const initialStatus = getPositionStatus(gameRef.current);
+    setPositionStatus(initialStatus);
+    setAnnouncement(
+      initialStatus.reason === 'checkmate'
+        ? statusTextForCheckmate(initialStatus.turn)
+        : initialStatus.reason
+          ? DRAW_LABELS[initialStatus.reason]
+          : initialStatus.inCheck
+            ? `${sideName(initialStatus.turn)} is in check`
+            : `${sideName(initialStatus.turn)} to move`,
+    );
     setOrientation('w');
     setLastMove(null);
     setPromotion(null);
     clearSelection();
-    setAnnouncement('White to move');
     setReady(true);
   }
 
