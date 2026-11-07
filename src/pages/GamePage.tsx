@@ -94,7 +94,7 @@ export default function GamePage() {
   const route = useMemo(() => {
     if (!game || game.type !== 'external' || !game.externalUrl) return null;
     const origins = [...EXTERNAL_GAME_ORIGINS, ...(game.allowedOrigins ?? [])];
-    return validateExternalGameUrl(game.externalUrl, origins, { allowLocalhost: import.meta.env.DEV });
+    return validateExternalGameUrl(game.externalUrl, origins, { allowLocalhost: import.meta.env.DEV, currentOrigin: window.location.origin });
   }, [game]);
 
   const related = useMemo(() => {
