@@ -8,7 +8,7 @@ import { createGame, getBoardPieces } from './rules';
 let container: HTMLDivElement;
 let root: Root;
 
-async function render(props: React.ComponentProps<typeof ChessBoard>) {
+async function render(props: ComponentProps<typeof ChessBoard>) {
   await act(async () => {
     root.render(<ChessBoard {...props} />);
   });
