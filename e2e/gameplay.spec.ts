@@ -537,7 +537,14 @@ async function readCountdownSequence(page: import('@playwright/test').Page): Pro
       await page.waitForTimeout(30);
       continue;
     }
-    const text = (await number.textContent())?.trim() ?? '';
+    // The overlay can detach between count() and the read. Bound the read so a
+    // finished countdown returns null instead of waiting out the test timeout.
+    const raw = await number.textContent({ timeout: 500 }).catch(() => null);
+    if (raw === null) {
+      if (seen.length > 0) break;
+      continue;
+    }
+    const text = raw.trim();
     if (text && seen.at(-1) !== text) seen.push(text);
     if (text === 'GO') break;
     await page.waitForTimeout(30);
