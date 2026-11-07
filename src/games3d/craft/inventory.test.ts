@@ -7,6 +7,7 @@ import {
   consumeHeld,
   countItem,
   createInventory,
+  damageTool,
   heldStack,
   maxStackFor,
   moveStack,
@@ -56,8 +57,25 @@ describe('inventory', () => {
 
     const inventory = createInventory();
     addItem(inventory, ITEM.WoodPickaxe, 2);
-    expect(inventory.slots[0]).toEqual({ id: ITEM.WoodPickaxe, count: 1 });
-    expect(inventory.slots[1]).toEqual({ id: ITEM.WoodPickaxe, count: 1 });
+    expect(inventory.slots[0]).toEqual({ id: ITEM.WoodPickaxe, count: 1, durability: 60 });
+    expect(inventory.slots[1]).toEqual({ id: ITEM.WoodPickaxe, count: 1, durability: 60 });
+  });
+
+  it('gives tools full durability and breaks them after the last use', () => {
+    const inventory = createInventory();
+    addItem(inventory, ITEM.WoodPickaxe, 1);
+    expect(inventory.slots[0]).toEqual({ id: ITEM.WoodPickaxe, count: 1, durability: 60 });
+
+    for (let use = 0; use < 59; use += 1) {
+      expect(damageTool(inventory, 0)).toBe(false);
+    }
+    expect(inventory.slots[0]?.durability).toBe(1);
+    expect(damageTool(inventory, 0)).toBe(true);
+    expect(inventory.slots[0]).toBeNull();
+
+    addItem(inventory, BLOCK.Stone, 5);
+    expect(damageTool(inventory, 0)).toBe(false);
+    expect(inventory.slots[0]).toEqual({ id: BLOCK.Stone, count: 5 });
   });
 
   it('returns unknown or invalid items as leftovers without changing slots', () => {

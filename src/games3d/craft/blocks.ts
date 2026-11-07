@@ -35,6 +35,15 @@ export const BLOCK = {
   Water: 33,
   Lava: 34,
   RiftLantern: 35,
+  Farmland: 36,
+  GlowberryCrop0: 37,
+  GlowberryCrop1: 38,
+  GlowberryCrop2: 39,
+  GlowberryCrop3: 40,
+  RiftrootCrop0: 41,
+  RiftrootCrop1: 42,
+  RiftrootCrop2: 43,
+  RiftrootCrop3: 44,
 } as const;
 
 export type BlockId = (typeof BLOCK)[keyof typeof BLOCK];
@@ -48,7 +57,10 @@ export type TextureKey =
   | 'coal_ore' | 'iron_ore' | 'gold_ore' | 'crystal_ore'
   | 'planks' | 'workbench_top' | 'workbench_side'
   | 'kiln_top' | 'kiln_side' | 'torch' | 'lantern'
-  | 'glass' | 'gilded' | 'bricks' | 'water' | 'lava' | 'rift_lantern';
+  | 'glass' | 'gilded' | 'bricks' | 'water' | 'lava' | 'rift_lantern'
+  | 'farmland_top' | 'farmland_side'
+  | 'glowberry_0' | 'glowberry_1' | 'glowberry_2' | 'glowberry_3'
+  | 'riftroot_0' | 'riftroot_1' | 'riftroot_2' | 'riftroot_3';
 
 export interface BlockSpec {
   id: BlockId;
@@ -104,7 +116,7 @@ export const BLOCKS: Record<number, BlockSpec> = {
     textures: { top: 'dirt', bottom: 'dirt', side: 'dirt' },
   }),
   [BLOCK.Grass]: spec(BLOCK.Grass, 'Grass', {
-    tool: 'shovel', hardness: 0.7, drop: BLOCK.Dirt,
+    tool: 'shovel', minTier: 0, hardness: 0.7, drop: BLOCK.Dirt,
     textures: { top: 'grass_top', bottom: 'dirt', side: 'grass_side' },
   }),
   [BLOCK.Sand]: spec(BLOCK.Sand, 'Sand', {
@@ -235,6 +247,50 @@ export const BLOCKS: Record<number, BlockSpec> = {
     solid: false, opaque: false, cutout: true, light: 15, tool: 'pickaxe', minTier: 0,
     hardness: 0.3, replaceable: true,
     textures: { top: 'rift_lantern', bottom: 'rift_lantern', side: 'rift_lantern' },
+  }),
+  [BLOCK.Farmland]: spec(BLOCK.Farmland, 'Farmland', {
+    tool: 'shovel', minTier: 0, hardness: 0.6, drop: BLOCK.Dirt,
+    textures: { top: 'farmland_top', bottom: 'dirt', side: 'farmland_side' },
+  }),
+  [BLOCK.GlowberryCrop0]: spec(BLOCK.GlowberryCrop0, 'Glowberry Crop Sprout', {
+    solid: false, opaque: false, cutout: true, tool: 'none', minTier: 0, hardness: 0.1,
+    drop: BLOCK.Air, replaceable: true,
+    textures: { top: 'glowberry_0', bottom: 'glowberry_0', side: 'glowberry_0' },
+  }),
+  [BLOCK.GlowberryCrop1]: spec(BLOCK.GlowberryCrop1, 'Glowberry Crop Stage 2', {
+    solid: false, opaque: false, cutout: true, tool: 'none', minTier: 0, hardness: 0.1,
+    drop: BLOCK.Air, replaceable: true,
+    textures: { top: 'glowberry_1', bottom: 'glowberry_1', side: 'glowberry_1' },
+  }),
+  [BLOCK.GlowberryCrop2]: spec(BLOCK.GlowberryCrop2, 'Glowberry Crop Stage 3', {
+    solid: false, opaque: false, cutout: true, tool: 'none', minTier: 0, hardness: 0.1,
+    drop: BLOCK.Air, replaceable: true,
+    textures: { top: 'glowberry_2', bottom: 'glowberry_2', side: 'glowberry_2' },
+  }),
+  [BLOCK.GlowberryCrop3]: spec(BLOCK.GlowberryCrop3, 'Glowberry Crop Stage 4', {
+    solid: false, opaque: false, cutout: true, tool: 'none', minTier: 0, hardness: 0.1,
+    drop: BLOCK.Air, replaceable: true,
+    textures: { top: 'glowberry_3', bottom: 'glowberry_3', side: 'glowberry_3' },
+  }),
+  [BLOCK.RiftrootCrop0]: spec(BLOCK.RiftrootCrop0, 'Riftroot Crop Sprout', {
+    solid: false, opaque: false, cutout: true, tool: 'none', minTier: 0, hardness: 0.1,
+    drop: BLOCK.Air, replaceable: true,
+    textures: { top: 'riftroot_0', bottom: 'riftroot_0', side: 'riftroot_0' },
+  }),
+  [BLOCK.RiftrootCrop1]: spec(BLOCK.RiftrootCrop1, 'Riftroot Crop Stage 2', {
+    solid: false, opaque: false, cutout: true, tool: 'none', minTier: 0, hardness: 0.1,
+    drop: BLOCK.Air, replaceable: true,
+    textures: { top: 'riftroot_1', bottom: 'riftroot_1', side: 'riftroot_1' },
+  }),
+  [BLOCK.RiftrootCrop2]: spec(BLOCK.RiftrootCrop2, 'Riftroot Crop Stage 3', {
+    solid: false, opaque: false, cutout: true, tool: 'none', minTier: 0, hardness: 0.1,
+    drop: BLOCK.Air, replaceable: true,
+    textures: { top: 'riftroot_2', bottom: 'riftroot_2', side: 'riftroot_2' },
+  }),
+  [BLOCK.RiftrootCrop3]: spec(BLOCK.RiftrootCrop3, 'Riftroot Crop Stage 4', {
+    solid: false, opaque: false, cutout: true, tool: 'none', minTier: 0, hardness: 0.1,
+    drop: BLOCK.Air, replaceable: true,
+    textures: { top: 'riftroot_3', bottom: 'riftroot_3', side: 'riftroot_3' },
   }),
 };
 

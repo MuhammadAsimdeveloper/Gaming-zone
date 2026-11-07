@@ -9,6 +9,8 @@ export const DEFAULT_STACK = 64;
 export interface ItemStack {
   id: number;
   count: number;
+  /** Remaining uses for tools; absent on materials and blocks. */
+  durability?: number;
 }
 
 export interface Inventory {
@@ -32,6 +34,11 @@ export function maxStackFor(id: number): number {
   return itemSpec(id)?.stack ?? DEFAULT_STACK;
 }
 
+function makeStack(id: number, count: number): ItemStack {
+  const tool = itemSpec(id)?.tool;
+  return tool ? { id, count, durability: tool.durability } : { id, count };
+}
+
 /** Adds items to existing partial stacks first, then to empty slots. Returns leftovers. */
 export function addItem(inventory: Inventory, id: number, count: number): number {
   if (!isKnownId(id) || !Number.isFinite(count) || count <= 0) {
@@ -53,7 +60,7 @@ export function addItem(inventory: Inventory, id: number, count: number): number
   for (let index = 0; index < inventory.slots.length && remaining > 0; index += 1) {
     if (inventory.slots[index]) continue;
     const moved = Math.min(stackLimit, remaining);
-    inventory.slots[index] = { id, count: moved };
+    inventory.slots[index] = makeStack(id, moved);
     remaining -= moved;
   }
 
@@ -91,7 +98,7 @@ export function splitStack(inventory: Inventory, index: number): number {
   if (target < 0) return 0;
   const moved = Math.ceil(slot.count / 2);
   slot.count -= moved;
-  inventory.slots[target] = { id: slot.id, count: moved };
+  inventory.slots[target] = makeStack(slot.id, moved);
   return moved;
 }
 
@@ -146,4 +153,19 @@ export function consumeHeld(inventory: Inventory): boolean {
   slot.count -= 1;
   if (slot.count <= 0) inventory.slots[inventory.selected] = null;
   return true;
+}
+
+/** Wears a tool by one use. Returns true when the tool broke and the slot cleared. */
+export function damageTool(inventory: Inventory, index: number, amount = 1): boolean {
+  const slot = inventory.slots[index];
+  if (!slot) return false;
+  const tool = itemSpec(slot.id)?.tool;
+  if (!tool) return false;
+  const remaining = (slot.durability ?? tool.durability) - amount;
+  if (remaining <= 0) {
+    inventory.slots[index] = null;
+    return true;
+  }
+  slot.durability = remaining;
+  return false;
 }

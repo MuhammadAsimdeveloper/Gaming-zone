@@ -53,6 +53,6 @@ describe('block registry', () => {
     expect(isReplaceable(BLOCK.Air)).toBe(true);
     expect(isReplaceable(BLOCK.Reeds)).toBe(true);
     expect(isReplaceable(BLOCK.Stone)).toBe(false);
-    expect(Object.keys(BLOCKS)).toHaveLength(36);
+    expect(Object.keys(BLOCKS)).toHaveLength(45);
   });
 });
