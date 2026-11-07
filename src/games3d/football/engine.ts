@@ -1110,8 +1110,8 @@ export class FootballEngine {
     this.keyboard.dispose();
     this.audio.dispose();
     disposeObject(this.scene);
-    this.renderer.dispose();
     this.renderer.forceContextLoss();
+    this.renderer.dispose();
     this.players = [];
   }
 }
