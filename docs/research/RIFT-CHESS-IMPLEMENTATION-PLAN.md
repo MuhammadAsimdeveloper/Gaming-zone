@@ -1,7 +1,7 @@
 # Rift Chess — Implementation Plan
 
 > Prepared 2026-11-02 after the platform hardening and quality gates passed.
-> **Status:** plan only. No Rift Chess code has been written and no catalogue entry exists.
+> **Status (2026-11-07):** M0 dependency/licence gate complete; M1 rules adapter and tests started on `fix/platform-hardening-2026-11`. Not yet playable; no catalogue entry exists.
 > Source design: [GDD/01-rift-chess.md](GDD/01-rift-chess.md).
 
 ---
@@ -13,9 +13,9 @@ The GDD requires platform hardening and the baseline quality gates to pass befor
 | Gate | Result |
 |---|---|
 | `npm run typecheck` | Passed, no output |
-| `npm test` | 49 tests passed in 5 files |
+| `npm test` | Historical 2026-11-04 baseline: 234 tests in 27 files; new rules tests pending CI |
 | `npm run build` | Passed; 2,143 modules; only the existing >500 kB Three.js chunk warning |
-| `npx playwright test` | 37 tests passed in 2.4 minutes with 2 workers |
+| `npx playwright test` | Historical 2026-11-04 baseline: 66 tests; new branch changes pending CI |
 
 Rift Chess implementation may start. Planned platform work that is **not** complete (CSP, automated full-match 3D QA) does not block a React DOM game.
 
@@ -32,11 +32,11 @@ Rift Chess implementation may start. Planned platform work that is **not** compl
 | Source | npm registry metadata and package README, 2026-11-02 |
 | Why | Mature legal move generation, check/checkmate/stalemate, repetition, fifty-move and insufficient-material detection, SAN history. Headless, TypeScript, browser ESM. |
 
-Add it as a runtime dependency only when M1 starts. Copy the BSD-2-Clause notice into `THIRD_PARTY_NOTICES.md` (created at M1 if absent). Re-verify the version and licence at install time; do not assume this snapshot is current.
+`chess.js@1.4.0` is pinned as a runtime dependency. Its BSD-2-Clause licence text is recorded in `THIRD_PARTY_NOTICES.md`; package integrity is pinned in `package-lock.json`.
 
 ### Bot: in-house Web Worker minimax
 
-The GDD suggested `js-chess-engine` (MIT). Registry check on 2026-11-02 shows **v2.4.6 requires Node.js ≥24**, while this project documents and tests on Node 20+. Rather than raise the platform baseline for one game or pin an old major, M3 will use a small alpha-beta minimax worker:
+The GDD suggested `js-chess-engine` (MIT). The bot remains an in-house alpha-beta minimax worker; chess.js supplies legal move generation. Node 24 is now the CI baseline for the Vitest 5 toolchain:
 
 - Legal moves come from `chess.js` inside the worker, so the bot cannot generate an illegal move.
 - Evaluation: material + piece-square tables + mobility. No endgame tablebases.
