@@ -69,6 +69,7 @@ describe('Rift Chess playable board', () => {
     await clickSquare('a8');
 
     expect(container.querySelector('[role="dialog"][aria-labelledby="promotion-title"]')).not.toBeNull();
+    expect(document.activeElement?.getAttribute('aria-label')).toBe('Queen');
     const choices = ['Queen', 'Rook', 'Bishop', 'Knight'];
     expect(choices.every((label) => container.querySelector(`button[aria-label="${label}"]`))).toBe(true);
     const knight = container.querySelector<HTMLButtonElement>('button[aria-label="Knight"]');
