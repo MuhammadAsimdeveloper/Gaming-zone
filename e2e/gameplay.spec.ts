@@ -340,6 +340,25 @@ test.describe('mobile input and hidden-tab fairness', () => {
     expectNoErrors(errors);
   });
 
+  test('snake leaves focused controls their own keys', async ({ page }) => {
+    const errors = collectErrors(page);
+
+    await page.goto('/game/neon-snake');
+    await page.getByRole('button', { name: 'Start run', exact: true }).click();
+
+    // Starting the run hands the keyboard to the board, so arrows steer instead
+    // of scrolling the page.
+    await expect(page.getByRole('application', { name: /Snake game area/ })).toBeFocused();
+
+    // Space belongs to the toolbar button it was aimed at: it restarts the run
+    // rather than reaching the board handler and pausing the game.
+    await page.getByRole('button', { name: 'Restart run' }).focus();
+    await page.keyboard.press('Space');
+    await expect(page.getByText('Paused', { exact: true })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Pause game' })).toBeVisible();
+    expectNoErrors(errors);
+  });
+
   test('math sprint freezes the clock while the tab is hidden', async ({ page }) => {
     const errors = collectErrors(page);
     await stubVisibility(page);

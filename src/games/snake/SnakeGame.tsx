@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import type { GameComponentProps } from '../../types/game';
 import { GameButton, GameFrame, GameOverlay, GameStat, Kbd } from '../shared/GameFrame';
+import { isInteractiveTarget } from '../shared/keyboard';
 import { useBestScore } from '../shared/useBestScore';
 import { useVisibilityPause } from '../shared/useVisibilityPause';
 
@@ -81,6 +82,7 @@ function roundedRectPath(
 
 export default function SnakeGame({ onStart, onComplete }: GameComponentProps) {
   const { best, submit } = useBestScore(BEST_KEY);
+  const boardRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [phase, setPhase] = useState<Phase>('idle');
   const [score, setScore] = useState(0);
@@ -155,6 +157,12 @@ export default function SnakeGame({ onStart, onComplete }: GameComponentProps) {
   }, [changePhase]);
 
   useVisibilityPause(togglePause, phase === 'running');
+
+  // The idle overlay returns focus to the frame when it closes, so the board
+  // claims the keyboard after that cleanup has run.
+  useEffect(() => {
+    if (phase === 'running') boardRef.current?.focus({ preventScroll: true });
+  }, [phase]);
 
   const resetRun = useCallback(() => {
     snakeRef.current = initialSnake();
@@ -393,12 +401,9 @@ export default function SnakeGame({ onStart, onComplete }: GameComponentProps) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.repeat) return;
-
-      const target = event.target;
-      if (target instanceof HTMLElement) {
-        const tag = target.tagName;
-        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable) return;
-      }
+      // Buttons and links keep their own activation keys; the board only hears
+      // keys that were not aimed at a control.
+      if (isInteractiveTarget(event.target)) return;
 
       const key = event.key.toLowerCase();
       const directions: Record<string, Point> = {
@@ -414,6 +419,9 @@ export default function SnakeGame({ onStart, onComplete }: GameComponentProps) {
 
       const direction = directions[key];
       if (direction) {
+        // Arrows only steer while a run is on or about to start; otherwise they
+        // keep their native scrolling behaviour.
+        if (phaseRef.current !== 'idle' && phaseRef.current !== 'running') return;
         event.preventDefault();
         turn(direction);
         return;
@@ -531,9 +539,11 @@ export default function SnakeGame({ onStart, onComplete }: GameComponentProps) {
 
       <div className="mx-auto w-full max-w-[380px]">
         <div
+          ref={boardRef}
           role="application"
           tabIndex={0}
           aria-label="Snake game area, 20 by 20 grid. Use arrow keys or W A S D to steer, Space to pause, or swipe on touch screens."
+          onPointerDown={() => boardRef.current?.focus()}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
           className="relative aspect-square w-full touch-none select-none overflow-hidden rounded-2xl border border-white/10 bg-night-950 shadow-[inset_0_0_40px_rgba(76,141,255,0.06)]"
