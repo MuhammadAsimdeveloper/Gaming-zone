@@ -2,6 +2,7 @@ import { useRef, useState, type KeyboardEvent } from 'react';
 import type { Color, Square } from 'chess.js';
 import { cn } from '../../lib/cn';
 import type { BoardPiece } from './rules';
+import { ChessPiece } from './pieces';
 
 const FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] as const;
 const RANKS = [8, 7, 6, 5, 4, 3, 2, 1] as const;
@@ -13,11 +14,6 @@ const PIECE_LABEL: Record<BoardPiece['type'], string> = {
   b: 'bishop',
   n: 'knight',
   p: 'pawn',
-};
-
-const PIECE_GLYPH: Record<Color, Record<BoardPiece['type'], string>> = {
-  w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙' },
-  b: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' },
 };
 
 export interface ChessBoardProps {
@@ -166,19 +162,7 @@ export function ChessBoard({
                   {square[1]}
                 </span>
               ) : null}
-              {piece ? (
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    'select-none text-[clamp(1.45rem,7vw,3.55rem)] leading-none sm:text-[clamp(2rem,5.5vw,3.7rem)]',
-                    piece.color === 'w'
-                      ? 'text-white [text-shadow:0_1px_1px_rgba(0,0,0,0.95),0_0_5px_rgba(0,0,0,0.45)]'
-                      : 'text-slate-950 [text-shadow:0_1px_0_rgba(255,255,255,0.3)]',
-                  )}
-                >
-                  {PIECE_GLYPH[piece.color][piece.type]}
-                </span>
-              ) : null}
+              {piece ? <ChessPiece type={piece.type} color={piece.color} /> : null}
               {target ? (
                 <span
                   aria-hidden="true"
