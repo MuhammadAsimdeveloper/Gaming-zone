@@ -101,4 +101,27 @@ test.describe('Rift Chess', () => {
     await expect(page.getByText('White to move', { exact: true }).first()).toBeVisible();
     await expect(page.locator('aside li')).toHaveCount(0);
   });
+
+  test("keeps the computer's reply clock paused while the page is unfocused", async ({ page }) => {
+    await page.goto('/game/rift-chess');
+    await page.getByRole('button', { name: 'vs Computer', exact: true }).click();
+    await page.getByRole('button', { name: 'Black', exact: true }).click();
+    await page.getByRole('button', { name: '5 min', exact: true }).click();
+    await page.getByRole('button', { name: 'Play computer game', exact: true }).click();
+    await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+
+    await expect(page.getByText('Black to move', { exact: true }).first()).toBeVisible({ timeout: 10_000 });
+    const savedClock = async () => page.evaluate(() => {
+      const raw = localStorage.getItem('neonrift:rift-chess:save:v1');
+      return raw ? JSON.parse(raw).options.clock : null;
+    });
+    const paused = await savedClock();
+    expect(paused.active).toBe('b');
+    expect(paused.running).toBe(false);
+    const remaining = paused.remainingMs.b;
+
+    await page.waitForTimeout(300);
+    expect((await savedClock()).remainingMs.b).toBe(remaining);
+    await page.evaluate(() => window.dispatchEvent(new Event('focus')));
+  });
 });
