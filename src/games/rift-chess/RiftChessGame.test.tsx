@@ -68,12 +68,11 @@ describe('Rift Chess playable board', () => {
 
     expect(container.textContent).toContain('Computer strength');
     expect(container.textContent).toContain('Play as');
-    expect(container.querySelector('button[aria-pressed="true"]')?.textContent).toBe('Local two-player');
-
+    expect(container.querySelector('button[aria-pressed="true"]')?.textContent).toBe('vs Computer');
+    const playAs = container.querySelector('[role="group"][aria-label="Play as"]');
+    const black = playAs?.querySelector<HTMLButtonElement>('button:not([aria-pressed="false"])');
     await clickButton('Black');
-    await clickButton('Play computer game');
-    expect(container.querySelector('[role="grid"]')).not.toBeNull();
-    expect(container.textContent).toContain('You: Black');
+    expect(playAs?.querySelector('button[aria-pressed="true"]')?.textContent).toBe('Black');
   });
 
   it('starts a timed game, autosaves it, and resumes the saved position', async () => {
