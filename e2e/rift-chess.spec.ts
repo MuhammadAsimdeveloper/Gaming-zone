@@ -5,7 +5,7 @@ test.describe('Rift Chess', () => {
     const errors: string[] = [];
     page.on('pageerror', (error) => errors.push(error.message));
     await page.setViewportSize({ width: 320, height: 740 });
-    await page.goto('/games');
+    await page.goto('/new');
     await page.getByRole('link', { name: /Rift Chess/ }).first().click();
 
     await expect(page.getByRole('heading', { name: 'Rift Chess' }).first()).toBeVisible();
@@ -18,7 +18,7 @@ test.describe('Rift Chess', () => {
     await page.locator('[data-square="e2"]').click();
     await expect(page.locator('[data-square="e4"]')).toHaveAttribute('data-legal-target', 'true');
     await page.locator('[data-square="e4"]').click();
-    await expect(page.getByText('Black to move')).toBeVisible();
+    await expect(page.getByText('Black to move', { exact: true }).first()).toBeVisible();
     await expect(page.getByText('e4', { exact: true })).toBeVisible();
 
     await page.getByRole('button', { name: 'Undo' }).click();
@@ -36,7 +36,7 @@ test.describe('Rift Chess', () => {
     await page.locator('[data-square="e2"]').click();
     await page.locator('[data-square="e4"]').click();
 
-    await expect(page.getByText('White to move')).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByText('White to move', { exact: true }).first()).toBeVisible({ timeout: 15_000 });
     await expect(page.locator('aside li').first()).toContainText('e4');
     await expect(page.locator('aside li').first().locator('span').nth(2)).not.toBeEmpty();
     expect(errors).toEqual([]);
