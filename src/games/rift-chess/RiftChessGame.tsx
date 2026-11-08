@@ -123,6 +123,7 @@ export default function RiftChessGame({
   const workerRef = useRef<Worker | null>(null);
   const aiRequestIdRef = useRef(0);
   const [ready, setReady] = useState(false);
+  const persistCurrentGameRef = useRef<() => void>(() => {});
   const [orientation, setOrientation] = useState<'w' | 'b'>('w');
   const [pieces, setPieces] = useState<BoardPiece[]>(() => getBoardPieces(gameRef.current));
   const [turn, setTurn] = useState<'w' | 'b'>(() => gameRef.current.turn());
@@ -197,7 +198,7 @@ export default function RiftChessGame({
   }
 
   function persistCurrentGame() {
-    if (mode === 'free') return;
+    if (!ready || mode === 'free') return;
     const storage = getBrowserStorage();
     if (!storage) return;
     const now = performance.now();
@@ -210,6 +211,10 @@ export default function RiftChessGame({
     };
     setSavedAvailable(saveGame(storage, gameRef.current, options));
   }
+
+  useEffect(() => {
+    persistCurrentGameRef.current = persistCurrentGame;
+  });
 
   function clearSelection() {
     setSelectedSquare(null);
@@ -310,6 +315,7 @@ export default function RiftChessGame({
     const pause = () => {
       const current = clockRef.current;
       if (current) updateClock(pauseClock(current, performance.now()));
+      persistCurrentGameRef.current();
     };
     const resume = () => {
       const current = clockRef.current;
@@ -318,10 +324,12 @@ export default function RiftChessGame({
     const visibility = () => document.hidden ? pause() : resume();
     document.addEventListener('visibilitychange', visibility);
     window.addEventListener('blur', pause);
+    window.addEventListener('pagehide', pause);
     window.addEventListener('focus', resume);
     return () => {
       document.removeEventListener('visibilitychange', visibility);
       window.removeEventListener('blur', pause);
+      window.removeEventListener('pagehide', pause);
       window.removeEventListener('focus', resume);
     };
   }, []);
