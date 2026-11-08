@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Rift Rally arcade racing key art: a drift car sliding through a neon checkpoint gate on a coastal circuit at dusk with rivals behind">
+  <defs>
+    <linearGradient id="rally-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c0a1f"/><stop offset=".55" stop-color="#241233"/><stop offset="1" stop-color="#4a1e35"/></linearGradient>
+    <linearGradient id="rally-sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1640"/><stop offset="1" stop-color="#120b20"/></linearGradient>
+    <linearGradient id="rally-road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2547"/><stop offset="1" stop-color="#0d0a18"/></linearGradient>
+    <linearGradient id="rally-body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb27a"/><stop offset="1" stop-color="#ff6b4a"/></linearGradient>
+    <linearGradient id="rally-glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ff3ff"/><stop offset="1" stop-color="#2d7ea8"/></linearGradient>
+    <radialGradient id="rally-sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd6a8" stop-opacity=".9"/><stop offset="1" stop-color="#ff8a5c" stop-opacity="0"/></radialGradient>
+    <filter id="rally-glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="rally-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.4"/></filter>
+  </defs>
+
+  <rect width="640" height="400" fill="url(#rally-sky)"/>
+  <circle cx="486" cy="196" r="150" fill="url(#rally-sun)"/>
+  <circle cx="486" cy="196" r="46" fill="#ffc48c" opacity=".55" filter="url(#rally-glow)"/>
+  <rect y="232" width="640" height="70" fill="url(#rally-sea)"/>
+  <g stroke="#ffb27a" stroke-opacity=".22" stroke-width="2">
+    <path d="M420 250 H560"/><path d="M450 262 H590"/><path d="M400 276 H530"/><path d="M470 288 H600"/>
+  </g>
+
+  <g opacity=".55">
+    <path d="M0 232 H30 V196 H58 V232 H96 V182 H128 V232 H170 V204 H198 V232 H640 V236 H0 Z" fill="#150e26"/>
+    <g fill="#38e8ff" opacity=".5">
+      <rect x="12" y="206" width="4" height="4"/><rect x="42" y="206" width="4" height="4"/><rect x="104" y="192" width="4" height="4"/><rect x="114" y="204" width="4" height="4"/><rect x="176" y="212" width="4" height="4"/>
+    </g>
+  </g>
+
+  <text x="36" y="58" fill="#fff4ec" font-family="ui-sans-serif, system-ui, sans-serif" font-size="34" font-weight="700">Rift Rally</text>
+  <text x="36" y="84" fill="#d7a48f" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="2.6">DRIFT · BOOST · THREE LAPS</text>
+
+  <path d="M148 400 L286 236 L354 236 L512 400 Z" fill="url(#rally-road)"/>
+  <path d="M148 400 L286 236 M512 400 L354 236" stroke="#ff8a5c" stroke-width="3" filter="url(#rally-glow)"/>
+  <path d="M212 400 L306 236 M448 400 L334 236" stroke="#38e8ff" stroke-opacity=".35" stroke-width="2"/>
+  <g stroke="#ffe2c8" stroke-opacity=".8" stroke-width="4" stroke-dasharray="14 16">
+    <path d="M330 400 L320 236"/>
+  </g>
+
+  <g transform="translate(322 250)">
+    <rect x="-58" y="-34" width="116" height="10" rx="5" fill="#1c1430" stroke="#ff8a5c" stroke-opacity=".8"/>
+    <rect x="-58" y="-58" width="8" height="58" fill="#38e8ff" filter="url(#rally-glow)"/>
+    <rect x="50" y="-58" width="8" height="58" fill="#38e8ff" filter="url(#rally-glow)"/>
+    <rect x="-62" y="-62" width="124" height="6" rx="3" fill="#38e8ff" filter="url(#rally-glow)"/>
+    <text x="0" y="-42" fill="#9ff3ff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="2">GATE 04</text>
+  </g>
+
+  <g transform="translate(210 322)">
+    <rect x="-76" y="-10" width="152" height="40" rx="12" fill="#0a0714" opacity=".5" filter="url(#rally-soft)"/>
+  </g>
+
+  <g transform="translate(352 332) rotate(-8)">
+    <rect x="-58" y="-22" width="116" height="32" rx="10" fill="url(#rally-body)"/>
+    <path d="M-26 -22 L-14 -42 L16 -42 L30 -22 Z" fill="url(#rally-glass)"/>
+    <rect x="-58" y="-26" width="116" height="7" rx="3" fill="#ffd6b8" opacity=".8" filter="url(#rally-glow)"/>
+    <rect x="-6" y="-16" width="44" height="4" rx="2" fill="#3a1230" opacity=".55"/>
+    <circle cx="-36" cy="12" r="15" fill="#120c1e"/>
+    <circle cx="-36" cy="12" r="6" fill="#4a3a6a"/>
+    <circle cx="38" cy="12" r="15" fill="#120c1e"/>
+    <circle cx="38" cy="12" r="6" fill="#4a3a6a"/>
+    <rect x="-64" y="-8" width="10" height="8" rx="3" fill="#ffcf6b" filter="url(#rally-glow)"/>
+    <path d="M-92 2 L-62 2 M-92 10 L-62 10" stroke="#ffb27a" stroke-opacity=".45" stroke-width="3"/>
+    <path d="M62 4 L96 4 M62 12 L92 12" stroke="#ffb27a" stroke-opacity=".35" stroke-width="3"/>
+  </g>
+
+  <g transform="translate(452 288) scale(.62)" opacity=".85">
+    <rect x="-58" y="-22" width="116" height="32" rx="10" fill="#2a3f6b"/>
+    <path d="M-26 -22 L-14 -42 L16 -42 L30 -22 Z" fill="#6fa8d8"/>
+    <circle cx="-36" cy="12" r="15" fill="#0c1222"/>
+    <circle cx="38" cy="12" r="15" fill="#0c1222"/>
+    <rect x="-64" y="-8" width="10" height="8" rx="3" fill="#9ff3ff" filter="url(#rally-glow)"/>
+  </g>
+  <g transform="translate(196 268) scale(.5)" opacity=".7">
+    <rect x="-58" y="-22" width="116" height="32" rx="10" fill="#3b2a55"/>
+    <path d="M-26 -22 L-14 -42 L16 -42 L30 -22 Z" fill="#7a5aa8"/>
+    <circle cx="-36" cy="12" r="15" fill="#0c1222"/>
+    <circle cx="38" cy="12" r="15" fill="#0c1222"/>
+    <rect x="-64" y="-8" width="10" height="8" rx="3" fill="#ffb27a" filter="url(#rally-glow)"/>
+  </g>
+
+  <rect x="36" y="352" width="120" height="6" rx="3" fill="#ff8a5c" opacity=".75"/>
+  <rect x="168" y="352" width="58" height="6" rx="3" fill="#38e8ff" opacity=".55"/>
+  <rect x="238" y="352" width="26" height="6" rx="3" fill="#ffcf6b" opacity=".5"/>
+</svg>

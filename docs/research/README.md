@@ -17,7 +17,7 @@ This folder is the complete deliverable for the “Top 50 Video Games — resear
 | [SOURCE-DIRECTORY.md](SOURCE-DIRECTORY.md) | The 19 verified repositories (21 candidates), languages, features, maintenance, licence and adaptability |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Platform constraints, module pattern, simulation design, engine per game, budgets, testing and deployment |
 | [ROADMAP.md](ROADMAP.md) | Phase 0 platform hardening, three sequential waves, milestones, QA gates and effort ranges |
-| [Wave 2 spec](../superpowers/specs/2026-11-04-games-wave2-design.md) | Six-game 2026-11-04 slate: Neon Craft, Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology. Design only; awaiting review |
+| [Wave 2 spec](../superpowers/specs/2026-11-04-games-wave2-design.md) | Six-game 2026-11-04 slate: Neon Craft, Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology. Neon Craft shipped 2026-11-07; Rift Rally and Neon Duel shipped 2026-11-08; three remain designs |
 | [SOURCES.md](SOURCES.md) | Numbered source register with credibility tiers and verification notes |
 | [games/](games/) | Per-group research notes for all 50 references |
 
@@ -85,5 +85,6 @@ Trial and Street Cricket). For the remaining ten, the next step requires an expl
 A second, user-directed six-game Wave 2 slate (Neon Craft plus five companions) has a written
 design spec at
 [`../superpowers/specs/2026-11-04-games-wave2-design.md`](../superpowers/specs/2026-11-04-games-wave2-design.md).
-Neon Craft (sub-wave 2A) shipped on 2026-11-07; the other five are designs with no catalogue
-entry yet.
+Neon Craft (sub-wave 2A) shipped on 2026-11-07 and Rift Rally with Neon Duel (sub-wave 2B)
+shipped on 2026-11-08; Riftfall, Rift Life and Rift Ecology (sub-wave 2C) are designs with no
+catalogue entry yet.

@@ -132,7 +132,7 @@ test.describe('reduced-motion preference', () => {
   });
 });
 
-test.describe('all thirty-three games boot and accept input', () => {
+test.describe('all thirty-five games boot and accept input', () => {
   test.describe.configure({ timeout: 150_000 });
 
   for (const game of GAMES) {
@@ -180,8 +180,7 @@ test.describe('all thirty-three games boot and accept input', () => {
           await expect(page.getByRole('button', { name: /^Answer / })).toHaveCount(4);
           break;
         case 'neon-apex':
-          await page.getByRole('button', { name: 'Start race', exact: true }).click();
-          const countdown = await readCountdownSequence(page);
+          const countdown = await startRaceAndRecordCountdown(page);
           expect(countdown[0], 'countdown starts at three').toBe('3');
           expect(countdown, 'countdown never shows an extra step').not.toContain('4');
           await assertSizedCanvas(page);
@@ -338,6 +337,30 @@ test.describe('all thirty-three games boot and accept input', () => {
           await page.getByRole('button', { name: 'Unmute audio' }).click();
           await page.getByRole('button', { name: 'Pause match' }).click();
           await expect(page.getByRole('button', { name: 'Resume match' })).toBeVisible();
+          await page.getByRole('button', { name: 'Resume match' }).click();
+          await expect(page.getByRole('button', { name: 'Pause match' })).toBeVisible();
+          break;
+        case 'rift-rally':
+          await page.getByRole('button', { name: 'Start race', exact: true }).click();
+          await assertSizedCanvas(page);
+          await assertMuteToggle(page);
+          await page.getByRole('button', { name: 'Pause race' }).click();
+          await expect(page.getByRole('dialog', { name: 'Race paused' })).toBeVisible();
+          await page.getByRole('button', { name: 'Resume', exact: true }).click();
+          await expect(page.getByRole('button', { name: 'Pause race' })).toBeVisible();
+          break;
+        case 'neon-duel':
+          await page.getByRole('button', { name: 'Start ladder', exact: true }).click();
+          await expect(page.getByRole('dialog', { name: 'Match setup' })).toBeVisible();
+          await page.getByRole('button', { name: 'Fight', exact: true }).click();
+          await assertSizedCanvas(page);
+          await expect(page.getByRole('button', { name: 'Light attack' })).toBeVisible();
+          await page.getByRole('button', { name: 'Light attack' }).click();
+          await page.getByRole('button', { name: 'Mute audio' }).click();
+          await expect(page.getByRole('button', { name: 'Unmute audio' })).toBeVisible();
+          await page.getByRole('button', { name: 'Unmute audio' }).click();
+          await page.getByRole('button', { name: 'Pause match' }).click();
+          await expect(page.getByRole('dialog', { name: 'Match paused' })).toBeVisible();
           await page.getByRole('button', { name: 'Resume match' }).click();
           await expect(page.getByRole('button', { name: 'Pause match' })).toBeVisible();
           break;
@@ -524,33 +547,54 @@ async function readRemainingSeconds(page: import('@playwright/test').Page): Prom
   return match ? Number(match[1]) : -1;
 }
 
-async function readCountdownSequence(page: import('@playwright/test').Page): Promise<string[]> {
-  const overlay = page.getByText('Get ready', { exact: true }).locator('..');
-  const number = overlay.locator('p').nth(1);
-  const seen: string[] = [];
-  const deadline = Date.now() + 15_000;
+type CountdownScope = Window & {
+  __countdown?: { values: string[]; done: boolean };
+  __countdownObserver?: MutationObserver;
+};
 
-  while (Date.now() < deadline) {
-    const visible = await overlay.count();
-    if (visible === 0) {
-      if (seen.length > 0) break;
-      await page.waitForTimeout(30);
-      continue;
-    }
-    // The overlay can detach between count() and the read. Bound the read so a
-    // finished countdown returns null instead of waiting out the test timeout.
-    const raw = await number.textContent({ timeout: 500 }).catch(() => null);
-    if (raw === null) {
-      if (seen.length > 0) break;
-      continue;
-    }
-    const text = raw.trim();
-    if (text && seen.at(-1) !== text) seen.push(text);
-    if (text === 'GO') break;
-    await page.waitForTimeout(30);
-  }
+// The race countdown runs on simulation time, so a busy machine stretches it in
+// wall-clock terms. Observing mutations records every rendered step without
+// relying on poll latency, and the deadline is generous enough for slow CI.
+async function startRaceAndRecordCountdown(
+  page: import('@playwright/test').Page,
+): Promise<string[]> {
+  await page.evaluate(() => {
+    const scope = window as CountdownScope;
+    scope.__countdown = { values: [], done: false };
+    const scan = () => {
+      const state = scope.__countdown;
+      if (!state) return;
+      const label = Array.from(document.querySelectorAll('p')).find(
+        (candidate) => candidate.textContent?.trim() === 'Get ready',
+      );
+      if (!label) {
+        // The engine flips to racing and unmounts the overlay in the same frame
+        // it reaches zero, so "GO" is often never painted.
+        if (state.values.length > 0) state.done = true;
+        return;
+      }
+      const number = label.parentElement?.querySelectorAll('p')[1];
+      const text = number?.textContent?.trim() ?? '';
+      if (text && state.values.at(-1) !== text) state.values.push(text);
+      if (text === 'GO') state.done = true;
+    };
+    const observer = new MutationObserver(scan);
+    observer.observe(document.body, { subtree: true, childList: true, characterData: true });
+    scope.__countdownObserver = observer;
+    scan();
+  });
 
-  return seen;
+  await page.getByRole('button', { name: 'Start race', exact: true }).click();
+  await page.waitForFunction(
+    () => (window as CountdownScope).__countdown?.done === true,
+    undefined,
+    { timeout: 90_000, polling: 100 },
+  );
+  return page.evaluate(() => {
+    const scope = window as CountdownScope;
+    scope.__countdownObserver?.disconnect();
+    return scope.__countdown?.values ?? [];
+  });
 }
 
 async function assertSizedCanvas(page: import('@playwright/test').Page): Promise<void> {

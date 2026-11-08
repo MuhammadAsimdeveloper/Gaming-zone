@@ -34,6 +34,8 @@ export const GAMES = [
   { slug: 'apex-time-trial', title: 'Apex Time Trial' },
   { slug: 'street-cricket', title: 'Street Cricket' },
   { slug: 'neon-craft', title: 'Neon Craft' },
+  { slug: 'rift-rally', title: 'Rift Rally' },
+  { slug: 'neon-duel', title: 'Neon Duel' },
 ] as const;
 
 export interface ErrorLog {

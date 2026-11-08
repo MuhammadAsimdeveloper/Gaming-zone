@@ -5,7 +5,7 @@ import { collectErrors, expectNoErrors } from './helpers';
 const require = createRequire(import.meta.url);
 const axePath = require.resolve('axe-core/axe.min.js');
 
-const ROUTES = ['/', '/games', '/about', '/game/neon-apex'];
+const ROUTES = ['/', '/games', '/about', '/game/neon-apex', '/game/rift-rally', '/game/neon-duel'];
 const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900 },
   { name: 'mobile', width: 390, height: 844 },

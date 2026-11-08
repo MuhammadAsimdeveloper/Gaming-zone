@@ -1596,5 +1596,119 @@
     "createdAt": "2026-11-07T15:00:00.000Z",
     "featured": true,
     "popularityRank": 33
+},
+  {
+    "id": "rift-rally",
+    "slug": "rift-rally",
+    "title": "Rift Rally",
+    "tagline": "Three laps of drift, boost and gate-to-gate racing.",
+    "description": "A 3D arcade rally across three original circuits: the coastal sweep of Coastal Ring, the stacked Interchange and the tight neon alleys of Night Market. Pick a grip, balanced or drift machine, choose weather and rival tier, then chase six checkpoint gates a lap across a three-car field. Released drifts charge a boost, a ghost of your best lap races alongside you, and lap records stay in this browser.",
+    "category": "racing",
+    "secondaryCategories": [
+      "arcade",
+      "action"
+    ],
+    "thumbnail": "/art/rift-rally.svg",
+    "accent": "#ff8a5c",
+    "type": "internal",
+    "internalKey": "rift-rally",
+    "instructions": [
+      "Choose a circuit, a car class and race setup, then start the race.",
+      "Hold throttle to build speed; brake into tight corners and steer against the slide.",
+      "Hold drift through a corner to charge the boost, then release and accelerate out.",
+      "Thread all six checkpoint gates each lap in order; missing one costs you time.",
+      "Three laps against three rivals. Weather and rival tier change grip and aggression.",
+      "Cycle chase, hood and bumper cameras with C.",
+      "Your fastest lap races back as a ghost and is stored in this browser only."
+    ],
+    "controls": [
+      {
+        "label": "Throttle / brake / steer",
+        "keys": "W S A D or ArrowUp ArrowDown ArrowLeft ArrowRight"
+      },
+      {
+        "label": "Drift",
+        "keys": "Space"
+      },
+      {
+        "label": "Change camera",
+        "keys": "C"
+      },
+      {
+        "label": "Pause",
+        "keys": "P or Escape"
+      },
+      {
+        "label": "Mute",
+        "keys": "M"
+      },
+      {
+        "label": "Touch",
+        "keys": "On-screen steering, throttle, brake and drift"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-08T10:00:00.000Z",
+    "featured": false,
+    "popularityRank": 34
+  },
+  {
+    "id": "neon-duel",
+    "slug": "neon-duel",
+    "title": "Neon Duel",
+    "tagline": "Best of three. Four fighters. One rooftop.",
+    "description": "A 2D arcade fighter on a rain-slick rooftop. Four original fighters with distinct reach, speed and jump arcs trade light, heavy and meter-burning specials across best-of-three sixty-second rounds. Climb a five-rung ladder against seeded rivals that react to your habits, or drill a resetting training dummy. Combos, chip damage, dash cooldowns and air evasion are all fixed at a deterministic 60 Hz tick, so every rematch is decided by timing rather than luck.",
+    "category": "action",
+    "secondaryCategories": [
+      "arcade",
+      "casual"
+    ],
+    "thumbnail": "/art/neon-duel.svg",
+    "accent": "#a06bff",
+    "type": "internal",
+    "internalKey": "neon-duel",
+    "instructions": [
+      "Pick a fighter and a gym mode, then choose Fight for a ladder bout or Start training for the dummy.",
+      "Walk with A and D, jump with W, block with S and dash with Shift.",
+      "Strike with J for light, K for heavy and L for the special once your meter is half full.",
+      "Land a light and cancel into heavy or special to extend a combo.",
+      "Rounds last sixty seconds; the fighter with more health when time expires takes the round.",
+      "Win two rounds to take the match and advance one rung up the five-fight ladder.",
+      "Training keeps resetting the dummy so you can practise combos without a run ending."
+    ],
+    "controls": [
+      {
+        "label": "Move",
+        "keys": "A D or ArrowLeft ArrowRight"
+      },
+      {
+        "label": "Jump / block",
+        "keys": "W or Space / S or ArrowDown"
+      },
+      {
+        "label": "Dash",
+        "keys": "Shift"
+      },
+      {
+        "label": "Light / heavy / special",
+        "keys": "J / K / L"
+      },
+      {
+        "label": "Pause",
+        "keys": "P or Escape"
+      },
+      {
+        "label": "Mute",
+        "keys": "M"
+      },
+      {
+        "label": "Touch",
+        "keys": "On-screen move, block, jump and attack buttons"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-08T12:00:00.000Z",
+    "featured": false,
+    "popularityRank": 35
   }
 ]

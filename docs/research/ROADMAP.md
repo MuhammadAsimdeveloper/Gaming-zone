@@ -277,19 +277,19 @@ This is a long programme. The wave structure exists so that value ships early an
 ## 11. Separate six-game Wave 2 design (2026-11-04)
 
 This is a second, user-directed slate, separate from the 15 research games. It does not reorder
-Phases 1–3. The design is complete; sub-wave 2A shipped on 2026-11-07 and sub-waves 2B and
-2C have not started.
+Phases 1–3. The design is complete; sub-waves 2A and 2B shipped, and sub-wave 2C has not started.
 
 | Sub-wave | Games | Renderer | Status |
 |---|---|---|---|
 | 2A | Neon Craft | Self-contained Three.js voxel engine | Shipped 2026-11-07 |
-| 2B | Rift Rally, Neon Duel | Three.js; Canvas 2D + React | Design complete; not started |
+| 2B | Rift Rally, Neon Duel | Three.js; Canvas 2D + React | Shipped 2026-11-08 |
 | 2C | Riftfall, Rift Life, Rift Ecology | Canvas 2D + React | Design complete; not started |
 
 - Spec: [2026-11-04-games-wave2-design.md](../superpowers/specs/2026-11-04-games-wave2-design.md)
 - Gates: each sub-wave must be playable end to end, tested, built and reviewed before the next
   sub-wave is called complete.
-- No catalogue entry, thumbnail, test or dependency change exists for these six games yet.
+- Catalogue entries, thumbnails and tests exist for the three shipped sub-wave 2A/2B games;
+  sub-wave 2C has none yet.
 - Effort is not estimated here; the sub-wave gates govern delivery.
 
 ---
@@ -300,14 +300,12 @@ No game implementation begins until the shortlist and the specific game plan are
 is complete and verified. After approval, the order is:
 
 1. Phase 0 platform hardening. **Complete and verified 2026-11-02.**
-2. Rift Chess. **Plan ready; implementation not started.**
-3. Neon Rush.
-4. Lawn Protocol.
-5. Apex Time Trial.
-6. Street Cricket.
-7. …and so on, one game at a time.
+2. Wave 1: Rift Chess, Neon Rush, Lawn Protocol, Apex Time Trial, Street Cricket.
+   **Complete 2026-11-07.**
+3. Wave 2A/2B: Neon Craft, Rift Rally, Neon Duel. **Shipped 2026-11-07 and 2026-11-08.**
+4. Wave 2C: Riftfall, Rift Life, Rift Ecology. **Next.**
 
 The roadmap can be re-ordered after any completed game without wasting work, because each game is an independent module.
 
-The separate six-game Wave 2 slate in section 11 has a written spec but no implementation. It
-begins only after the spec is reviewed and approved and an implementation plan is written.
+The separate six-game Wave 2 slate in section 11 has three shipped games and a written spec for
+the remaining three; sub-wave 2C begins only after an implementation plan is written.

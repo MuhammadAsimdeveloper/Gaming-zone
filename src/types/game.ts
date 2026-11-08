@@ -48,6 +48,8 @@ export const INTERNAL_GAME_KEYS = [
   'apex-time-trial',
   'street-cricket',
   'neon-craft',
+  'rift-rally',
+  'neon-duel',
 ] as const;
 
 export type InternalGameKey = (typeof INTERNAL_GAME_KEYS)[number];

@@ -10,6 +10,9 @@
 
 **Spec:** `docs/superpowers/specs/2026-11-04-games-wave2-design.md` (§ Sub-wave 2B).
 
+**Status:** Shipped 2026-11-08. Both games are in the catalogue, covered by unit and browser
+tests, and verified against the full suite on `feat/games-wave2`.
+
 ## Global Constraints
 
 - No new runtime dependency. Use only packages already in `package.json`.
@@ -83,11 +86,11 @@
   - `registerGatePass(track, progress, trackIndex, elapsed): LapProgress`
   - `projectToMinimap(track, x, z): { x: number; y: number }`
 
-- [ ] **Step 1: Write failing tests** covering: every track has ≥ 360 samples; sampling is deterministic for a seed; three distinct circuits; checkpoint indices are strictly increasing and evenly spaced; `nearestTrackIndex` respects a hint; on-track is true at a sample and false far outside the width; a gate pass advances the expected gate; passing a later gate out of order does not advance; a lap increments only after every gate; minimap points stay inside the 100×100 box.
-- [ ] **Step 2: Run** `npx vitest run src/games3d/rally/track.test.ts` and confirm failure.
-- [ ] **Step 3: Implement.** Use a pure Catmull-Rom sampler (no Three.js) with a seeded offset that perturbs waypoints by at most 3 units, `getSpacedPoints` equivalent via arc-length resampling, and six checkpoints at evenly spaced sample indices. `registerGatePass` accepts a gate only when the nearest sample is within 5 samples *after* the expected gate index, and only `nextGate` advances; when `nextGate` wraps past the last gate back to `0`, increment `lap` and clear `splits`.
-- [ ] **Step 4: Run tests** and `npm run typecheck`.
-- [ ] **Step 5: Commit** `feat(rally): add seeded circuits and lap validation`.
+- [x] **Step 1: Write failing tests** covering: every track has ≥ 360 samples; sampling is deterministic for a seed; three distinct circuits; checkpoint indices are strictly increasing and evenly spaced; `nearestTrackIndex` respects a hint; on-track is true at a sample and false far outside the width; a gate pass advances the expected gate; passing a later gate out of order does not advance; a lap increments only after every gate; minimap points stay inside the 100×100 box.
+- [x] **Step 2: Run** `npx vitest run src/games3d/rally/track.test.ts` and confirm failure.
+- [x] **Step 3: Implement.** Use a pure Catmull-Rom sampler (no Three.js) with a seeded offset that perturbs waypoints by at most 3 units, `getSpacedPoints` equivalent via arc-length resampling, and six checkpoints at evenly spaced sample indices. `registerGatePass` accepts a gate only when the nearest sample is within 5 samples *after* the expected gate index, and only `nextGate` advances; when `nextGate` wraps past the last gate back to `0`, increment `lap` and clear `splits`.
+- [x] **Step 4: Run tests** and `npm run typecheck`.
+- [x] **Step 5: Commit** `feat(rally): add seeded circuits and lap validation`.
 
 ## Task 2: Rift Rally physics
 
@@ -109,11 +112,11 @@
   - `aiDriveInput(self, target, carClass, tier, rng): DriveInput`
   - `AiTier = 'rookie' | 'pro' | 'elite'`
 
-- [ ] **Step 1: Write failing tests** covering: throttle increases speed and never exceeds class max; brake reduces speed; zero input coasts down; steering changes heading only while moving; rain reduces achievable cornering grip relative to clear (same input, lower lateral speed after a turn); handbrake plus steering builds drift charge; releasing handbrake with charge awards boost time; boost raises top speed above class max; off-track limits speed; identical inputs and dt produce identical states; AI aims at a far target and slows for a near turn.
-- [ ] **Step 2: Run** the suite and confirm failure.
-- [ ] **Step 3: Implement** a fixed-step arcade model: transform velocity into forward/lateral components; engine/brake along forward; lateral damping by `grip * weatherGrip * (handbrake ? driftGrip : 1)`; steering scaled by speed and weather; handbrake accumulates `driftCharge` from lateral slip; when handbrake is released above 0.5 charge, set `boostTime` proportional to charge and clear charge; boost adds `boostAccel` and a 15% speed ceiling; off-track multiplies engine force by 0.55 and adds drag. Clamp `dt` to 0.05.
-- [ ] **Step 4: Run tests and typecheck.**
-- [ ] **Step 5: Commit** `feat(rally): add fixed-step vehicle physics and AI inputs`.
+- [x] **Step 1: Write failing tests** covering: throttle increases speed and never exceeds class max; brake reduces speed; zero input coasts down; steering changes heading only while moving; rain reduces achievable cornering grip relative to clear (same input, lower lateral speed after a turn); handbrake plus steering builds drift charge; releasing handbrake with charge awards boost time; boost raises top speed above class max; off-track limits speed; identical inputs and dt produce identical states; AI aims at a far target and slows for a near turn.
+- [x] **Step 2: Run** the suite and confirm failure.
+- [x] **Step 3: Implement** a fixed-step arcade model: transform velocity into forward/lateral components; engine/brake along forward; lateral damping by `grip * weatherGrip * (handbrake ? driftGrip : 1)`; steering scaled by speed and weather; handbrake accumulates `driftCharge` from lateral slip; when handbrake is released above 0.5 charge, set `boostTime` proportional to charge and clear charge; boost adds `boostAccel` and a 15% speed ceiling; off-track multiplies engine force by 0.55 and adds drag. Clamp `dt` to 0.05.
+- [x] **Step 4: Run tests and typecheck.**
+- [x] **Step 5: Commit** `feat(rally): add fixed-step vehicle physics and AI inputs`.
 
 ## Task 3: Rift Rally ghost codec
 
@@ -128,11 +131,11 @@
   - `encodeGhost(samples): string`, `decodeGhost(raw): GhostSample[] | null`
   - `sampleGhost(samples, t): GhostSample | null`
 
-- [ ] **Step 1: Write failing tests**: recorder stores at most one sample per 0.05 s; a 1 s recording yields 21 samples; encode/decode round-trips exactly; corrupt, empty and wrong-version payloads return `null`; sampling between two samples interpolates position and takes the shortest heading arc; sampling before the first or after the last sample returns the nearest endpoint.
-- [ ] **Step 2: Run** and confirm failure.
-- [ ] **Step 3: Implement** a versioned payload `{ v: 1, s: [[t,x,z,h], ...] }`, values rounded to 3 decimals to keep saves small. Guard every parse with `Array.isArray` and finite-number checks.
-- [ ] **Step 4: Run tests and typecheck.**
-- [ ] **Step 5: Commit** `feat(rally): add ghost replay codec`.
+- [x] **Step 1: Write failing tests**: recorder stores at most one sample per 0.05 s; a 1 s recording yields 21 samples; encode/decode round-trips exactly; corrupt, empty and wrong-version payloads return `null`; sampling between two samples interpolates position and takes the shortest heading arc; sampling before the first or after the last sample returns the nearest endpoint.
+- [x] **Step 2: Run** and confirm failure.
+- [x] **Step 3: Implement** a versioned payload `{ v: 1, s: [[t,x,z,h], ...] }`, values rounded to 3 decimals to keep saves small. Guard every parse with `Array.isArray` and finite-number checks.
+- [x] **Step 4: Run tests and typecheck.**
+- [x] **Step 5: Commit** `feat(rally): add ghost replay codec`.
 
 ## Task 4: Rift Rally engine and shell
 
@@ -148,12 +151,12 @@
   - `class RallyEngine` with `constructor(canvas, setup)`, `start()`, `pause()`, `resume()`, `restart()`, `setCamera(mode)`, `setMuted(muted)`, `dispose()` and callbacks `onHud`, `onFinish`.
   - `default RiftRallyGame({ onStart, onComplete })`.
 
-- [ ] **Step 1: Write failing shell test**: with `RallyEngine` mocked, the menu renders three circuits, three cars and both weathers; starting calls `onStart`; a finished result shows position and calls `onComplete` once; unmount disposes the engine.
-- [ ] **Step 2: Implement `audio.ts`** as a small `RallyAudio` wrapper around `GameAudio` exposing `engine(ratio)`, `skid(amount)`, `impact(strength)`, `countdown(final)`, `lap(record)`, `setMuted`, `dispose`.
-- [ ] **Step 3: Implement `engine.ts`**: scene with fog and horizon; `createRoad` for the circuit; `createCity`/`createTrackLights` for scenery; player car and three rivals; rain Points when weather is rain; chase/wide/hood camera; fixed-step accumulator at 1/60 with at most 4 catch-up steps; rival AI from `aiDriveInput` with tiered max-speed scaling; lap progress from `registerGatePass`; position from lap + gate + distance to next gate; ghost recorder for the player; ghost car playback from the best stored ghost; countdown 3-2-1-GO; finish after three laps; HUD snapshot every 100 ms; `dispose()` removes RAF/listeners and disposes geometries/materials.
-- [ ] **Step 4: Implement `RiftRallyGame.tsx`**: `menu | countdown | racing | paused | finished` phases, car/track/weather/camera segmented controls, mute, best lap via `useBestScore('neonrift:game:rift-rally:best-lap', true)`, touch steering/throttle/brake/handbrake, pause on visibility change, results panel, and an error/WebGL notice fallback.
-- [ ] **Step 5: Run** the shell test, typecheck, and a production build to confirm the lazy chunk size.
-- [ ] **Step 6: Commit** `feat(rally): ship Rift Rally circuit racer`.
+- [x] **Step 1: Write failing shell test**: with `RallyEngine` mocked, the menu renders three circuits, three cars and both weathers; starting calls `onStart`; a finished result shows position and calls `onComplete` once; unmount disposes the engine.
+- [x] **Step 2: Implement `audio.ts`** as a small `RallyAudio` wrapper around `GameAudio` exposing `engine(ratio)`, `skid(amount)`, `impact(strength)`, `countdown(final)`, `lap(record)`, `setMuted`, `dispose`.
+- [x] **Step 3: Implement `engine.ts`**: scene with fog and horizon; `createRoad` for the circuit; `createCity`/`createTrackLights` for scenery; player car and three rivals; rain Points when weather is rain; chase/wide/hood camera; fixed-step accumulator at 1/60 with at most 4 catch-up steps; rival AI from `aiDriveInput` with tiered max-speed scaling; lap progress from `registerGatePass`; position from lap + gate + distance to next gate; ghost recorder for the player; ghost car playback from the best stored ghost; countdown 3-2-1-GO; finish after three laps; HUD snapshot every 100 ms; `dispose()` removes RAF/listeners and disposes geometries/materials.
+- [x] **Step 4: Implement `RiftRallyGame.tsx`**: `menu | countdown | racing | paused | finished` phases, car/track/weather/camera segmented controls, mute, best lap via `useBestScore('neonrift:game:rift-rally:best-lap', true)`, touch steering/throttle/brake/handbrake, pause on visibility change, results panel, and an error/WebGL notice fallback.
+- [x] **Step 5: Run** the shell test, typecheck, and a production build to confirm the lazy chunk size.
+- [x] **Step 6: Commit** `feat(rally): ship Rift Rally circuit racer`.
 
 ## Task 5: Neon Duel fighter data
 
@@ -171,9 +174,9 @@
   - `interface LadderRung { fighter: FighterId; tier: AiTier; name: string }`
   - `DUEL_LADDER: LadderRung[]` (five entries)
 
-- [ ] **Step 1: Write failing tests**: all four fighters exist with distinct speed/health/reach profiles; every move has positive startup/active/recovery and damage; only specials cost meter; light can cancel into heavy; the ladder has five rungs and ends with Sable.
-- [ ] **Step 2: Implement** four profiles: Volt (balanced), Kestrel (fast, low health, long reach), Mako (heavy, slow, high damage), Sable (technical, strong special). Frame data stays in ticks at 60 Hz.
-- [ ] **Step 3: Run tests and typecheck; commit** `feat(duel): add fighter roster and frame data`.
+- [x] **Step 1: Write failing tests**: all four fighters exist with distinct speed/health/reach profiles; every move has positive startup/active/recovery and damage; only specials cost meter; light can cancel into heavy; the ladder has five rungs and ends with Sable.
+- [x] **Step 2: Implement** four profiles: Volt (balanced), Kestrel (fast, low health, long reach), Mako (heavy, slow, high damage), Sable (technical, strong special). Frame data stays in ticks at 60 Hz.
+- [x] **Step 3: Run tests and typecheck; commit** `feat(duel): add fighter roster and frame data`.
 
 ## Task 6: Neon Duel combat engine
 
@@ -191,9 +194,9 @@
   - `stepCombat(a, b, inputA, inputB, arena: { minX; maxX }): { a; b; events }`
   - `MAX_METER`, `SPECIAL_COST`
 
-- [ ] **Step 1: Write failing tests**: attack produces no hit before startup and a hit during the active frames; hitbox range produces hits at reach and misses beyond it; simultaneous active attacks trade; blocking converts damage to chip and applies blockstun without hitstun; hitstop prevents action-frame advancement for both fighters; meter gains on hit and caps at 100; special does nothing below cost and consumes 50; jumping over a grounded attack avoids it; a landed light can cancel into heavy during the cancel window; fighters cannot leave arena bounds; KO emits a `ko` event once health reaches zero.
-- [ ] **Step 2: Implement** a tick-based state machine. Timers decrement first; if `hitstop > 0`, decrement and return without advancing actions. Movement respects block (no walk), hitstun (knockback only), and jump arcs. Attack frame advances each non-frozen tick; when `frame` enters `[startup, startup+active)` and `hasHit` is false, build a 1-D hitbox in front of the attacker with the reach, and compare it with the defender's hurtbox; a defender whose `y > 0.9` evades grounded mid attacks. Resolve both attacks after movement so trades are possible.
-- [ ] **Step 3: Run tests and typecheck; commit** `feat(duel): add deterministic combat engine`.
+- [x] **Step 1: Write failing tests**: attack produces no hit before startup and a hit during the active frames; hitbox range produces hits at reach and misses beyond it; simultaneous active attacks trade; blocking converts damage to chip and applies blockstun without hitstun; hitstop prevents action-frame advancement for both fighters; meter gains on hit and caps at 100; special does nothing below cost and consumes 50; jumping over a grounded attack avoids it; a landed light can cancel into heavy during the cancel window; fighters cannot leave arena bounds; KO emits a `ko` event once health reaches zero.
+- [x] **Step 2: Implement** a tick-based state machine. Timers decrement first; if `hitstop > 0`, decrement and return without advancing actions. Movement respects block (no walk), hitstun (knockback only), and jump arcs. Attack frame advances each non-frozen tick; when `frame` enters `[startup, startup+active)` and `hasHit` is false, build a 1-D hitbox in front of the attacker with the reach, and compare it with the defender's hurtbox; a defender whose `y > 0.9` evades grounded mid attacks. Resolve both attacks after movement so trades are possible.
+- [x] **Step 3: Run tests and typecheck; commit** `feat(duel): add deterministic combat engine`.
 
 ## Task 7: Neon Duel match and AI
 
@@ -215,9 +218,9 @@
   - `chooseAiInput(memory, self, opponent, profile, tick, rng): { input; memory }`
   - `mulberry32(seed): () => number`
 
-- [ ] **Step 1: Write failing tests**: timer counts down from 3600; timeout awards the higher health and returns `null` on a tie; first to two rounds ends the match; the ladder advances only after a win; AI with the same seed and state produces identical input; AI blocks a telegraphed attack when `blockChance` is forced to 1; AI approaches when out of spacing and attacks when in range; AI spends meter on a special only when affordable.
-- [ ] **Step 2: Implement.** `chooseAiInput` only re-decides every `reactionTicks`, sampling the opponent's action at decision time; held inputs persist between decisions. Approach/retreat uses the horizontal distance versus `spacing`; blocking is chosen when the opponent is in an attack's startup and the RNG passes `blockChance`; attacks mix light/heavy by `aggression`; specials require meter ≥ 50 and an RNG pass.
-- [ ] **Step 3: Run tests and typecheck; commit** `feat(duel): add best-of-three match flow and seeded AI`.
+- [x] **Step 1: Write failing tests**: timer counts down from 3600; timeout awards the higher health and returns `null` on a tie; first to two rounds ends the match; the ladder advances only after a win; AI with the same seed and state produces identical input; AI blocks a telegraphed attack when `blockChance` is forced to 1; AI approaches when out of spacing and attacks when in range; AI spends meter on a special only when affordable.
+- [x] **Step 2: Implement.** `chooseAiInput` only re-decides every `reactionTicks`, sampling the opponent's action at decision time; held inputs persist between decisions. Approach/retreat uses the horizontal distance versus `spacing`; blocking is chosen when the opponent is in an attack's startup and the RNG passes `blockChance`; attacks mix light/heavy by `aggression`; specials require meter ≥ 50 and an RNG pass.
+- [x] **Step 3: Run tests and typecheck; commit** `feat(duel): add best-of-three match flow and seeded AI`.
 
 ## Task 8: Neon Duel renderer, audio and shell
 
@@ -232,11 +235,11 @@
   - `class DuelAudio` with `hit(strength)`, `block()`, `whoosh()`, `ko()`, `countdown(final)`, `setMuted`, `dispose`.
   - `default NeonDuelGame({ onStart, onComplete })`.
 
-- [ ] **Step 1: Write failing shell test**: menu shows four fighters and five ladder rungs; selecting a fighter and starting calls `onStart`; pause freezes the loop; a match win advances the ladder; a loss ends the run and calls `onComplete` once; unmount cancels the loop.
-- [ ] **Step 2: Implement renderer** with parallax arena layers, vector fighters drawn from pose keyframes per action frame, attack arcs for active frames, block shields, sparks from the effect list, screen shake (disabled by reduced motion), round banners and a training dummy.
-- [ ] **Step 3: Implement shell** with phases `menu | select | intro | fight | roundOver | matchOver | runOver`, fixed accumulator at 1/60, HUD at 10 Hz, keyboard A/D/W/S + J/K/L + Shift, touch buttons, pause/restart, a move list, reduced-flash toggle, ladder persistence of the furthest rung via `localStorage`, and a training mode that resets the dummy.
-- [ ] **Step 4: Run** shell test, typecheck and build.
-- [ ] **Step 5: Commit** `feat(duel): ship Neon Duel arcade fighter`.
+- [x] **Step 1: Write failing shell test**: menu shows four fighters and five ladder rungs; selecting a fighter and starting calls `onStart`; pause freezes the loop; a match win advances the ladder; a loss ends the run and calls `onComplete` once; unmount cancels the loop.
+- [x] **Step 2: Implement renderer** with parallax arena layers, vector fighters drawn from pose keyframes per action frame, attack arcs for active frames, block shields, sparks from the effect list, screen shake (disabled by reduced motion), round banners and a training dummy.
+- [x] **Step 3: Implement shell** with phases `menu | select | intro | fight | roundOver | matchOver | runOver`, fixed accumulator at 1/60, HUD at 10 Hz, keyboard A/D/W/S + J/K/L + Shift, touch buttons, pause/restart, a move list, reduced-flash toggle, ladder persistence of the furthest rung via `localStorage`, and a training mode that resets the dummy.
+- [x] **Step 4: Run** shell test, typecheck and build.
+- [x] **Step 5: Commit** `feat(duel): ship Neon Duel arcade fighter`.
 
 ## Task 9: Catalogue, thumbnails, browser tests and docs
 
@@ -244,12 +247,12 @@
 - Modify: `src/types/game.ts`, `src/games/registry.ts`, `src/data/games.json`, `e2e/helpers.ts`, count copy in the home page and catalogue specs, axe route lists, `src/games/simulation-smoke.test.tsx` (if it enumerates every game), `README.md`, `ARCHITECTURE.md`, `ROADMAP.md`, `docs/research/README.md`, `docs/research/ROADMAP.md`, the Wave 2 spec status line, `docs/games/1000-game-expansion-program.md`.
 - Create: `public/art/rift-rally.svg`, `public/art/neon-duel.svg`.
 
-- [ ] **Step 1:** Add both keys, registry entries, catalogue records (category `racing` / `action`, published, instructions and controls matching the real inputs), and original SVG thumbnails.
-- [ ] **Step 2:** Update every literal count from 33 to 35 and "33 original games" copy.
-- [ ] **Step 3:** Extend the Playwright boot/catalogue matrices and axe scans to both routes.
-- [ ] **Step 4:** Run `npm run typecheck`, `npm test`, `npm run build`, `npx playwright test --workers=2`; fix every failure at the root rather than relaxing assertions.
-- [ ] **Step 5:** Update documentation with real test counts and verification date; list the games as shipped in the Wave 2 spec and roadmap.
-- [ ] **Step 6: Commit** `feat(rally,duel): register Wave 2B games and update docs`.
+- [x] **Step 1:** Add both keys, registry entries, catalogue records (category `racing` / `action`, published, instructions and controls matching the real inputs), and original SVG thumbnails.
+- [x] **Step 2:** Update every literal count from 33 to 35 and "33 original games" copy.
+- [x] **Step 3:** Extend the Playwright boot/catalogue matrices and axe scans to both routes.
+- [x] **Step 4:** Run `npm run typecheck`, `npm test`, `npm run build`, `npx playwright test --workers=2`; fix every failure at the root rather than relaxing assertions.
+- [x] **Step 5:** Update documentation with real test counts and verification date; list the games as shipped in the Wave 2 spec and roadmap.
+- [x] **Step 6: Commit** `feat(rally,duel): register Wave 2B games and update docs`.
 
 ## Verification commands
 
