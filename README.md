@@ -2,7 +2,7 @@
 
 A free, instant-play browser gaming portal. Original branding, original games, no account and no download.
 
-**Status:** the platform and 25 internal games are implemented. Rift Chess has entered Wave 1 development: M0 is complete, the M1 rules adapter and tests are authored, and an initial M2 local-play board prototype now exists on the hardening PR. It is **not yet verified, registered in the catalogue, or ready to publish**. The remaining 14 shortlisted games are still designs only.
+**Status:** the platform currently has 26 internal games represented in the hardening PR, including Rift Chess in the source catalogue and lazy registry. Rift Chess includes local two-player and free-analysis modes, a five-level computer opponent in a Web Worker, optional clocks, browser-local save/resume, original SVG pieces and unit/browser tests. **Release status: unverified and unmerged.** GitHub Actions attempts still fail before executing steps, so typecheck, unit tests, production build and Playwright have not run on the current PR head. Rift Chess is not released until CI and the remaining manual QA gates pass. Neon Rush is next in Wave 1; its GDD is ready, but implementation remains queued behind Rift Chess sign-off.
 
 ---
 
