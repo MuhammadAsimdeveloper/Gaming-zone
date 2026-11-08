@@ -21,9 +21,9 @@ test.describe('Rift Chess', () => {
     await expect(page.getByText('Black to move', { exact: true }).first()).toBeVisible();
     await expect(page.getByText('e4', { exact: true })).toBeVisible();
 
-    await page.getByRole('button', { name: 'Undo' }).click();
+    await page.getByRole('button', { name: 'Undo move', exact: true }).click();
     await expect(page.locator('[aria-label="e2, white pawn"]')).toBeVisible();
-    await expect(page.getByText('White to move')).toBeVisible();
+    await expect(page.getByText('White to move', { exact: true }).first()).toBeVisible();
     expect(errors).toEqual([]);
   });
 
