@@ -222,6 +222,15 @@ export default function RiftChessGame({
     setPositionStatus(nextStatus);
     setPositionVersion((value) => value + 1);
 
+    if (nextStatus.isGameOver) {
+      if (clockRef.current) updateClock(pauseClock(clockRef.current, performance.now()));
+      const storage = getBrowserStorage();
+      if (storage) clearSavedGame(storage);
+      setSavedAvailable(false);
+    } else if (mode !== 'free') {
+      persistCurrentGame();
+    }
+
     if (nextStatus.reason === 'checkmate') {
       setAnnouncement(statusTextForCheckmate(nextStatus.turn));
     } else if (nextStatus.reason) {
@@ -248,6 +257,17 @@ export default function RiftChessGame({
   }
 
   function applyMove(input: ChessMoveInput) {
+    const now = performance.now();
+    const beforeClock = clockRef.current;
+    if (beforeClock?.running) {
+      const elapsed = advanceClock(beforeClock, now);
+      if (elapsed.flagged) {
+        updateClock(elapsed);
+        recordFlag(elapsed.flagged);
+        return;
+      }
+    }
+    if (beforeClock?.flagged) return;
     const move = makeMove(gameRef.current, input);
     if (!move) {
       setAnnouncement('That move is not legal');
@@ -259,6 +279,12 @@ export default function RiftChessGame({
       onStartRef.current?.();
     }
 
+    if (beforeClock) {
+      clockHistoryRef.current.push(pauseClock(beforeClock, now));
+      const nextClock = completeClockMove(beforeClock, gameRef.current.turn(), now);
+      updateClock(nextClock);
+      if (nextClock.flagged) recordFlag(nextClock.flagged);
+    }
     setLastMove({ from: move.from, to: move.to });
     clearSelection();
     setPromotion(null);
@@ -266,7 +292,39 @@ export default function RiftChessGame({
   }
 
   useEffect(() => {
-    if (!ready || mode !== 'computer' || positionStatus.isGameOver || turn === playerColor) return;
+    if (!clock?.running) return;
+    const timer = window.setInterval(() => {
+      const current = clockRef.current;
+      if (!current) return;
+      const next = advanceClock(current, performance.now());
+      if (next !== current) updateClock(next);
+      if (next.flagged) recordFlag(next.flagged);
+    }, 100);
+    return () => window.clearInterval(timer);
+  }, [clock?.running]);
+
+  useEffect(() => {
+    const pause = () => {
+      const current = clockRef.current;
+      if (current) updateClock(pauseClock(current, performance.now()));
+    };
+    const resume = () => {
+      const current = clockRef.current;
+      if (current && !document.hidden) updateClock(resumeClock(current, performance.now()));
+    };
+    const visibility = () => document.hidden ? pause() : resume();
+    document.addEventListener('visibilitychange', visibility);
+    window.addEventListener('blur', pause);
+    window.addEventListener('focus', resume);
+    return () => {
+      document.removeEventListener('visibilitychange', visibility);
+      window.removeEventListener('blur', pause);
+      window.removeEventListener('focus', resume);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!ready || mode !== 'computer' || positionStatus.isGameOver || turn === playerColor || clock?.flagged) return;
 
     const fen = gameRef.current.fen();
     const requestId = ++aiRequestIdRef.current;
@@ -321,10 +379,10 @@ export default function RiftChessGame({
       worker.terminate();
       if (workerRef.current === worker) workerRef.current = null;
     };
-  }, [ready, mode, turn, positionVersion, playerColor, aiLevel, positionStatus.isGameOver]);
+  }, [ready, mode, turn, positionVersion, playerColor, aiLevel, positionStatus.isGameOver, clock?.flagged]);
 
   function handleSquareClick(square: ChessMoveInput['from']) {
-    if (promotion || positionStatus.isGameOver || thinking || (mode === 'computer' && turn !== playerColor)) return;
+    if (promotion || positionStatus.isGameOver || clock?.flagged || thinking || (mode === 'computer' && turn !== playerColor)) return;
 
     if (selectedSquare) {
       const matchingMoves = getLegalMoves(gameRef.current, selectedSquare).filter(
