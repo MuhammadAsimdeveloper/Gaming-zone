@@ -80,4 +80,25 @@ test.describe('Rift Chess', () => {
     await page.waitForTimeout(250);
     expect(await savedClock()).toEqual(paused);
   });
+
+  test('plays a legal move with keyboard-only board controls and restarts cleanly', async ({ page }) => {
+    await page.goto('/game/rift-chess');
+    await page.getByRole('button', { name: 'Play local game', exact: true }).click();
+
+    const e2 = page.locator('[data-square="e2"]');
+    await e2.focus();
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await expect(page.locator('[data-square="e4"]')).toBeFocused();
+    await page.keyboard.press('Enter');
+
+    await expect(page.getByText('Black to move', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('e4', { exact: true })).toBeVisible();
+
+    await page.getByRole('button', { name: 'New game', exact: true }).click();
+    await expect(page.locator('[aria-label="e2, white pawn"]')).toBeVisible();
+    await expect(page.getByText('White to move', { exact: true }).first()).toBeVisible();
+    await expect(page.locator('aside li')).toHaveCount(0);
+  });
 });
