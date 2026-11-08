@@ -12,6 +12,7 @@ export interface SavedGameOptions {
   playerColor: 'w' | 'b';
   aiLevel: AiLevel;
   orientation: 'w' | 'b';
+  clockPreset?: 'off' | '5+0' | '10+0' | '10+5';
   startFen: string;
   clock?: ChessClockState | null;
   clockHistory?: ChessClockState[];
@@ -66,6 +67,7 @@ function isValidOptions(value: unknown): value is SavedGameOptions {
     && (options.playerColor === 'w' || options.playerColor === 'b')
     && [1, 2, 3, 4, 5].includes(options.aiLevel as number)
     && (options.orientation === 'w' || options.orientation === 'b')
+    && (options.clockPreset === undefined || ['off', '5+0', '10+0', '10+5'].includes(String(options.clockPreset)))
     && typeof options.startFen === 'string'
     && (options.clock === undefined || options.clock === null || isValidClockState(options.clock))
     && (options.clockHistory === undefined
