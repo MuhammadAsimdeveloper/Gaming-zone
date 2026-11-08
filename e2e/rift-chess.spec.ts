@@ -53,7 +53,7 @@ test.describe('Rift Chess', () => {
 
     await page.getByRole('button', { name: 'Back to setup' }).click();
     await page.getByRole('button', { name: 'Resume saved game', exact: true }).click();
-    await expect(page.getByText('Black to move')).toBeVisible();
+    await expect(page.getByText('Black to move', { exact: true }).first()).toBeVisible();
     await expect(page.getByText('e4', { exact: true })).toBeVisible();
   });
 });
