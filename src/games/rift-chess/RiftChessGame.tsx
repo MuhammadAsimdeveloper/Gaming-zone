@@ -124,6 +124,7 @@ export default function RiftChessGame({
   const aiRequestIdRef = useRef(0);
   const [ready, setReady] = useState(false);
   const persistCurrentGameRef = useRef<() => void>(() => {});
+  const pageActiveRef = useRef(true);
   const [orientation, setOrientation] = useState<'w' | 'b'>('w');
   const [pieces, setPieces] = useState<BoardPiece[]>(() => getBoardPieces(gameRef.current));
   const [turn, setTurn] = useState<'w' | 'b'>(() => gameRef.current.turn());
@@ -289,7 +290,8 @@ export default function RiftChessGame({
 
     if (beforeClock) {
       clockHistoryRef.current.push(pauseClock(beforeClock, now));
-      const nextClock = completeClockMove(beforeClock, gameRef.current.turn(), now);
+      const completedClock = completeClockMove(beforeClock, gameRef.current.turn(), now);
+      const nextClock = pageActiveRef.current ? completedClock : pauseClock(completedClock, now);
       updateClock(nextClock);
       if (nextClock.flagged) recordFlag(nextClock.flagged);
     }
@@ -313,13 +315,16 @@ export default function RiftChessGame({
 
   useEffect(() => {
     const pause = () => {
+      pageActiveRef.current = false;
       const current = clockRef.current;
       if (current) updateClock(pauseClock(current, performance.now()));
       persistCurrentGameRef.current();
     };
     const resume = () => {
+      if (document.hidden) return;
+      pageActiveRef.current = true;
       const current = clockRef.current;
-      if (current && !document.hidden) updateClock(resumeClock(current, performance.now()));
+      if (current) updateClock(resumeClock(current, performance.now()));
     };
     const visibility = () => document.hidden ? pause() : resume();
     document.addEventListener('visibilitychange', visibility);
@@ -481,7 +486,8 @@ export default function RiftChessGame({
     gameRef.current = createGame(initialFen);
     setPositionVersion((value) => value + 1);
     clockHistoryRef.current = [];
-    updateClock(mode === 'free' ? null : createPresetClock(clockPreset, 'w'));
+    const initialClock = mode === 'free' ? null : createPresetClock(clockPreset, 'w');
+    updateClock(initialClock && !pageActiveRef.current ? pauseClock(initialClock, performance.now()) : initialClock);
     const storage = getBrowserStorage();
     if (storage) clearSavedGame(storage);
     setSavedAvailable(false);
@@ -543,9 +549,12 @@ export default function RiftChessGame({
     setLastMove(last ? { from: last.from, to: last.to } : null);
     clockHistoryRef.current = saved.options.clockHistory ?? [];
     const storedClock = saved.options.clock;
-    updateClock(storedClock && storedClock.flagged === null
+    const restoredClock = storedClock && storedClock.flagged === null
       ? resumeClock(storedClock, performance.now())
-      : storedClock ?? null);
+      : storedClock ?? null;
+    updateClock(restoredClock && !pageActiveRef.current
+      ? pauseClock(restoredClock, performance.now())
+      : restoredClock);
     startedRef.current = history.length > 0;
     finishedRef.current = false;
     clearSelection();
