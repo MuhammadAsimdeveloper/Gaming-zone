@@ -187,6 +187,9 @@ export default function RiftChessGame({
 
   function recordFlag(flagged: 'w' | 'b') {
     setAnnouncement(`${sideName(flagged)} ran out of time. ${sideName(flagged === 'w' ? 'b' : 'w')} wins.`);
+    const storage = getBrowserStorage();
+    if (storage) clearSavedGame(storage);
+    setSavedAvailable(false);
     if (mode !== 'free' && !finishedRef.current) {
       finishedRef.current = true;
       onCompleteRef.current?.({ outcome: mode === 'computer' ? (flagged === playerColor ? 'loss' : 'win') : 'complete' });
@@ -200,7 +203,7 @@ export default function RiftChessGame({
     const now = performance.now();
     const pausedClock = clockRef.current ? pauseClock(clockRef.current, now) : null;
     const options: SavedGameOptions = {
-      mode, playerColor, aiLevel, orientation,
+      mode, playerColor, aiLevel, orientation, clockPreset,
       startFen: initialFen ?? DEFAULT_POSITION,
       clock: pausedClock,
       clockHistory: clockHistoryRef.current,
@@ -444,11 +447,20 @@ export default function RiftChessGame({
     workerRef.current = null;
     setThinking(false);
     const computerHadReplied = mode === 'computer' && gameRef.current.turn() === playerColor;
-    const undone = undoMove(gameRef.current);
-    if (!undone) return;
-    if (computerHadReplied) undoMove(gameRef.current);
+    const plies = computerHadReplied ? 2 : 1;
+    let restoredClock: ChessClockState | null = null;
+    let didUndo = false;
+    for (let index = 0; index < plies; index += 1) {
+      if (!undoMove(gameRef.current)) break;
+      didUndo = true;
+      restoredClock = clockHistoryRef.current.pop() ?? restoredClock;
+    }
+    if (!didUndo) return;
+    if (restoredClock) updateClock(resumeClock(restoredClock, performance.now()));
     finishedRef.current = false;
-    setLastMove(null);
+    const history = gameRef.current.history({ verbose: true });
+    const last = history[history.length - 1];
+    setLastMove(last ? { from: last.from, to: last.to } : null);
     clearSelection();
     setPromotion(null);
     refreshPosition();
@@ -460,6 +472,11 @@ export default function RiftChessGame({
     setThinking(false);
     gameRef.current = createGame(initialFen);
     setPositionVersion((value) => value + 1);
+    clockHistoryRef.current = [];
+    updateClock(createPresetClock(clockPreset, 'w'));
+    const storage = getBrowserStorage();
+    if (storage) clearSavedGame(storage);
+    setSavedAvailable(false);
     startedRef.current = false;
     finishedRef.current = false;
     setPieces(getBoardPieces(gameRef.current));
@@ -487,9 +504,59 @@ export default function RiftChessGame({
     startGame();
   }
 
+  function resumeSavedGame() {
+    const storage = getBrowserStorage();
+    if (!storage) return;
+    const saved = loadGame(storage);
+    if (!saved) {
+      setSavedAvailable(false);
+      return;
+    }
+
+    workerRef.current?.terminate();
+    workerRef.current = null;
+    const game = saved.game;
+    gameRef.current = game;
+    setMode(saved.options.mode);
+    setAiLevel(saved.options.aiLevel);
+    setPlayerColor(saved.options.playerColor);
+    setOrientation(saved.options.orientation);
+    setClockPreset(saved.options.clockPreset ?? 'off');
+    setPieces(getBoardPieces(game));
+    setTurn(game.turn());
+    setMoveHistory(game.history());
+    const status = getPositionStatus(game);
+    setPositionStatus(status);
+    setAnnouncement(status.reason
+      ? status.reason === 'checkmate' ? statusTextForCheckmate(status.turn) : DRAW_LABELS[status.reason]
+      : `${sideName(game.turn())} to move · saved game restored`);
+    const history = game.history({ verbose: true });
+    const last = history[history.length - 1];
+    setLastMove(last ? { from: last.from, to: last.to } : null);
+    clockHistoryRef.current = saved.options.clockHistory ?? [];
+    const storedClock = saved.options.clock;
+    updateClock(storedClock && storedClock.flagged === null
+      ? resumeClock(storedClock, performance.now())
+      : storedClock ?? null);
+    startedRef.current = history.length > 0;
+    finishedRef.current = false;
+    clearSelection();
+    setPromotion(null);
+    setThinking(false);
+    setReady(true);
+    setSavedAvailable(true);
+    setPositionVersion((value) => value + 1);
+  }
+
   function backToSetup() {
-    startGame();
+    workerRef.current?.terminate();
+    workerRef.current = null;
+    setThinking(false);
+    if (clockRef.current) updateClock(pauseClock(clockRef.current, performance.now()));
     setReady(false);
+    clearSelection();
+    setPromotion(null);
+    persistCurrentGame();
   }
 
   const moveRows = [];
@@ -531,7 +598,7 @@ export default function RiftChessGame({
           <GameStat label="Moves played" value={moveRows.length} />
           <GameStat
             label="Position"
-            value={positionStatus.reason ? 'Finished' : positionStatus.inCheck ? 'Check' : 'Live'}
+            value={clock?.flagged || positionStatus.reason ? 'Finished' : positionStatus.inCheck ? 'Check' : 'Live'}
             tone={positionStatus.isGameOver ? 'mint' : positionStatus.inCheck ? 'coral' : 'electric'}
           />
         </div>
@@ -556,6 +623,15 @@ export default function RiftChessGame({
             label="Game mode"
             className="mx-auto"
           />
+          {mode !== 'free' ? (
+            <GameSegmented
+              options={CLOCK_OPTIONS}
+              value={clockPreset}
+              onChange={setClockPreset}
+              label="Game clock"
+              className="mx-auto"
+            />
+          ) : null}
           {mode === 'computer' ? (
             <div className="grid gap-3">
               <GameSegmented
@@ -573,6 +649,11 @@ export default function RiftChessGame({
                 className="mx-auto"
               />
             </div>
+          ) : null}
+          {savedAvailable ? (
+            <GameButton variant="secondary" size="md" onClick={resumeSavedGame} className="mx-auto min-w-48">
+              Resume saved game
+            </GameButton>
           ) : null}
           <GameButton variant="primary" size="md" onClick={startGame} className="mx-auto min-w-48">
             {mode === 'local' ? 'Play local game' : mode === 'computer' ? 'Play computer game' : 'Open free board'}
@@ -674,9 +755,16 @@ export default function RiftChessGame({
                 ))}
               </ol>
             )}
+            {clock ? (
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                <GameStat label="White clock" value={formatClock(clock.remainingMs.w)} tone={clock.flagged === 'w' ? 'coral' : clock.active === 'w' ? 'mint' : 'ink'} />
+                <GameStat label="Black clock" value={formatClock(clock.remainingMs.b)} tone={clock.flagged === 'b' ? 'coral' : clock.active === 'b' ? 'mint' : 'ink'} />
+              </div>
+            ) : null}
             <div className="mt-4 border-t border-white/10 pt-3">
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted">Rules engine</p>
-              <p className="mt-1 text-xs leading-5 text-muted">chess.js · legal moves, check, castling, en passant, promotion and draw detection.</p>
+              <p className="mt-1 text-xs leading-5 text-muted">chess.js · worker-backed alpha-beta opponent · local clocks and versioned browser saves.</p>
+              <p className="mt-2 text-[10px] text-muted">{mode !== 'free' && moveHistory.length > 0 ? 'This game is autosaved in this browser.' : 'No account or cloud storage required.'}</p>
             </div>
           </aside>
         </div>
