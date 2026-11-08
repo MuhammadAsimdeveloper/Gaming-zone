@@ -14,6 +14,7 @@ export interface SavedGameOptions {
   orientation: 'w' | 'b';
   startFen: string;
   clock?: ChessClockState | null;
+  clockHistory?: ChessClockState[];
 }
 
 export interface SavedMove {
@@ -43,6 +44,21 @@ export interface StorageLike {
   removeItem?(key: string): void;
 }
 
+function isValidClockState(value: unknown): value is ChessClockState {
+  if (!value || typeof value !== 'object') return false;
+  const clock = value as Record<string, unknown>;
+  const remaining = clock.remainingMs as Record<string, unknown> | undefined;
+  const validTime = (time: unknown) => typeof time === 'number' && Number.isFinite(time) && time >= 0;
+  return !!remaining
+    && validTime(remaining.w)
+    && validTime(remaining.b)
+    && (clock.active === null || clock.active === 'w' || clock.active === 'b')
+    && validTime(clock.incrementMs)
+    && typeof clock.running === 'boolean'
+    && (clock.lastUpdatedAt === null || (typeof clock.lastUpdatedAt === 'number' && Number.isFinite(clock.lastUpdatedAt)))
+    && (clock.flagged === null || clock.flagged === 'w' || clock.flagged === 'b');
+}
+
 function isValidOptions(value: unknown): value is SavedGameOptions {
   if (!value || typeof value !== 'object') return false;
   const options = value as Record<string, unknown>;
@@ -50,7 +66,10 @@ function isValidOptions(value: unknown): value is SavedGameOptions {
     && (options.playerColor === 'w' || options.playerColor === 'b')
     && [1, 2, 3, 4, 5].includes(options.aiLevel as number)
     && (options.orientation === 'w' || options.orientation === 'b')
-    && typeof options.startFen === 'string';
+    && typeof options.startFen === 'string'
+    && (options.clock === undefined || options.clock === null || isValidClockState(options.clock))
+    && (options.clockHistory === undefined
+      || (Array.isArray(options.clockHistory) && options.clockHistory.length <= 600 && options.clockHistory.every(isValidClockState)));
 }
 
 function isValidMove(value: unknown): value is SavedMove {
