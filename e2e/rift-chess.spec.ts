@@ -120,7 +120,10 @@ test.describe('Rift Chess', () => {
     expect(paused.running).toBe(false);
     const remaining = paused.remainingMs.b;
 
-    await page.waitForTimeout(300);
+    const blackClockValue = page.getByText('Black clock', { exact: true }).locator('..').locator('p').nth(1);
+    await expect(blackClockValue).toHaveText('5:00');
+    await page.waitForTimeout(1_200);
+    await expect(blackClockValue).toHaveText('5:00');
     expect((await savedClock()).remainingMs.b).toBe(remaining);
     await page.evaluate(() => window.dispatchEvent(new Event('focus')));
   });
