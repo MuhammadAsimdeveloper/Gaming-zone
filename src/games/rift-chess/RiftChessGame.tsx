@@ -43,12 +43,14 @@ const MODE_OPTIONS: ReadonlyArray<SegmentOption<Mode>> = [
   { value: 'free', label: 'Free board' },
 ];
 
-const AI_LEVEL_OPTIONS: ReadonlyArray<SegmentOption<AiLevel>> = [
-  { value: 1, label: 'Novice' },
-  { value: 2, label: 'Casual' },
-  { value: 3, label: 'Club' },
-  { value: 4, label: 'Expert' },
-  { value: 5, label: 'Master' },
+type AiLevelOption = '1' | '2' | '3' | '4' | '5';
+
+const AI_LEVEL_OPTIONS: ReadonlyArray<SegmentOption<AiLevelOption>> = [
+  { value: '1', label: 'Novice' },
+  { value: '2', label: 'Casual' },
+  { value: '3', label: 'Club' },
+  { value: '4', label: 'Expert' },
+  { value: '5', label: 'Master' },
 ];
 
 const PLAYER_COLOR_OPTIONS: ReadonlyArray<SegmentOption<'w' | 'b'>> = [
@@ -435,8 +437,8 @@ export default function RiftChessGame({
             <div className="grid gap-3">
               <GameSegmented
                 options={AI_LEVEL_OPTIONS}
-                value={aiLevel}
-                onChange={setAiLevel}
+                value={String(aiLevel) as AiLevelOption}
+                onChange={(value) => setAiLevel(Number(value) as AiLevel)}
                 label="Computer strength"
                 className="mx-auto"
               />
