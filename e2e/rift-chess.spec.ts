@@ -56,4 +56,28 @@ test.describe('Rift Chess', () => {
     await expect(page.getByText('Black to move', { exact: true }).first()).toBeVisible();
     await expect(page.getByText('e4', { exact: true })).toBeVisible();
   });
+
+  test('persists the remaining clock when the page loses focus', async ({ page }) => {
+    await page.goto('/game/rift-chess');
+    await page.getByRole('button', { name: '5 min', exact: true }).click();
+    await page.getByRole('button', { name: 'Play local game', exact: true }).click();
+    await page.locator('[data-square="e2"]').click();
+    await page.locator('[data-square="e4"]').click();
+
+    await page.waitForTimeout(1_200);
+    await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+
+    const savedClock = async () => page.evaluate(() => {
+      const raw = localStorage.getItem('neonrift:rift-chess:save:v1');
+      return raw ? JSON.parse(raw).options.clock : null;
+    });
+    const paused = await savedClock();
+    expect(paused).not.toBeNull();
+    expect(paused.running).toBe(false);
+    expect(paused.lastUpdatedAt).toBeNull();
+    expect(paused.remainingMs.b).toBeLessThan(299_000);
+
+    await page.waitForTimeout(250);
+    expect(await savedClock()).toEqual(paused);
+  });
 });
