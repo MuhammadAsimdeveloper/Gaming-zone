@@ -132,11 +132,15 @@ export class StadiumAudio {
     this.noiseBurst(0.5, 1600, 0.09);
   }
 
-  toggleMute(): boolean {
-    this.muted = !this.muted;
+  setMuted(muted: boolean): void {
+    this.muted = muted;
     if (this.context && this.master) {
       this.master.gain.setTargetAtTime(this.muted ? 0 : 0.8, this.context.currentTime, 0.05);
     }
+  }
+
+  toggleMute(): boolean {
+    this.setMuted(!this.muted);
     return this.muted;
   }
 

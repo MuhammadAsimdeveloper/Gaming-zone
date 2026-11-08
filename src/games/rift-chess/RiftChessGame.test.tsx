@@ -26,6 +26,7 @@ async function clickSquare(square: string) {
 }
 
 beforeEach(() => {
+  localStorage.clear();
   container = document.createElement('div');
   document.body.appendChild(container);
   root = createRoot(container);
@@ -66,10 +67,11 @@ describe('Rift Chess playable board', () => {
     await render();
     await clickButton('vs Computer');
 
-    expect(container.textContent).toContain('Computer strength');
-    expect(container.textContent).toContain('Play as');
-    expect(container.querySelector('button[aria-pressed="true"]')?.textContent).toBe('vs Computer');
+    const strength = container.querySelector('[role="group"][aria-label="Computer strength"]');
     const playAs = container.querySelector('[role="group"][aria-label="Play as"]');
+    expect(strength).not.toBeNull();
+    expect(playAs).not.toBeNull();
+    expect(container.querySelector('button[aria-pressed="true"]')?.textContent).toBe('vs Computer');
     await clickButton('Black');
     expect(playAs?.querySelector('button[aria-pressed="true"]')?.textContent).toBe('Black');
   });

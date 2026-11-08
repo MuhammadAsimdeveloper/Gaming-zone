@@ -344,7 +344,7 @@ export default function RiftChessGame({
         applyMove({
           from: fallback.from,
           to: fallback.to,
-          ...(fallback.promotion ? { promotion: fallback.promotion } : {}),
+          ...(fallback.promotion ? { promotion: fallback.promotion as PromotionPiece } : {}),
         });
       }
     };

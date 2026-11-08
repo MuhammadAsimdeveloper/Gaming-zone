@@ -1,6 +1,6 @@
 import { Chess } from 'chess.js';
 import type { Square } from 'chess.js';
-import type { AiLevel, AiMove } from './ai';
+import type { AiLevel } from './ai';
 import type { ChessClockState } from './clock';
 
 export const RIFT_CHESS_SAVE_KEY = 'neonrift:rift-chess:save:v1';

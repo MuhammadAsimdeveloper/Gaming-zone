@@ -110,7 +110,7 @@ export function findBestMove(fen: string, options: AiSearchOptions = {}): AiMove
     moves.sort((a, b) => a === best ? -1 : b === best ? 1 : orderValue(b) - orderValue(a));
   }
 
-  return { from: best.from, to: best.to, ...(best.promotion ? { promotion: best.promotion } : {}) };
+  return { from: best.from, to: best.to, ...(best.promotion ? { promotion: best.promotion as NonNullable<AiMove['promotion']> } : {}) };
 }
 
 export const AI_LEVEL_LABELS: Record<AiLevel, string> = {
