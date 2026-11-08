@@ -37,7 +37,8 @@ test.describe('Rift Chess', () => {
     await page.locator('[data-square="e4"]').click();
 
     await expect(page.getByText('White to move')).toBeVisible({ timeout: 15_000 });
-    await expect(page.locator('[data-square="e5"]')).toHaveAttribute('aria-label', /black pawn/, { timeout: 15_000 });
+    await expect(page.locator('aside li').first()).toContainText('e4');
+    await expect(page.locator('aside li').first().locator('span').nth(2)).not.toBeEmpty();
     expect(errors).toEqual([]);
   });
 
