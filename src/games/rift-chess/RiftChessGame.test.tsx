@@ -62,6 +62,44 @@ describe('Rift Chess playable board', () => {
     expect(container.textContent).not.toContain('e4');
   });
 
+  it('plays against the computer with configurable side and strength', async () => {
+    await render();
+    await clickButton('vs Computer');
+
+    expect(container.textContent).toContain('Computer strength');
+    expect(container.textContent).toContain('Play as');
+    expect(container.querySelector('button[aria-pressed="true"]')?.textContent).toBe('Local two-player');
+
+    await clickButton('Black');
+    await clickButton('Play computer game');
+    expect(container.querySelector('[role="grid"]')).not.toBeNull();
+    expect(container.textContent).toContain('You: Black');
+  });
+
+  it('starts a timed game, autosaves it, and resumes the saved position', async () => {
+    localStorage.clear();
+    await render();
+    await clickButton('5 min');
+    await clickButton('Play local game');
+
+    expect(container.textContent).toContain('White clock');
+    expect(container.textContent).toContain('Black clock');
+
+    await clickSquare('e2');
+    await clickSquare('e4');
+    expect(localStorage.getItem('neonrift:rift-chess:save:v1')).not.toBeNull();
+
+    const back = container.querySelector<HTMLButtonElement>('button[aria-label="Back to setup"]');
+    expect(back).not.toBeNull();
+    await act(async () => back!.click());
+    await clickButton('Resume saved game');
+
+    expect(container.querySelector('[role="grid"]')).not.toBeNull();
+    expect(container.textContent).toContain('e4');
+    expect(container.textContent).toContain('Black to move');
+    expect(container.textContent).toContain('White clock');
+  });
+
   it('offers all four promotion choices and applies the selected piece', async () => {
     await render('4k3/P7/8/8/8/8/8/4K3 w - - 0 1');
     await clickButton('Play local game');

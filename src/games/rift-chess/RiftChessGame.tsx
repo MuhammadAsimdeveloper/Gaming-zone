@@ -473,7 +473,7 @@ export default function RiftChessGame({
     gameRef.current = createGame(initialFen);
     setPositionVersion((value) => value + 1);
     clockHistoryRef.current = [];
-    updateClock(createPresetClock(clockPreset, 'w'));
+    updateClock(mode === 'free' ? null : createPresetClock(clockPreset, 'w'));
     const storage = getBrowserStorage();
     if (storage) clearSavedGame(storage);
     setSavedAvailable(false);
