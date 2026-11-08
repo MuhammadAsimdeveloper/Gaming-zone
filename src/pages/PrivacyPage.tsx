@@ -59,7 +59,7 @@ export default function PrivacyPage() {
       title="Privacy Policy"
       description="What NeonRift stores, what it does not collect, and the separate choices you have over local data, analytics and advertising."
       path="/privacy"
-      updated="2 November 2026"
+      updated="7 November 2026"
     >
       <LegalSection id="summary" title="The short version">
         <p>
@@ -95,6 +95,16 @@ export default function PrivacyPage() {
           <li>
             <strong className="text-ink">Game saves</strong> — best scores and simple progress for
             individual games, when a game supports them.
+          </li>
+          <li>
+            <strong className="text-ink">Local catalogue settings</strong> — local-only catalogue
+            overrides, hidden categories and advertising placement preferences, if any are saved
+            in this browser. They are not account data and are not sent to a NeonRift server.
+          </li>
+          <li>
+            <strong className="text-ink">Returning-visitor timestamp</strong> — after analytics is
+            configured and you allow it, a first/last-visit timestamp is stored locally to calculate
+            a returning-visitor interval for Google Analytics.
           </li>
         </ul>
       </LegalSection>

@@ -5,6 +5,8 @@
 ---
 
 > Every game below has a full design document in [GDD/README.md](GDD/README.md). Read the GDD before starting a milestone; the roadmap sets order and gates, the GDD sets content and rules.
+>
+> **Current execution state — 8 November 2026:** Rift Chess source work now includes the rules board, worker AI, clocks, browser-local save/resume and a catalogue/registry entry on the open hardening PR. Its current-branch CI and manual QA have not passed, so it is not accepted as complete or released. Neon Rush is next in Wave 1 and its GDD is ready; implementation remains queued until Rift Chess clears its earlier gates.
 
 ## 1. Principles
 
@@ -46,7 +48,7 @@ Before the first new game, close the existing platform gaps. These are small and
 | Task | Status |
 |---|---|
 | 0.1 App-level ErrorBoundary | Complete. `AppErrorBoundary` covers routes; game boundaries still contain game chunk failures. Playwright recovery test passes. |
-| 0.2 Admin route/dashboard | Not shipped by design. `adminAuth.ts`/`adminStore.ts` remain dormant scaffolding; README states that a browser passcode is not server authentication. |
+| 0.2 Admin route/dashboard | Not shipped by design. `adminAuth.ts` is dormant scaffolding; `adminStore.ts` is active localStorage-backed catalogue override state, but there is no admin UI or server authentication. |
 | 0.3 Privacy “NeoRift” typo | Complete. Brand audit found no remaining `NeoRift` or `Gaming Zone` references. |
 | 0.4 Invalid Tailwind utilities | No unknown-utility warnings in the production build; pages were exercised in Playwright. |
 | 0.5 `public/_redirects` | Complete. SPA fallback present and verified through preview deep links. |
@@ -103,8 +105,7 @@ Goal: prove the game pipeline five times with small, complete games.
 
 ### Rift Chess — implementation milestones
 
-**Status:** plan ready, implementation not started, no catalogue entry. The platform gates above
-pass; starting code requires explicit approval. Full plan:
+**Status (2026-11-07):** M0 dependency/licence gate is complete. M1 rules adapter and 30-position regression suite are authored. An M2 board prototype now supports local two-player/free-board play, legal selection, promotion choice, SAN history, undo, flip and restart. Neither M1 nor M2 has passed runtime verification: GitHub Actions did not start because the repository owner's account is locked over a billing issue. The game remains unregistered and unpublished. Full plan:
 [RIFT-CHESS-IMPLEMENTATION-PLAN.md](RIFT-CHESS-IMPLEMENTATION-PLAN.md).
 
 | Milestone | Deliverable | Exit criteria |
@@ -118,7 +119,7 @@ pass; starting code requires explicit approval. Full plan:
 | M6 — Integration and QA | Registry, catalogue, thumbnail, docs, browser tests | Existing 49 unit + 37 browser tests still pass; new tests pass; all gates green |
 
 Licence note: `js-chess-engine@2.4.6` is MIT but requires Node ≥24 as of 2026-11-02, while this
-project targets Node 20+. The plan therefore uses `chess.js` for rules and an in-house worker
+project now uses Node 24 for the full Vitest 5 workflow. The plan uses `chess.js` for rules and an in-house worker
 minimax. Do not add `js-chess-engine` without deliberately raising the Node baseline and recording
 that decision.
 
@@ -278,7 +279,7 @@ No game implementation begins until the shortlist and the specific game plan are
 is complete and verified. After approval, the order is:
 
 1. Phase 0 platform hardening. **Complete and verified 2026-11-02.**
-2. Rift Chess. **Plan ready; implementation not started.**
+2. Rift Chess. **M0 complete; M1/M2 source authored; CI verification blocked; not registered or publishable.**
 3. Neon Rush.
 4. Lawn Protocol.
 5. Apex Time Trial.

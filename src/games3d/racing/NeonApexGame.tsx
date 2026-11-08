@@ -154,7 +154,7 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
     try {
       const engine = new RaceEngine(
         canvas,
-        { trackId, carId, difficulty, camera },
+        { trackId, carId, difficulty, camera, muted },
         {
           onHud: (nextHud) => {
             setHud(nextHud);
@@ -203,6 +203,7 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
           },
         },
       );
+
       engineRef.current = engine;
       engine.setCamera(camera);
       onStartRef.current?.();
@@ -214,7 +215,7 @@ export default function NeonApexGame({ onStart, onComplete }: GameComponentProps
       );
       setPhase('menu');
     }
-  }, [camera, carId, difficulty, disposeEngine, trackId]);
+  }, [camera, carId, difficulty, disposeEngine, muted, trackId]);
 
   const togglePause = useCallback(() => {
     const engine = engineRef.current;

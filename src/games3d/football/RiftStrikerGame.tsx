@@ -174,7 +174,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
     try {
       const engine = new FootballEngine(
         canvas,
-        { difficulty, camera },
+        { difficulty, camera, muted },
         {
           onHud: (nextHud) => setHud(nextHud),
           onFinish: (matchResult) => {
@@ -200,6 +200,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
           },
         },
       );
+
       engineRef.current = engine;
       onStartRef.current?.();
     } catch (cause) {
@@ -210,7 +211,7 @@ export default function RiftStrikerGame({ onStart, onComplete }: GameComponentPr
       );
       setPhase('menu');
     }
-  }, [camera, difficulty, disposeEngine, resetTouch]);
+  }, [camera, difficulty, disposeEngine, muted, resetTouch]);
 
   const togglePause = useCallback(() => {
     const engine = engineRef.current;

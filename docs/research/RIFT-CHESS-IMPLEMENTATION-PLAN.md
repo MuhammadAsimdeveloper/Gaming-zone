@@ -1,24 +1,24 @@
 # Rift Chess — Implementation Plan
 
 > Prepared 2026-11-02 after the platform hardening and quality gates passed.
-> **Status:** plan only. No Rift Chess code has been written and no catalogue entry exists.
+> **Status (2026-11-08):** M0 dependency/licence work and M1 rules source/tests are present. M2 board source and tests, M3 worker AI/five levels, and M4 clocks plus browser-local save/resume are also implemented in `fix/platform-hardening-2026-11`. The Rift Chess thumbnail, docs, public catalogue entry and lazy registry route have been added in the same PR. These later milestones were authored ahead of CI verification: **M2–M6 are not accepted as passed** until current-branch tests, build, browser QA and manual review succeed. The PR is open and unmerged. Puzzles/local records and the remaining M5 polish are still outstanding.
 > Source design: [GDD/01-rift-chess.md](GDD/01-rift-chess.md).
-
 ---
 
 ## 1. Gate status
 
-The GDD requires platform hardening and the baseline quality gates to pass before implementation. On 2026-11-02:
+The 4 November platform results below are a **historical baseline**, not verification of this PR:
 
-| Gate | Result |
-|---|---|
-| `npm run typecheck` | Passed, no output |
-| `npm test` | 49 tests passed in 5 files |
-| `npm run build` | Passed; 2,143 modules; only the existing >500 kB Three.js chunk warning |
-| `npx playwright test` | 37 tests passed in 2.4 minutes with 2 workers |
+| Gate | Historical baseline | Current PR branch |
+|---|---|---|
+| `npm run typecheck` | Passed on 2026-11-04 | Not run |
+| `npm test` | 234 tests in 27 files on 2026-11-04 | New chess rules, board, AI, clock, persistence and platform tests are authored but not executed |
+| `npm run build` | Passed on 2026-11-04; 2,143 modules and the existing Three.js chunk warning | Not run |
+| `npx playwright test` | 66 tests on 2026-11-04 | Rift Chess catalogue launch, 320 px board, AI response, save/resume and blur-clock persistence tests are authored but not executed |
 
-Rift Chess implementation may start. Planned platform work that is **not** complete (CSP, automated full-match 3D QA) does not block a React DOM game.
+The latest Actions attempts on 8 November terminate before any job steps or downloadable logs are available. An earlier job annotation explicitly identified an account billing lock. This is an infrastructure/access blocker, **not evidence of a TypeScript or test failure**. Do not mark a gate green until it has actually run on the current branch.
 
+M2 board, M3 AI, M4 clock/persistence and M6 catalogue integration code now exist, but source presence is not QA sign-off. M4 still lacks the planned puzzle fixtures and local-record work, and M5 polish/manual accessibility review remains open. Do not merge or release while the CI and manual QA gates are unresolved.
 ---
 
 ## 2. Decisions
@@ -32,11 +32,11 @@ Rift Chess implementation may start. Planned platform work that is **not** compl
 | Source | npm registry metadata and package README, 2026-11-02 |
 | Why | Mature legal move generation, check/checkmate/stalemate, repetition, fifty-move and insufficient-material detection, SAN history. Headless, TypeScript, browser ESM. |
 
-Add it as a runtime dependency only when M1 starts. Copy the BSD-2-Clause notice into `THIRD_PARTY_NOTICES.md` (created at M1 if absent). Re-verify the version and licence at install time; do not assume this snapshot is current.
+`chess.js@1.4.0` is pinned as a runtime dependency. Its BSD-2-Clause licence text is recorded in `THIRD_PARTY_NOTICES.md`; package integrity is pinned in `package-lock.json`.
 
 ### Bot: in-house Web Worker minimax
 
-The GDD suggested `js-chess-engine` (MIT). Registry check on 2026-11-02 shows **v2.4.6 requires Node.js ≥24**, while this project documents and tests on Node 20+. Rather than raise the platform baseline for one game or pin an old major, M3 will use a small alpha-beta minimax worker:
+The GDD suggested `js-chess-engine` (MIT). The bot remains an in-house alpha-beta minimax worker; chess.js supplies legal move generation. Node 24 is now the CI baseline for the Vitest 5 toolchain:
 
 - Legal moves come from `chess.js` inside the worker, so the bot cannot generate an illegal move.
 - Evaluation: material + piece-square tables + mobility. No endgame tablebases.
@@ -181,18 +181,17 @@ Rules:
 
 ## 9. Milestones
 
-| Milestone | Deliverable | Exit criteria |
+| Milestone | Source status on the PR branch | Acceptance status |
 |---|---|---|
-| **M0 — Dependency gate** | `chess.js` installed and noticed | Licence re-verified; notice added; licence file included in build/credits; typecheck/build green |
-| **M1 — Rules spine** | `rules.ts` + `rules.test.ts` | ≥30 FEN fixtures: legal counts, check, mate, stalemate, castling rights, en passant window, promotion, repetition, fifty-move, insufficient material; all reasons exact |
-| **M2 — Playable board** | Board, selection, promotion, move list, undo, restart | Full local two-player game by mouse and keyboard; illegal moves rejected; SAN history correct |
-| **M3 — Computer opponent** | Worker AI + five levels + cancellation | Bot always returns a legal move; 10 s timeout fallback; worker terminates on restart/unmount; UI never blocks |
-| **M4 — Modes and persistence** | Clocks, save/resume, puzzles, local records | Reload restores an AI game; hidden tab freezes clocks; puzzle fixtures accept only intended solutions; record math tested |
-| **M5 — Polish** | Themes, audio, accessibility, responsive layout | Keyboard-only full game; screen-reader labels reviewed; 320 px layout verified; audio mute and cleanup verified |
-| **M6 — Integration and QA** | Registry, catalogue, thumbnail, docs, E2E | New unit tests + existing 49 pass; Playwright covers launch, move, promotion, undo, restart, save/resume, 320 px and route-away cleanup; typecheck/test/build green; docs updated |
+| **M0 — Dependency gate** | `chess.js@1.4.0` pinned; BSD-2-Clause notice and lockfile integrity recorded | Source/licence work complete; current-branch typecheck/build not verified |
+| **M1 — Rules spine** | `rules.ts` and tests include legal moves, check/mate/stalemate, castling, en passant, promotion, repetition, fifty-move and insufficient-material cases with 30 FEN fixtures | Authored; test suite not executed on this branch |
+| **M2 — Playable board** | Accessible 8×8 board, local two-player/free modes, promotion, SAN history, undo/restart, keyboard focus and Escape behaviour | Prototype and unit/E2E coverage authored; full local mouse/keyboard playthrough and responsive QA still pending |
+| **M3 — Computer opponent** | Five-level alpha-beta AI in a dedicated Web Worker, 10-second UI fallback, worker termination on restart/unmount | Source implemented; tactical quality, real worker bundling, cancellation and browser behaviour not verified |
+| **M4 — Modes and persistence** | 5+0, 10+0 and 10+5 clocks; save/resume replays moves from the saved FEN; clock pauses on blur/hidden/pagehide and persists the paused snapshot | Core source implemented; clock/persistence tests authored. Puzzle fixtures and local records are outstanding; reload/hidden-tab QA not run |
+| **M5 — Polish** | Original SVG pieces, keyboard board navigation, labelled squares and focus-managed promotion chooser | Partial; complete screen-reader/manual accessibility, full mobile/device and audio review remain |
+| **M6 — Integration and QA** | Catalogue JSON entry, lazy registry route, thumbnail, game documentation and Playwright coverage | Integration is present on the open PR only. Typecheck/test/build/E2E and manual QA have not passed; not released |
 
-Order is strict. M2 must not start until M1 is green; M3 must not start until a full local game works.
-
+The intended order remains strict: M1 must pass before accepting M2; M2 must pass before accepting M3; and all gameplay, responsive and release checks must pass before M6 is accepted. Some later source work has been authored in this branch, but it does not waive earlier gates.
 ---
 
 ## 10. Testing plan

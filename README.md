@@ -2,7 +2,7 @@
 
 A free, instant-play browser gaming portal. Original branding, original games, no account and no download.
 
-**Status:** the platform and 25 internal games are implemented. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). **The 15 shortlisted games are designs only — they are not implemented, and no catalogue entry claims otherwise.**
+**Status:** the platform currently has 26 internal games represented in the hardening PR, including Rift Chess in the source catalogue and lazy registry. Rift Chess includes local two-player and free-analysis modes, a five-level computer opponent in a Web Worker, optional clocks, browser-local save/resume, original SVG pieces and unit/browser tests. **Release status: unverified and unmerged.** GitHub Actions attempts still fail before executing steps, so typecheck, unit tests, production build and Playwright have not run on the current PR head. Rift Chess is not released until CI and the remaining manual QA gates pass. Neon Rush is next in Wave 1; its GDD is ready, but implementation remains queued behind Rift Chess sign-off.
 
 ---
 
@@ -33,7 +33,7 @@ npm run preview    # preview the production build
 npm run test:e2e   # build, then Playwright browser tests against the preview
 ```
 
-Node 20+ is required. The project is developed on Node 24.
+Node 24+ is required for the full development and test workflow (Vitest 5).
 
 Playwright's Chromium is the only browser target in CI. Install it once with
 `npx playwright install chromium` before running `npm run test:e2e` locally.
@@ -168,18 +168,24 @@ Cloudflare Pages (not deployed by this repository):
 ```text
 Build command:    npm run build
 Output directory: dist
-Node version:     20+
+Node version:     24+
 ```
 
 The build is a static site. `public/_redirects` provides the SPA fallback for deep links, and `public/_headers` sets baseline security headers. A Content-Security-Policy is not yet configured because the optional analytics and ad integrations must be validated against it first.
 
 ---
 
-## Next game: Rift Chess
+## Next game: Rift Chess — M2 prototype in progress
 
-Rift Chess is the first approved shortlist game. It is **not implemented and has no catalogue
-entry yet**. The gated implementation plan, licence checks and milestones are in
-[`docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md`](docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md).
+The `chess.js` 1.4.0 dependency is pinned and its BSD-2-Clause notice is recorded in
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). `src/games/rift-chess/` now contains the
+rules adapter, legal-move/draw tests, an accessible 8×8 board, local two-player/free-board
+modes, promotion selection, move history, undo, flip and restart. These components are not
+yet registered in the public catalogue. AI, clocks, save/resume, puzzles, custom SVG pieces,
+audio and full desktop/mobile browser QA remain. GitHub Actions could not start because the
+repository owner's account is locked over a billing issue, so the new source and tests have
+not been compiled or run. Do not describe this prototype as production-ready. See the
+[`implementation plan`](docs/research/RIFT-CHESS-IMPLEMENTATION-PLAN.md).
 
 ---
 

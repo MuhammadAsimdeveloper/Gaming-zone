@@ -31,4 +31,5 @@ export const gameRegistry: Record<
   'signal-stack': lazy(() => import('../games/signal-stack/SignalStackGame')),
   'rift-runner': lazy(() => import('../games/rift-runner/RiftRunnerGame')),
   'rift-tactics': lazy(() => import('../games/rift-tactics/RiftTacticsGame')),
+  'rift-chess': lazy(() => import('../games/rift-chess/RiftChessGame')),
 };

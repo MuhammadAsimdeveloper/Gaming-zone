@@ -54,7 +54,7 @@ Method: GitHub API metadata plus the licence file where GitHub reported `NOASSER
 | `Hextris/hextris` | JavaScript | GPL-3.0 (despite `NOASSERTION`) | Copyleft | Last push 2023-05-13 | Fast puzzle game; reference only |
 | `freeciv/freeciv-web` | JavaScript + C | AGPL-3.0 client / GPL server | Copyleft | Active (2026-03-27) | Browser strategy game; architecture reference only |
 | `luanti-org/luanti` | C++ | LGPL code + CC-BY-SA 3.0 media | Code weak copyleft; media share-alike | Active (2026-10-30) | Voxel platform; engine architecture reference |
-| `jhlywa/chess.js` | TypeScript | BSD-2-Clause | Yes | Active (2026-08-11) | Move generation, validation, check/checkmate/draw detection |
+| `jhlywa/chess.js` | TypeScript | BSD-2-Clause | Yes | Pinned 1.4.0 (2026-11-07) | Installed for Rift Chess M1 rules; notice in `THIRD_PARTY_NOTICES.md` |
 | `josefjadrny/js-chess-engine` | TypeScript | MIT | Yes | Active (2026-02-22) | Zero-dependency chess engine with configurable difficulty |
 | `oakmac/chessboardjs` | JavaScript | MIT | Yes | Last push 2024-04-17 | Standalone chessboard UI |
 | `guyz/tinystrike` | JavaScript | ISC | Yes | Active (2026-10-03) | Tactical browser FPS with solo, bot and online modes |

@@ -18,6 +18,8 @@ export interface DriveMission {
   route: DrivePoint[];
 }
 
+export const DRIVE_SPAWN: DrivePoint = { x: 0, z: 72 };
+
 export type DriveCarId = 'nova-gt' | 'vanta-rs' | 'halo-s';
 
 export interface DriveCar {
@@ -84,7 +86,7 @@ export const DRIVE_MISSIONS: DriveMission[] = [
     name: 'First Light',
     brief: 'Learn the grid: five checkpoint gates through the morning streets.',
     timeLimit: 85,
-    route: [point(2, 4), point(4, 2), point(3, 0), point(1, 1), point(0, 2)],
+    route: [point(3, 4), point(4, 2), point(3, 0), point(1, 1), point(0, 2)],
   },
   {
     id: 'neon-courier',
