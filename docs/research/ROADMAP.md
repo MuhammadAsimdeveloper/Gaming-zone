@@ -5,6 +5,8 @@
 ---
 
 > Every game below has a full design document in [GDD/README.md](GDD/README.md). Read the GDD before starting a milestone; the roadmap sets order and gates, the GDD sets content and rules.
+>
+> **Current execution state — 8 November 2026:** Rift Chess source work now includes the rules board, worker AI, clocks, browser-local save/resume and a catalogue/registry entry on the open hardening PR. Its current-branch CI and manual QA have not passed, so it is not accepted as complete or released. Neon Rush is next in Wave 1 and its GDD is ready; implementation remains queued until Rift Chess clears its earlier gates.
 
 ## 1. Principles
 
