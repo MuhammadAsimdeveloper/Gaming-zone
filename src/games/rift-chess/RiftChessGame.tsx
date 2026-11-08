@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { ArrowLeft, FlipHorizontal, RotateCcw, Undo2 } from 'lucide-react';
-import type { Chess } from 'chess.js';
+import { DEFAULT_POSITION, type Chess } from 'chess.js';
+import { advanceClock, completeClockMove, createClock, pauseClock, resumeClock, startClock, type ChessClockState } from './clock';
+import { clearSavedGame, loadGame, saveGame, type SavedGameOptions } from './persistence';
 import type { GameComponentProps } from '../../types/game';
 import {
   GameButton,
@@ -26,6 +28,7 @@ import {
 } from './rules';
 
 type Mode = 'local' | 'free' | 'computer';
+type ClockPreset = 'off' | '5+0' | '10+0' | '10+5';
 
 interface PromotionChoice {
   from: ChessMoveInput['from'];
@@ -52,6 +55,29 @@ const AI_LEVEL_OPTIONS: ReadonlyArray<SegmentOption<AiLevelOption>> = [
   { value: '4', label: 'Expert' },
   { value: '5', label: 'Master' },
 ];
+
+const CLOCK_OPTIONS: ReadonlyArray<SegmentOption<ClockPreset>> = [
+  { value: 'off', label: 'No clock' },
+  { value: '5+0', label: '5 min' },
+  { value: '10+0', label: '10 min' },
+  { value: '10+5', label: '10 + 5' },
+];
+
+function createPresetClock(preset: ClockPreset, firstSide: 'w' | 'b'): ChessClockState | null {
+  if (preset === 'off') return null;
+  const [minutes, incrementSeconds] = preset.split('+').map(Number);
+  return startClock(createClock(minutes! * 60_000, incrementSeconds! * 1_000, firstSide), performance.now());
+}
+
+function formatClock(milliseconds: number): string {
+  const seconds = Math.ceil(milliseconds / 1_000);
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+function getBrowserStorage(): Storage | null {
+  try { return typeof window === 'undefined' ? null : window.localStorage; }
+  catch { return null; }
+}
 
 const PLAYER_COLOR_OPTIONS: ReadonlyArray<SegmentOption<'w' | 'b'>> = [
   { value: 'w', label: 'White' },
@@ -87,6 +113,11 @@ export default function RiftChessGame({
   const [mode, setMode] = useState<Mode>('local');
   const [aiLevel, setAiLevel] = useState<AiLevel>(2);
   const [playerColor, setPlayerColor] = useState<'w' | 'b'>('w');
+  const [clockPreset, setClockPreset] = useState<ClockPreset>('off');
+  const [clock, setClock] = useState<ChessClockState | null>(null);
+  const clockRef = useRef<ChessClockState | null>(null);
+  const clockHistoryRef = useRef<ChessClockState[]>([]);
+  const [savedAvailable, setSavedAvailable] = useState(false);
   const [thinking, setThinking] = useState(false);
   const [positionVersion, setPositionVersion] = useState(0);
   const workerRef = useRef<Worker | null>(null);
@@ -109,6 +140,11 @@ export default function RiftChessGame({
   const boardContainerRef = useRef<HTMLDivElement>(null);
   const promotionFirstButtonRef = useRef<HTMLButtonElement>(null);
   const pendingFocusSquareRef = useRef<ChessMoveInput['from'] | null>(null);
+
+  useEffect(() => {
+    const storage = getBrowserStorage();
+    setSavedAvailable(storage ? loadGame(storage) !== null : false);
+  }, []);
 
   useEffect(() => {
     onStartRef.current = onStart;
@@ -135,13 +171,42 @@ export default function RiftChessGame({
   }, [promotion]);
 
   const statusText = useMemo(() => {
+    if (clock?.flagged) return `${sideName(clock.flagged)} ran out of time · ${sideName(clock.flagged === 'w' ? 'b' : 'w')} wins`;
     if (positionStatus.reason === 'checkmate') {
       return `${sideName(positionStatus.turn === 'w' ? 'b' : 'w')} wins by checkmate`;
     }
     if (positionStatus.reason) return DRAW_LABELS[positionStatus.reason];
     if (positionStatus.inCheck) return `${sideName(positionStatus.turn)} is in check`;
     return `${sideName(positionStatus.turn)} to move`;
-  }, [positionStatus]);
+  }, [positionStatus, clock?.flagged]);
+
+  function updateClock(next: ChessClockState | null) {
+    clockRef.current = next;
+    setClock(next);
+  }
+
+  function recordFlag(flagged: 'w' | 'b') {
+    setAnnouncement(`${sideName(flagged)} ran out of time. ${sideName(flagged === 'w' ? 'b' : 'w')} wins.`);
+    if (mode !== 'free' && !finishedRef.current) {
+      finishedRef.current = true;
+      onCompleteRef.current?.({ outcome: mode === 'computer' ? (flagged === playerColor ? 'loss' : 'win') : 'complete' });
+    }
+  }
+
+  function persistCurrentGame() {
+    if (mode === 'free') return;
+    const storage = getBrowserStorage();
+    if (!storage) return;
+    const now = performance.now();
+    const pausedClock = clockRef.current ? pauseClock(clockRef.current, now) : null;
+    const options: SavedGameOptions = {
+      mode, playerColor, aiLevel, orientation,
+      startFen: initialFen ?? DEFAULT_POSITION,
+      clock: pausedClock,
+      clockHistory: clockHistoryRef.current,
+    };
+    setSavedAvailable(saveGame(storage, gameRef.current, options));
+  }
 
   function clearSelection() {
     setSelectedSquare(null);
