@@ -11,6 +11,7 @@ import {
   type SegmentOption,
 } from '../shared/GameFrame';
 import { ChessBoard } from './board';
+import { AI_LEVEL_LABELS, type AiLevel, type AiWorkerRequest, type AiWorkerResponse } from './ai';
 import {
   createGame,
   getBoardPieces,
@@ -24,7 +25,7 @@ import {
   type PromotionPiece,
 } from './rules';
 
-type Mode = 'local' | 'free';
+type Mode = 'local' | 'free' | 'computer';
 
 interface PromotionChoice {
   from: ChessMoveInput['from'];
@@ -38,7 +39,21 @@ interface RiftChessGameProps extends GameComponentProps {
 
 const MODE_OPTIONS: ReadonlyArray<SegmentOption<Mode>> = [
   { value: 'local', label: 'Local two-player' },
+  { value: 'computer', label: 'vs Computer' },
   { value: 'free', label: 'Free board' },
+];
+
+const AI_LEVEL_OPTIONS: ReadonlyArray<SegmentOption<AiLevel>> = [
+  { value: 1, label: 'Novice' },
+  { value: 2, label: 'Casual' },
+  { value: 3, label: 'Club' },
+  { value: 4, label: 'Expert' },
+  { value: 5, label: 'Master' },
+];
+
+const PLAYER_COLOR_OPTIONS: ReadonlyArray<SegmentOption<'w' | 'b'>> = [
+  { value: 'w', label: 'White' },
+  { value: 'b', label: 'Black' },
 ];
 
 const PROMOTION_OPTIONS: ReadonlyArray<{ value: PromotionPiece; label: string; whiteGlyph: string; blackGlyph: string }> = [
@@ -68,6 +83,12 @@ export default function RiftChessGame({
 }: RiftChessGameProps) {
   const gameRef = useRef<Chess>(createGame(initialFen));
   const [mode, setMode] = useState<Mode>('local');
+  const [aiLevel, setAiLevel] = useState<AiLevel>(2);
+  const [playerColor, setPlayerColor] = useState<'w' | 'b'>('w');
+  const [thinking, setThinking] = useState(false);
+  const [positionVersion, setPositionVersion] = useState(0);
+  const workerRef = useRef<Worker | null>(null);
+  const aiRequestIdRef = useRef(0);
   const [ready, setReady] = useState(false);
   const [orientation, setOrientation] = useState<'w' | 'b'>('w');
   const [pieces, setPieces] = useState<BoardPiece[]>(() => getBoardPieces(gameRef.current));
@@ -91,6 +112,11 @@ export default function RiftChessGame({
     onStartRef.current = onStart;
     onCompleteRef.current = onComplete;
   }, [onStart, onComplete]);
+
+  useEffect(() => () => {
+    workerRef.current?.terminate();
+    workerRef.current = null;
+  }, []);
 
   useEffect(() => {
     if (promotion) {
@@ -127,6 +153,7 @@ export default function RiftChessGame({
     setTurn(game.turn());
     setMoveHistory(game.history());
     setPositionStatus(nextStatus);
+    setPositionVersion((value) => value + 1);
 
     if (nextStatus.reason === 'checkmate') {
       setAnnouncement(statusTextForCheckmate(nextStatus.turn));
@@ -138,11 +165,14 @@ export default function RiftChessGame({
       setAnnouncement(`${sideName(nextStatus.turn)} to move`);
     }
 
-    if (nextStatus.isGameOver && mode === 'local' && !finishedRef.current) {
+    if (nextStatus.isGameOver && mode !== 'free' && !finishedRef.current) {
       finishedRef.current = true;
-      onCompleteRef.current?.({
-        outcome: nextStatus.reason === 'checkmate' ? 'complete' : 'draw',
-      });
+      const outcome = nextStatus.reason === 'checkmate'
+        ? mode === 'computer'
+          ? (nextStatus.turn === playerColor ? 'loss' : 'win')
+          : 'complete'
+        : 'draw';
+      onCompleteRef.current?.({ outcome });
     }
   }
 
@@ -168,8 +198,66 @@ export default function RiftChessGame({
     refreshPosition();
   }
 
+  useEffect(() => {
+    if (!ready || mode !== 'computer' || positionStatus.isGameOver || turn === playerColor) return;
+
+    const fen = gameRef.current.fen();
+    const requestId = ++aiRequestIdRef.current;
+    const worker = new Worker(new URL('./ai.worker.ts', import.meta.url), { type: 'module' });
+    workerRef.current = worker;
+    setThinking(true);
+
+    const playFallback = (message: string) => {
+      if (gameRef.current.fen() !== fen) return;
+      const fallback = getLegalMoves(gameRef.current)[0];
+      setThinking(false);
+      setAnnouncement(message);
+      if (fallback) {
+        applyMove({
+          from: fallback.from,
+          to: fallback.to,
+          ...(fallback.promotion ? { promotion: fallback.promotion } : {}),
+        });
+      }
+    };
+
+    const timeoutId = window.setTimeout(() => {
+      worker.terminate();
+      if (workerRef.current === worker) workerRef.current = null;
+      playFallback('Computer search timed out; a legal fallback move was played.');
+    }, 10_000);
+
+    worker.onmessage = (event: MessageEvent<AiWorkerResponse>) => {
+      const response = event.data;
+      if (response.requestId !== requestId || response.fen !== fen) return;
+      window.clearTimeout(timeoutId);
+      worker.terminate();
+      if (workerRef.current === worker) workerRef.current = null;
+      if (gameRef.current.fen() !== fen) return;
+      setThinking(false);
+      if (response.move) applyMove(response.move);
+      else playFallback(response.error ?? 'Computer search returned no move; a legal fallback was played.');
+    };
+
+    worker.onerror = () => {
+      window.clearTimeout(timeoutId);
+      worker.terminate();
+      if (workerRef.current === worker) workerRef.current = null;
+      playFallback('Computer engine unavailable; a legal fallback move was played.');
+    };
+
+    const request: AiWorkerRequest = { requestId, fen, level: aiLevel };
+    worker.postMessage(request);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      worker.terminate();
+      if (workerRef.current === worker) workerRef.current = null;
+    };
+  }, [ready, mode, turn, positionVersion, playerColor, aiLevel, positionStatus.isGameOver]);
+
   function handleSquareClick(square: ChessMoveInput['from']) {
-    if (promotion || positionStatus.isGameOver) return;
+    if (promotion || positionStatus.isGameOver || thinking || (mode === 'computer' && turn !== playerColor)) return;
 
     if (selectedSquare) {
       const matchingMoves = getLegalMoves(gameRef.current, selectedSquare).filter(
@@ -227,8 +315,13 @@ export default function RiftChessGame({
   }
 
   function undo() {
+    workerRef.current?.terminate();
+    workerRef.current = null;
+    setThinking(false);
+    const computerHadReplied = mode === 'computer' && gameRef.current.turn() === playerColor;
     const undone = undoMove(gameRef.current);
     if (!undone) return;
+    if (computerHadReplied) undoMove(gameRef.current);
     finishedRef.current = false;
     setLastMove(null);
     clearSelection();
@@ -237,7 +330,11 @@ export default function RiftChessGame({
   }
 
   function startGame() {
+    workerRef.current?.terminate();
+    workerRef.current = null;
+    setThinking(false);
     gameRef.current = createGame(initialFen);
+    setPositionVersion((value) => value + 1);
     startedRef.current = false;
     finishedRef.current = false;
     setPieces(getBoardPieces(gameRef.current));
@@ -254,7 +351,7 @@ export default function RiftChessGame({
             ? `${sideName(initialStatus.turn)} is in check`
             : `${sideName(initialStatus.turn)} to move`,
     );
-    setOrientation('w');
+    setOrientation(mode === 'computer' ? playerColor : 'w');
     setLastMove(null);
     setPromotion(null);
     clearSelection();
@@ -314,7 +411,7 @@ export default function RiftChessGame({
           />
         </div>
       }
-      footer="Keyboard: arrow keys move focus · Enter or Space selects/moves · Escape clears selection. Local games stay on this device."
+      footer="Keyboard: arrow keys move focus · Enter or Space selects/moves · Escape clears selection. Computer search runs in a Worker; games stay on this device."
     >
       {!ready ? (
         <div className="mx-auto flex w-full max-w-xl flex-1 flex-col justify-center gap-5 py-8 text-center">
@@ -324,8 +421,7 @@ export default function RiftChessGame({
           <div>
             <h3 className="text-xl font-semibold text-ink">The board is yours.</h3>
             <p className="mt-2 text-sm leading-6 text-muted">
-              Play pass-and-play with someone beside you, or use the free board to explore legal positions.
-              Computer opponents and puzzles are being built in later milestones.
+              Play a computer opponent, pass-and-play with someone beside you, or use the free board to explore legal positions.
             </p>
           </div>
           <GameSegmented
@@ -335,8 +431,26 @@ export default function RiftChessGame({
             label="Game mode"
             className="mx-auto"
           />
+          {mode === 'computer' ? (
+            <div className="grid gap-3">
+              <GameSegmented
+                options={AI_LEVEL_OPTIONS}
+                value={aiLevel}
+                onChange={setAiLevel}
+                label="Computer strength"
+                className="mx-auto"
+              />
+              <GameSegmented
+                options={PLAYER_COLOR_OPTIONS}
+                value={playerColor}
+                onChange={setPlayerColor}
+                label="Play as"
+                className="mx-auto"
+              />
+            </div>
+          ) : null}
           <GameButton variant="primary" size="md" onClick={startGame} className="mx-auto min-w-48">
-            {mode === 'local' ? 'Play local game' : 'Open free board'}
+            {mode === 'local' ? 'Play local game' : mode === 'computer' ? 'Play computer game' : 'Open free board'}
           </GameButton>
         </div>
       ) : (
@@ -344,7 +458,7 @@ export default function RiftChessGame({
           <div className="min-w-0">
             <div className="mb-2 flex items-center justify-between gap-2">
               <p className="text-xs font-semibold text-ink">
-                {mode === 'local' ? 'Local two-player' : 'Free board'}
+                {mode === 'local' ? 'Local two-player' : mode === 'computer' ? `You: ${sideName(playerColor)} · ${AI_LEVEL_LABELS[aiLevel]}` : 'Free board'}
               </p>
               <p className="text-[10px] uppercase tracking-[0.15em] text-muted">
                 {positionStatus.inCheck ? 'King in check' : 'Standard chess'}
@@ -396,7 +510,7 @@ export default function RiftChessGame({
               ) : null}
             </div>
             <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-              <p className="text-xs font-medium text-ink" aria-live="polite">{statusText}</p>
+              <p className="text-xs font-medium text-ink" aria-live="polite">{thinking ? "Computer is thinking…" : statusText}</p>
               <GameButton size="sm" variant="secondary" onClick={undo} disabled={moveHistory.length === 0}>
                 <Undo2 className="h-3.5 w-3.5" aria-hidden="true" />
                 Undo move
