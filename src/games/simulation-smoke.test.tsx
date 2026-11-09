@@ -10,6 +10,7 @@ import NeonDinerGame from '../games/neon-diner/NeonDinerGame';
 import OrbitMarketGame from '../games/orbit-market/OrbitMarketGame';
 import ParkPulseGame from '../games/park-pulse/ParkPulseGame';
 import RiftColonyGame from '../games/rift-colony/RiftColonyGame';
+import RiftEcologyGame from '../games/rift-ecology/RiftEcologyGame';
 import RiftHospitalGame from '../games/rift-hospital/RiftHospitalGame';
 import RiftLifeGame from '../games/rift-life/RiftLifeGame';
 import RiftRunnerGame from '../games/rift-runner/RiftRunnerGame';
@@ -94,6 +95,7 @@ const GAMES = [
   { name: 'Rift Tactics', Component: RiftTacticsGame, start: /Start battle/ },
   { name: 'Riftfall', Component: RiftfallGame, start: /Start run/ },
   { name: 'Rift Life', Component: RiftLifeGame, start: /Start the 21 days/ },
+  { name: 'Rift Ecology', Component: RiftEcologyGame, start: /Start season/ },
 ];
 
 describe('simulation game shells', () => {
