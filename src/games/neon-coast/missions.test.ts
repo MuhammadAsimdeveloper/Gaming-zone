@@ -3,6 +3,7 @@ import {
   MISSIONS,
   advanceMission,
   beginMission,
+  nextTarget,
   rankFor,
   rewardFor,
   type MissionEvent,
@@ -43,6 +44,27 @@ describe('mission catalogue', () => {
     expect(MISSIONS.filter((mission) => mission.repeatable).map((mission) => mission.id)).toEqual([
       'glow-run',
     ]);
+  });
+});
+
+describe('objective targeting', () => {
+  it('points the HUD at the next thing to do', () => {
+    const courier = beginMission('tideglass-courier', 1);
+    expect(nextTarget(courier)).toEqual(landmarkPosition('tideglass-market'));
+    expect(nextTarget({ ...courier, pickedUp: true })).toEqual(
+      landmarkPosition('coral-radio-tower'),
+    );
+
+    const circuit = beginMission('lantern-circuit', 4);
+    expect(nextTarget(circuit)).toEqual(circuit.gates[0]);
+    expect(nextTarget({ ...circuit, gateIndex: 3 })).toEqual(circuit.gates[3]);
+
+    const glow = beginMission('glow-run', 21);
+    expect(nextTarget(glow)).toEqual(glow.shards[0]);
+    expect(nextTarget({ ...glow, collected: [0] })).toEqual(glow.shards[1]);
+    expect(nextTarget({ ...glow, collected: [0, 1, 2, 3, 4, 5, 6, 7] })).toBeNull();
+
+    expect(nextTarget(beginMission('landmark-trail', 2))).toBeNull();
   });
 });
 

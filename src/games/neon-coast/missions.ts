@@ -265,6 +265,25 @@ export function rewardFor(id: MissionId, outcome: MissionOutcome): number {
   return outcome.completed ? definitionFor(id).reward : 0;
 }
 
+/** The next point the HUD should point at, or null when the trail has no pin. */
+export function nextTarget(runtime: MissionRuntime): Point | null {
+  switch (runtime.id) {
+    case 'tideglass-courier':
+      return runtime.pickedUp
+        ? landmarkPosition('coral-radio-tower')
+        : landmarkPosition('tideglass-market');
+    case 'lantern-circuit':
+      return runtime.gates[runtime.gateIndex] ?? null;
+    case 'glow-run':
+      for (let index = 0; index < runtime.shards.length; index += 1) {
+        if (!runtime.collected.includes(index)) return runtime.shards[index]!;
+      }
+      return null;
+    case 'landmark-trail':
+      return null;
+  }
+}
+
 const RANKS = ['Newcomer', 'Local', 'Runner', 'Insider', 'Coast Legend'] as const;
 
 export function rankFor(completed: readonly MissionId[]): string {
