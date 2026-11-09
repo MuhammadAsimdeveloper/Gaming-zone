@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { AnimationLoop } from '../shared/animationLoop';
+import { HudPump } from '../shared/hud';
 import { GameAudio } from '../shared/audio';
 import { createKeyboard, readDriveInput, type TouchDriveState } from '../shared/input';
 import { clamp, damp, formatRaceTime, normalizeAngle } from '../shared/math';
@@ -137,7 +138,7 @@ export class RaceEngine {
   private countdown = 3;
   private lastCountdownBeep = 4;
   private raceTime = 0;
-  private hudTimer = 0;
+  private hudPump: HudPump<RaceHud>;
   private shake = 0;
   private cameraMode: CameraMode;
   private cameraPosition = new THREE.Vector3();
@@ -154,6 +155,7 @@ export class RaceEngine {
   ) {
     this.setup = setup;
     this.callbacks = callbacks;
+    this.hudPump = new HudPump<RaceHud>((hud) => this.callbacks.onHud(hud), 0.1);
     this.track = getTrack(setup.trackId);
     this.cameraMode = setup.camera;
     this.keyboard = createKeyboard(this.canvas);
@@ -337,7 +339,7 @@ export class RaceEngine {
       this.updateVisuals(delta);
       this.updateCamera(delta);
       this.renderer.render(this.scene, this.camera);
-      this.emitHud();
+      this.hudPump.push(delta, () => this.snapshotHud());
       return;
     }
 
@@ -361,11 +363,7 @@ export class RaceEngine {
     this.updateCamera(delta);
     this.renderer.render(this.scene, this.camera);
 
-    this.hudTimer += delta;
-    if (this.hudTimer >= 0.08) {
-      this.hudTimer = 0;
-      this.emitHud();
-    }
+    this.hudPump.push(delta, () => this.snapshotHud());
   };
 
   private updatePlayer(delta: number, drive: TouchDriveState): void {
@@ -692,8 +690,10 @@ export class RaceEngine {
   }
 
   private emitHud(): void {
-    const count = this.track.points.length;
-    const playerProgress = this.player.lapsCompleted * count + this.player.index;
+    this.hudPump.push(0, () => this.snapshotHud(), true);
+  }
+
+  private snapshotHud(): RaceHud {
     const position =
       this.standings().findIndex((racer) => racer.id === this.player.id) + 1;
     const onTrack = isOnTrack(
@@ -704,7 +704,7 @@ export class RaceEngine {
       this.player.index,
     );
 
-    this.callbacks.onHud({
+    return {
       speed: Math.abs(this.player.speed) * 3.6,
       lap: Math.min(this.player.lapsCompleted + 1, TOTAL_LAPS),
       totalLaps: TOTAL_LAPS,
@@ -720,9 +720,7 @@ export class RaceEngine {
       minimapRivals: this.racers
         .filter((racer) => !racer.isPlayer)
         .map((racer) => this.toMinimap(racer.x, racer.z)),
-    });
-
-    void playerProgress;
+    };
   }
 
   private toMinimap(x: number, z: number): { x: number; y: number } {

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { AnimationLoop } from '../shared/animationLoop';
+import { HudPump } from '../shared/hud';
 import { GameAudio } from '../shared/audio';
 import { createKeyboard, readDriveInput, type TouchDriveState } from '../shared/input';
 import { clamp, damp, normalizeAngle } from '../shared/math';
@@ -123,7 +124,7 @@ export class DriveEngine {
   private crashCooldown = 0;
   private message: string | null = null;
   private messageTimer = 0;
-  private hudTimer = 0;
+  private hudPump: HudPump<DriveHud>;
   private timeOfDay = 0.36;
   private player: VehicleVisual;
   private playerX = DRIVE_SPAWN.x;
@@ -168,6 +169,7 @@ export class DriveEngine {
     this.cameraMode = setup.camera;
     this.callbackHud = callbacks.onHud;
     this.callbackFinish = callbacks.onFinish;
+    this.hudPump = new HudPump<DriveHud>((hud) => this.callbackHud(hud), 0.1);
     this.timeLeft = this.mission.timeLimit;
     this.keyboard = createKeyboard(this.canvas);
 
@@ -352,11 +354,7 @@ export class DriveEngine {
     this.audio.setSpeed(Math.abs(this.playerSpeed) / this.carConfig.maxSpeed);
     this.renderer.render(this.scene, this.camera);
 
-    this.hudTimer += delta;
-    if (this.hudTimer >= 0.08) {
-      this.hudTimer = 0;
-      this.emitHud();
-    }
+    this.hudPump.push(delta, () => this.snapshotHud());
   };
 
   private updatePlayer(delta: number): void {
@@ -624,13 +622,17 @@ export class DriveEngine {
   }
 
   private emitHud(): void {
+    this.hudPump.push(0, () => this.snapshotHud(), true);
+  }
+
+  private snapshotHud(): DriveHud {
     const target = this.currentTarget();
     const dx = target ? target.x - this.playerX : 0;
     const dz = target ? target.z - this.playerZ : 0;
     const distance = target ? Math.hypot(dx, dz) : 0;
     const bearing = target ? normalizeAngle(Math.atan2(-dx, -dz) - this.playerHeading) : 0;
 
-    this.callbackHud({
+    return {
       speedKph: Math.abs(this.playerSpeed) * 3.6,
       phase: this.phase,
       countdown: Math.ceil(this.countdown),
@@ -649,7 +651,7 @@ export class DriveEngine {
       minimapPlayer: mapPoint(this.playerX, this.playerZ, DRIVE_EXTENT),
       minimapTarget: target ? mapPoint(target.x, target.z, DRIVE_EXTENT) : null,
       minimapTraffic: this.traffic.map((car) => mapPoint(car.x, car.z, DRIVE_EXTENT)),
-    });
+    };
   }
 
   private handleResize = (): void => {

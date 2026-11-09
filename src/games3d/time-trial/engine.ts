@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { AnimationLoop } from '../shared/animationLoop';
+import { HudPump } from '../shared/hud';
 import { GameAudio } from '../shared/audio';
 import { createKeyboard, readDriveInput, type TouchDriveState } from '../shared/input';
 import { clamp, damp } from '../shared/math';
@@ -217,7 +218,7 @@ export class TimeTrialEngine {
 
   private minimapBounds: { minX: number; minZ: number; scale: number };
   private gatePoints: Array<{ pointIndex: number; gate: number }>;
-  private hudTimer = 0;
+  private hudPump: HudPump<TrialHud>;
 
   constructor(
     private canvas: HTMLCanvasElement,
@@ -226,6 +227,7 @@ export class TimeTrialEngine {
   ) {
     this.setup = setup;
     this.callbacks = callbacks;
+    this.hudPump = new HudPump<TrialHud>((hud) => this.callbacks.onHud(hud), 0.1);
     this.track = getTimeTrialTrack(setup.trackId);
     this.vehicle = getVehicle(setup.carId);
     this.cameraMode = setup.camera;
@@ -407,7 +409,7 @@ export class TimeTrialEngine {
       this.updateGhost();
       this.updateCamera(delta);
       this.renderer.render(this.scene, this.camera);
-      this.emitHud();
+      this.hudPump.push(delta, () => this.snapshotHud());
       return;
     }
 
@@ -431,11 +433,7 @@ export class TimeTrialEngine {
     this.updateCamera(delta);
     this.renderer.render(this.scene, this.camera);
 
-    this.hudTimer += delta;
-    if (this.hudTimer >= 0.08) {
-      this.hudTimer = 0;
-      this.emitHud();
-    }
+    this.hudPump.push(delta, () => this.snapshotHud());
   };
 
   private stepSimulation(dt: number): void {
@@ -707,12 +705,16 @@ export class TimeTrialEngine {
   }
 
   private emitHud(): void {
+    this.hudPump.push(0, () => this.snapshotHud(), true);
+  }
+
+  private snapshotHud(): TrialHud {
     const checkpointCount = this.track.checkpoints.length;
     const ghostPose = this.setup.ghost
       ? interpolateGhost(this.setup.ghost.samples, this.run.clock)
       : null;
 
-    this.callbacks.onHud({
+    return {
       phase: this.phase,
       clock: this.run.clock,
       speed: Math.abs(this.speed) * 3.6,
@@ -737,7 +739,7 @@ export class TimeTrialEngine {
       invalidReason: this.run.invalidReason,
       progress: this.toMinimap(this.x, this.z),
       ghostProgress: ghostPose ? this.toMinimap(ghostPose.x, ghostPose.z) : null,
-    });
+    };
   }
 
   private toMinimap(x: number, z: number): { x: number; y: number } {
