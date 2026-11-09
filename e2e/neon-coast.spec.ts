@@ -87,10 +87,18 @@ async function currentMinimap(page: Page): Promise<MinimapState> {
 }
 
 /** Walks to a world waypoint using only real key events plus the minimap. */
-async function walkTo(page: Page, waypoint: MinimapPoint, tolerance = 45): Promise<void> {
+async function walkTo(
+  page: Page,
+  waypoint: MinimapPoint,
+  tolerance = 45,
+  stop?: { isVisible(): Promise<boolean> },
+): Promise<void> {
   const deadline = Date.now() + 25_000;
   let last: MinimapState | null = null;
   while (Date.now() < deadline) {
+    // Completing a mission freezes the world, so a waypoint inside the finish
+    // radius may never register; stop as soon as the results panel opens.
+    if (stop && (await stop.isVisible())) return;
     last = await minimapState(page);
     if (!last) {
       await page.waitForTimeout(120);
@@ -104,6 +112,7 @@ async function walkTo(page: Page, waypoint: MinimapPoint, tolerance = 45): Promi
     const ms = Math.min(600, Math.max(180, (Math.abs(delta) / 175) * 1000));
     await hold(page, ['Shift', key], ms);
   }
+  if (stop && (await stop.isVisible())) return;
   throw new Error(`Waypoint ${waypoint.x},${waypoint.y} not reached; last ${JSON.stringify(last)}`);
 }
 
@@ -190,11 +199,11 @@ test.describe('Neon Coast: After Hours', () => {
     await walkTo(page, { x: 560, y: 560 });
     await nudgeUntil(page, DELIVERY_OBJECTIVE, 'w', 'courier pickup');
 
+    const results = page.getByRole('dialog', { name: 'Mission results' });
     await walkTo(page, { x: 560, y: 760 });
     await walkTo(page, { x: 1160, y: 760 });
-    await walkTo(page, { x: 1160, y: 950 });
+    await walkTo(page, { x: 1160, y: 950 }, 45, results);
 
-    const results = page.getByRole('dialog', { name: 'Mission results' });
     await expect(results).toBeVisible({ timeout: 15_000 });
     await expect(results.getByText('Tideglass Courier complete')).toBeVisible();
     await expect(results.getByText('+450', { exact: true })).toBeVisible();
