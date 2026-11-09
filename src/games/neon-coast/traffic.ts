@@ -22,7 +22,6 @@ export interface TrafficCar {
   waypoints: Point[];
 }
 
-const TRAFFIC_COUNT = 6;
 const TRAFFIC_MIN_SPEED = 80;
 const TRAFFIC_MAX_SPEED = 140;
 const TRAFFIC_BRAKE_DISTANCE = 150;
