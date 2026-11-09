@@ -14,6 +14,7 @@ import RiftHospitalGame from '../games/rift-hospital/RiftHospitalGame';
 import RiftRunnerGame from '../games/rift-runner/RiftRunnerGame';
 import RiftTacticsGame from '../games/rift-tactics/RiftTacticsGame';
 import RiftTransitGame from '../games/rift-transit/RiftTransitGame';
+import RiftfallGame from '../games/riftfall/RiftfallGame';
 import SignalStackGame from '../games/signal-stack/SignalStackGame';
 import SkyportGame from '../games/skyport/SkyportGame';
 
@@ -90,6 +91,7 @@ const GAMES = [
   { name: 'Signal Stack', Component: SignalStackGame, start: /Start stacking/ },
   { name: 'Rift Runner', Component: RiftRunnerGame, start: /Start run/ },
   { name: 'Rift Tactics', Component: RiftTacticsGame, start: /Start battle/ },
+  { name: 'Riftfall', Component: RiftfallGame, start: /Start run/ },
 ];
 
 describe('simulation game shells', () => {
