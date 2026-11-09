@@ -33,6 +33,7 @@ npm run preview    # preview the production build
 npm run build:consent   # second build with analytics + ads configured, to dist-consent/
 npm run preview:consent # preview the configured-consent build
 npm run test:e2e   # build, then Playwright browser tests against the preview
+npm run check:bundle # enforce the initial and per-chunk bundle budgets against dist/
 ```
 
 Playwright also builds and serves `dist-consent` on port 4176 automatically; the
@@ -48,6 +49,9 @@ Playwright's Chromium is the only browser target in CI. Install it once with
 ---
 
 ## Verification snapshot (2026-11-09)
+
+The full programme report is in
+[`docs/audits/2026-11-09-final-report.md`](docs/audits/2026-11-09-final-report.md).
 
 | Command | Result |
 |---|---|
