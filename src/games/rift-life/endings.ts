@@ -1,4 +1,7 @@
+import { readJson, writeJson } from '../../lib/storage';
 import type { LifeState } from './simulation';
+
+export const ENDING_GALLERY_KEY = 'neonrift:game:rift-life:endings';
 
 export type EndingId =
   | 'rift-anchor'
@@ -77,4 +80,20 @@ export function endingById(id: EndingId): EndingRule {
   const found = ENDING_TABLE.find((rule) => rule.id === id);
   if (!found) throw new Error(`Unknown ending: ${id}`);
   return found;
+}
+
+export function readEndingGallery(): EndingId[] {
+  const raw = readJson<unknown>(ENDING_GALLERY_KEY);
+  if (!Array.isArray(raw)) return [];
+  return raw.filter(
+    (entry): entry is EndingId => typeof entry === 'string' && (ENDING_IDS as readonly string[]).includes(entry),
+  );
+}
+
+export function saveEndingToGallery(id: EndingId): EndingId[] {
+  const existing = readEndingGallery();
+  if (existing.includes(id)) return existing;
+  const next = [...existing, id];
+  writeJson(ENDING_GALLERY_KEY, next);
+  return next;
 }

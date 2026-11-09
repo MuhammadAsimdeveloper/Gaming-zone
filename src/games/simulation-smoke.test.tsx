@@ -11,6 +11,7 @@ import OrbitMarketGame from '../games/orbit-market/OrbitMarketGame';
 import ParkPulseGame from '../games/park-pulse/ParkPulseGame';
 import RiftColonyGame from '../games/rift-colony/RiftColonyGame';
 import RiftHospitalGame from '../games/rift-hospital/RiftHospitalGame';
+import RiftLifeGame from '../games/rift-life/RiftLifeGame';
 import RiftRunnerGame from '../games/rift-runner/RiftRunnerGame';
 import RiftTacticsGame from '../games/rift-tactics/RiftTacticsGame';
 import RiftTransitGame from '../games/rift-transit/RiftTransitGame';
@@ -92,6 +93,7 @@ const GAMES = [
   { name: 'Rift Runner', Component: RiftRunnerGame, start: /Start run/ },
   { name: 'Rift Tactics', Component: RiftTacticsGame, start: /Start battle/ },
   { name: 'Riftfall', Component: RiftfallGame, start: /Start run/ },
+  { name: 'Rift Life', Component: RiftLifeGame, start: /Start the 21 days/ },
 ];
 
 describe('simulation game shells', () => {
