@@ -102,6 +102,7 @@ export interface RunState {
   dashCooldownLength: number;
   comboDecayTicks: number;
   scoreBonus: number;
+  upgrades: Record<string, number>;
 }
 
 export const WEAPON_IDS: readonly WeaponId[] = ['blade', 'arc', 'rail', 'bloom'];
@@ -289,6 +290,7 @@ export function createRun({ seed, weapon }: RunConfig): RunState {
     dashCooldownLength: DASH_COOLDOWN_TICKS,
     comboDecayTicks: COMBO_DECAY_TICKS,
     scoreBonus: 0,
+    upgrades: {},
   };
   spawnWave(state);
   return state;
