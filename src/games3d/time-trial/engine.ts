@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { AnimationLoop } from '../shared/animationLoop';
 import { GameAudio } from '../shared/audio';
 import { createKeyboard, readDriveInput, type TouchDriveState } from '../shared/input';
 import { clamp, damp } from '../shared/math';
@@ -169,6 +170,7 @@ function createCheckpointGate(
 
 export class TimeTrialEngine {
   private renderer: THREE.WebGLRenderer;
+  private frameLoop: AnimationLoop;
   private scene = new THREE.Scene();
   private camera = new THREE.PerspectiveCamera(62, 16 / 9, 0.5, 1000);
   private lastFrame = 0;
@@ -275,7 +277,8 @@ export class TimeTrialEngine {
 
     this.audio.start();
     this.audio.beep(392, 120, 'sine', 0.06);
-    this.renderer.setAnimationLoop(this.loop);
+    this.frameLoop = new AnimationLoop((callback) => this.renderer.setAnimationLoop(callback));
+    this.frameLoop.start(this.loop);
     this.canvas.focus();
     this.emitHud();
   }
@@ -608,6 +611,8 @@ export class TimeTrialEngine {
       ghost,
     });
     this.emitHud();
+    this.frameLoop.stop();
+    this.audio.stopMusic();
   }
 
   private recordGhostSample(): void {
@@ -827,7 +832,7 @@ export class TimeTrialEngine {
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
-    this.renderer.setAnimationLoop(null);
+    this.frameLoop.stop();
     window.removeEventListener('resize', this.handleResize);
     this.keyboard.dispose();
     this.audio.dispose();

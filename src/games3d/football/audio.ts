@@ -5,6 +5,7 @@ export class StadiumAudio {
   private master: GainNode | null = null;
   private crowdGain: GainNode | null = null;
   private muted = readMutedPreference();
+  private pauseTimer: number | null = null;
 
   start(): void {
     if (this.context) {
@@ -147,11 +148,27 @@ export class StadiumAudio {
     if (this.context?.state === 'running') void this.context.suspend().catch(() => undefined);
   }
 
+  pauseSoon(delayMs = 1200): void {
+    if (this.pauseTimer !== null) window.clearTimeout(this.pauseTimer);
+    this.pauseTimer = window.setTimeout(() => {
+      this.pauseTimer = null;
+      this.pause();
+    }, delayMs);
+  }
+
   resume(): void {
+    if (this.pauseTimer !== null) {
+      window.clearTimeout(this.pauseTimer);
+      this.pauseTimer = null;
+    }
     this.resumeContext();
   }
 
   dispose(): void {
+    if (this.pauseTimer !== null) {
+      window.clearTimeout(this.pauseTimer);
+      this.pauseTimer = null;
+    }
     const context = this.context;
     if (context) void context.close().catch(() => undefined);
     this.context = null;

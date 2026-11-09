@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { AnimationLoop } from '../shared/animationLoop';
 import { GameAudio } from '../shared/audio';
 import { createKeyboard, readDriveInput, type TouchDriveState } from '../shared/input';
 import { clamp, damp, formatRaceTime, normalizeAngle } from '../shared/math';
@@ -117,6 +118,7 @@ function modularCrossed(previous: number, current: number, target: number, count
 
 export class RaceEngine {
   private renderer: THREE.WebGLRenderer;
+  private frameLoop: AnimationLoop;
   private scene = new THREE.Scene();
   private camera = new THREE.PerspectiveCamera(62, 16 / 9, 0.5, 900);
   private lastFrame = 0;
@@ -196,7 +198,8 @@ export class RaceEngine {
 
     this.audio.start();
     this.audio.beep(330, 80, 'sine', 0.05);
-    this.renderer.setAnimationLoop(this.loop);
+    this.frameLoop = new AnimationLoop((callback) => this.renderer.setAnimationLoop(callback));
+    this.frameLoop.start(this.loop);
     canvas.focus();
     this.emitHud();
   }
@@ -608,6 +611,8 @@ export class RaceEngine {
       newBestLap: player.bestLap !== null && player.lastLap !== null && player.bestLap === player.lastLap,
     });
     this.emitHud();
+    this.frameLoop.stop();
+    this.audio.stopMusic();
   }
 
   private standings(): Racer[] {
@@ -786,7 +791,7 @@ export class RaceEngine {
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
-    this.renderer.setAnimationLoop(null);
+    this.frameLoop.stop();
     window.removeEventListener('resize', this.handleResize);
     this.keyboard.dispose();
     this.audio.dispose();

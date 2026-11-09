@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { AnimationLoop } from '../shared/animationLoop';
 import { CricketAudio } from './audio';
 import {
   directionAngle,
@@ -100,6 +101,7 @@ function standardMaterial(color: string, options: Partial<THREE.MeshStandardMate
 
 export class StreetCricketEngine {
   private renderer: THREE.WebGLRenderer;
+  private frameLoop: AnimationLoop;
   private scene = new THREE.Scene();
   private camera = new THREE.PerspectiveCamera(48, 16 / 9, 0.1, 320);
   private audio = new CricketAudio();
@@ -188,7 +190,8 @@ export class StreetCricketEngine {
     this.placeBallAtBowler();
     this.camera.position.set(0, 4.8, -8.6);
     this.camera.lookAt(this.cameraLook);
-    this.renderer.setAnimationLoop(this.loop);
+    this.frameLoop = new AnimationLoop((callback) => this.renderer.setAnimationLoop(callback));
+    this.frameLoop.start(this.loop);
     this.emitHud();
   }
 
@@ -551,6 +554,8 @@ export class StreetCricketEngine {
       this.motion = 'idle';
       this.motionTime = 0;
       this.emitHud();
+      this.frameLoop.stop();
+      this.audio.stopAmbience();
       return;
     }
 
@@ -562,7 +567,7 @@ export class StreetCricketEngine {
 
   // ---------- loop ----------
 
-  private loop = (now: number): void => {
+  private loop = (now = performance.now()): void => {
     if (this.disposed || this.paused) return;
     const delta = Math.min(0.05, Math.max(0, (now - this.lastFrame) / 1000 || 0));
     this.lastFrame = now;
@@ -861,7 +866,7 @@ export class StreetCricketEngine {
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
-    this.renderer.setAnimationLoop(null);
+    this.frameLoop.stop();
     window.removeEventListener('resize', this.handleResize);
     this.audio.dispose();
     disposeObject(this.scene);

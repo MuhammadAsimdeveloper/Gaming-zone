@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { AnimationLoop } from '../shared/animationLoop';
 import { GameAudio } from '../shared/audio';
 import { createKeyboard, readDriveInput, type TouchDriveState } from '../shared/input';
 import { clamp, damp, normalizeAngle } from '../shared/math';
@@ -99,6 +100,7 @@ function clockLabel(timeOfDay: number): string {
 
 export class DriveEngine {
   private renderer: THREE.WebGLRenderer;
+  private frameLoop: AnimationLoop;
   private scene = new THREE.Scene();
   private camera = new THREE.PerspectiveCamera(56, 16 / 9, 0.3, 420);
   private lastFrame = 0;
@@ -228,7 +230,8 @@ export class DriveEngine {
 
     this.audio.start();
     this.audio.setEngineVolume(0.03);
-    this.renderer.setAnimationLoop(this.loop);
+    this.frameLoop = new AnimationLoop((callback) => this.renderer.setAnimationLoop(callback));
+    this.frameLoop.start(this.loop);
     this.emitHud();
   }
 
@@ -518,6 +521,8 @@ export class DriveEngine {
       carId: this.carConfig.id,
     });
     this.emitHud();
+    this.frameLoop.stop();
+    this.audio.stopMusic();
   }
 
   private updateCarVisual(delta: number): void {
@@ -689,7 +694,7 @@ export class DriveEngine {
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
-    this.renderer.setAnimationLoop(null);
+    this.frameLoop.stop();
     window.removeEventListener('resize', this.handleResize);
     this.keyboard.dispose();
     this.audio.dispose();

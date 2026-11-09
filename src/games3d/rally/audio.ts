@@ -57,6 +57,10 @@ export class RallyAudio {
     this.audio.suspend();
   }
 
+  stopMusic(): void {
+    this.audio.stopMusic();
+  }
+
   resume(): void {
     this.audio.resume();
   }

@@ -17,6 +17,10 @@ export class CricketAudio {
     this.base.pause();
   }
 
+  stopAmbience(): void {
+    this.base.pauseSoon();
+  }
+
   resume(): void {
     this.base.resume();
   }

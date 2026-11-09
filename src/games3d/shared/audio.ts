@@ -133,6 +133,13 @@ export class GameAudio {
     return this.muted;
   }
 
+  stopMusic(): void {
+    if (this.musicTimer !== null) {
+      window.clearInterval(this.musicTimer);
+      this.musicTimer = null;
+    }
+  }
+
   suspend(): void {
     if (this.context?.state === 'running') void this.context.suspend().catch(() => undefined);
   }

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { writeString, readString } from '../../lib/storage';
+import { AnimationLoop } from '../shared/animationLoop';
 import { createKeyboard, readDriveInput, type TouchDriveState } from '../shared/input';
 import { clamp, damp, normalizeAngle } from '../shared/math';
 import {
@@ -135,6 +136,7 @@ function aiCar(base: CarClass, tier: AiTier): CarClass {
 }
 
 export class RallyEngine {
+  private frameLoop!: AnimationLoop;
   private renderer: THREE.WebGLRenderer;
   private scene = new THREE.Scene();
   private cameraObject = new THREE.PerspectiveCamera(62, 16 / 9, 0.4, 950);
@@ -372,7 +374,8 @@ export class RallyEngine {
   start(): void {
     this.audio.start();
     this.lastFrame = performance.now();
-    this.renderer.setAnimationLoop(this.loop);
+    this.frameLoop = new AnimationLoop((callback) => this.renderer.setAnimationLoop(callback));
+    this.frameLoop.start(this.loop);
     this.canvas.focus();
     this.emitHud();
   }
@@ -598,6 +601,8 @@ export class RallyEngine {
       weather: this.setup.weather,
     });
     this.emitHud();
+    this.frameLoop.stop();
+    this.audio.stopMusic();
   }
 
   private standings(): Racer[] {
@@ -813,7 +818,7 @@ export class RallyEngine {
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
-    this.renderer.setAnimationLoop(null);
+    this.frameLoop.stop();
     window.removeEventListener('resize', this.handleResize);
     this.keyboard.dispose();
     this.audio.dispose();

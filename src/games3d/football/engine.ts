@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { AnimationLoop } from '../shared/animationLoop';
 import { createAthlete, createPitchShadow, createSelectionRing, type AthleteVisual } from '../shared/athlete';
 import { createKeyboard } from '../shared/input';
 import { clamp, damp } from '../shared/math';
@@ -106,6 +107,7 @@ function headingTo(dx: number, dz: number): number {
 
 export class FootballEngine {
   private renderer: THREE.WebGLRenderer;
+  private frameLoop: AnimationLoop;
   private scene = new THREE.Scene();
   private camera = new THREE.PerspectiveCamera(52, 16 / 9, 0.5, 400);
   private lastFrame = 0;
@@ -189,7 +191,8 @@ export class FootballEngine {
 
     this.audio.start();
     this.audio.whistle();
-    this.renderer.setAnimationLoop(this.loop);
+    this.frameLoop = new AnimationLoop((callback) => this.renderer.setAnimationLoop(callback));
+    this.frameLoop.start(this.loop);
     this.canvas.focus();
     this.emitHud();
   }
@@ -1025,6 +1028,8 @@ export class FootballEngine {
       possessionHome,
     });
     this.emitHud();
+    this.frameLoop.stop();
+    this.audio.pauseSoon();
   }
 
   private handlePointerDown = (event: PointerEvent): void => {
@@ -1092,7 +1097,7 @@ export class FootballEngine {
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
-    this.renderer.setAnimationLoop(null);
+    this.frameLoop.stop();
     window.removeEventListener('resize', this.handleResize);
     window.removeEventListener('pointerup', this.handlePointerUp);
     window.removeEventListener('pointercancel', this.handlePointerUp);
