@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "build:consent": "node scripts/build-consent.mjs",
+    "check:bundle": "node scripts/check-bundle.mjs",
     "preview": "vite preview",
     "preview:consent": "vite preview --outDir dist-consent",
     "test": "vitest run",

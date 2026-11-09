@@ -36,8 +36,8 @@ These rules are not negotiable, and they override any "ship faster" pressure.
 |---|---|
 | Published games | 38 |
 | Simulation suites (pure rules) | Included in the 123 Vitest files |
-| Unit tests | 1078 passing |
-| Dedicated browser suites | Penalty Protocol, Hoop Circuit, Neon Rush, Rift Chess, Lawn Protocol, Apex Time Trial, Street Cricket, Neon Craft, plus the shared gameplay matrix (which covers Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology too) |
+| Unit tests | 1079 passing |
+| Dedicated browser suites | Penalty Protocol, Hoop Circuit, Neon Rush, Rift Chess, Lawn Protocol, Apex Time Trial, Street Cricket, Neon Craft, plus the shared gameplay matrix (which covers Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology too), the axe sweep over all 38 game routes at desktop and mobile widths, and sitemap/robots checks |
 | Catalogue boot matrix | All 38 slugs boot, start, unmount and leave no console errors |
 
 Current category distribution is concentrated in simulation (14) and thin in sports,

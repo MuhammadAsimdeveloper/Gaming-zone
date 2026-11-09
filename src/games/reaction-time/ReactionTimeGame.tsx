@@ -408,7 +408,7 @@ export default function ReactionTimeGame({ onStart, onComplete }: GameComponentP
                     ? 'border-electric-500/25 bg-electric-500/10'
                     : isCurrent
                       ? 'border-white/15 bg-white/5'
-                      : 'border-white/5 bg-white/5 opacity-60',
+                      : 'border-white/5 bg-white/5',
                 )}
               >
                 <p className="text-[9px] font-semibold uppercase tracking-wide text-muted">R{index + 1}</p>

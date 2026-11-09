@@ -53,13 +53,15 @@ Playwright's Chromium is the only browser target in CI. Install it once with
 |---|---|
 | `npm ci` | Completed previously; lockfile unchanged |
 | `npm run typecheck` | Passed with no output |
-| `npm test` | 1078 tests passed in 123 files |
-| `npm run build` | Passed; Rift Rally loads as its own 46.69 kB / 14.69 kB gzip chunk, Neon Duel as 48.95 kB / 15.05 kB gzip and Neon Craft as 143.92 kB / 43.63 kB gzip; the shared Three.js chunk is 567.22 kB raw / 140.83 kB gzip and still triggers the existing >500 kB warning |
+| `npm test` | 1079 tests passed in 123 files |
+| `npm run build` | Passed; Rift Rally loads as its own 46.69 kB / 14.69 kB gzip chunk, Neon Duel as 48.95 kB / 15.05 kB gzip and Neon Craft as 143.92 kB / 43.63 kB gzip; the shared Three.js chunk is 567.22 kB raw / 140.83 kB gzip and is neither preloaded nor part of the initial bundle |
+| `npm run check:bundle` | Passed; initial assets 128.0 kB gzip against a 170 kB budget, 38 lazy game chunks, every chunk within the 600 kB raw budget |
 | `npm run build:consent` | Passed; same chunks with analytics and AdSense identifiers configured |
-| `npx playwright test --workers=2` | 129 tests passed in 14 files |
+| `npx playwright test --workers=2` | 196 tests passed in 15 files |
 
 The browser suite covers the homepage, catalogue, search, category filters, all thirty-eight game pages,
-launch/pause/resume/restart, favorites after reload, recently played, fullscreen state, 404,
+an axe-core WCAG 2.2 AA scan of every game route at desktop and mobile widths, sitemap and
+robots.txt contents, launch/pause/resume/restart, favorites after reload, recently played, fullscreen state, 404,
 mobile navigation, the absence of analytics/ad scripts in the default build, error-boundary
 recovery, hidden-tab fairness, keyboard and touch input for the 2D games, and 2D game
 completion/game-over. The configured-consent matrix runs against a second build and checks,
@@ -247,7 +249,7 @@ Three tracks are queued. **Only the shipped games have catalogue entries.**
 - The 1000-game target is a documented program, not a shipped library. 38 games have catalogue entries today; the remaining 962 are planned. No placeholder records exist.
 - Game records are local; the site does not display invented player counts, ratings or revenue.
 - The Content-Security-Policy is report-only, not enforced. Violations are collected but nothing is blocked; enforcement needs a real report collector and a period of clean reports.
-- The production build warns about the shared Three.js chunk exceeding 500 kB raw. It is lazy-loaded and compressed to ~140 kB gzip, but further splitting is still an open performance task.
+- The shared Three.js chunk is 553.9 KiB raw (567.22 kB decimal) and ~141 kB gzip. It is lazy-loaded and absent from the initial bundle; `npm run check:bundle` enforces a 600 kB per-chunk budget and a 170 kB initial gzip budget. Three.js ships as a single module, so it cannot be split further without replacing the library.
 
 ---
 

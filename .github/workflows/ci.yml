@@ -31,6 +31,9 @@ jobs:
       - name: Production build
         run: npm run build
 
+      - name: Bundle budget
+        run: npm run check:bundle
+
       - name: Install Chromium for Playwright
         run: npx playwright install --with-deps chromium
 

@@ -1,6 +1,6 @@
 import { createRequire } from 'node:module';
 import { expect, test } from '@playwright/test';
-import { collectErrors, expectNoErrors } from './helpers';
+import { GAMES, collectErrors, expectNoErrors } from './helpers';
 
 const require = createRequire(import.meta.url);
 const axePath = require.resolve('axe-core/axe.min.js');
@@ -9,12 +9,7 @@ const ROUTES = [
   '/',
   '/games',
   '/about',
-  '/game/neon-apex',
-  '/game/rift-rally',
-  '/game/neon-duel',
-  '/game/riftfall',
-  '/game/rift-life',
-  '/game/rift-ecology',
+  ...GAMES.map((game) => `/game/${game.slug}`),
 ];
 const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900 },

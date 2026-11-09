@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { advertisingAllowed } from './ads';
+import { AD_PLACEMENTS } from '../config/site';
+import { advertisingAllowed, isAdSlotConfigured, isAdvertisingConfigured } from './ads';
 
 const base = {
   enabled: true,
@@ -22,5 +23,14 @@ describe('advertisingAllowed', () => {
     expect(advertisingAllowed({ ...base, enabled: false })).toBe(false);
     expect(advertisingAllowed({ ...base, client: '' })).toBe(false);
     expect(advertisingAllowed({ ...base, slotId: '' })).toBe(false);
+  });
+});
+
+describe('shipped default build', () => {
+  it('never renders an ad placement, even with consent, until a build supplies a client and slots', () => {
+    expect(isAdvertisingConfigured()).toBe(false);
+    for (const placement of AD_PLACEMENTS) {
+      expect(isAdSlotConfigured(placement, 'granted')).toBe(false);
+    }
   });
 });

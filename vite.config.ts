@@ -127,6 +127,8 @@ export default defineConfig({
   build: {
     target: 'es2022',
     sourcemap: false,
+    // Aligned with scripts/check-bundle.mjs, which fails the build above this budget.
+    chunkSizeWarningLimit: 600,
   },
   test: {
     environment: 'node',
