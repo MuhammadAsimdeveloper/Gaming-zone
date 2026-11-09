@@ -227,6 +227,14 @@ export const VELA_DISTRICT: District = {
   carSpawn: { x: 1160, y: 1560 },
 };
 
+/** Every solid rectangle a walker or car must collide with. */
+export function obstacleRects(district: District): Rect[] {
+  const rects: Rect[] = [];
+  for (const block of district.blocks) rects.push(...block.buildings);
+  rects.push(...district.props);
+  return rects;
+}
+
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
