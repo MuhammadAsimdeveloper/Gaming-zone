@@ -1,5 +1,11 @@
 # NeonRift final development report — Wave 2 and platform quality
 
+> **Superseded snapshot:** this report describes the Wave 2 programme as it stood on
+> 2026-11-09 before the Neon Coast cycle shipped. The figures below (38 games, 1079 unit
+> tests, 196 browser tests) are the evidence recorded for that programme and are left
+> unchanged. The current library is 39 games with 1176 unit tests and 212 browser tests;
+> see [`2026-11-09-neon-coast-cycle.md`](2026-11-09-neon-coast-cycle.md).
+
 - Date: 2026-11-09
 - Branch: `feat/games-wave2`
 - Scope: the six-game Wave 2 slate, platform hardening (Phases B–C), Neon Craft

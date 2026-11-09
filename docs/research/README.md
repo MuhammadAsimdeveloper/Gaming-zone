@@ -88,3 +88,8 @@ design spec at
 Neon Craft (sub-wave 2A) shipped on 2026-11-07, Rift Rally with Neon Duel (sub-wave 2B) shipped
 on 2026-11-08, and Riftfall, Rift Life and Rift Ecology (sub-wave 2C) shipped on 2026-11-09. All
 six have catalogue entries, thumbnails and tests.
+
+A third, separate cycle shipped **Neon Coast: After Hours** on 2026-11-09: an original
+one-district top-down adventure with three handcrafted missions and a repeatable glow run.
+It is not part of the 15-game research programme or the Wave 2 slate; see
+[`../games/neon-coast.md`](../games/neon-coast.md).

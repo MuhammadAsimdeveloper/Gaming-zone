@@ -291,6 +291,22 @@ Phases 1–3. All three sub-waves have shipped.
 - Catalogue entries, thumbnails and tests exist for all six Wave 2 games.
 - Effort is not estimated here; the sub-wave gates govern delivery.
 
+### 11.1 Neon Coast cycle (2026-11-09)
+
+A separate, user-directed vertical slice shipped on the same branch family: **Neon Coast:
+After Hours**, an original top-down open-district adventure in the fictional Vela district
+of Solara Bay. It adds no entry to the 15-game research programme or the Wave 2 slate; it is
+the platform's first mission-driven open-district game.
+
+- Three handcrafted missions (Tideglass Courier, Lantern Circuit, Landmark Trail) plus a
+  repeatable Glow Run, with sequential unlocks and browser-local cash, ranks and best times.
+- Desktop keyboard and touch controls, pause/resume/restart, validated versioned save and a
+  compact minimap.
+- Three pre-existing 3D defects were fixed in the same cycle: unreachable Neon City Drive
+  checkpoints, mute state resetting on reload, and finished runs continuing to simulate,
+  render and play audio behind the results screen.
+- One district ships. Further districts are data-level designs, not shipped content.
+
 ---
 
 ## 12. Approval gate
@@ -303,6 +319,7 @@ is complete and verified. After approval, the order is:
    **Complete 2026-11-07.**
 3. Wave 2A/2B: Neon Craft, Rift Rally, Neon Duel. **Shipped 2026-11-07 and 2026-11-08.**
 4. Wave 2C: Riftfall, Rift Life, Rift Ecology. **Shipped 2026-11-09.**
+5. Neon Coast cycle: After Hours vertical slice. **Shipped 2026-11-09.**
 
 The roadmap can be re-ordered after any completed game without wasting work, because each game is an independent module.
 

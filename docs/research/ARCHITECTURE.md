@@ -168,11 +168,19 @@ Benefits: deterministic behaviour, stable physics, reproducible tests, and a cle
 
 **No new engine dependency is required for any of the 15.** Add one only if a prototype proves the custom path is materially slower or worse.
 
-The separate six-game slate from 2026-11-04 follows the same platform contracts. Neon Craft is
-planned as a self-contained Three.js voxel engine (chunk streaming, greedy meshing and baked
-light); Rift Rally reuses the existing Three.js racing pattern; Neon Duel, Riftfall, Rift Life
-and Rift Ecology use Canvas 2D and React. No implementation exists yet. See the
+The separate six-game slate from 2026-11-04 follows the same platform contracts and all six
+are shipped. Neon Craft is a self-contained Three.js voxel engine (chunk streaming, greedy
+meshing and baked light); Rift Rally reuses the Three.js racing pattern; Neon Duel and
+Riftfall use Canvas 2D with React shells; Rift Life and Rift Ecology are React simulations
+(Rift Ecology renders with SVG). See the
 [Wave 2 spec](../superpowers/specs/2026-11-04-games-wave2-design.md).
+
+Neon Coast: After Hours adds a different contract: a Canvas 2D engine that is independent of
+React, with pure simulation modules (`world`, `player`, `vehicle`, `traffic`, `missions`,
+`simulation`, `persistence`) and an injected renderer, clock, audio and RAF. The React shell
+only forwards input and paint-ready HUD frames at 10 Hz. A district is plain data
+(`District`), so further districts need no engine change. See
+[the game document](../games/neon-coast.md).
 
 ---
 

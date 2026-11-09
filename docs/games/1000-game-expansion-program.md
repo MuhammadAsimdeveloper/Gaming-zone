@@ -1,6 +1,6 @@
 # NeonRift 1000-Game Expansion Program
 
-**Status:** program definition, 2026-11-06; Wave 1 complete 2026-11-07; Wave 2A (Neon Craft) shipped 2026-11-07; Wave 2B (Rift Rally, Neon Duel) shipped 2026-11-08; Wave 2C (Riftfall, Rift Life, Rift Ecology) shipped 2026-11-09. The catalogue currently ships **38 original games**.
+**Status:** program definition, 2026-11-06; Wave 1 complete 2026-11-07; Wave 2A (Neon Craft) shipped 2026-11-07; Wave 2B (Rift Rally, Neon Duel) shipped 2026-11-08; Wave 2C (Riftfall, Rift Life, Rift Ecology) shipped 2026-11-09; Neon Coast: After Hours shipped 2026-11-09 in its own cycle, outside this program's 27-family allocation. The catalogue currently ships **39 original games**.
 This document defines how the library grows to **1000 playable, tested games** without
 fabricating entries, cloning proprietary content, or diluting quality.
 
@@ -34,23 +34,23 @@ These rules are not negotiable, and they override any "ship faster" pressure.
 
 | Metric | Value |
 |---|---|
-| Published games | 38 |
-| Simulation suites (pure rules) | Included in the 123 Vitest files |
-| Unit tests | 1079 passing |
-| Dedicated browser suites | Penalty Protocol, Hoop Circuit, Neon Rush, Rift Chess, Lawn Protocol, Apex Time Trial, Street Cricket, Neon Craft, plus the shared gameplay matrix (which covers Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology too), the axe sweep over all 38 game routes at desktop and mobile widths, and sitemap/robots checks |
-| Catalogue boot matrix | All 38 slugs boot, start, unmount and leave no console errors |
+| Published games | 39 |
+| Simulation suites (pure rules) | Included in the 136 Vitest files |
+| Unit tests | 1176 passing |
+| Dedicated browser suites | Penalty Protocol, Hoop Circuit, Neon Rush, Rift Chess, Lawn Protocol, Apex Time Trial, Street Cricket, Neon Craft, Neon Coast, plus the shared gameplay matrix (which covers Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology too), the axe sweep over all 39 game routes at desktop and mobile widths, and sitemap/robots checks |
+| Catalogue boot matrix | All 39 slugs boot, start, unmount and leave no console errors |
 
 Current category distribution is concentrated in simulation (14) and thin in sports,
 board, card, trivia, racing and action. The program's first phases deliberately correct
 that imbalance.
 
-**Shipped today (38):** Neon Snake, Tic-Tac-Toe, Memory Match, Rock Paper Scissors,
+**Shipped today (39):** Neon Snake, Tic-Tac-Toe, Memory Match, Rock Paper Scissors,
 Reaction Time Challenge, Rift Breaker, Math Sprint, Neon Apex, Rift Striker, Neon City Drive,
 Neon Harvest, Rift Transit, Grid Supply, Rift Colony, Orbit Market, Neon Diner, Skyport,
 Rift Hospital, Park Pulse, Factory Line, Cargo Ring, Aqua Grid, Signal Stack, Rift Runner,
 Rift Tactics, Rift Chess, Neon Rush, Penalty Protocol, Hoop Circuit, Lawn Protocol,
 Apex Time Trial, Street Cricket, Neon Craft, Rift Rally, Neon Duel, Riftfall, Rift Life,
-Rift Ecology.
+Rift Ecology, Neon Coast: After Hours.
 
 ---
 
@@ -108,7 +108,11 @@ A variant is publishable only when all of these are true:
 
 ## 4. Portfolio allocation to 1000
 
-38 games ship today. The remaining **962** are allocated across 27 kit families. Counts are
+39 games ship today. Reaching 1000 needs **961** more. The allocation below was drafted
+when 38 games existed and its family rows sum to 964: two entries are a carry-over double
+count from the first draft, and one is offset by Neon Coast shipping outside the families.
+Phase 1 therefore trims three entries before Phase 5; the count below is the draft
+allocation, not a promise to ship 1003 games. Counts are
 deliberate: puzzle and board families scale with authored content, simulation scales with
 scenario packs, and action families stay smaller because each variant needs bespoke tuning.
 
@@ -141,9 +145,10 @@ scenario packs, and action families stay smaller because each variant needs besp
 | 25 | Sandbox & creative | 18 | Neon Craft worlds, drawing, music maker, level editor challenges | 9 |
 | 26 | Idle & incremental | 25 | neon factory, space mining, diner rush, garden growth | 9 |
 | 27 | Hidden object & detective | 10 | scene search, clue deduction, alibi logic | 9 |
-| | **Total new** | **962** | | |
-| | **Shipped** | **38** | | |
-| | **Grand total** | **1000** | | |
+| | **Total new listed** | **964** | | |
+| | **Shipped today** | **39** | | |
+| | **Remaining to 1000** | **961** | | |
+| | **If every listed variant shipped** | **1003** | | |
 
 ### 4.1 Family scaling rules
 
@@ -164,33 +169,34 @@ not start until the previous phase's published count is verified against
 
 | Phase | Scope | Adds | Cumulative | Exit gate |
 |---|---|---:|---:|---|
-| 0 | Platform + current library | 38 | 38 | Full suite green (current baseline) |
-| 1 | Scale foundation (no games) | 0 | 38 | Catalogue split, manifest generator, generated boot sweep, search pagination |
-| 2 | Finish Wave 2 + sports flagships | 2 | 40 | Two sports flagships |
-| 3 | Puzzle families 1–6 | 206 | 246 | 206 variants; kit cores under budget; sampled e2e green |
-| 4 | Board, card and trivia | 145 | 391 | 391 |
-| 5 | Arcade, runners, rhythm, party | 125 | 516 | 516 |
-| 6 | Racing and sports depth | 85 | 601 | 601 |
-| 7 | Action, fighting, horror, platformers | 100 | 701 | 701 |
-| 8 | Roleplay, simulation, strategy | 162 | 863 | 863 |
-| 9 | Physics, educational, sandbox, idle, detective | 137 | 1000 | 1000 published, every slug boot-tested |
+| 0 | Platform + current library | 39 | 39 | Full suite green (current baseline) |
+| 1 | Scale foundation (no games) | 0 | 39 | Catalogue split, manifest generator, generated boot sweep, search pagination |
+| 2 | Finish Wave 2 + sports flagships | 0 | 39 | Wave 2 complete; the two sports flagships stay inside the sports family allocation and are counted once there |
+| 3 | Puzzle families 1–6 | 206 | 245 | 206 variants; kit cores under budget; sampled e2e green |
+| 4 | Board, card and trivia | 145 | 390 | 390 |
+| 5 | Arcade, runners, rhythm, party | 125 | 515 | 515 |
+| 6 | Racing and sports depth | 85 | 600 | 600 |
+| 7 | Action, fighting, horror, platformers | 100 | 700 | 700 |
+| 8 | Roleplay, simulation, strategy | 162 | 862 | 862 |
+| 9 | Physics, educational, sandbox, idle, detective | 138 | 1000 | 1000 published, every slug boot-tested |
 
-Phase 2's two remaining titles are drawn from the family counts in §4, so the 962 future
-variants and the 962 added by phases 2–9 are the same titles, counted once each.
-
+The cumulative column restarts from the 39-game baseline: Phases 3–9 add 961, which is the
+remaining distance to 1000. Phase 2 no longer adds games because both Wave 2 sub-waves and
+the sports flagships shipped before this revision; its exit gate now only confirms the
+Wave 2 slate. Any family entries trimmed in Phase 1 come out of the phase that owns them.
 ### 5.1 Realistic cadence
 
 This is a multi-quarter program. A credible cadence with the current single-maintainer
 workflow is **10–20 published variants per month**, and less during kit construction
 (a new kit typically takes 2–4 weeks before its first variant ships). At 15/month, the
-remaining 962 take roughly five years. The roadmap is honest about that: the alternative —
+remaining 961 take roughly five years. The roadmap is honest about that: the alternative —
 fast catalogue inflation — is explicitly rejected in §1.
 
 ---
 
 ## 6. Catalogue architecture at 1000 records
 
-The current single `src/data/games.json` (38 records) is fine now and will not be at 1000.
+The current single `src/data/games.json` (39 records) is fine now and will not be at 1000.
 The Phase 1 foundation replaces it with a generated, chunked catalogue.
 
 ### 6.1 Data split

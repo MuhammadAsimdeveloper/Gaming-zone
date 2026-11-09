@@ -2,7 +2,7 @@
 
 A free, instant-play browser gaming portal. Original branding, original games, no account and no download.
 
-**Status:** the platform and 38 internal games are implemented, including the six-game Wave 2 slate: Neon Craft, Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). Five of the 15 shortlisted games are shipped — Rift Chess, Neon Rush, Lawn Protocol, Apex Time Trial and Street Cricket — completing Wave 1; the rest remain designs. The six-game Wave 2 spec (2026-11-04) is fully shipped: Neon Craft released on 2026-11-07, Rift Rally and Neon Duel on 2026-11-08, and Riftfall, Rift Life and Rift Ecology on 2026-11-09. The path to a 1000-game library is defined in the [1000-game expansion program](docs/games/1000-game-expansion-program.md): 38 shipped, 962 planned across 27 kit families, with no placeholder entries.
+**Status:** the platform and 39 internal games are implemented, including the six-game Wave 2 slate: Neon Craft, Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology, plus Neon Coast: After Hours, an original one-district adventure shipped on 2026-11-09. The 50-game research and 15-game design package is complete in [`docs/research/`](docs/research/README.md). Five of the 15 shortlisted games are shipped — Rift Chess, Neon Rush, Lawn Protocol, Apex Time Trial and Street Cricket — completing Wave 1; the rest remain designs. The six-game Wave 2 spec (2026-11-04) is fully shipped: Neon Craft released on 2026-11-07, Rift Rally and Neon Duel on 2026-11-08, and Riftfall, Rift Life and Rift Ecology on 2026-11-09. The path to a 1000-game library is defined in the [1000-game expansion program](docs/games/1000-game-expansion-program.md): 39 shipped, 961 planned across 27 kit families, with no placeholder entries.
 
 ---
 
@@ -57,13 +57,13 @@ The full programme report is in
 |---|---|
 | `npm ci` | Completed previously; lockfile unchanged |
 | `npm run typecheck` | Passed with no output |
-| `npm test` | 1079 tests passed in 123 files |
-| `npm run build` | Passed; Rift Rally loads as its own 46.69 kB / 14.69 kB gzip chunk, Neon Duel as 48.95 kB / 15.05 kB gzip and Neon Craft as 143.92 kB / 43.63 kB gzip; the shared Three.js chunk is 567.22 kB raw / 140.83 kB gzip and is neither preloaded nor part of the initial bundle |
-| `npm run check:bundle` | Passed; initial assets 128.0 kB gzip against a 170 kB budget, 38 lazy game chunks, every chunk within the 600 kB raw budget |
+| `npm test` | 1176 tests passed in 136 files |
+| `npm run build` | Passed; Rift Rally loads as its own 46.87 kB / 14.75 kB gzip chunk, Neon Duel as 48.95 kB / 15.05 kB gzip, Neon Craft as 143.92 kB / 43.63 kB gzip and Neon Coast as 55.24 kB / 17.89 kB gzip; the shared Three.js chunk is 567.22 kB raw / 140.83 kB gzip and is neither preloaded nor part of the initial bundle |
+| `npm run check:bundle` | Passed; initial assets 128.7 kB gzip against a 170 kB budget, 39 lazy game chunks, every chunk within the 600 kB raw budget |
 | `npm run build:consent` | Passed; same chunks with analytics and AdSense identifiers configured |
 | `npx playwright test --workers=2` | 196 tests passed in 15 files |
 
-The browser suite covers the homepage, catalogue, search, category filters, all thirty-eight game pages,
+The browser suite covers the homepage, catalogue, search, category filters, all thirty-nine game pages,
 an axe-core WCAG 2.2 AA scan of every game route at desktop and mobile widths, sitemap and
 robots.txt contents, launch/pause/resume/restart, favorites after reload, recently played, fullscreen state, 404,
 mobile navigation, the absence of analytics/ad scripts in the default build, error-boundary
@@ -86,6 +86,13 @@ controls are exercised on a mobile viewport. The other 3D games' action keys are
 unit-level keyboard-capture tests, not by a full browser playthrough, and a complete race,
 time trial, match or over is not automated. Neon Craft's mining, crafting progression,
 combat and farming loops are covered by unit tests, not played to completion in a browser.
+Neon Coast's ten-case browser spec walks and drives the coupe, runs Tideglass Courier from
+pickup to delivery on foot with real key events, checks the results panel and reward,
+reloads the browser-local save, rejects a corrupt save, pauses, resumes, restarts, toggles
+the game's fullscreen control, resizes, leaves the route, and holds 44 px touch controls on
+a 390 px viewport. The cycle also fixed three 3D defects with regression tests: unreachable
+Neon City Drive checkpoints, mute state resetting on reload, and finished runs that kept
+simulating, rendering and playing audio behind the results screen.
 No game is described as manually played beyond what these tests exercised.
 
 CI runs on every pushed branch and every pull request in
@@ -164,8 +171,9 @@ CI runs on every pushed branch and every pull request in
 | Riftfall | Action | Canvas 2D |
 | Rift Life | Adventure | React |
 | Rift Ecology | Simulation | React + SVG |
+| Neon Coast: After Hours | Adventure | Canvas 2D |
 
-All thirty-eight are original implementations. No commercial game assets, code or branding are used.
+All thirty-nine are original implementations. No commercial game assets, code or branding are used.
 Rift Chess uses the open-source chess.js library (BSD-2-Clause) for move generation; see
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
@@ -180,7 +188,8 @@ The full deliverable is indexed at [`docs/research/README.md`](docs/research/REA
 - 15 game design documents with features, architecture, milestones, testing and limitations.
 - Licence audit, source-repository directory, technical architecture and delivery roadmap.
 - Six-game Wave 2 design spec (2026-11-04): Neon Craft plus Rift Rally, Neon Duel, Riftfall, Rift Life and Rift Ecology. All six are shipped — Neon Craft on 2026-11-07, Rift Rally and Neon Duel on 2026-11-08, and Riftfall, Rift Life and Rift Ecology on 2026-11-09. See [`docs/superpowers/specs/2026-11-04-games-wave2-design.md`](docs/superpowers/specs/2026-11-04-games-wave2-design.md).
-- [1000-game expansion program](docs/games/1000-game-expansion-program.md): kit and variant architecture, the 27-family portfolio allocation to 1000 games, the nine-phase roadmap, quality gates, catalogue scaling and licensing policy. 38 games carry catalogue entries today; the remaining 962 are planned, not shipped.
+- [1000-game expansion program](docs/games/1000-game-expansion-program.md): kit and variant architecture, the 27-family portfolio allocation to 1000 games, the nine-phase roadmap, quality gates, catalogue scaling and licensing policy. 39 games carry catalogue entries today; the remaining 961 are planned, not shipped.
+- [Neon Coast: After Hours design and verification](docs/games/neon-coast.md): the Vela district, missions, persistence, tested behaviour and measured size.
 - [25-game enhancement report (2026-11-05)](docs/ENHANCEMENT-REPORT-2026-11-05.md): verified fixes, a per-game status table and a prioritized file-specific backlog.
 
 Start with the [package index](docs/research/README.md).
@@ -226,7 +235,7 @@ The build is a static site. `public/_redirects` provides the SPA fallback for de
 Three tracks are queued. **Only the shipped games have catalogue entries.**
 
 - **1000-game expansion program (2026-11-06):** kit and variant architecture plus a
-  nine-phase roadmap from 38 to 1000 tested games. Phase 1 is the catalogue scale
+  nine-phase roadmap from 39 to 1000 tested games. Phase 1 is the catalogue scale
   foundation; Phase 2 covers the Wave 2 slate. See
   [`docs/games/1000-game-expansion-program.md`](docs/games/1000-game-expansion-program.md).
 - **Wave 2 six-game slate (2026-11-04):** Neon Craft, Rift Rally, Neon Duel, Riftfall, Rift
@@ -236,6 +245,9 @@ Three tracks are queued. **Only the shipped games have catalogue entries.**
   [`docs/superpowers/specs/2026-11-04-games-wave2-design.md`](docs/superpowers/specs/2026-11-04-games-wave2-design.md).
 - **Wave 1:** complete as of 2026-11-07 — Rift Chess, Neon Rush, Lawn Protocol, Apex Time
   Trial and Street Cricket are shipped, integrated and tested.
+- **Neon Coast cycle (2026-11-09):** the one-district vertical slice is shipped with three
+  handcrafted missions plus a repeatable glow run, browser-local progression and touch
+  controls. Further districts are designed as data, not shipped.
 
 ---
 
@@ -250,7 +262,7 @@ Three tracks are queued. **Only the shipped games have catalogue entries.**
 - External game embedding is deny-by-default and requires an explicit HTTPS allowlist.
 - Five of the 15 shortlist games are shipped (Rift Chess, Neon Rush, Lawn Protocol, Apex Time Trial, Street Cricket); the remaining ten are designs, not shipped features.
 - All six games in the 2026-11-04 Wave 2 spec are shipped. Riftfall, Rift Life and Rift Ecology are covered by rules unit tests, shell tests and a browser boot/start/input check; a full sixty-day ecology season and a complete twenty-one-day Rift Life run are not yet played end to end in the browser suite.
-- The 1000-game target is a documented program, not a shipped library. 38 games have catalogue entries today; the remaining 962 are planned. No placeholder records exist.
+- The 1000-game target is a documented program, not a shipped library. 39 games have catalogue entries today; the remaining 961 are planned. No placeholder records exist.
 - Game records are local; the site does not display invented player counts, ratings or revenue.
 - The Content-Security-Policy is report-only, not enforced. Violations are collected but nothing is blocked; enforcement needs a real report collector and a period of clean reports.
 - The shared Three.js chunk is 553.9 KiB raw (567.22 kB decimal) and ~141 kB gzip. It is lazy-loaded and absent from the initial bundle; `npm run check:bundle` enforces a 600 kB per-chunk budget and a 170 kB initial gzip budget. Three.js ships as a single module, so it cannot be split further without replacing the library.
