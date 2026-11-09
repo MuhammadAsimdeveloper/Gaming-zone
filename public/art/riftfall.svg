@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Riftfall arena survival key art: a glowing player core holding the centre of a neon grid arena while four weapon sigils light the edges and hostile shapes close in from the dark">
+  <defs>
+    <linearGradient id="rf-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0618"/><stop offset=".55" stop-color="#170a2c"/><stop offset="1" stop-color="#2a0f33"/></linearGradient>
+    <radialGradient id="rf-core" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe3fb"/><stop offset=".4" stop-color="#ff5c8a"/><stop offset="1" stop-color="#ff5c8a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="rf-aura" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#b57bff" stop-opacity=".5"/><stop offset="1" stop-color="#b57bff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="rf-bolt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9ff3ff"/><stop offset="1" stop-color="#6d7bff"/></linearGradient>
+    <filter id="rf-glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="rf-soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
+  </defs>
+
+  <rect width="640" height="400" fill="url(#rf-bg)"/>
+  <circle cx="322" cy="238" r="196" fill="url(#rf-aura)"/>
+
+  <g stroke="#7a4bff" stroke-opacity=".22" stroke-width="1">
+    <path d="M0 96 H640 M0 152 H640 M0 208 H640 M0 264 H640 M0 320 H640 M0 376 H640"/>
+    <path d="M64 60 V400 M128 60 V400 M192 60 V400 M256 60 V400 M320 60 V400 M384 60 V400 M448 60 V400 M512 60 V400 M576 60 V400"/>
+  </g>
+  <g stroke="#ff5c8a" stroke-opacity=".16" stroke-width="2">
+    <ellipse cx="322" cy="244" rx="150" ry="96"/>
+    <ellipse cx="322" cy="244" rx="220" ry="142"/>
+  </g>
+
+  <text x="34" y="56" fill="#ffe6f1" font-family="ui-sans-serif, system-ui, sans-serif" font-size="34" font-weight="700">Riftfall</text>
+  <text x="34" y="82" fill="#c99ad6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="2.6">TWELVE WAVES · FOUR WEAPONS · HOLD THE RIFT</text>
+
+  <g transform="translate(322 250)">
+    <circle r="86" fill="url(#rf-core)" opacity=".5" filter="url(#rf-soft)"/>
+    <circle r="52" fill="none" stroke="#ff9cbd" stroke-opacity=".55" stroke-width="2"/>
+    <circle r="38" fill="#1a0b2e" stroke="#ff5c8a" stroke-width="3" filter="url(#rf-glow)"/>
+    <path d="M0 -22 L19 11 L-19 11 Z" fill="#ffd9e7" filter="url(#rf-glow)"/>
+    <circle r="9" fill="#fff0f6"/>
+  </g>
+
+  <g fill="none" stroke="#ff5c8a" stroke-width="3" filter="url(#rf-glow)">
+    <path d="M206 250 A116 116 0 0 1 322 134"/>
+    <path d="M438 250 A116 116 0 0 0 322 366" stroke="#b57bff"/>
+  </g>
+
+  <g transform="translate(116 228)">
+    <rect x="-24" y="-40" width="48" height="80" rx="12" fill="#120a22" stroke="#9ff3ff" stroke-opacity=".6"/>
+    <path d="M0 -24 L0 24" stroke="url(#rf-bolt)" stroke-width="5" filter="url(#rf-glow)"/>
+    <text x="0" y="60" fill="#9ff3ff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="2">ARC</text>
+  </g>
+
+  <g transform="translate(152 350)">
+    <path d="M-20 12 L0 -26 L20 12 Z" fill="none" stroke="#ffb0c9" stroke-width="4" filter="url(#rf-glow)"/>
+    <path d="M-10 4 L10 4" stroke="#ffb0c9" stroke-width="3"/>
+    <text x="0" y="34" fill="#ffb0c9" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="2">BLADE</text>
+  </g>
+
+  <g transform="translate(470 196)">
+    <rect x="-30" y="-14" width="60" height="28" rx="14" fill="#120a22" stroke="#ffcf6b" stroke-opacity=".6"/>
+    <path d="M-18 0 H18" stroke="#ffcf6b" stroke-width="4" filter="url(#rf-glow)"/>
+    <text x="0" y="42" fill="#ffcf6b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="2">RAIL</text>
+  </g>
+
+  <g transform="translate(512 330)">
+    <circle r="24" fill="#120a22" stroke="#7dd3fc" stroke-opacity=".6"/>
+    <circle r="10" fill="#7dd3fc" filter="url(#rf-glow)"/>
+    <circle r="18" fill="none" stroke="#7dd3fc" stroke-opacity=".5" stroke-dasharray="4 6"/>
+    <text x="0" y="48" fill="#7dd3fc" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="2">BLOOM</text>
+  </g>
+
+  <g fill="#ff5c8a" opacity=".9" filter="url(#rf-glow)">
+    <polygon points="214,150 226,172 208,178"/>
+    <polygon points="440,160 452,184 430,188"/>
+    <polygon points="250,348 262,326 274,348"/>
+    <polygon points="392,348 404,326 416,348"/>
+    <polygon points="560,232 572,254 548,254"/>
+  </g>
+
+  <g transform="translate(34 352)">
+    <rect width="86" height="6" rx="3" fill="#5c2e6b"/>
+    <rect width="56" height="6" rx="3" fill="#ff5c8a" filter="url(#rf-glow)"/>
+    <text x="98" y="7" fill="#c99ad6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" letter-spacing="2">WAVE 07 / 12</text>
+  </g>
+  <g transform="translate(34 372)" fill="#ff5c8a">
+    <rect width="28" height="4" rx="2"/><rect x="34" width="28" height="4" rx="2" opacity=".7"/><rect x="68" width="28" height="4" rx="2" opacity=".4"/>
+  </g>
+</svg>

@@ -41,4 +41,7 @@ export const gameRegistry: Record<
   'neon-craft': lazy(() => import('../games3d/craft/NeonCraftGame')),
   'rift-rally': lazy(() => import('../games3d/rally/RiftRallyGame')),
   'neon-duel': lazy(() => import('../games/neon-duel/NeonDuelGame')),
+  riftfall: lazy(() => import('../games/riftfall/RiftfallGame')),
+  'rift-life': lazy(() => import('../games/rift-life/RiftLifeGame')),
+  'rift-ecology': lazy(() => import('../games/rift-ecology/RiftEcologyGame')),
 };

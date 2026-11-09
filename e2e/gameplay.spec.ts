@@ -132,7 +132,7 @@ test.describe('reduced-motion preference', () => {
   });
 });
 
-test.describe('all thirty-five games boot and accept input', () => {
+test.describe('all thirty-eight games boot and accept input', () => {
   test.describe.configure({ timeout: 150_000 });
 
   for (const game of GAMES) {
@@ -363,6 +363,32 @@ test.describe('all thirty-five games boot and accept input', () => {
           await expect(page.getByRole('dialog', { name: 'Match paused' })).toBeVisible();
           await page.getByRole('button', { name: 'Resume match' }).click();
           await expect(page.getByRole('button', { name: 'Pause match' })).toBeVisible();
+          break;
+        case 'riftfall':
+          await page.getByRole('button', { name: 'Start run', exact: true }).click();
+          await assertSizedCanvas(page);
+          await page.getByRole('button', { name: 'Mute audio' }).click();
+          await expect(page.getByRole('button', { name: 'Unmute audio' })).toBeVisible();
+          await page.getByRole('button', { name: 'Unmute audio' }).click();
+          await page.getByRole('button', { name: 'Pause run' }).click();
+          const pausedRun = page.getByRole('dialog', { name: 'Run paused' });
+          await expect(pausedRun).toBeVisible();
+          await pausedRun.getByRole('button', { name: 'Resume run' }).click();
+          await expect(page.getByRole('button', { name: 'Pause run' })).toBeVisible();
+          break;
+        case 'rift-life':
+          await page.getByRole('button', { name: 'Start the 21 days', exact: true }).click();
+          await page.getByRole('button', { name: 'Rig shift', exact: true }).click();
+          await expect(page.getByText(/time blocks? left today/i)).toBeVisible();
+          break;
+        case 'rift-ecology':
+          await page.getByRole('button', { name: 'Start season', exact: true }).click();
+          await page.getByRole('button', { name: 'Advance day', exact: true }).click();
+          await expect(page.getByText(/^Day 1:/)).toBeVisible();
+          await page.getByRole('button', { name: 'Plant', exact: true }).click();
+          await page.getByRole('button', { name: 'Glow Kelp', exact: true }).click();
+          await page.getByRole('button', { name: 'Advance day', exact: true }).click();
+          await expect(page.getByText(/^Planted Glow Kelp/)).toBeVisible();
           break;
         case 'neon-craft':
           await page.getByRole('button', { name: 'Create world' }).first().click();

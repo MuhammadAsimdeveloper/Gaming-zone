@@ -50,6 +50,9 @@ export const INTERNAL_GAME_KEYS = [
   'neon-craft',
   'rift-rally',
   'neon-duel',
+  'riftfall',
+  'rift-life',
+  'rift-ecology',
 ] as const;
 
 export type InternalGameKey = (typeof INTERNAL_GAME_KEYS)[number];

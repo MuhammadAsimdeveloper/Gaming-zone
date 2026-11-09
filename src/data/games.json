@@ -1710,5 +1710,166 @@
     "createdAt": "2026-11-08T12:00:00.000Z",
     "featured": false,
     "popularityRank": 35
+  },
+  {
+    "id": "riftfall",
+    "slug": "riftfall",
+    "title": "Riftfall",
+    "tagline": "Twelve waves. Four weapons. Hold the rift.",
+    "description": "A twelve-wave arena survival run. Four original weapons — Blade, Arc, Rail and Bloom — swing automatically whenever an enemy is in reach while you move, dash and parry. Enemies telegraph their attacks; a well-timed parry stuns and reflects. Clear a wave to choose one of three upgrades, face bosses on waves six and twelve, and bank a best score in this browser.",
+    "category": "action",
+    "secondaryCategories": [
+      "arcade",
+      "casual"
+    ],
+    "thumbnail": "/art/riftfall.svg",
+    "accent": "#ff5c8a",
+    "type": "internal",
+    "internalKey": "riftfall",
+    "instructions": [
+      "Pick a weapon on the menu, then start the run.",
+      "Move with WASD or the arrow keys; attacks fire automatically when an enemy is in reach.",
+      "Dash with Space to slip through fire, and parry with Shift to stun and reflect a telegraphed hit.",
+      "Swap weapons mid-run with 1 to 4, or with the on-screen weapon buttons.",
+      "Clear a wave, then choose one of three upgrades before the next wave starts.",
+      "Bosses arrive on waves six and twelve; health carries between waves.",
+      "P pauses and M mutes. The best score is stored in this browser only."
+    ],
+    "controls": [
+      {
+        "label": "Move",
+        "keys": "W A S D or Arrow keys"
+      },
+      {
+        "label": "Dash",
+        "keys": "Space"
+      },
+      {
+        "label": "Parry",
+        "keys": "Shift"
+      },
+      {
+        "label": "Swap weapon",
+        "keys": "1 2 3 4"
+      },
+      {
+        "label": "Pause",
+        "keys": "P or Escape"
+      },
+      {
+        "label": "Mute",
+        "keys": "M"
+      },
+      {
+        "label": "Touch",
+        "keys": "On-screen movement, dash, parry and weapon buttons"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-09T09:00:00.000Z",
+    "featured": false,
+    "popularityRank": 36
+  },
+  {
+    "id": "rift-life",
+    "slug": "rift-life",
+    "title": "Rift Life",
+    "tagline": "Twenty-one days. Three blocks a day. One small town.",
+    "description": "A twenty-one-day roleplay in a small rift town. Spend three time blocks a day working the rig, helping the community or sitting with one of five townspeople, each with a scene at 25 bond and an arc at 75. Energy and weather shape what each day costs, and day twenty-one resolves an ending you can collect in a persistent ending gallery.",
+    "category": "adventure",
+    "secondaryCategories": [
+      "simulation",
+      "casual"
+    ],
+    "thumbnail": "/art/rift-life.svg",
+    "accent": "#ffcf6b",
+    "type": "internal",
+    "internalKey": "rift-life",
+    "instructions": [
+      "Choose an activity in the planner for each of your three daily time blocks.",
+      "Work earns job progress, community help raises standing, and visits build bonds.",
+      "Rest restores energy, and energy limits how much you can afford to do each day.",
+      "The weather changes energy costs and sets the tone of the day.",
+      "Bond 25 unlocks a townsperson's personal scene; bond 75 resolves their arc.",
+      "After three blocks the day rolls over; day twenty-one resolves your ending.",
+      "Discovered endings stay in this browser between sessions."
+    ],
+    "controls": [
+      {
+        "label": "Choose activity",
+        "keys": "Planner buttons"
+      },
+      {
+        "label": "Answer a conversation",
+        "keys": "Scene choice buttons"
+      },
+      {
+        "label": "End the day",
+        "keys": "Next day or Pass time"
+      },
+      {
+        "label": "Restart",
+        "keys": "Restart life"
+      },
+      {
+        "label": "Leave",
+        "keys": "Quit to menu"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-09T09:30:00.000Z",
+    "featured": false,
+    "popularityRank": 37
+  },
+  {
+    "id": "rift-ecology",
+    "slug": "rift-ecology",
+    "title": "Rift Ecology",
+    "tagline": "Sixty days. Six species. One fragile food web.",
+    "description": "A sixty-day food-web simulation across three habitats. Six species — two producers, two herbivores and two predators — grow, feed and starve through four seasons. Spend a 24-point budget on planting, culling, shelter or flow, then advance the day. Meet each scenario's target populations while keeping the web alive; losing both producers or three species ends the run in collapse.",
+    "category": "simulation",
+    "secondaryCategories": [
+      "strategy",
+      "educational"
+    ],
+    "thumbnail": "/art/rift-ecology.svg",
+    "accent": "#7dd3fc",
+    "type": "internal",
+    "internalKey": "rift-ecology",
+    "instructions": [
+      "Choose a habitat and start the season.",
+      "Pick an intervention and a species, then advance the day to apply it that day.",
+      "Plant and flow only work on producers; cull and protect work on any living species.",
+      "Each season lasts fifteen days and shifts producer capacity and feeding pressure.",
+      "Interventions cost budget. Unspent budget still counts in the final score.",
+      "Losing both producers, or three species, collapses the run immediately.",
+      "After sixty days the debrief grades survival, biodiversity, stability, budget and targets."
+    ],
+    "controls": [
+      {
+        "label": "Choose habitat",
+        "keys": "Habitat cards"
+      },
+      {
+        "label": "Apply intervention",
+        "keys": "Tool and species buttons, then Advance day"
+      },
+      {
+        "label": "Advance",
+        "keys": "Advance day"
+      },
+      {
+        "label": "Restart",
+        "keys": "Restart season"
+      },
+      {
+        "label": "Leave",
+        "keys": "Quit to menu"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-09T10:00:00.000Z",
+    "featured": false,
+    "popularityRank": 38
   }
 ]
