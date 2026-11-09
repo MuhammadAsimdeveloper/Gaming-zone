@@ -370,6 +370,10 @@ test.describe('all thirty-eight games boot and accept input', () => {
           await page.getByRole('button', { name: 'Mute audio' }).click();
           await expect(page.getByRole('button', { name: 'Unmute audio' })).toBeVisible();
           await page.getByRole('button', { name: 'Unmute audio' }).click();
+          const upgrade = page.getByRole('dialog', { name: 'Choose an upgrade' });
+          if (await upgrade.isVisible()) {
+            await upgrade.getByRole('button').first().click();
+          }
           await page.getByRole('button', { name: 'Pause run' }).click();
           const pausedRun = page.getByRole('dialog', { name: 'Run paused' });
           await expect(pausedRun).toBeVisible();

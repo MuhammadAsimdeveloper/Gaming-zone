@@ -739,7 +739,10 @@ export default function ApexTimeTrialGame({ onStart, onComplete }: GameComponent
           <p className="flex items-center justify-end gap-1.5 text-[9px] uppercase tracking-[0.2em] text-muted/70">
             <Gauge className="h-3 w-3" aria-hidden="true" /> km/h
           </p>
-          <p className="font-display text-3xl font-semibold leading-none text-white">
+          <p
+            aria-label={`Current speed ${Math.round(hud.speed)} kilometres per hour`}
+            className="font-display text-3xl font-semibold leading-none text-white"
+          >
             {Math.round(hud.speed)}
           </p>
           <p className="mt-1 flex items-center justify-end gap-1 text-[10px] text-muted">

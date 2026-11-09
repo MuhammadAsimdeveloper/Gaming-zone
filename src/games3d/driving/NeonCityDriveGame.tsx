@@ -657,7 +657,12 @@ export default function NeonCityDriveGame({ onStart, onComplete }: GameComponent
       ) : null}
 
       {phase === 'paused' ? (
-        <div className="absolute inset-0 grid place-items-center bg-night-950/75 backdrop-blur-sm">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Drive paused"
+          className="absolute inset-0 grid place-items-center bg-night-950/75 backdrop-blur-sm"
+        >
           <div className="w-[min(92%,360px)] rounded-3xl border border-white/12 bg-night-900/95 p-6 text-center shadow-2xl">
             <Pause className="mx-auto h-8 w-8 text-mint" aria-hidden="true" />
             <h3 className="mt-3 font-display text-xl font-semibold text-white">Drive paused</h3>
