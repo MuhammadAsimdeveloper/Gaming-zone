@@ -39,6 +39,7 @@ export const GAMES = [
   { slug: 'riftfall', title: 'Riftfall' },
   { slug: 'rift-life', title: 'Rift Life' },
   { slug: 'rift-ecology', title: 'Rift Ecology' },
+  { slug: 'neon-coast', title: 'Neon Coast: After Hours' },
 ] as const;
 
 export interface ErrorLog {

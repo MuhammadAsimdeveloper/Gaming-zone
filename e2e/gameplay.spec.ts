@@ -132,7 +132,7 @@ test.describe('reduced-motion preference', () => {
   });
 });
 
-test.describe('all thirty-eight games boot and accept input', () => {
+test.describe('all thirty-nine games boot and accept input', () => {
   test.describe.configure({ timeout: 150_000 });
 
   for (const game of GAMES) {
@@ -415,9 +415,21 @@ test.describe('all thirty-eight games boot and accept input', () => {
           await page.getByRole('button', { name: 'Save and quit' }).click();
           await expect(page.getByRole('heading', { name: 'Worlds', level: 3 })).toBeVisible();
           break;
+        case 'neon-coast':
+          await page.getByRole('button', { name: 'Start Tideglass Courier' }).click();
+          await assertSizedCanvas(page);
+          await page.getByRole('button', { name: 'Mute audio' }).click();
+          await expect(page.getByRole('button', { name: 'Unmute audio' })).toBeVisible();
+          await page.getByRole('button', { name: 'Unmute audio' }).click();
+          await page.getByRole('button', { name: 'Pause game' }).click();
+          await expect(page.getByRole('dialog', { name: 'Coast paused' })).toBeVisible();
+          await page.getByRole('button', { name: 'Resume drive' }).click();
+          await expect(page.getByRole('button', { name: 'Pause game' })).toBeVisible();
+          await page.getByRole('button', { name: 'Pause game' }).click();
+          await page.getByRole('button', { name: 'Restart mission' }).click();
+          await expect(page.getByRole('button', { name: 'Pause game' })).toBeVisible();
+          break;
       }
-
-      await page.waitForTimeout(600);
       await page.goto('/games');
       await expect(page.getByRole('heading', { name: /All games/i })).toBeVisible();
       expectNoErrors(errors);

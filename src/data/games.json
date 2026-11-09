@@ -1871,5 +1871,56 @@
     "createdAt": "2026-11-09T10:00:00.000Z",
     "featured": false,
     "popularityRank": 38
+  },
+  {
+    "id": "neon-coast",
+    "slug": "neon-coast",
+    "title": "Neon Coast: After Hours",
+    "tagline": "One district. Three handcrafted runs. Your coast after dark.",
+    "description": "An original top-down adventure in the fictional Vela district of Solara Bay. Walk the promenade on foot, take the Vela coupe out with arcade driving, weave through light traffic and state-based pedestrians, then chase the clock across three handcrafted missions and a repeatable glow run. Cash, ranks and best times stay browser-local in a versioned save.",
+    "category": "adventure",
+    "secondaryCategories": [
+      "racing",
+      "casual"
+    ],
+    "thumbnail": "/art/neon-coast.svg",
+    "accent": "#ffb35c",
+    "type": "internal",
+    "internalKey": "neon-coast",
+    "instructions": [
+      "Pick a mission from the coast menu and follow the mint marker on the map and minimap.",
+      "Walk with WASD or the arrow keys; hold Shift to sprint.",
+      "Press E beside the Vela coupe to get in, and E again to step out.",
+      "While driving, W accelerates, S brakes, A and D steer, and Space is the handbrake drift.",
+      "Clear Tideglass Courier to unlock Lantern Circuit, then Landmark Trail; Glow Run is always repeatable.",
+      "Esc pauses, M mutes, and every mission offers Retry, Next or Mission select from the results screen.",
+      "Cash, ranks and best times are stored in this browser only — there are no cloud saves or leaderboards."
+    ],
+    "controls": [
+      {
+        "label": "Walk or steer",
+        "keys": "WASD or arrow keys"
+      },
+      {
+        "label": "Sprint or drift",
+        "keys": "Shift or Space"
+      },
+      {
+        "label": "Enter or exit the Vela",
+        "keys": "E"
+      },
+      {
+        "label": "Pause",
+        "keys": "Escape"
+      },
+      {
+        "label": "Mute audio",
+        "keys": "M"
+      }
+    ],
+    "published": true,
+    "createdAt": "2026-11-09T11:00:00.000Z",
+    "featured": true,
+    "popularityRank": 39
   }
 ]
