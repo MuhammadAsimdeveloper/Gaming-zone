@@ -207,6 +207,30 @@ describe('Neon Coast engine loop', () => {
     });
   });
 
+  it('keeps a queued interact until a simulation step consumes it', () => {
+    const app = harness();
+    app.engine.start();
+    app.engine.setInput({ interact: true });
+
+    app.runFrames(1, 0);
+    expect(app.engine.getWorld().inVehicle).toBe(false);
+
+    app.runFrames(1);
+    expect(app.engine.getWorld().inVehicle).toBe(true);
+  });
+
+  it('keeps a queued mission acceptance until a simulation step consumes it', () => {
+    const app = harness();
+    app.engine.start();
+    app.engine.setInput({ acceptMission: 'tideglass-courier' });
+
+    app.runFrames(1, 0);
+    expect(app.engine.getWorld().mission).toBeNull();
+
+    app.runFrames(1);
+    expect(app.engine.getWorld().mission?.id).toBe('tideglass-courier');
+  });
+
   it('delegates mute to the audio channel', () => {
     const app = harness();
     expect(app.engine.muted).toBe(false);

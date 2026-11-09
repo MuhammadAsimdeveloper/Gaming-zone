@@ -245,8 +245,12 @@ export class NeonCoastEngine {
         this.playCue(event);
       }
     }
-    this.input.interact = false;
-    this.input.acceptMission = null;
+    // Queued taps survive sub-step frames; otherwise a zero-delta first frame
+    // would silently drop the mission accept or the E press.
+    if (this.budget.steps > 0) {
+      this.input.interact = false;
+      this.input.acceptMission = null;
+    }
 
     this.audio.updateEngine(this.world.inVehicle ? this.world.vehicle.speed : 0);
     this.hudPump.push(delta, () => this.buildHud());
