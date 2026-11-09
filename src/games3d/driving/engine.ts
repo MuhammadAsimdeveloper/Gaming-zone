@@ -22,6 +22,7 @@ import {
   type DriveMission,
   type TrafficSpawn,
 } from './city';
+import { advanceCheckpoint } from './progress';
 
 export type DrivePhase = 'countdown' | 'driving' | 'finished';
 
@@ -484,14 +485,17 @@ export class DriveEngine {
   }
 
   private checkCheckpoint(): void {
-    const target = this.currentTarget();
-    if (!target) return;
-    const distance = Math.hypot(this.playerX - target.x, this.playerZ - target.z);
-    if (distance > CHECKPOINT_RADIUS) return;
+    const step = advanceCheckpoint(
+      this.checkpointIndex,
+      { x: this.playerX, z: this.playerZ },
+      this.mission.route,
+      CHECKPOINT_RADIUS,
+    );
+    if (step.index === this.checkpointIndex) return;
 
-    this.checkpointIndex += 1;
+    this.checkpointIndex = step.index;
     this.audio.lap();
-    if (this.checkpointIndex >= this.mission.route.length) {
+    if (step.complete) {
       this.finish(true);
       return;
     }

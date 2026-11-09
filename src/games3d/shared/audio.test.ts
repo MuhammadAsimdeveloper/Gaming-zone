@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { GameAudio } from './audio';
+import { writeMutedPreference } from './mutePreference';
 
 class FakeParam {
   value = 0;
@@ -35,9 +36,12 @@ class FakeAudioContext {
   currentTime = 0;
   destination = new FakeNode();
   oscillators: FakeOscillator[] = [];
+  gains: FakeGain[] = [];
 
   createGain(): FakeGain {
-    return new FakeGain();
+    const gain = new FakeGain();
+    this.gains.push(gain);
+    return gain;
   }
 
   createOscillator(): FakeOscillator {
@@ -75,6 +79,7 @@ let context: FakeAudioContext;
 const originalAudioContext = window.AudioContext;
 
 beforeEach(() => {
+  window.localStorage.clear();
   vi.useFakeTimers();
   context = new FakeAudioContext();
   Object.defineProperty(window, 'AudioContext', {
@@ -110,6 +115,24 @@ describe('GameAudio background music', () => {
     vi.advanceTimersByTime(200);
     expect(context.oscillators.length).toBe(scheduled + 2);
     expect(context.suspend).not.toHaveBeenCalled();
+  });
+
+  it('creates the next engine with the stored mute state applied to its master gain', () => {
+    writeMutedPreference(true);
+    const first = new GameAudio();
+    expect(first.isMuted).toBe(true);
+    first.start();
+    expect(context.gains[0]?.gain.value).toBe(0);
+
+    expect(first.toggleMute()).toBe(false);
+    const restarted = new GameAudio();
+    expect(restarted.isMuted).toBe(false);
+
+    const nextContext = new FakeAudioContext();
+    context = nextContext;
+    restarted.start();
+    expect(nextContext.gains[0]?.gain.value).toBe(0.7);
+    restarted.dispose();
   });
 
   it('leaves the context running when music stops so results audio can play', () => {
